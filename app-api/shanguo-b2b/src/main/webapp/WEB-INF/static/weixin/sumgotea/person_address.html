@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>管理收货地址</title>
+</head>
+<body id="address" class="bg-main address">
+    <ul id="addrCon" class="op0">
+        <template v-for="item in addrData">
+            <li class="bg-white mar-b1">
+                <div class="addr-detail border-b1" v-on:click="setDefaultBack(event,item.id)">
+                    <h4 class="clearfix"><em class="fl">{{item.receiptName}}</em><i class="fl">{{item.mobile}}</i></h4>
+                    <p>{{item.provinceName}}{{item.cityName}}{{item.areaName}}{{item.detailAddr}}</p>
+                </div>
+                <div class="addr-edit dis-tabel w100">
+
+                    <div class="dis-cell" v-if="item.status==1"><span v-on:click="setDefault(event,item.id)" class="color-main"><input checked="checked" name="address" type="radio" value="{{item.id}}" id="add{{item.id}}"><label for="add{{item.id}}" ></label>选择该地址</span></div>
+                    <div class="dis-cell" v-else><span v-on:click="setDefault(event,item.id)"><input name="address" type="radio" id="add{{item.id}}"  value="{{item.id}}"><label for="add{{item.id}}"></label>选择该地址</span></div>
+                    <div class="dis-cell ta-c" v-on:click="editAddr(item.id)" ><i class="iconfont">&#xe61a;</i>编辑</div>
+                    <div class="dis-cell ta-c" v-on:click="delAddr(item.id)"><i class="iconfont">&#xe659;</i>删除</div>
+                </div>
+            </li>
+        </template>
+
+    </ul>
+    <div class="br4"></div>
+
+    <div id="emptyIcon" style="display: none;">
+        <div class="empty-icon"><img src="img/icons/no.png" alt=""></div>
+        <p class="fs-14 ta-c">暂无收货地址，<br/>去新增吧~</p>
+    </div>
+
+    <div class="add-new btn-active ta-c" v-on:click="goto('person_address_edit')"><i class="iconfont">&#xe61f;</i>新增收货地址</div>
+</body>
+
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script src="js/bizhelp.js"></script>
+<script>
+
+    var addrSelected = false;
+
+    Util.common.addloadingAnimate();
+
+    $(function () {
+        address.loadlist();
+        //                微信分享
+        //Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+    })
+    
+    var address=new Vue({
+        el:'#address',
+        data:{
+            addrData:{}
+        },
+        computed:{
+
+        },
+        methods:{
+            goto:function (name) {
+                window.location.href=name+".html?type=add&listType="  +Util.common.getParameter('type');
+            },
+            loadlist:function () {
+                var url ="/weixin/addr/query.do";
+                var param = {"userId": sessionStorage.getItem('userid')};
+                Util.common.executeAjaxCallback(url , param , function(data){
+                    console.log(data);
+                    Util.common.removeloadingAnimate('addrCon');
+                    if(data.length==0){
+                        $("#emptyIcon").css("display",'block');
+                    }else {
+                        address.$set("addrData",data);
+                    }
+                });
+            },
+            delAddr:function (id) {
+                my_confirm({
+                            title:'提示',
+                            tips:"确定删除该地址吗？",
+                            btnOk:'确定',
+                            btnNo:'取消',
+                            funcOk:function () {
+                                var url ="/weixin/addr/delete.do";
+                                var param = {"userId": sessionStorage.getItem('userid'),"ids":id};
+                                Util.common.executeAjaxCallback(url ,param,function(data){
+                                    document.location.reload();
+                                });
+                            },
+                            funcNo:function () {
+                            }
+                });
+
+            },
+            editAddr:function (id) {
+//                location.replace('person_address_edit.html?type=edit&id='+id);
+                window.location.href='person_address_edit.html?type=edit&id='+id;
+            },
+            setDefault:function (event,id) {
+
+                if (addrSelected){
+                    return;
+                }
+                addrSelected = true;
+                
+
+                $(".dis-cell>span").unbind("click");
+                var url ="/weixin/addr/update_status.do";
+                var param = {
+                    "id": id,
+                    "userId": sessionStorage.getItem('userid')
+                };
+                console.log(param);
+                $(event).find('input').attr('checked', 'true');
+              if(Util.common.getParameter('type') != "person") {
+                    Util.common.executeAjaxCallback(url, param, function (data) {
+                        console.log(data.msg);
+                        // var phone = getPhone();
+                        // if (phone == 'IOS') {
+                            window.location.href = "order_sub.html?type=add&buyType=0&shopCartInfo=" + sessionStorage.getItem('orderSubInfo'); 
+                        // } else {
+                        //     history.back();
+                        // }
+                    });
+              }else {
+                  Util.common.executeAjaxCallback(url, param, function (data) {
+                      console.log(data.msg+'');
+                      document.location.reload();
+                  });
+              }
+            },
+            setDefaultBack:function (event,id) {
+                var url ="/weixin/addr/update_status.do";
+                var param = {
+                    "id": id,
+                    //"userId": "1"
+                    "userId": sessionStorage.getItem('userid')
+                };
+                console.log(param);
+                $(event).find('input').attr('checked', 'true');
+                if(Util.common.getParameter('type') != "person") {
+                    Util.common.executeAjaxCallback(url, param, function (data) {
+                        console.log(data.msg);
+                        // var phone = getPhone();
+                        // if (phone == 'IOS') {
+                            window.location.href = "order_sub.html?type=add&buyType=0&shopCartInfo=" + sessionStorage.getItem('orderSubInfo'); 
+                        // } else {
+                        //     history.back();
+                        // }
+                    });
+                }
+            }
+        }
+    });
+
+
+
+</script>
+</html>

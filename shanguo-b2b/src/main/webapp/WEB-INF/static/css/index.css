@@ -1,0 +1,387 @@
+
+/*banner*/
+.banner-wrap{
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.banner-wrap .banner{
+    width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    height: 434px;
+}
+.banner-wrap .swiper-container{
+    width: 1920px;
+    height: 434px;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    margin-left: -960px;
+}
+/*swiper*/
+.swiper-container{
+    width: 100%;
+    height: 434px;
+}
+.swiper-container .swiper-slide a{
+    display: block;
+    text-align: center;
+}
+.swiper-container .swiper-slide a img{
+    display: inline-block;
+}
+.pagination {
+    position: absolute;
+    z-index: 20;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+.swiper-pagination-switch {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border:2px solid #cc9b4b;
+    margin: 0 8px;
+    cursor: pointer;
+    background: transparent;
+    border-radius: 50%;
+}
+.swiper-active-switch {
+    background: #cc9b4b;
+}
+
+/*推荐位置*/
+.recommend-img-group{
+    width: 1200px;
+    margin: 0 auto;
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+.recommend-img-group a{
+    display: block;
+    width: 100%;
+    height: 170px;
+    overflow: hidden;
+}
+
+.recommend-img-group a img{
+    width: 100%;
+    height: 170px;
+}
+.recommend-product{
+    width: 1200px;
+    margin: 0 auto;
+}
+.recommend-product .recommend-product-content{
+    width: 960px;
+}
+.recommend-product .recommend-product-content .recommend-product-content-title{
+    border:1px solid #f0f0f0;
+    border-radius: 6px 6px 0px 0px;
+    border-bottom: none;
+}
+.recommend-product .recommend-product-content .recommend-product-content-title span{
+    width: 20%;
+    text-align: center;
+    font-size: 16px;
+    line-height: 48px;
+    color: #333;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+}
+.recommend-product .recommend-product-content .recommend-product-content-title .recommend-product-content-title-active{
+    border-bottom: 2px solid #cc9b2b;
+    color: #cc9b2b;
+}
+.recommend-product .recommend-product-content .recommend-product-content-list-wrap{
+    border: 1px solid #f0f0f0;
+    border-radius: 0px 0px 6px 6px;
+    border-top:none;
+    min-height: 512px;
+    padding-top: 10px;
+}
+.recommend-product .recommend-product-content .recommend-product-content-list-wrap .recommend-product-content-list-group li{
+    width: 20%;
+}
+.recommend-product .recommend-product-content .recommend-product-content-list-wrap .recommend-product-content-list-group li a{
+    display: block;
+    text-align: center;
+}
+.recommend-product .recommend-product-content .recommend-product-content-list-wrap .recommend-product-content-list-group li a img{
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
+}
+.recommend-product .recommend-product-content .recommend-product-content-list-wrap .recommend-product-content-list-group li a p{
+    text-align: left;
+    font-size: 14px;
+    line-height: 38px;
+    height: 38px;
+    overflow: hidden;
+    color: #666;
+    margin-left: 12px;
+}
+.recommend-product .recommend-product-content .recommend-product-content-list-wrap .recommend-product-content-list-group li a span{
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    color: #f05353;
+    display: block;
+    margin-left: 12px;
+    margin-bottom: 13px;
+}
+.recommend-product .recommend-product-content .recommend-product-content-list-wrap .recommend-product-content-list-group li a span sub{
+    font-size: 14px;
+    font-weight: bold;
+    color: #f05353;
+    vertical-align: baseline;
+}
+.recommend-product .recommend-product-news{
+    width: 230px;
+    border:1px solid #f0f0f0;
+    border-radius: 6px;
+}
+.recommend-product .recommend-product-news .recommend-product-news-title span{
+    width: 33.333%;
+    text-align: center;
+    font-size: 16px;
+    line-height: 50px;
+    border-bottom: 1px solid #fff;
+    cursor: pointer;
+}
+.recommend-product .recommend-product-news .recommend-product-news-title .news-title-active{
+    border-bottom: 2px solid #cc9b2b;
+}
+.recommend-product .recommend-product-news .recommend-product-news-content .recommend-product-news-content-group ul{
+    padding-left: 14px;
+    padding-right: 14px;
+    height: 260px;
+    overflow: hidden;
+}
+.recommend-product .recommend-product-news .recommend-product-news-content .recommend-product-news-content-group ul li a{
+    display: block;
+    border-bottom: 1px dotted #f2f2f2;
+    font-size: 12px;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 36px;
+}
+.recommend-product .recommend-product-news .recommend-product-news-content .recommend-product-news-content-group ul li a:hover {
+    color: #cc9b2b;
+}
+.recommend-product .recommend-product-news .recommend-product-news-content .recommend-product-news-content-group .news-link-img{
+    width: 230px;
+    height: 230px;
+    overflow: hidden;
+    margin-top: 6px;
+}
+.recommend-product .recommend-product-news .recommend-product-news-content .recommend-product-news-content-group .news-link-img a{
+    display: block;
+    border-radius: 6px;
+}
+.recommend-product .recommend-product-news .recommend-product-news-content .recommend-product-news-content-group .news-link-img a img{
+    width: 230px;
+    height: 230px;
+}
+
+.section{
+    width: 1200px;
+    margin: 0 auto;
+    margin-top: 67px;
+    margin-bottom: 43px;
+}
+.section .section-left{
+    width: 356px;
+}
+.section .section-left h4{
+    font-size: 18px;
+    color: #333;
+    text-align: left;
+    line-height: 24px;
+    padding-bottom: 13px;
+    border-bottom: 1px solid #cc9b2b;
+    font-weight: normal;
+}
+.section .section-left h4 i{
+    width: 20px;
+    padding-right: 12px;
+    margin-right: 14px;
+    display: inline-block;
+    background: url(../images/icon_index_section_title.png) no-repeat center;
+    background-size: contain;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    font-style: normal;
+    color: #cc9b2b;
+    height: 24px;
+}
+.section .section-left .img-box{
+    width: 354px;
+    height: 565px;
+    overflow: hidden;
+    position: relative;
+}
+.section .section-left .img-box .bg-img{
+    width: 354px;
+    height: 565px;
+    display: block;
+}
+.section .section-left .img-box .bg-img img{
+    width: 354px;
+    height: 565px;
+    margin: 0;
+}
+.section .section-left .img-box .bg-link{
+    width: 354px;
+    height: 400px;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top:0;
+    z-index: 1111;
+}
+.section .section-left .img-box .link-box{
+    width: 334px;
+    height: 538px;
+    border: 1px solid #fff;
+    position: absolute;
+    left: 10px;
+    top:10px;
+}
+.section .section-left .img-box .link-box .link-wrap{
+    position: absolute;
+    bottom:0;
+    left: 0;
+    width: 334px;
+}
+.section .section-left .img-box .link-box .link-wrap .link-wrap-box{
+    width: 25%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.section .section-left .img-box .link-box .link-wrap .link-wrap-box a{
+    width: 72px;
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px;
+    display: inline-block;
+    color: #666;
+    background: #000;
+    filter:alpha(opacity=60);
+    background: rgba(255,255,255,0.6);
+}
+.section .section-left .img-box .link-box .link-wrap .link-wrap-box a:hover{
+    background: #fff;
+    color: #cc9b4b;
+}
+.section .section-right{
+    width: 844px;
+    position: relative;
+    padding-top: 4px;
+}
+.section .section-right .section-right-title{
+    height: 35px;
+}
+.section .section-right .section-right-title a{
+    font-size: 14px;
+    line-height: 35px;
+    padding-left: 5px;
+    padding-right: 5px;
+    cursor: pointer;
+    color: #666;
+}
+.section .section-right .section-right-title a:hover{
+    color: #cc9b4b;
+}
+.section .section-right .section-right-title .section-right-active{
+    border-top: 4px solid #cc9b2b;
+    line-height: 35px;
+    color: #cc9b2b;
+    border-left: 1px solid #cc9b2b;
+    border-right: 1px solid #cc9b2b;
+    border-bottom: 1px solid #fff;
+}
+.section .section-right .section-right-content{
+    border-top: 1px solid #cc9b2b;
+    min-height: 565px;
+}
+.section .section-right .section-right-content .section-right-content-group li{
+    width: 25%;
+    border-bottom: 1px solid #f0f0f0;
+    box-sizing: border-box;
+    border-right: 1px solid #f0f0f0;
+}
+.section .section-right .section-right-content .section-right-content-group li a{
+    display: block;
+    padding-top: 25px;
+}
+.section .section-right .section-right-content .section-right-content-group li a img{
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
+}
+.section .section-right .section-right-content .section-right-content-group li a p{
+    text-align: left;
+    font-size: 14px;
+    line-height: 38px;
+    height: 38px;
+    overflow: hidden;
+    color: #666;
+    margin-left: 12px;
+}
+.section .section-right .section-right-content .section-right-content-group li a span{
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    color: #f05353;
+    display: block;
+    margin-left: 12px;
+    margin-bottom: 13px;
+}
+.section .section-right .section-right-content .section-right-content-group li a span sub{
+    font-size: 14px;
+    font-weight: bold;
+    color: #f05353;
+    vertical-align: baseline;
+}
+.section .section-banner{
+    width: 1200px;
+    margin: 0 auto;
+}
+.section .section-banner a{
+    display: block;
+}
+.section .section-banner a img{
+    width: 100%;
+    height: 200px;
+}
+.nav .nav-wrap .nav-product .nav-product-wrap{
+    display: block!important;
+}
+.section .section-right .section-right-content .section-right-content-group li a span .consult-price{
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    color: #cc9b4b;
+    display: block;
+    margin-left: -5px;
+    font-style: normal;
+    display: inline-block;
+}
+
+.off-sale-icon-big{
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    background: url("/static/images/buhuoing.png") no-repeat center;
+    background-size: contain;
+    position: absolute;
+    right: 15px;
+    top:100px;
+    z-index: 111;
+}

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="css/segment.css" />
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>店铺公告</title>
+</head>
+<body id="notice" class="bg-main">
+	<div class="noticeTop">
+		<div class="ui-segment">
+            <span class="option" id="gg" v-on:click="toChoose('tw,wz')">公告</span>
+            <span class="option" id="sp" v-on:click="toChoose('sp')">商品快讯</span>
+        </div>  
+        <i class="iconfont delNotice" v-on:click="delAll">&#xe659;</i>
+	</div>
+    <div class="nbsp">&nbsp</div>
+    <ul class="noticeUl" style="display: none">
+        <template v-for="list in noticelist">
+         <li class="sl-li border-b1">
+              <div class="sl-content" v-on:click="noticeDetail(list)">
+                <div><img class="noticeIcon" src="img/icons/gongg.png" alt=""><i class="isRead bg-red2" v-if="!list.userRel">&nbsp</i></div>
+                <div class="partr" >
+                <div class="partr-0"><span >{{list.classifyName}}</span><p class="fr">{{list.date}}</p></div>
+                <div class="notice"><p>{{list.title}}</p><i class="iconfont fr">&#xe65e;</i></div>
+                </div>
+              </div>
+              <div class="sl-opts">
+                <span class="bg-red2" v-on:click="delNoitce(list.classify,list.toutiaoId)">删除</span>
+              </div>
+            </li>
+        </template>
+    </ul>
+    <p style="display: none" class="ta-c copyright">已经到底了...</p>
+    <div id="emptyIcon" style="display: none;">
+        <div class="empty-icon"><img src="img/icons/no.png" alt=""></div>
+        <p class="fs-14 ta-c">暂无任何消息～</p>
+    </div>
+</body>
+
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/slideleft.min.js" charset="utf-8"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script src="js/bizhelp.js"></script>
+<script>
+
+    $(function () {
+        noticeData.loadlist();
+        // noticeData.getNoticeList();
+        $(window).scroll(function() {
+            if ($(document).scrollTop() >= $(document).height() - $(window).height() && $(document).scrollTop() !=0) {
+                noticeData.loadlist();
+            }
+        });
+        //                微信分享
+        //Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+        var noticeStyle = JSON.parse(window.sessionStorage.getItem('noticeStyle')) || 'tw,wz';
+        if (noticeStyle==="sp") {
+            $("#sp").addClass('active');
+        } else {
+            $("#gg").addClass('active');
+        }
+    })
+    var start = 0;
+    var noticeData=new Vue({
+        el:'#notice',
+        data:{
+            noticelist:[],
+            classifys: JSON.parse(window.sessionStorage.getItem('noticeStyle')) || 'tw,wz',
+            pageNum:1,    //公告列表页码
+            pageSize:50,   //公告每页条数
+            isEmpty:false
+        },
+        computed:{
+
+        },
+        methods:{
+            /*获取公告列表*/
+            loadlist:function () {
+                console.log(noticeData.classifys)
+//                	加载公告列表
+                var url = "weixin/markting/listByUser";
+                var param={};
+                param .target = "bizapp";
+                param .classifys = noticeData.classifys;
+                param .start = start;
+                param .limit = 10;
+                //商品快讯暂时请求不到数据
+                if (param.classifys == 'sp') {
+                    return;
+                }
+                $(".copyright").html("努力加载中...");
+                Util.common.b2bPostCallback(url , param , function(data){
+                    start=start+10;
+                    var datas = data.data;
+                    console.log(data.data)
+                    if (datas.toutiaoList == null || datas.toutiaoList.length == 0) {
+                       $(".copyright").html("已经到底了...");
+                            if(noticeData.noticelist.length == 0){
+                                $("#emptyIcon").css('display','block');
+                                $(".copyright").css('display','none');
+                            } 
+                    } else {
+                       for (x in datas.toutiaoList){
+                            if (isShow(datas.toutiaoList[x].validStart,datas.toutiaoList[x].validEnd)) {
+                                if (datas.toutiaoList[x].validStart){
+                                    datas.toutiaoList[x].date = timerFun(datas.toutiaoList[x].validStart);
+                                }
+                                if (datas.toutiaoList[x].tag == 'gg') {
+                                    datas.toutiaoList[x].classifyName='公告';
+                                } else {
+                                    datas.toutiaoList[x].classifyName='促销';
+                                }
+                                noticeData.noticelist.push(datas.toutiaoList[x]);
+                            }
+                            
+                        }
+                        $("#emptyIcon").css('display','none');
+                        $(".noticeUl").css('display','block');
+                        $(".copyright").css('display','');
+                        if (noticeData.noticelist.length<10) {
+                            $(".copyright").css('display','none');
+                        } 
+                    }
+                    noticeData.$nextTick(function(){
+                        initSlide();
+                    })
+                });
+                
+            },
+//          切换            
+            toChoose: function(choose) {
+                if (noticeData.classifys === choose) {
+                    return;
+                }
+                $(".option").removeClass('active');
+                if (choose==="sp") {
+                    $("#sp").addClass('active');
+                } else {
+                    $("#gg").addClass('active');
+                }
+                start = 0;
+                noticeData.$set("noticelist",[]);
+                $(".noticeUl").css("display","none");
+                noticeData.$set('classifys',choose);
+                noticeData.loadlist();
+            },
+//              查看详情            
+            noticeDetail: function(datas) {
+                window.sessionStorage.setItem('noticeStyle',JSON.stringify(noticeData.classifys))
+//              标记为已读
+                var url = 'weixin/markting/markAsReaded';
+                var param ={"toutiaoId": datas.toutiaoId, "classify":datas.classify};
+                Util.common.b2bPostCallback(url ,param,function(data){
+                    console.log(data)
+                    if (data.success) {
+                        console.log(data.data.msg);
+                    }
+                });
+                
+                setTimeout(function() {
+                    var url = getToutiaoUrl(datas.toutiaoId,datas.url,datas.classify);
+                    window.location.href = url;
+                },500)
+                
+            },
+//              删除单条消息            
+            delNoitce:function (classify,id) {
+                console.log(classify,id)
+                my_confirm({
+                            title:'提示',
+                            tips:"确定删除本条内容？",
+                            btnOk:'确定',
+                            btnNo:'取消',
+                            funcOk:function () {
+                                var url ="weixin/markting/delUserToutiao";
+                                var param = {"classify":classify, "toutiaoId": id};
+                                Util.common.b2bPostCallback(url ,param,function(data){
+                                    if (data.success) {
+                                        start = 0;
+                                        noticeData.$set("noticelist",[]);
+                                        noticeData.loadlist();
+                                    }
+                                });
+                            },
+                            funcNo:function () {
+                                
+                            }
+                });
+            },
+//              删除全部消息 
+            delAll:function () {
+                my_confirm({
+                            title:'提示',
+                            tips:"确定删除所有内容？",
+                            btnOk:'确定',
+                            btnNo:'取消',
+                            funcOk:function () {
+                                var url ="weixin/markting/delAllUserToutiao";
+                                var param = {"classifys": noticeData.classifys};
+                                Util.common.b2bPostCallback(url ,param,function(data){
+                                    start = 0;
+                                    noticeData.$set("noticelist",[]);
+                                    noticeData.loadlist();
+                                });
+                            },
+                            funcNo:function () {
+
+                            }
+                });
+            },
+        }
+    });
+    var timerFun = function(time) {
+        var Createtime = time;
+        var current=new Date().getTime();
+        if (Createtime>current) {
+            var newCurrent = new Date(current);
+            var h = newCurrent.getHours();
+            var mm = newCurrent.getMinutes();
+            return add0(h)+':'+add0(mm);
+        } else {
+            var d = Math.floor((current-Createtime)/1000/60/60/24);
+            if (d>1) {
+                var newCurrent = new Date(Createtime);
+                var year=newCurrent.getFullYear(); 
+                var month=newCurrent.getMonth()+1; 
+                var date=newCurrent.getDate(); 
+                return year+'-'+month+'-'+date;
+            } else {
+                var newCurrent = new Date(Createtime);
+                var h = newCurrent.getHours();
+                var mm = newCurrent.getMinutes();
+                return add0(h)+':'+add0(mm);
+            }
+        }
+    }
+    var add0 =function(m){return m<10?'0'+m:m }
+
+    var isShow = function(start,end) {
+        var isStart = start;
+        var isEnd = end;
+        var now = new Date().getTime();
+        if (isStart<now && now < isEnd ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+</html>

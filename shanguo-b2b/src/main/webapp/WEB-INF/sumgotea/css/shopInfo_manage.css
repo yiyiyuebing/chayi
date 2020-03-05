@@ -1,0 +1,275 @@
+body{
+    position: relative;
+    padding-top: 3.64rem;
+}
+nav{
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 2.64rem;
+    background: #fff;
+    border-bottom: 1px solid #f3f2f5;
+    z-index: 999;
+    width: 100%;
+    text-align: center;
+}
+nav h4{
+    font-size: 1rem;
+    color: #333;
+    text-align: center;
+    line-height: 2.64rem;
+}
+nav .back-btn{
+    width: 3.64rem;
+    height: 2.64rem;
+    display: inline-block;
+    background: url("../img/icons/left.png") no-repeat center;
+    background-size: 1.4rem 1.4rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+nav .update-btn{
+    width: 3.64rem;
+    height: 2.64rem;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    line-height: 2.64rem;
+    font-size: 0.9rem;
+    text-align: center;
+}
+.tips{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 6.6rem;
+    text-align: center;
+    font-size: 0.8125rem;
+    color: #999;
+}
+.tips02{
+    width: 60%!important;
+}
+.btn-tips{
+    font-size: 0.67rem;
+    text-align: center;
+    line-height: 2rem;
+    padding-bottom: 1rem;
+}
+.info-part2 i{
+    width: 8.2rem!important;
+    line-height: 3rem;
+    padding-left: 1rem;
+}
+.upload-box{
+    width: 5rem;
+    height: 5rem;
+    padding: 0!important;
+    margin: 0 auto;
+}
+.upload-img{
+    width: 100%;
+    height: 100%;
+    padding: 0!important;
+}
+.webuploader-pick{
+    width: 100%!important;
+    height: 100%!important;
+}
+.webuploader-pick img{
+    width: 100%!important;
+    height: 100%!important;
+}
+.file-item{
+    width: 100%!important;
+    height: 100%!important;
+    position: relative;
+}
+.file-item img{
+    width: 100%!important;
+    height: 100%!important;
+}
+.file-item i{
+    margin: 0!important;
+    right: 12px!important;
+    top: 12px!important;
+    width: 1rem!important;
+    height: 1rem!important;
+}
+.btn-wrap{
+    width: 5rem!important;
+    height: 5rem!important;
+    padding: 0!important;
+}
+.btn-wrap>div{
+    width: 100%!important;
+    height: 100%!important;
+    padding: 0!important;
+}
+.shop-box{
+    display: block;
+    width: 5rem;
+    height: 5rem;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #ccc;
+}
+/*.shop-box .file-item i{
+    margin: 0!important;
+    right: 0px!important;
+    top: 0px!important;
+    width: 1rem!important;
+    height: 1rem!important;
+}*/
+#add-shop .webuploader-pick{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background: url("../img/gg_icon_tea.png") no-repeat center;
+    background-size: 70%;
+}
+.top-img{
+    background: #fff;
+    border-bottom: 1px solid #D7D7D7;
+    padding-right: 3rem;
+    position: relative;
+}
+.top-img .info-name{
+    width: 5rem;
+    color: #1c1c1c;
+    font-size: 0.9rem;
+    text-align: center;
+    line-height: 6rem;
+}
+.top-img .shop-box{
+    margin-top: 0.5rem;
+    margin-bottom: 0!important;
+}
+.icon-right{
+    position: absolute;
+    right: 1rem;
+    display: inline-block;
+    width: 0.8rem;
+    height: 0.8rem;
+    background: url("../img/g_icon_right_gray.png") no-repeat center;
+    background-size: contain;
+    top: 50%;
+    margin-top: -0.4rem;
+}
+.lists li{
+    position: relative;
+}
+.dis-cell input{
+    text-align: right!important;
+    padding-right: 2rem!important;
+    box-sizing: border-box;
+}
+.info-part2 div{
+     padding: 0!important;
+ }
+.change .input-wrap{
+    width: 94%;
+    margin: 0 auto;
+    position: relative;
+}
+.change .input-wrap input{
+    display: block;
+    padding: 1rem;
+    font-size: 0.87rem;
+    line-height: 1rem;
+    text-align: left;
+    border: none;
+    outline: none;
+    background: #fff;
+    border-radius: 3px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #666;
+}
+.change .input-wrap .input-clear{
+    background:url('../img/gg_icon_close.png') no-repeat center;
+    background-size: 50%;
+    width: 2.4rem;
+    height: 2.4rem;
+    display: inline-block;
+    position: absolute;
+    right: 0rem;
+    top: 0.3rem;
+}
+.change .btn{
+    width: 82%;
+    margin: 0 auto;
+    margin-top: 14rem;
+}
+.change .btn a{
+    display: block;
+    height: 2.4rem;
+    font-size: 0.87rem;
+    text-align: center;
+    background: #cc9b4b;
+    color: #fff;
+    line-height: 2.4rem;
+    border-radius: 4px;
+}
+.change .input-wrap textarea{
+    display: block;
+    padding: 1rem;
+    font-size: 0.87rem;
+    line-height: 1rem;
+    text-align: left;
+    border: none;
+    outline: none;
+    background: #fff;
+    border-radius: 3px;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    color: #666;
+}
+.change .input-wrap .count-wrap{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 0.87rem;
+    line-height: 1rem;
+    display: inline-block;
+    padding: 0.3rem;
+    color: #666;
+}
+
+#pca_value{
+    display: block;
+    font-size: 0.87rem;
+    background: url("../img/g_icon_right_gray.png") no-repeat 96% center,#fff;
+    background-size: 0.5rem ;
+    padding: 1rem;
+    line-height: 1rem;
+}
+.change label{
+    font-size: 0.87rem;
+    text-align: left;
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+    line-height: 2rem;
+}
+.idCard{
+    height: 5.4rem;
+    width: 5.4rem!important;
+}
+
+.idCardIndex,.idCardBack{
+    width: 100%;
+    height: 100%;
+}
+.shopCount{
+    width: 90%;
+    margin: 0 auto;
+    text-align: right;
+    font-size: 0.87rem;
+    line-height: 2rem;
+}

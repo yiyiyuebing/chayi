@@ -1,0 +1,66 @@
+package pub.makers.shop.promotion.vo;
+
+import pub.makers.shop.baseOrder.enums.OrderBizType;
+
+import java.io.Serializable;
+
+/**
+ * Created by dy on 2017/8/19.
+ */
+public class ManzengParam implements Serializable {
+
+    private String activityName;
+    private String skuCode;
+    private String goodName;
+    private OrderBizType orderBizType;
+    private String activityIds;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getActivityIds() {
+        return activityIds;
+    }
+
+    public void setActivityIds(String activityIds) {
+        this.activityIds = activityIds;
+    }
+
+    public OrderBizType getOrderBizType() {
+        return orderBizType;
+    }
+
+    public void setOrderBizType(OrderBizType orderBizType) {
+        this.orderBizType = orderBizType;
+    }
+
+    public String getActivityName() {
+        return activityName;
+    }
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
+    }
+
+    public String getSkuCode() {
+        return skuCode;
+    }
+
+    public void setSkuCode(String skuCode) {
+        this.skuCode = skuCode;
+    }
+
+    public String getGoodName() {
+        return goodName;
+    }
+
+    public void setGoodName(String goodName) {
+        this.goodName = goodName;
+    }
+}

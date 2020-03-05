@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link href="//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css?v=2.1.1">
+    <link rel="stylesheet" href="css/ui-box.css?v=2.1.1">
+    <link rel="stylesheet" href="css/style.css?v=2.1.1">
+    <link rel="stylesheet" href="css/index.css">
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Wn6viYpMDx4Xwvjdhg0nKO5ApKO6IgwP"></script>
+    <title>优茶联</title>
+</head>
+<body  class="bg-main">
+<div id="allmap" style="display: none"></div>
+<div id="index">
+    <div class="slider-con bg-white">
+        <div class="top dis-tabel">
+            <div class="dis-row">
+                <div class="search dis-cell">
+                    <input class="search-icon"  type="text" placeholder="商品分类、名称、品牌名称" v-on:click="goodSearchFocus()">
+                </div>
+            </div>
+        </div>
+        <div class="slider">
+            <div id="mainViews">
+                <div class="swiper-wrapper">
+                    <template v-for="item in mainList">
+                        <div class="swiper-slide">
+                            <template v-if="item.linkType == 'good'">
+                                <a href="goods_detail.html?id={{item.linkGoodId}}">
+                                    <img :src="item.imageUrl">
+                                </a>
+                            </template>
+                            <template v-if="item.linkType == 'classify'">
+                                <a href="today.html?classifyIds={{item.classifyId}}">
+                                    <img :src="item.imageUrl">
+                                </a>
+                            </template>
+                            <template v-if="item.linkType == ''">
+                                <a href="javascript:;">
+                                    <img :src="item.imageUrl">
+                                </a>
+                            </template>
+                        </div>
+                    </template>
+                    <!-- 如果需要分页器 -->
+                    <template v-if="subList.length > 1">
+                        <div class="main-pagination"></div>
+                    </template>
+            </div>
+        </div>
+    </div>
+    <ul class="banner clearfix">
+        <template v-for="list in banner1">
+            <li v-if="$index < 5" v-on:click="classify(list.id)" class="banner-icon w20 fl">
+                <div class="banner-img"><img :src="list.imgUrl" alt=""></div>
+                <p>{{list.name}}</p>
+            </li>
+        </template>
+    </ul>
+    <div class="line"></div>
+    <div class="swiper-container" id="views">
+
+        <div class="swiper-wrapper">
+            <template v-for="item in subList">
+                <div class="swiper-slide">
+                    <template v-if="item.linkType == 'good'">
+                        <a href="goods_detail.html?id={{item.linkGoodId}}">
+                            <img :src="item.imageUrl">
+                        </a>
+                    </template>
+                    <template v-if="item.linkType == 'classify'">
+                        <a href="today.html?classifyIds={{item.classifyId}}">
+                            <img :src="item.imageUrl">
+                        </a>
+                    </template>
+                    <template v-if="item.linkType == ''">
+                        <a href="javascript:;">
+                            <img :src="item.imageUrl">
+                        </a>
+                    </template>
+                </div>
+            </template>
+        </div>
+        <!-- 如果需要分页器 -->
+        <template v-if="subList.length > 1">
+            <div class="swiper-pagination"></div>
+        </template>
+    </div>
+    <template v-for="item in floorInfo">
+        <div class="section">
+            <h4><i class="floor">{{$index+1}}F</i>{{item.moduleName}}<i class="color-line"></i></h4>
+            <div class="section-body">
+                <div class="section-product clearfix">
+                    <template v-if="item.goodList[0]">
+                        <div class="product-left fl">
+                            <a href="goods_detail.html?id={{item.goodList[0].id}}">
+                                <img :src="item.goodList[0].image.url || './img/icons/tea.png' ">
+                                <p>{{item.goodList[0].name}}</p>
+                                <span class="consult"  v-if="!isLoginFlag">￥询价</span>
+                                <span class="price" v-if="isLoginFlag">￥{{item.goodList[0].price}}</span>
+                            </a>
+                        </div>
+                    </template>
+
+                    <div class="product-right fr">
+                        <template v-if="item.goodList[1]">
+                            <a href="goods_detail.html?id={{item.goodList[1].id}}" class="group borderBottom clearfix">
+                                <div class="group-left fl">
+                                    <p>{{item.goodList[1].name}}</p>
+                                    <span v-if="isLoginFlag" class="price"> ￥{{item.goodList[1].price}}</span>
+                                    <span v-if="!isLoginFlag" class="consult">￥询价</span>
+                                </div>
+                                <div class="group-right fr">
+                                    <img :src="item.goodList[1].image.url || './img/icons/tea.png' ">
+                                </div>
+                            </a>
+                        </template>
+                        <template v-if="item.goodList[2]">
+                            <a href="goods_detail.html?id={{item.goodList[2].id}}" class="group clearfix">
+                                <div class="group-left fl">
+                                    <p>{{item.goodList[2].name}}</p>
+                                    <span v-if="isLoginFlag" class="price">￥{{item.goodList[2].price}}</span>
+                                    <span v-if="!isLoginFlag" class="consult">￥询价</span>
+                                </div>
+                                <div class="group-right fr">
+                                    <img :src="item.goodList[2].image.url || './img/icons/tea.png' ">
+                                </div>
+                            </a>
+                        </template>
+                    </div>
+                </div>
+                <ul class="section-link clearfix">
+                    <template v-for="classify in item.classifyList">
+                        <li class="fl" ><a href="today.html?classifyIds={{classify.subClassifyId}}" :class="{'color-red1': classify.isHot=='T'}">{{classify.subClassifyName}}</a></li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+    </template>
+    <template v-if="maylikeInfo.modelName">
+        <div class="may-like">
+            <h4><i class="like"></i>{{maylikeInfo.modelName}}<i class="color-line"></i></h4>
+            <ul class="like-wrap clearfix">
+                <template v-for="item in maylikeInfo.goodList">
+                    <li>
+                        <a href="goods_detail.html?id={{item.id}}">
+                            <img :src="item.image.url">
+                            <p><i v-if="item.label" class="sale">{{item.label}}</i>{{item.name}}</p>
+                            <template v-if="item.promotionalInfo && item.promotionalInfo.bestActivity && item.promotionalInfo.bestActivity.activityName != '赠品'">
+                                <p>
+                                    <template v-if="item.promotionalInfo.bestActivity && list.promotionalInfo.bestActivity.tag2">
+                                        <i class="group-shopping">{{item.promotionalInfo.bestActivity.tag2}}</i>
+                                    </template>
+                                </p>
+                                <div v-if="isLoginFlag" class="sku"><label>供货价：</label><sub>￥</sub>{{item.promotionalInfo.bestActivity.presellAmount}}/{{item.skuName | filterSku}}</div>
+                            </template>
+                            <template v-else>
+                                <p></p>
+                                <div v-if="isLoginFlag" class="sku"><label>供货价：</label><sub>￥</sub>{{item.price}}/{{item.skuName | filterSku}}</div>
+                            </template>
+                            <div v-if="!isLoginFlag" class="consult"><sub>￥</sub>询价</div>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </template>
+    <div class="br4"></div>
+
+    <div class="footer-nav clearfix">
+        <a href="javascript:;" class="index active fl">
+            <i></i>
+            <span>首页</span>
+        </a>
+        <a href="sorts.html" class="category fl">
+            <i></i>
+            <span>分类</span>
+        </a>
+        <a href="javascript:;" v-on:click="personCenterLink('cart.html')" class="shopping-cart fl">
+            <i>
+                <sup v-if="cartCount">{{cartCount}}</sup>
+            </i>
+            <span>购物车</span>
+        </a>
+        <a href="javascript:;" v-on:click="personCenterLink('person_center_index.html')" class="person-center fl">
+            <i></i>
+            <span>个人中心</span>
+        </a>
+    </div>
+
+</div>
+
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="//cdn.bootcss.com/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+    <script src="js/jquery.marquee.js"></script>
+    <script src="js/jquery.tmpl.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/main.js?v=2.1.1"></script>
+    <script src="js/bizhelp.js?v=2.1.1"></script>
+    <script type="text/x-jquery-tmpl" id="index_advertise_t">
+        <ul class="swiper-wrapper">
+        {{each(i,advertise) datas}}
+           <li class="swiper-slide">
+            <a href="javascript: jump('${advertise.linkType}', '${advertise.lnkUrl}', '${advertise.linkGoodId}');"  target="_top" type="${advertise.lineStatus}" typeId="${advertise.id}"><img src="${advertise.imageUrl}"></a>
+           </li>
+         {{/each}}
+        </ul>
+        <div class="swiper-pagination"></div>
+    </script>
+    <!--客服-->
+    <script src="https://qiyukf.com/script/1a8fad464c1c676e72fd62c3d82937c0.js" charset="UTF-8"></script>
+    <script >
+        Util.common.addloadingAnimate();
+        var show_map = Util.common.getParameter("show_map") ? Util.common.getParameter("show_map") : sessionStorage.getItem("show_map") ;
+        var selectShopInfo = {};
+        if (Util.common.getParameter("shopInfo")) {
+            selectShopInfo = JSON.parse(Util.common.getParameter("shopInfo"));
+            sessionStorage.setItem('selectShopInfo',Util.common.getParameter("shopInfo"));
+
+        } else {
+            selectShopInfo = JSON.parse(sessionStorage.getItem('selectShopInfo'));
+        }
+
+        //获取当前位置
+        var map = new BMap.Map("allmap");
+        if (show_map == 'T' && selectShopInfo) {
+
+            sessionStorage.setItem('show_map',show_map);
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r){
+                if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                    map.panTo(r.point);
+                    indexData.getNearShop(selectShopInfo.lng,selectShopInfo.lat);
+                }
+                else {
+                    new Toast({context:$('body'),message:"定位加载失败，请重试"}).show();
+                }
+            },{enableHighAccuracy: false})
+        }
+
+
+
+
+        $(function () {
+            indexData.isLogin();
+            indexData.mylikeData();
+            indexData.slider();
+            indexData.floorData();
+            // indexData.notice();
+            indexData.banner();
+            //记录scrollTop值
+           Util.scrollMar.setPos("index", 0, 1,true);
+           Util.scrollMar.init("index",function(data){
+           });
+           document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+                WeixinJSBridge.call('hideOptionMenu');
+            });
+        });
+        //清空classifyId保存记录
+        window.sessionStorage.removeItem('classifyId');
+
+
+        var indexData=new Vue({
+            el:'#index',
+            data:{
+                isLoginFlag:false,
+                shopid:'',
+                goodsList:[],
+                banner1:[],
+                activity:[],
+                themelist:[],
+                cartCount: '',
+                noticelist:[],
+                shopName: '',
+                userInfo: {},
+                shopInfoList: [],
+                selectedShop: {},
+                show_map: show_map,
+                //小轮播图
+                subList: [],
+                mainList:[], //大轮播图
+                floorInfo:[],  //楼层信息
+                maylikeInfo:[]
+            },
+            filters:{
+                /*sku filter函数*/
+                filterSku:function(value){
+                    if(value){
+                        var skuArr = value.split(",");
+                        var result;
+                        $.each(skuArr,function(i,item){
+                            if(item.indexOf("单位") != -1){
+                                result = item.split(":")[1];
+                            }
+                        });
+                        return result;
+                    }
+                },
+            },
+            methods:{
+                /*设置高度*/
+                setHeight:function(){
+                    for(var i = 0 ;i < $(".section-link").length;i++){
+                        var sum = $(".section-link").eq(i).find("li").length;
+                        if(sum%4 > 0 ){
+                            var row = Math.ceil( sum/4 );
+                            console.log(row);
+                            var lastRowStart = Math.floor( sum/4 );
+                            for(var j = (row-1)*4;j < sum;j++){
+                                $(".section-link").eq(i).find('li').eq(j).find("a").css({"border-bottom":'2px solid #fff'});
+                            }
+                        }
+                    }
+
+                },
+                /*获取猜你喜欢数据*/
+                mylikeData: function () {
+                    var url = '/weixin/index/indexTpl';
+                    var param = null;
+                    Util.common.b2bPostCallback(url,param,function(result){
+                        if(result.success){
+                            indexData.$set('maylikeInfo',result.data);
+                        }else{
+                            new Toast({context:$('body'),message:result.msg}).show();
+                        }
+                    })
+                },
+                /*是否登录  跳转*/
+                personCenterLink:function(url){
+                    var login = localStorage.getItem('token');
+                    if(!login || login == null || login == ''){
+                        window.location.href = 'login.html?url=' + url;
+                    }else{
+                        window.location.href = url;
+                    }
+                },
+                /*判断是否登录*/
+                isLogin:function(){
+                    var login = localStorage.getItem('user');
+                    if(login && login != null ){  //token不为空  表示登录
+                        indexData.isLoginFlag = true;
+                        indexData.getCartCount();
+                    }else{
+                        indexData.isLoginFlag = false;
+
+                    }
+                },
+                getNearShop: function(lng,lat) {
+                    var url = Util.common.baseUrlApi + "store/subbranch/findNearBy";
+                    var param = {};
+                    param.lat = lat;
+                    param.lng = lng;
+                    param.distance = 1000;
+                    $.post(url, param, function (data) {
+                        console.log(data)
+                        if (data.success && data.data && data.data.data.length> 0) {
+                            var shopInfoList = data.data.data.slice(0,5);
+                            for (x in shopInfoList) {
+                                if (shopInfoList[x].lat && shopInfoList[x].lng) {
+                                    var distance  = map.getDistance(map.getCenter(),new BMap.Point(shopInfoList[x].lng, shopInfoList[x].lat));
+                                    shopInfoList[x].distance = (distance/1000).toFixed(2);
+                                }
+                                shopInfoList[x].addrDetail = shopInfoList[x].provinceName.substring(0,shopInfoList[x].provinceName.length - 1)  + shopInfoList[x].cityName.substring(0,shopInfoList[x].cityName.length - 1) + shopInfoList[x].countryName + shopInfoList[x].address;
+                                shopInfoList[x].addrName = shopInfoList[x].provinceName.substring(0,shopInfoList[x].provinceName.length - 1)  + shopInfoList[x].cityName.substring(0,shopInfoList[x].cityName.length - 1) + shopInfoList[x].countryName + shopInfoList[x].name;
+                                if(shopInfoList[x].id == selectShopInfo.id) {
+                                    indexData.$set('selectedShop',shopInfoList[x]);
+                                }
+                            }
+                            indexData.$set('shopInfoList',shopInfoList);
+                            
+                            $('.selectedShop').css('display','');
+                        } else {
+
+                        }
+                    },'json');
+                },
+                slider:function() {
+//                  加载轮播图
+                    var url ="weixin/index/ad";
+                    Util.common.b2bPostCallback(url,{},function(data) {
+                        Util.common.removeloadingAnimate('index');
+                        if (data.success && data.data) {
+                            var dataInfo = data.data;
+                            var mainList = dataInfo.main;
+                            var subList = dataInfo.sub;
+                            indexData.$set("mainList",mainList);
+                            indexData.$set('subList', subList);
+                            indexData.$nextTick(function() {
+                                var mainViews = new Swiper("#mainViews",{
+                                    autoplay : 3000,
+                                    loop:true,
+                                    pagination : '.main-pagination',
+                                    effect : 'fade',
+                                    autoplayDisableOnInteraction : false,
+                                    fade: {
+                                        crossFade: true,
+                                    }
+                                });
+
+                                var views = new Swiper("#views",{
+                                    autoplay : 3000,
+                                    loop:true,
+                                    pagination : '.swiper-pagination',
+                                    effect : 'fade',
+                                    autoplayDisableOnInteraction : false,
+                                    fade: {
+                                        crossFade: true,
+                                    }
+                                });
+                            })
+                        }
+                    });
+                },
+                /*获取楼层信息*/
+                floorData:function(){
+                    var url = '/weixin/index/indexFloor';
+                    var param = null;
+                    Util.common.b2bPostCallback(url,param,function(result){
+                        if(result.success){
+                            console.log(result.data);
+                            indexData.$set('floorInfo',result.data.floorList);
+                            Vue.nextTick(function(){
+                                indexData.setHeight();
+                            });
+                        }else{
+                            new Toast({context:$('body'),message:result.msg}).show();
+                        }
+                    });
+                    
+                },
+                goNoticeDetail: function(datas) {
+//                  跳转到公告详情页
+                    var url = getToutiaoUrl(datas.toutiaoId,datas.url,datas.classify);
+                    window.location.href = url;
+                },
+                notice: function() {
+//                	加载公告轮播
+                	var url = "/weixin/toutiao/toutiaoList.do";
+
+                    var param={"target":"userwx"};
+                    Util.common.executeAjaxCallback(url,param,function (data) {
+                        if (data.success && data.data) {
+                            console.log(data.data)
+                            for (x in data.data.toutiaoList) {
+                                if (isShow(data.data.toutiaoList[x].validStart, data.data.toutiaoList[x].validEnd)) {
+                                    indexData.noticelist.push(data.data.toutiaoList[x]);
+                                    
+                                }
+                            }
+
+                            indexData.$nextTick(function() {
+                                $("#marquee").marquee({yScroll: "bottom"}); 
+                            })
+                        }
+                    });
+                },
+                banner:function () {
+//        加载banner
+                    var url ="weixin/purchaseGoods/getFirstClassifyList";
+                    Util.common.b2bPostCallback(url,{},function (data) {
+                        if (data.success && data.data && data.data.classifyList) {
+                            indexData.$set("banner1", data.data.classifyList);
+                        }
+                        
+                    });
+                },
+                getCartCount: function () {
+//            获取购物车内商品数
+                    var url ="/weixin/cart/getCartCount";
+                    Util.common.b2bPostCallback(url, {}, function (data) {
+                        Util.common.initAdvertiseSlide();
+                        if(data.success && data.data && data.data.num) {
+                        var count = data.data.num;
+                        if (count*1 > 100) {
+                            count = '99+';
+                        }
+                        indexData.$set('cartCount',count);
+                    } else {
+                    }
+                    });
+                },
+                classify:function (id) {
+                    window.location.href="today.html?classifyIds=" + id + "&indexToFlag=true";
+                },
+                category:function (category,name) {
+                    if(name=='活动专区'){
+                        window.location.href="group.html?sortType=92&category="+category+"&title="+name;
+                    }
+                    else if(name=='团购专区'){
+                        window.location.href="tuangou.html?sortType=92&category="+category+"&title="+name;
+                    }  
+                    else {
+                        window.location.href="today.html?sortType=92&category="+category+"&title="+name;
+                    }
+                },
+                themes:function (theme,name,img) {
+                    window.location.href="today.html?sortType=93&themes="+theme+"&title="+name+'&intro='+img;
+                },
+                gotoMessage: function() {
+                //客服
+                    location.href = ysf.url();
+                },
+                selectShop: function(list) {
+                //选择附近的茶店
+                    indexData.$set('selectedShop',list);
+                    sessionStorage.setItem('selectShopInfo',JSON.stringify(list));
+                    console.log(list)
+                    indexData.getInfo(list.id);
+                    indexData.getshopInfo();
+                },
+                hideNear: function() {
+                    $('.full-bg').css('display','none');
+                },
+                showNear: function() {
+                    $('.full-bg').css('display','');
+                },
+                jumpFun:function(item) {
+                    if (item.linkType == 'good') {
+                        window.location.href = 'goods_detail.html?id=' + item.linkGoodId;
+                    } else {
+                        window.location.href = 'today.html?classifyIds=' + item.lnkUrl;
+                    }
+                },
+                goodSearchFocus:function() {
+                    window.location.href="search.html";
+                }
+            }
+        });
+        function jump(linkType, lineUrl, linkGoodId) {
+            if (linkType == 'good') {
+                window.location.href = 'goods_detail.html?id=' + linkGoodId;
+            } else {
+                window.location.href = 'today.html?classifyIds=' + lineUrl;
+            }
+        }
+
+         
+
+        var isShow = function(start,end) {
+        var isStart = new Date(start.replace(/\-/g,"/")).getTime();
+        var isEnd = new Date(end.replace(/\-/g,"/")).getTime();
+        var now = new Date().getTime();
+        if (isStart<now && now < isEnd ) {
+            return true;
+        } else {
+            return false;
+        }
+        }
+
+    </script>
+    
+</body>
+</html>

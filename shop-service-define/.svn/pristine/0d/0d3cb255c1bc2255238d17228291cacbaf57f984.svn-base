@@ -1,0 +1,11 @@
+package pub.makers.shop.store.service;
+
+import pub.makers.shop.store.entity.VtwoStoreRole;
+
+/**
+ * Created by dy on 2017/4/28.
+ */
+public interface VtwoStoreRoleMgrBizService {
+
+    VtwoStoreRole getVtwoStoreRoleBySubbranchId(String subbranchId);
+}

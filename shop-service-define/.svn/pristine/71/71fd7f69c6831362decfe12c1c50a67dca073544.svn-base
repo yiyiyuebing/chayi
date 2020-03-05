@@ -1,0 +1,20 @@
+package pub.makers.shop.baseOrder.service;
+
+import pub.makers.shop.baseOrder.pojo.BaseOrder;
+import pub.makers.shop.baseOrder.pojo.PromotionOrderQuery;
+import pub.makers.shop.baseOrder.pojo.TradeContext;
+
+/**
+ * 订单促销服务
+ * @author apple
+ *
+ */
+public interface OrderPromotionBizService {
+
+	/**
+	 * 应用促销规则
+	 * @param query
+	 * @return
+	 */
+	BaseOrder applyPromotionRule(PromotionOrderQuery query, TradeContext tc);
+}

@@ -1,0 +1,56 @@
+package pub.makers.shop.afterSale.service;
+
+import pub.makers.shop.afterSale.vo.AfterSaleApply;
+
+import java.math.BigDecimal;
+
+/**
+ * Created by dy on 2017/4/15.
+ */
+public interface AfterSaleBizService {
+
+	
+	/**
+	 * 申请售后
+	 * @param apply
+	 */
+	void applyAfterSale(AfterSaleApply apply);
+	
+	
+	/**
+	 * 同意售后申请
+	 * 对于退款，则为同意退款，流程跳转到财务
+	 * 对于退货/换货，则为同意退换货，需要用户提交运单号
+	 */
+	void agreeApply(String flowId, String operDesc, String operManId, String operManType);
+	
+	
+	/**
+	 * 拒绝售后申请
+	 */
+	void rejectApply(String flowId, String operDesc, String operManId, String operManType);
+	
+	
+	/**
+	 * 财务执行退款操作
+	 */
+	void refund(String flowId, String operDesc, String operManId, String operManType, BigDecimal returnAmount);
+	
+
+	/**
+	 * 修改用户物流信息
+	 */
+	void editUserShipping(String flowId, String freightNo);
+	
+	
+	/**
+	 * 接受用户快递的商品信息
+	 */
+	void acceptShipping(String flowId, String operDesc, String operManId, String operManType);
+	
+	
+	/**
+	 * 对商品进行换货
+	 */
+	void changeGood(String flowId, String operDesc, String operManId, String operManType, String freightNo);
+}

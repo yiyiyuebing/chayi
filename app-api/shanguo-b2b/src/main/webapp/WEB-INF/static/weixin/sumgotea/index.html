@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link href="//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css?v=2.1.1">
+    <link rel="stylesheet" href="css/ui-box.css?v=2.1.1">
+    <link rel="stylesheet" href="css/style.css?v=2.1.1">
+    <link rel="stylesheet" href="css/index.css">
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Wn6viYpMDx4Xwvjdhg0nKO5ApKO6IgwP"></script>
+    <title>优茶联</title>
+</head>
+<body  class="bg-main">
+<div id="allmap" style="display: none"></div>
+<div id="index">
+    <div class="slider-con bg-white">
+        <div class="top dis-tabel">
+            <div class="dis-row">
+                <div class="search dis-cell">
+                    <input class="search-icon"  type="text" placeholder="搜索商品名称/关键字" onfocus="goodSearchFocus()">
+                </div>
+                <div onclick="jumpTo('shop_info')" class="store-icon dis-cell">
+                    <div class="btn-active">了解店铺</div>
+                </div>
+            </div>
+        </div>
+        <div class="slider">
+            <div id="slider-content">
+			
+            </div>
+        </div>
+    </div>
+    <ul class="banner clearfix">
+        <template v-for="list in banner1">
+            <li v-on:click="classify(list.classify,list.text)" class="banner-icon w20 fl">
+                <div class="banner-img"><img :src="list.imgUrl" alt=""></div>
+                <p>{{list.text}}</p>
+            </li>
+        </template>
+    </ul>
+    <div class="line"></div>
+    <div class="swiper-container" id="views">
+
+    </div>
+    <div class="section">
+        <h4><i class="floor">1F</i>茶叶专区<i class="color-line"></i></h4>
+        <div class="section-body">
+            <div class="section-product clearfix">
+                <div class="product-left fl">
+                    <a href="#">
+                        <img src="./img/brand1.png">
+                        <p>组合组合组合组合组合组合组合组合</p>
+                        <span class="consult">￥询价</span>
+                        <span class="price">￥234.00</span>
+                    </a>
+                </div>
+                <div class="product-right fr">
+                    <a href="#" class="group borderBottom clearfix">
+                        <div class="group-left fl">
+                            <p>组合组合组合组合组合组合组合组合组合</p>
+                            <span class="consult">￥234.00</span>
+                            <span class="price">￥询价</span>
+                        </div>
+                        <div class="group-right fr">
+                            <img src="./img/g_product_list_img_default.png">
+                        </div>
+                    </a>
+                    <a href="#" class="group clearfix">
+                        <div class="group-left fl">
+                            <p>组合组合组合组合组合组合组合组合组合</p>
+                            <span class="consult">￥234.00</span>
+                            <span class="price">￥询价</span>
+                        </div>
+                        <div class="group-right fr">
+                            <img src="./img/g_product_list_img_default.png">
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <ul class="section-link clearfix">
+                <li class="fl"><a href="#">山国茶饮</a></li>
+                <li class="fl"><a href="#">山国茶饮</a></li>
+                <li class="fl"><a href="#">山国茶饮</a></li>
+                <li class="fl"><a href="#">山国茶饮</a></li>
+                <li class="fl"><a href="#">山国茶饮</a></li>
+                <li class="fl"><a href="#">山国茶饮</a></li>
+                <li class="fl"><a href="#">山国茶饮</a></li>
+                <li class="fl"><a href="#">山国茶饮</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="may-like">
+        <h4><i class="like"></i>猜你喜欢<i class="color-line"></i></h4>
+        <ul class="like-wrap clearfix">
+            <li>
+                <a href="#">
+                    <img src="./img/g_product_list_img_default.png">
+                    <p><i class="sale">代销</i>组合组合组合组合组合组合组合组合</p>
+                    <p><i class="group-shopping">团购</i></p>
+                    <div class="sku"><label>供货价：</label><sub>￥</sub>234.00/盒</div>
+                    <div class="consult"><sub>￥</sub>询价</div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="./img/g_product_list_img_default.png">
+                    <p><i class="sale">代销</i>组合组合组合组合组合组合组合组合</p>
+                    <p><i class="">团购</i></p>
+                    <div class="sku"><label>供货价：</label><sub>￥</sub>23400.00/盒</div>
+                    <div class="consult"><sub>￥</sub>询价</div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="./img/g_product_list_img_default.png">
+                    <p><i class="sale">代销</i>组合组合组合组合组合组合组合组合</p>
+                    <p><i class="">团购</i></p>
+                    <div class="sku"><label>供货价：</label><sub>￥</sub>23400.00/盒</div>
+                    <div class="consult"><sub>￥</sub>询价</div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="./img/g_product_list_img_default.png">
+                    <p><i class="sale">代销</i>组合组合组合组合组合组合组合组合</p>
+                    <p><i class="">团购</i></p>
+                    <div class="sku"><label>供货价：</label><sub>￥</sub>23400.00/盒</div>
+                    <div class="consult"><sub>￥</sub>询价</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+	<!--<div class="noticeview">
+
+        &lt;!&ndash;<div class="fl">
+            <img  class="noticeImg" src="img/icons/notice.png" alt="">
+        </div>&ndash;&gt;
+        &lt;!&ndash;<a class="noticeMore fr" onclick="jumpTo('notice')">更多</a>&ndash;&gt;
+        &lt;!&ndash;<ul id="marquee" class="marquee border-l1">
+            <template v-for="list in noticelist">
+                <li v-if="list.tag =='cx'"><a class="bg-red2 fl">促销</a><p v-on:click="goNoticeDetail(list)">&nbsp;{{list.title}}</p></li>
+                <li v-else><a class="bg-red2 fl">公告</a><p v-on:click="goNoticeDetail(list)">&nbsp;{{list.title}}</p></li>
+            </template>    
+        </ul>&ndash;&gt;
+	</div>-->
+
+    <!--<ul class="part1 clearfix">
+        <template v-for="list in activity">
+
+            <li v-on:click="category(list.id,list.columnName)" v-if="$index<=1" class="fl w50 border-l1"><img class="dis-b" :src="list.showpicture" alt=""></li>
+            <template v-else>
+                <li v-on:click="category(list.id,list.columnName)" class="fl w25 border-l1"><img class="dis-b" :src="list.showpicture" alt=""></li>
+            </template>
+        </template>
+    </ul>
+
+    <div class="part2">
+        <h3 onclick="jumpTo('theme')" class="clearfix"><em class="border-l1">主题馆</em>Special offer <a class="color-main fr" href="#"><i>MORE</i> <i class="iconfont">&#xf0030;</i></a></h3>
+        <ul class="clearfix">
+            <template v-for="list in themelist">
+
+                <li v-on:click="themes(list.id,list.name,list.introPhoto)" v-if="$index<8"  class="fl w25">
+                    <div><img :src="list.minPhoto" alt=""></div>
+                    <p>{{list.name}}</p>
+                </li>
+            </template>
+        </ul>
+    </div>
+    <div class="part3">
+        <h3 onclick="jumpTo('today_pack')" class="clearfix"><em class="border-l1">套餐专区</em>Special offer<a class="color-main fr" href="#"><i>MORE</i> <i class="iconfont">&#xf0030;</i></a></h3>
+        <ul id="goodsList" class="clearfix">
+            <template v-for="list in goodsList">
+                <li class="fl">
+                    <div class="relative">
+                        <a href=""></a>
+                        <a href="goods_detail.html?id={{list.id}}&storeId={{shopid}}" style="display: block;"><img v-bind:src="list.showPicture" alt=""></a>
+                        <h4>{{list.goodName}}</h4>
+                        <h5>¥{{list.salePrice}} <i>¥{{list.marketPrice}}</i></h5>
+                        <p>销售量：{{list.saleNum}}</p>
+                        <i v-if="list.stock == 0" class="sellover" v-on:click="goodsDetail(list.id)"></i>
+                    </div>
+                </li>
+            </template>
+        </ul>
+    </div>
+    <div class="csad_gray" style="position: fixed;bottom: 5.5rem;right: 1rem;" v-on:click="gotoMessage()"></div>
+    <div class="teaShop" v-if="show_map == 'T'" onclick="jumpTo('home_map')"></div>
+    <p class="ta-c copyright p0625">客服热线：400-8396-815<br/>©2017&nbsp;山国饮艺版权所有&nbsp;仿冒必究</p>
+    <div class="br4"></div>
+    <ul class="footer clearfix">
+            <li class="fl w25">
+                <div><img src="img/icons/footer1a.png" alt=""></div>
+                <p class="color-main">首页</p>
+            </li>
+            <li onclick="jumpTo('sorts')" class="fl w25">
+                <div><img src="img/icons/footer2.png" alt=""></div>
+                <p>分类</p>
+            </li>
+            <li onclick="jumpTo('cart')" class="fl w25">
+                <div class="footer-cart"><img src="img/icons/footer3.png" alt=""> <i id="carNum" style="display: none;" >{{cartCount}}</i></div>
+                <p>购物车</p>
+            </li>
+            <li onclick="jumpTo('person')" class="fl w25">
+                <div><img src="img/icons/footer4.png" alt=""></div>
+                <p>个人中心</p>
+            </li>
+        </ul> 
+        &lt;!&ndash;附近的茶点    &ndash;&gt;
+        <span v-if="selectedShop" v-on:click="showNear()" style="display: none;" class="selectedShop">{{selectedShop.addrName}}&nbsp;<i class="downIcon"></i></span>
+        <div class="full-bg" style="display: none;">
+        <div class="near-bg clearfix"  v-on:click="hideNear()">
+            <div class="bg-white nearView">
+                <div class="top border-b1">选店</div>
+                <ul class="nearUl">
+                <template v-for="list in shopInfoList">
+                    <template v-if="list.id == selectedShop.id">
+                    <span class="listNum fl color-main">{{$index+1}}</span><li class="border-b1" style="margin-left: 0.8125rem;" v-on:click="selectShop(list)">
+                        <span class="address color-main">{{list.addrDetail}}</span>
+                        <br><span >{{list.distance}}km</span><span style="margin-left: 0.8125rem;">({{list.name}})</span>
+                    </li>
+                    </template>
+                    <template v-else>
+                    <span class="listNum fl">{{$index+1}}</span><li class="border-b1" style="margin-left: 0.8125rem;" v-on:click="selectShop(list)">
+                        <span class="address">{{list.addrDetail}}</span>
+                        <br><span >{{list.distance}}km</span><span style="margin-left: 0.8125rem;">({{list.name}})</span>
+                    </li>
+                    </template>
+                </template> 
+                </ul>
+            </div>
+        </div>
+        </div>-->
+</div>
+
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="//cdn.bootcss.com/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+    <script src="js/jquery.marquee.js"></script>
+    <script src="js/jquery.tmpl.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/main.js?v=2.1.1"></script>
+    <script src="js/bizhelp.js?v=2.1.1"></script>
+    <script type="text/x-jquery-tmpl" id="index_advertise_t">
+        <ul class="swiper-wrapper">
+        {{each(i,advertise) datas}}
+           <li class="swiper-slide">
+            <a href="{{if advertise.lineStatus==1}}goods_detail.html?id=${advertise.lineUrl}{{/if}}"  target="_top" type="${advertise.lineStatus}" typeId="${advertise.id}"><img src="${advertise.picUrl}"></a>
+           </li>
+         {{/each}}
+        </ul>
+        <div class="swiper-pagination"></div>
+    </script>
+    <script type="text/x-jquery-tmpl" id="viewsBanner">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <a href="#">
+                    <img src="./img/best1.png">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="#">
+                    <img src="./img/best2.png">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="#">
+                    <img src="./img/best3.png">
+                </a>
+            </div>
+        </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
+    </script>
+    <!--客服-->
+    <script src="https://qiyukf.com/script/1a8fad464c1c676e72fd62c3d82937c0.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+        var storeName = '';
+        var url ="/weixin/store/subbranch/getShopName.do?id="+ Util.common.getParameter("storeId");
+        var param = {};
+        Util.common.executeAjaxCallback(url, param, function (data) {
+            if(data.code==1){
+                storeName = data.data.name;
+            }
+        });
+        var url ="/weixin/weixinClient/loadMyInfo.do?id=" + Util.common.getParameter("userId");
+        var param = {"userId": Util.common.getParameter("userId")};
+        Util.common.executeAjaxCallback(url, param, function (data) {
+            console.log(data.msg);
+            if(data.success){
+                var userInfo = data.msg;
+                sessionStorage.setItem("userInfo",data.msg);
+                sessionStorage.setItem("openid",userInfo.openid);
+                ysf.on({
+                    'onload': function(){
+                        ysf.config({
+                            uid: userInfo.id,
+                            "data":JSON.stringify([
+                                {"key":"real_name", "value":userInfo.nickname},
+                                {"key":"mobile_phone","value": userInfo.tel},
+                                {"key":"avatar", "value":userInfo.headimgurl},
+                                {"key":"storeName","label":"店铺名称","value":storeName}
+                            ])
+                        });
+                    }
+                });
+                
+            }
+        });
+    </script>
+    <script >
+        var show_map = Util.common.getParameter("show_map") ? Util.common.getParameter("show_map") : sessionStorage.getItem("show_map") ;
+        var selectShopInfo = {};
+        if (Util.common.getParameter("shopInfo")) {
+            selectShopInfo = JSON.parse(Util.common.getParameter("shopInfo"));
+            sessionStorage.setItem('selectShopInfo',Util.common.getParameter("shopInfo"));
+            
+        } else {
+            selectShopInfo = JSON.parse(sessionStorage.getItem('selectShopInfo'));
+        }
+        
+        //获取当前位置
+        var map = new BMap.Map("allmap");
+        if (show_map == 'T' && selectShopInfo) {
+
+            sessionStorage.setItem('show_map',show_map);
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r){
+                if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                    map.panTo(r.point);
+                    indexData.getNearShop(selectShopInfo.lng,selectShopInfo.lat);
+                }
+                else {
+                    new Toast({context:$('body'),message:"定位加载失败，请重试"}).show();
+                }         
+            },{enableHighAccuracy: false})
+        }
+        
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+        WeixinJSBridge.call('hideOptionMenu'); 
+        });
+
+        Util.common.addloadingAnimate();
+
+        $(function () {
+            var shopId = Util.common.getParameter("storeId");
+            if(shopId=="" ||shopId==undefined || shopId=="undefined" || shopId==null || shopId=="null"){
+
+            }else{
+                sessionStorage.setItem("shopId",shopId);
+            }
+            indexData.slider();
+            indexData.viewsSlider();
+            indexData.getshopInfo();
+            indexData.getInfo(shopId);
+            indexData.notice();
+            indexData.banner();
+            indexData.getactivity();
+            indexData.getTheme();
+            indexData.getCartCount();
+            //记录scrollTop值
+           Util.scrollMar.setPos("index", 0, 1,true); 
+           Util.scrollMar.init("index",function(data){
+                
+           });
+           
+        });
+        //清空sortsList保存记录
+        var Sorts = {};
+        window.sessionStorage.setItem('Sorts', JSON.stringify(Sorts));
+
+        
+        var indexData=new Vue({
+            el:'#index',
+            data:{
+                shopid:'',
+                goodsList:[],
+                banner1:[],
+                activity:[],
+                themelist:[],
+                cartCount:'',
+                noticelist:[],
+                shopName: '',
+                userInfo: {},
+                shopInfoList: [],
+                selectedShop: {},
+                show_map: show_map,
+            },
+            methods:{
+                getNearShop: function(lng,lat) {
+                    var url = Util.common.baseUrlApi + "store/subbranch/findNearBy";
+                    var param = {};
+                    param.lat = lat;
+                    param.lng = lng;
+                    param.distance = 1000;
+                    $.post(url, param, function (data) {
+                        console.log(data)
+                        if (data.success && data.data && data.data.data.length> 0) {
+                            var shopInfoList = data.data.data.slice(0,5);
+                            for (x in shopInfoList) {
+                                if (shopInfoList[x].lat && shopInfoList[x].lng) {
+                                    var distance  = map.getDistance(map.getCenter(),new BMap.Point(shopInfoList[x].lng, shopInfoList[x].lat));
+                                    shopInfoList[x].distance = (distance/1000).toFixed(2);
+                                }
+                                shopInfoList[x].addrDetail = shopInfoList[x].provinceName.substring(0,shopInfoList[x].provinceName.length - 1)  + shopInfoList[x].cityName.substring(0,shopInfoList[x].cityName.length - 1) + shopInfoList[x].countryName + shopInfoList[x].address;
+                                shopInfoList[x].addrName = shopInfoList[x].provinceName.substring(0,shopInfoList[x].provinceName.length - 1)  + shopInfoList[x].cityName.substring(0,shopInfoList[x].cityName.length - 1) + shopInfoList[x].countryName + shopInfoList[x].name;
+                                if(shopInfoList[x].id == selectShopInfo.id) {
+                                    indexData.$set('selectedShop',shopInfoList[x]);
+                                }
+                            }
+                            indexData.$set('shopInfoList',shopInfoList);
+                            
+                            $('.selectedShop').css('display','');
+                        } else {
+
+                        }
+                    },'json');
+                },
+                getInfo:function (storeId) {
+                    // var storeId = Util.common.getParameter("storeId");
+                    if(storeId=="" ||storeId==undefined || storeId=="undefined" || storeId==null || storeId=="null"){
+                        storeId = Util.common.getParameter("shopId");
+                    }
+                    sessionStorage.setItem("shopId",storeId);
+                    var userId = Util.common.getParameter("userId");
+                    sessionStorage.setItem("userid",userId);
+                    sessionStorage.setItem("shopId",storeId);
+                    indexData.$set("shopid",storeId);
+//                  电脑测试用例id
+                    //sessionStorage.setItem("shopId","322457995533078528");
+                    //sessionStorage.setItem("userid",'316917094539743232');
+                    //indexData.$set("shopid","322457995533078528");
+
+                },
+                slider:function() {
+//                  加载轮播图
+                    var url ="weixin/common/getImg.do?category=0";
+                    Util.common.executeAjaxCallback(url,{},function(data) {
+                        console.log(data);
+                        var datas ={"datas":data};
+                        Util.common.loadTemplate("#slider-content", "#index_advertise_t", datas);
+                        Util.common.initAdvertiseSlide();
+                        Util.common.removeloadingAnimate('index');
+                    });
+                },
+                viewsSlider:function(){
+                    Util.common.loadTemplate("#views", "#viewsBanner");
+                    var views = new Swiper("#views",{
+                        autoplay:2000,
+                        pagination : '.swiper-pagination',
+                    });
+                },
+                goNoticeDetail: function(datas) {
+//                  跳转到公告详情页
+                    var url = getToutiaoUrl(datas.toutiaoId,datas.url,datas.classify);
+                    window.location.href = url;
+                },
+                notice: function() {
+//                	加载公告轮播
+                	var url = "/weixin/toutiao/toutiaoList.do";
+
+                    var param={"target":"userwx"};
+                    Util.common.executeAjaxCallback(url,param,function (data) {
+                        if (data.success && data.data) {
+                            console.log(data.data)
+                            for (x in data.data.toutiaoList) {
+                                if (isShow(data.data.toutiaoList[x].validStart, data.data.toutiaoList[x].validEnd)) {
+                                    indexData.noticelist.push(data.data.toutiaoList[x]);
+                                    
+                                }
+                            }
+
+                            indexData.$nextTick(function() {
+                                $("#marquee").marquee({yScroll: "bottom"}); 
+                            })
+                        }
+                    });
+                },
+                banner:function () {
+//        加载banner
+                    var url ="cargo/classify/mobile/firstAndSecondList.do";
+                    Util.common.executeAjaxCallback(url,{},function (data) {
+                        console.log(data);
+                        indexData.$set("banner1",data);
+                    });
+                },
+                getCartCount: function () {
+//            获取购物车内商品数
+                    var url ="/weixin/cart/getCartCount.do";
+                    var param = {"userId": sessionStorage.getItem("userid"), "shopId": sessionStorage.getItem("shopId")};
+
+                    Util.common.executeAjaxCallback(url, param, function (data) {
+                        Util.common.initAdvertiseSlide();
+                        console.log(data);
+                        if(data != '' && data != null && data !=0) {
+                            if (data*1 > 100) {
+                                data = '99+';
+                            }
+                            indexData.$set('cartCount',data);
+                            $('#carNum').css('display','');
+                        } else {
+                            indexData.$set('cartCount',0);
+                        }
+                    });
+                },
+                getactivity:function () {
+                    var url ="weixin/good/goodColumn/getAllGoodColumns.do";
+                    Util.common.executeAjaxCallback(url,{},function (res) {
+                        console.log(res);
+                        indexData.$set("activity",res.data);
+                    });
+                },
+                getTheme:function () {
+                    var url ="weixin/good/goodColumn/getAllGoodTheme.do";
+                    Util.common.executeAjaxCallback(url,{},function (res) {
+                        console.log(res);
+                        indexData.$set("themelist",res.data); 
+                        
+                    });
+                },
+                classify:function (classify,name) {
+                    window.location.href="sortsList.html?sortType=91&oneType="+classify+"&title="+name+"&banner1="+JSON.stringify(indexData.banner1);
+                },
+                category:function (category,name) {
+                    if(name=='活动专区'){
+                        window.location.href="group.html?sortType=92&category="+category+"&title="+name;
+                    }
+                    else if(name=='团购专区'){
+                        window.location.href="tuangou.html?sortType=92&category="+category+"&title="+name;
+                    }  
+                    else {
+                        window.location.href="today.html?sortType=92&category="+category+"&title="+name;
+                    }
+                },
+                themes:function (theme,name,img) {
+                    window.location.href="today.html?sortType=93&themes="+theme+"&title="+name+'&intro='+img;
+                },
+                getshopInfo:function () {
+                    var url ="/weixin/store/subbranch/getShopName.do?id="+sessionStorage.getItem('shopId');
+                    console.log(sessionStorage.getItem('shopId'))
+                    var param = {};
+                    Util.common.executeAjaxCallback(url, param, function (data) {
+                        console.log(data)
+                        if(data.code==1){
+                            sessionStorage.setItem('shopName',data.data.name);
+                            sessionStorage.setItem('shopImg',data.data.headImgUrl);
+//                          微信分享
+                            Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+
+//                            设置当前网页标题
+                            $(document).attr('title',data.data.name);
+                            
+                            var $body = $('body');
+                            document.title = data.data.name;
+                            var $iframe = $("<iframe style='display:none;' src='/favicon.ico'></iframe>");
+                            $iframe.on('load',function() {
+                                setTimeout(function() {
+                                    $iframe.off('load').remove();
+                                }, 0);
+                            }).appendTo($body);
+                        }else{
+                            sessionStorage.setItem('shopName',"优茶联");
+                            $(document).attr('title',"优茶联");
+                            var $body = $('body');
+                            document.title = "优茶联";
+                        }
+                    });
+                },
+                gotoMessage: function() {
+                //客服
+                    location.href = ysf.url();
+                },
+                selectShop: function(list) {
+                //选择附近的茶店
+                    indexData.$set('selectedShop',list);
+                    sessionStorage.setItem('selectShopInfo',JSON.stringify(list));
+                    console.log(list)
+                    indexData.getInfo(list.id);
+                    indexData.getshopInfo();
+                },
+                hideNear: function() {
+                    $('.full-bg').css('display','none');
+                },
+                showNear: function() {
+                    $('.full-bg').css('display','');
+                }
+
+            }
+        });
+
+//        加载全部商品列表
+        var url ="/weixin/good/getSeachGoodListSer.do?pageSize=4";
+        Util.common.executeAjaxCallback(url,{},function (data) {
+            console.log(data);
+            indexData.$set('goodsList',data);
+        });
+
+        function goodSearchFocus() {
+            window.location.href="search.html?shopId="+sessionStorage.getItem("shopId")+"&userId="+sessionStorage.getItem("userid")+"&shopName="+sessionStorage.getItem('shopName');
+
+        }
+
+        var isShow = function(start,end) {
+        var isStart = new Date(start.replace(/\-/g,"/")).getTime();
+        var isEnd = new Date(end.replace(/\-/g,"/")).getTime();
+        var now = new Date().getTime();
+        if (isStart<now && now < isEnd ) {
+            return true;
+        } else {
+            return false;
+        }
+        }
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,19 @@
+package pub.makers.shop.bill.service.impl;
+
+import pub.makers.shop.bill.service.BillHandler;
+import pub.makers.shop.bill.vo.Actor;
+import pub.makers.shop.bill.vo.BillItemVo;
+
+public class SgBillHanderV1 implements BillHandler{
+
+	@Override
+	public void recordBill(Actor actor, BillItemVo billItem) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+	
+
+}

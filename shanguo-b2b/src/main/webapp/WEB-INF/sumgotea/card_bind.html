@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/card_bind.css">
+    <title>绑定银行卡</title>
+</head>
+<body id="mycard" class="bg-main address-edit card-bind">
+    <h2 id="card-bind">*该银行卡将用于平台与商家结算，请正确填写银行卡信息，否则将导致无法结算</h2>
+    <ul class="lists">
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">持卡人：</div>
+            <p class="dis-cell">
+                <input type="text" v-model="param.name" placeholder="请输入持卡人真实姓名">
+            </p>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">身份证号：</div>
+            <p class="dis-cell">
+                <input type="text" v-on:input="checkIdCard()" v-model="param.idCard" placeholder="请输入持卡人身份证号">
+            </p>
+        </li>
+        <li v-on:click="show()" class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">所属银行：</div>
+            <p class="dis-cell ta-r">{{param.bankName}}</p>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">银行卡号：</div>
+            <p class="dis-cell ">
+                <input type="text" v-model="param.bankCard" placeholder="请输入银行卡号">
+            </p>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">开户行：</div>
+            <p class="dis-cell">
+                <input type="text" v-model="param.openBankName" placeholder="建设银行支行">
+            </p>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">手机号码：</div>
+            <p class="dis-cell">
+                <input v-on:input="checkMobile()" type="text" v-model="param.mobile" placeholder="请输入银行预留手机号码">
+            </p>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100" style="padding: 0.6rem 0.4rem">
+            <div class="dis-cell info-name">校验码：</div>
+            <p class="dis-cell">
+                <input type="text" v-model="param.imgCode" placeholder="请输入短信验证码">
+            </p>
+            <div class="dis-cell" id="get_imgCode">
+                <div class="color-main"><img style="height: 1.8rem" id="imgs" v-on:click="switchImgCode()" ></div>
+            </div>
+        </li>
+        <li class="dis-tabel bg-white w100">
+            <div class="dis-cell info-name">短信验证码：</div>
+            <p class="dis-cell">
+                <input type="text" v-model="param.verifyCode" placeholder="请输入短信验证码">
+            </p>
+            <template v-if="isGetCode">
+                <div class="dis-cell" id="get_message">
+                    <div class="color-main" v-on:click="sendCode()">{{countText}}</div>
+                </div>
+            </template>
+            <template v-if="!isGetCode">
+                <div class="dis-cell" id="get_message">
+                    <div class="color-main" v-on:click="sendCode()">{{count}}</div>
+                </div>
+            </template>
+        </li>
+    </ul>
+    <div v-on:click="subCard()" class="big-btn btn-active" style="margin-bottom: 1rem;">提交</div>
+
+    <div style="display: none;" id="reason" class="full-bg returnReason">
+        <div class="params-list  clearfix" style="height: 40%;overflow: auto;">
+            <div style="position: absolute;width: 100%;" class="clearfix bg-main"><i style="text-align: center;line-height: 2rem;width: 4rem;" v-on:click="cancle()" class="fl">取消</i><i style="line-height: 2rem;width: 4rem;
+            text-align: center;" v-on:click="finish()" class="fr">完成</i></div>
+            <ul style="height: 100%;overflow: auto;padding-top: 2rem;">
+                <li v-on:click="chooseCard(1)" id="card1" class="reason ta-c ">中国工商银行</li>
+                <li v-on:click="chooseCard(2)" id="card2" class="reason ta-c ">中国银行</li>
+                <li v-on:click="chooseCard(3)" id="card3" class="reason ta-c ">中国建设银行</li>
+                <li v-on:click="chooseCard(4)" id="card4" class="reason ta-c ">中国农业银行</li>
+                <li v-on:click="chooseCard(5)" id="card5" class="reason ta-c ">交通银行</li>
+                <li v-on:click="chooseCard(6)" id="card6" class="reason ta-c ">招商银行</li>
+                <li v-on:click="chooseCard(7)" id="card7" class="reason ta-c ">兴业银行</li>
+                <li v-on:click="chooseCard(8)" id="card8"  class="reason ta-c ">华夏银行</li>
+                <li v-on:click="chooseCard(9)" id="card9"  class="reason ta-c ">民生银行</li>
+                <li v-on:click="chooseCard(10)" id="card10"  class="reason ta-c ">光大银行</li>
+                <li v-on:click="chooseCard(11)" id="card11"  class="reason ta-c ">中国邮政储蓄银行</li>
+                <li v-on:click="chooseCard(12)" id="card12"  class="reason ta-c ">平安银行</li>
+                <li v-on:click="chooseCard(13)" id="card13"  class="reason ta-c ">浦发银行</li>
+                <li v-on:click="chooseCard(14)" id="card14"  class="reason ta-c ">中信银行</li>
+                <li v-on:click="chooseCard(15)" id="card15"  class="reason ta-c ">农村信用合作社</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script src="js/common.js"></script>
+<script>
+    $(function () {
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+        wallet.switchImgCode();
+    });
+
+    var InterValObj;
+    var count = 60;
+    var curCount;
+
+    var wallet=new Vue({
+        el: "#mycard",
+        data: {
+            detail:{},
+            isGetCode:true,
+            requestRandom:Math.random(),
+            count:60,
+            countText: '获取验证码',
+            jumpType:Util.common.getParameter('type'),
+            param:{
+                name:'',
+                idCard:'',
+                bankCard:'',
+                bankName:'请选择',
+                openBankName:'',
+                mobile:'',
+                imgCode:'',
+                verifyCode:'',
+                connectId:JSON.parse(localStorage.getItem('user')).id,
+            },
+            chooseStr:''
+        },
+        computed: {},
+        methods: {
+            /*切换图片验证码*/
+            switchImgCode:function(){
+                wallet.requestRandom = Math.random();
+                $("#imgs").attr("src", Util.common.b2bUrlApi + '/weixin/user/getVerifyImg?requestId=' + wallet.requestRandom );
+            },
+            /*身份证合法性*/
+            checkIdCard:function(){
+              if(!$.validateIDCard(wallet.param.idCard) && wallet.param.idCard.length == 18){
+                  new Toast({context:$('body'),message:"身份证号码不合法！"}).show();
+              }
+            },
+            /*验证手机号码*/
+            checkMobile:function(){
+              if(!$.validatePhone(wallet.param.mobile) && wallet.param.mobile.length == 11){
+                  new Toast({context:$('body'),message:"手机号码不合法！"}).show();
+              }
+            },
+            chooseCard:function (id) {
+                $(".reason").removeClass('choosedRea');
+                $("#card"+id).addClass('choosedRea');
+                var card=$("#card"+id).html();
+                console.log(card);
+                wallet.$set('chooseStr',card);
+            },
+            show:function () {
+                $("#reason").css("display","block");
+            },
+            sendCode:function(){
+
+                if(wallet.param.mobile == '' || wallet.param.mobile == null){
+                    new Toast({context:$('body'),message:"手机号码不能为空！"}).show();
+                    return;
+                }
+                if(!$.validatePhone(wallet.param.mobile)){
+                    new Toast({context:$('body'),message:"手机号码不合法！"}).show();
+                    return;
+                }
+                if(wallet.param.imgCode == '' || wallet.param.imgCode == null){
+                    new Toast({context:$('body'),message:"验证码不能为空！"}).show();
+                    return;
+                }
+                wallet.count = 60;
+                var url = "/weixin/user/sendSms";
+                console.log(wallet.requestRandom);
+                var param = { requestId:wallet.requestRandom,phoneCode:wallet.param.mobile,iptVerifyCode:wallet.param.imgCode,smsType:'bankcard' };
+                Util.common.b2bPostCallback(url,param,function (result) {
+                    if (result.success) {
+                        wallet.count = 60;
+                        new Toast({context:$('body'),message:"发送成功"}).show();
+                        InterValObj = window.setInterval(SetRemainTime, 1000);
+                        wallet.isGetCode = false;
+                    } else {
+                        new Toast({context:$('body'),message:result.msg}).show();
+                        wallet.switchImgCode();
+                    }
+                });
+            },
+            /*/!*发送验证码请求*!/
+            sendTelCode:function(){
+                var url = '/user/send';
+                var param = {phoneNmuber:wallet.param.mobile};
+                Util.common.b2bPostCallback(url,param,function(result){
+                    if(result.success){
+                        new Toast({context:$('body'),message:"发送成功"}).show();
+                    }else{
+                        new Toast({context:$('body'),message:result.msg}).show();
+                    }
+                })
+            },*/
+            finish:function () {
+                $("#reason").css("display","none");
+
+                wallet.$set('param.bankName',wallet.chooseStr);
+            },
+            cancle:function () {
+                $("#reason").css("display","none");
+            },
+
+            subCard:function () {
+//              提交银行卡信息
+                if( wallet.param.name == '' || wallet.param.name == null ){
+                    new Toast({context:$('body'),message:"持卡人姓名不能为空"}).show();
+                    return;
+                }
+                if(!$.validateIDCard(wallet.param.idCard)){
+                    new Toast({context:$('body'),message:"身份证号码不合法！"}).show();
+                    return;
+                }
+                if( wallet.param.bankName == '' || wallet.param.bankName == null || wallet.param.bankName == '请选择'){
+                    new Toast({context:$('body'),message:"请选择所属银行！"}).show();
+                    return;
+                }
+                if( wallet.param.bankCard == '' || wallet.param.bankCard == null ){
+                    new Toast({context:$('body'),message:"请填写银行卡号！"}).show();
+                    return;
+                }
+                if( wallet.param.openBankName == '' || wallet.param.openBankName == null ){
+                    new Toast({context:$('body'),message:"请填写开户支行！"}).show();
+                    return;
+                }
+                if( wallet.param.mobile == '' || wallet.param.mobile == null ){
+                    new Toast({context:$('body'),message:"手机号码不能为空！"}).show();
+                    return;
+                }
+                if(!$.validatePhone(wallet.param.mobile)){
+                    new Toast({context:$('body'),message:"手机号码不合法！"}).show();
+                    return;
+                }
+                if( wallet.param.verifyCode == '' || wallet.param.verifyCode == null ){
+                    new Toast({context:$('body'),message:"短信验证码不能为空"}).show();
+                    return;
+                }
+                var url ="/weixin/bankCard/bind";
+                var cardParams = {};
+                cardParams.name = wallet.param.name;
+                cardParams.card = wallet.param.idCard;
+                cardParams.bankName = wallet.param.bankName;
+                cardParams.bankCard = wallet.param.bankCard;
+                cardParams.mobile = wallet.param.mobile;
+                cardParams.bankAddress = wallet.param.openBankName;
+                cardParams.verifyCode = wallet.param.verifyCode;
+
+                var postParam = {};
+                postParam.modelJson = JSON.stringify(cardParams);
+
+                Util.common.b2bPostCallback(url, postParam, function (result) {
+                    if(result.success){
+                        new Toast({context:$('body'),message:"银行卡信息提交成功"}).show();
+                        if(wallet.jumpType == 'personCenter'){
+                            window.location.href = 'my_card.html';
+                        }else{
+                            window.location.href = 'index.html';
+                        }
+                    }else{
+                        new Toast({context:$('body'),message:result.msg}).show();
+                    }
+                });
+
+            }
+        }
+    });
+    function SetRemainTime() {
+        if (wallet.count == 0) {
+            window.clearInterval(InterValObj);
+            wallet.isGetCode = true;
+            wallet.countText = "重新获取";
+            wallet.switchImgCode();
+        } else {
+            wallet.count--;
+        }
+    }
+    /*function sentText() {
+        curCount = count;
+
+        if ("" == wallet.param.mobile) {
+            new Toast({context:$('body'),message:"手机号不能为空"}).show();
+            return false;
+        }else{
+            var url ="/mobile/user/verifyPhone.do?phoneCode="+wallet.param.mobile;
+            var param = {};
+            Util.common.executeAjaxCallback(url, param, function (res) {
+                console.log(res);
+                if(res.success){
+                set_html('get_message','');
+                set_html('get_message', '<div>' + curCount + 's</div>');
+                InterValObj = window.setInterval(SetRemainTime, 1000);
+                }
+            });
+        }
+    }
+
+    function SetRemainTime() {
+        if (curCount == 0) {
+            window.clearInterval(InterValObj);
+            set_html('get_message', '<div onclick="sentText()">请重新获取</div>');
+        } else {
+            curCount--;
+            set_html('get_message', '<div class="color1 bc5 lh7 br1 pad3">' + curCount + 's</div>');
+        }
+    }*/
+
+</script>
+</html>

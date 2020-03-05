@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link href="//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sortsList.css">
+    <title>&nbsp;&nbsp;</title>
+</head>
+<body id="today" class="bg-main today">
+    <!--<div class="slider-con ">-->
+        <!--<div class="top dis-tabel">
+            <div class="dis-row">
+                <div class="search dis-cell">
+                    <input class="search-icon" onfocus="goodSearchFocus()"  type="text" placeholder="搜索商品名称/关键字">
+                </div>
+                <div onclick="jumpTo('cart')"  class="store-icon dis-cell cartIcon"><i v-if="cartCount != 0">{{cartCount}}</i></div>
+            </div>
+        </div>
+        <div class="slider">
+            <div id="slider-content">
+
+            </div>
+        </div>-->
+    <!--</div>-->
+    <template v-if="intro!=undefined && intro!=''">
+        <img :src="intro" alt="">
+    </template>
+    <div class=" fiexdTop">
+        <ul class="banner2 clearfix border-b1" >
+            <template v-for="list in banner1">
+                <li v-if="$index < 5" v-on:click="doClassify(list.classify,list.text)" class="banner-icon w20 fl" id="banner{{list.classify}}">
+                    <p class="bannerText" id="bannerText{{list.classify}}">{{list.text}}</p>
+                </li>
+            </template>
+        </ul>
+        <div class="part3">
+            <template v-if="theme==93">
+                <div class="clearfix condition">
+                    <span v-on:click="moren()" class="fl w25 ta-c"><i id="moren" class="color-main" >默认</i></span>
+                    <span v-on:click="saleNum()" class="fl w25 ta-c"><i id="sale" class="default">销量&nbsp;</i></span>
+                    <span v-on:click="priceNum()" class="fl w25 ta-c"><i id="price" class="default">价格</i></span>
+                    <span v-on:click="changeListStyle()" class="border-l1 fl w25 ta-c"><i id="liststyle" class="style1">&nbsp;</i></span>
+                </div>
+            </template>
+            <template v-else>
+            <div class="clearfix condition border-b1">
+                <span v-on:click="moren()" class="fl w20 ta-c"><i id="moren" class="color-main" >默认</i></span>
+                <span v-on:click="saleNum()" class="fl w20 ta-c"><i id="sale" class="default">销量&nbsp;</i></span>
+                <span v-on:click="priceNum()" class="fl w20 ta-c"><i id="price" class="default">价格</i></span>
+                <span v-on:click="changeListStyle()" class="border-l1 fl w20 ta-c"><i id="liststyle" class="style1">&nbsp;</i></span>
+                <span v-on:click="screen()" class="fl w20 ta-c"><i id="select" class="select">筛选</i></span>
+            </div>
+            </template>
+        </div>
+    </div>
+        <!--占位-->
+        <ul class="banner2 clearfix " style="margin-top: -0.5rem;">
+            <template v-for="list in banner1">
+                <li v-if="$index < 5" class="banner-icon w20 fl bg-main" >
+                    <p class="bannerText">&nbsp;</p>
+                </li>
+            </template>
+        </ul>
+        <div class="part3 " >
+            <div class="clearfix condition" style="background: #F2F2F2;">
+                <span class="fl w20 ta-c  bg-main"><i class="bg-main">&nbsp;</i></span>
+            </div>
+        </div>
+    <div style="display: none" class="part3">
+        <ul class="mylist clearfix">
+            <template v-for="list in goodsList">
+                <li class="fl" v-if="listStyle">
+                	<div class="relative">
+	                    <a style="display: block" v-on:click="goodsDetail(list)" ><img v-bind:src="list.image.url" alt=""></a>
+	                    <h4><span v-if="list.label" class="nameType">{{list.label}}</span>{{list.name}}</h4>
+                        <template v-if="list.promotionalInfo && list.promotionalInfo.activityList && list.promotionalInfo.activityList.length > 0">
+                            <h5>
+                                <template v-for="item in list.promotionalInfo.activityList">
+                                    <template v-if="item.activityType != 'manzeng' && item.activityType != 'manjian'">
+                                            <span class="goodType bg-red">{{item.tag2}}</span>
+                                    </template>
+                                </template>
+                                <template v-if="list.isManjian">
+                                    <span class="goodType bg-red">满减</span>
+                                </template>
+                                <template v-if="list.isManzeng">
+                                    <span class="goodType bg-red">满赠</span>
+                                </template>
+                            </h5>
+                            <template v-if="list.promotionalInfo.activityList.length > 0 && list.promotionalInfo.bestActivity">
+                                <template v-if="list.promotionalInfo.bestActivity.activityType == 'sale' ">
+                                    <h5>促销价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}<sup></sup></span></h5>
+                                </template>
+                                <template v-if="list.promotionalInfo.bestActivity.activityType == 'presell' ">
+                                    <h5>预售价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}<sup></sup></span></h5>
+                                </template>
+                                <template v-if="list.promotionalInfo.bestActivity.activityType !== 'sale' && list.promotionalInfo.bestActivity.activityType !== 'presell' ">
+                                    <h5>零售价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}<sup></sup></span></h5>
+                                </template>
+                            </template>
+                        </template>
+                        <template v-else>
+                            <h5>
+                            </h5>
+                            <h5>零售价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}<sup></sup></span></h5>
+                        </template>
+	                    <h5>销量：{{list.saleNum || 0}}</h5>
+                        <i v-if="list.stock <= 0" class="sellover" v-on:click="goodsDetail(list)"></i>
+                    </div>
+                </li>  
+                <li class="dis-tabel" v-on:click="goodsDetail(list)" v-if="!listStyle">
+                	 <div class="relative"> 
+	                	<div class="dis-cell part2 fl" ><img :src="list.image.url" alt=""></div>
+		                <div class="dis-cell part3 fl">
+		                    <div class="dis-tabel part3-1"> 
+		                        <div class="dis-cell">
+		                            <div>
+		                                <h4 class="two-height"><span v-if="list.label" class="nameType">{{list.label}}</span>{{list.name}}</h4>
+                                        <template v-if="list.promotionalInfo && list.promotionalInfo.activityList && list.promotionalInfo.activityList.length > 0">
+                                            <h5>
+                                                <template v-for="item in list.promotionalInfo.activityList">
+                                                    <template v-if="item.activityType != 'manzeng' && item.activityType != 'manjian'">
+                                                        <span class="goodType bg-red">{{item.tag2}}</span>
+                                                    </template>
+                                                </template>
+                                                <template v-if="list.isManjian">
+                                                    <span class="goodType bg-red">满减</span>
+                                                </template>
+                                                <template v-if="list.isManzeng">
+                                                    <span class="goodType bg-red">满赠</span>
+                                                </template>
+                                            </h5>
+                                            <template v-if="list.promotionalInfo.activityList.length > 0 && list.promotionalInfo.bestActivity">
+                                                <template v-if="list.promotionalInfo.bestActivity.activityType == 'sale' ">
+                                                    <h5>促销价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}<sup></sup></span></h5>
+                                                </template>
+                                                <template v-if="list.promotionalInfo.bestActivity.activityType == 'presell' ">
+                                                    <h5>预售价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}<sup></sup></span></h5>
+                                                </template>
+                                                <template v-if="list.promotionalInfo.bestActivity.activityType !== 'sale' && list.promotionalInfo.bestActivity.activityType !== 'presell' ">
+                                                    <h5>零售价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}<sup></sup></span></h5>
+                                                </template>
+                                            </template>
+                                        </template>
+                                        <template v-else>
+                                            <h5>
+                                            </h5>
+                                            <h5>零售价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}<sup></sup></span></h5>
+                                        </template>
+                                        <h5>销量：{{list.saleNum || 0}}</h5>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+                        <i v-if="list.stock <= 0" class="selloverh" v-on:click="goodsDetail(list)"></i>
+                    </div> 
+                </li>
+            </template>  
+        </ul>
+    </div>
+    
+    <div class="goTop"  style="display: none"></div>
+    <div class="csad_gray" v-on:click="gotoMessage()"></div>
+    <p style="display: none" class="ta-c copyright">已经到底了...</p>
+    <div id="screenWin" style="display: none;" class="full-bg">
+        <div class="choose-left"  v-on:click="hiddenScreen()"></div>
+        <div class="choose-list">
+            <ul >
+                <li id="sort"  class="choose" >
+                    <p>品类</p>
+                    <div class="clearfix">
+                    <template v-for="sort in secondTit">
+                        <i v-on:click="clickSort(sort.id)" id="sort{{sort.id}}" class="sortC fl">{{sort.name}}</i>
+                    </template>
+                    </div>
+                </li>
+                <li id="use"  class="choose">
+                    <p>用途</p>
+                    <div class="clearfix">
+                    <template v-for="list in useType">
+                        <i v-on:click="clickUse(list.id)" id="use{{list.id}}" class="useC fl">{{list.labelName}}</i>
+                    </template>
+                    </div>
+                </li>
+                <li  class="choose">
+                    <p>品牌</p>
+                    <div class="clearfix">
+                        <template v-for="brand in brandType">
+                            <i  v-on:click="clickBrand(brand.id)" id="brand{{brand.id}}" class="brandC fl">{{brand.name}}</i>
+                        </template>
+                    </div>
+                </li>
+                <li  class="clearfix choose-price">
+                    <p class="fl">价格区间：</p>
+                    <div class="fl choose-input">
+                        <input type="number" pattern="[0-9]*"  v-model="chooseData.startPrice" placeholder="最低价">
+                        <em>&nbsp;&nbsp;&nbsp;</em>
+                        <input type="number" pattern="[0-9]*" v-model="chooseData.endPrice" placeholder="最高价">
+                    </div>
+                </li>
+                <li class="br4"></li>
+            </ul>
+            <div class="choose-btn-con clearfix">
+                <!--<i v-on:click="toChoose()" class="fr btn-active">确定</i>
+                <i v-on:click="chooseReload()" class="fr">重置</i>-->
+                <div v-on:click="chooseReload()" class="dis-cell color-main">重置</div>
+                <div v-on:click="toChoose()" class="dis-cell btn-active">确定</div>
+            </div>
+        </div>
+    </div>
+
+        <div id="emptyIcon" style="display: none;">
+            <div class="empty-icon"><img src="img/icons/no.png" alt=""></div>
+            <p class="fs-14 ta-c">暂无此类商品，<br/>客官逛逛其他商品吧~</p>
+        </div>
+
+        <script src="js/jquery-1.8.2.min.js"></script>
+    	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+   	 	<script src="//cdn.bootcss.com/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+        <script src="js/vue.js"></script>
+        <script src="js/jquery.tmpl.min.js"></script>
+        <script src="js/main.js"></script>
+        <script type="text/x-jquery-tmpl" id="index_advertise_t">
+        <ul class="swiper-wrapper">
+        {{each(i,advertise) datas}}
+           <li class="swiper-slide">
+            <a href="{{if advertise.lineStatus==1}}goods_detail.html?id=${advertise.lineUrl}{{/if}}" target="_top" type="${advertise.lineStatus}" typeId="${advertise.id}"><img src="${advertise.picUrl}"></a>
+           </li>
+         {{/each}}
+        </ul>
+        <div class="swiper-pagination"></div>
+    </script>
+     <!--客服-->
+    <script src="https://qiyukf.com/script/1a8fad464c1c676e72fd62c3d82937c0.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+        var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+        var storeName = sessionStorage.getItem("shopName");
+        ysf.on({
+            'onload': function(){
+                ysf.config({
+                    uid: userInfo.id,
+                    "data":JSON.stringify([
+                        {"key":"real_name", "value":userInfo.nickname},
+                        {"key":"mobile_phone","value": userInfo.tel},
+                        {"key":"avatar", "value":userInfo.headimgurl},
+                        {"key":"storeName","label":"店铺名称","value":storeName}
+                    ])
+                });
+            }
+        });
+        ysf.on({
+            unread : function(msg){
+                if(msg.total){
+                    // 处理逻辑
+                }
+            }
+        });
+    </script>
+        <script> 
+            Util.common.addloadingAnimate(); 
+
+            $(function () {
+            	todayData.$set('banner1',JSON.parse(Util.common.getParameter("banner1")));
+
+               //状态保存 
+                var Sorts = JSON.parse(window.sessionStorage.getItem('Sorts')) || {};
+                console.log(Sorts);
+                
+                if ($.isEmptyObject(Sorts)) {
+                    todayData.$set('title',Util.common.getParameter('title'));
+                    todayData.$set('classify',Util.common.getParameter('oneType'));  
+                } else {
+                    todayData.$set('title', Sorts.title);
+                    todayData.$set('classify',Sorts.classify);  
+                }
+                
+                todayData.loadlist();
+                todayData.loadChooselist();
+                todayData.getCartCount();
+                todayData.$nextTick(function(){ todayData.changeBanner() })
+                
+                $(window).scroll(function() {
+                	
+                    if ($(window).scrollTop() > 0) {
+                        $(".goTop").fadeIn(800);
+                    } else {
+                        $(".goTop").fadeOut(800);
+                    }
+                    
+                    if ($(document).scrollTop() >= $(document).height() - $(window).height() && $(document).scrollTop() !=0) {
+                        todayData.loadlist(todayData.rankstr);
+                    }
+                    
+                });
+
+                $(".goTop").click(function() {
+                    $('html,body').animate({
+                                scrollTop: 0
+                            },
+                            500);
+                    return false;
+                    
+                });
+//                微信分享
+                Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+            });
+            var counter=1;
+
+            var todayData=new Vue({
+                el:'#today',
+                data:{
+                    userId:sessionStorage.getItem("userid"),
+                    storeId:sessionStorage.getItem("shopId"),
+                    sortType:Util.common.getParameter("sortType"),
+                    banner1:[],
+                    goodsList:[],
+                    rankstr:'',
+//                    筛选列表的值
+                    useType:[],
+                    brandType:[],
+                    secondTit: [],
+                    chooseStatus:0,
+                    chooseData:{
+                        startPrice:'',
+                        endPrice:'',
+                        brandId:'',
+                        use:'',
+                        oneType:'',
+                        twoType:'',
+                        threeType:''
+                    },
+//                  分类页面所选的分类值
+                    initialData:{},
+//                    购物车数量
+                    cartCount:'',
+//                    主题馆介绍
+                    intro:'',
+                    theme:'',
+//                 	列表样式
+					listStyle: true,
+                    title:'',
+                    classify:'',
+                },
+                computed: {
+                },
+                filters:{
+                    /*sku filter函数*/
+                    filterSku:function(value){
+                        if(value){
+                            var skuArr = value.split(",");
+                            var result;
+                            $.each(skuArr,function(i,item){
+                                if(item.indexOf("单位") != -1){
+                                    result = item.split(":")[1];
+                                }
+                            });
+                            return result;
+                        }
+                    },
+                },
+                methods:{
+//  				  跳转到详情页
+					goodsDetail: function(list) {
+//                      记录滚动位置
+                        Util.scrollMar.setPos("sortsList"+todayData.classify,$(window).scrollTop(),2,todayData.listStyle);
+                        window.location.href="goods_detail.html?id="+list.id+"&userId="+todayData.userId+"&storeId="+todayData.storeId;
+					},
+//					改变列表样式
+					changeListStyle: function() {
+						todayData.listStyle = !todayData.listStyle;
+                        if (todayData.listStyle) {
+                            $("#liststyle").removeClass("style2");
+                            $("#liststyle").addClass("style1");
+                        } else {
+                            $("#liststyle").removeClass("style1");
+                            $("#liststyle").addClass("style2");
+                        }
+					},
+//                  选中的分类样式
+                    changeBanner: function() {
+                        for(item in todayData.banner1){
+                           if($('#banner'+todayData.banner1[item].classify).hasClass('border-b2') ||$('#bannerText'+todayData.banner1[item].classify).hasClass('color-main')) {
+                                $('#banner'+todayData.banner1[item].classify).removeClass('border-b2');
+                                $('#bannerText'+todayData.banner1[item].classify).removeClass('color-main');
+                           }
+                        }
+                        $('#banner'+todayData.classify).addClass('border-b2');
+                        $('#bannerText'+todayData.classify).addClass('color-main');
+                    },
+//                    筛选框隐藏显示
+                    screen:function () {
+                        $("#screenWin").css('display','block');
+                        $(".choose-list").animate({
+                            position: "fixed",
+                            bottom: "0",
+                            left: "15%"
+                        })
+                        $(".choose-btn-con").animate({
+                            position: "fixed",
+                            bottom: "0",
+                            left: "15%"
+                        })
+                        $("body").addClass('hide');
+                        $("html").css('overflow','hidden');
+                    },
+                    hiddenScreen: function() {
+                        $(".choose-list").animate({
+                            position: "fixed",
+                            bottom: "0",
+                            left: "100%"
+                        })
+                        $(".choose-btn-con").animate({
+                            position: "fixed",
+                            bottom: "0",
+                            left: "100%"
+                        })
+                        setTimeout(function(){
+                            $("#screenWin").css('display','none');
+                            $("body").removeClass('hide');
+                            $("html").css('overflow','auto');
+                        },500)
+                    },
+//                    加载商品列表
+                    loadlist:function (rankNum) {
+                        if(rankNum==''|| rankNum==undefined){
+//                            默认排序
+                            rankNum={saleNumSort:"",priceSort:""};
+                        }
+                        
+                        var ci= todayData.classify;
+                        var url ="weixin/good/getSearchGoodListSer?goodName=&pageSize=50&shopId="+sessionStorage.getItem("shopId");
+                        param={'oneType':ci,'conditionStr':rankNum,"pageNum":counter};
+                        param. startPrice=todayData.chooseData.startPrice;
+                        param. endPrice=todayData.chooseData.endPrice;
+                        param. brandId=todayData.chooseData.brandId;
+                        param. use=todayData.chooseData.use;
+                        // param. oneType=todayData.chooseData.oneType;
+                        param. twoType=todayData.chooseData.twoType;
+                        param. threeType=todayData.chooseData.threeType;
+                        param.saleNumSort =rankNum.saleNumSort;
+                        param.priceSort =rankNum.priceSort;
+                        $(document).attr('title',todayData.title);
+//                        滑动加载商品列表
+                        $(".copyright").html("努力加载中...");
+                        param.pageSize = 50; 
+                        param = JSON.stringify(param);
+                        var param1 = {};
+                        param1.json = param;
+                        Util.common.b2cPostCallback(url,param1,function (data) {
+                            counter=counter+1;
+                            console.log(data);
+                            if (data.success) {
+                                var dataList = data.data;
+                                Util.common.removeloadingAnimate('today');
+                                if (dataList==null || dataList.length==0){
+                                    $(".copyright").html("已经到底了...");
+                                    if( todayData.goodsList.length==0){
+                                        $("#emptyIcon").css('display','block');
+                                        $(".copyright").css('display','none');
+                                    }
+                                }else {
+                                    dataList.forEach(function(data){
+                                        data.isManjian = false;
+                                        data.isManzeng = false;
+                                        if(data.promotionalInfo && data.promotionalInfo.activityList){
+                                            data.promotionalInfo.activityList.forEach(function(item){
+                                                if(item.activityType == 'manjian'){
+                                                    data.isManjian = true;
+                                                }
+                                            });
+                                            data.promotionalInfo.activityList.forEach(function(item){
+                                                if(item.activityType == 'manzeng'){
+                                                    data.isManzeng = true;
+                                                }
+                                            })
+                                        }
+                                        todayData.goodsList.push(data);
+                                    });
+//                                    console.log(JSON.stringify(todayData.goodsList[0]));
+                                    /*for (x in dataList){
+                                        todayData.goodsList.push(dataList[x]);
+                                    }*/
+                                    $("#emptyIcon").css('display','none');
+                                    $(".part3").css('display','block');
+                                    $(".copyright").css('display','');
+                                    if ((todayData.goodsList.length<3 && todayData.listStyle) || (todayData.goodsList.length<6 && !todayData.listStyle)) {
+                                        $(".copyright").css('display','none');
+                                    }
+                                }
+                                //还原滚动位置
+                                todayData.$nextTick( function(){
+                                    if (counter === 2){
+                                        Util.scrollMar.init("sortsList"+todayData.classify, function(scrollTemp){
+                                            $(window).scrollTop(scrollTemp.pos);
+                                            todayData.$set('listStyle',scrollTemp.style);
+                                        }); 
+                                    }
+                                })
+                            } else{
+                                new Toast({context:$('body'),message: data.msg}).show();
+                            }
+                         });
+                    },
+                    loadChooselist:function () {
+
+//                        加载筛选列表
+                        if(todayData.title !='茶叶'){
+                            $("#use").css('display','none');
+                            var url_ = "weixin/good/sortTypeIndexBrand?classify="+todayData.classify;
+                            Util.common.b2cPostCallback(url_, {}, function (res) {
+                                if(res.success && res.data){
+                                    todayData.$set('brandType', res.data);
+                                }
+                            });
+                        }else{
+                            $("#use").css('display','');
+                            var url_ = "weixin/good/sortTypeIndexBrand?classify="+todayData.classify;
+                            Util.common.b2cPostCallback(url_, {}, function (res) {
+                                if(res.success && res.data){
+                                    todayData.$set('brandType', res.data);
+                                }
+                            });
+                            var url = "weixin/good/sortTypeIndex";
+                            Util.common.b2cPostCallback(url, {}, function (res) {
+                                if(res.success && res.data){
+                                    todayData.$set('useType', res.data.use);
+                                }
+                            });
+                        }
+                        var url = "weixin/good/sortTypeByParentId?parentId="+todayData.classify;
+                        Util.common.b2cPostCallback(url, {}, function (res) {
+                            if(res.success){
+                                if(res.data.length!=0){
+                                    todayData.$set('secondTit', res.data);
+                                }
+                            }
+                        });                       
+                    },
+//                       重新选择一级分类
+                    doClassify: function(classify,name) {
+                         if (todayData.title === name && todayData.classify === classify) {
+                            return;
+                        }
+                        todayData.$set('title',name);
+                        console.log(todayData.title);
+                        todayData.$set('classify',classify);
+                        var Sorts = {
+                            title: todayData.title,
+                            classify: todayData.classify,
+                        };
+                        //保存记录
+                        window.sessionStorage.setItem('Sorts', JSON.stringify(Sorts));
+                        $("#moren").addClass('color-main');
+                        todayData.removeStyle();
+//                        清空已有数据
+                        todayData.$set('goodsList',[]);
+                        todayData.$set('secondTit', []);
+                        todayData.$set('useType', []);
+                        todayData.$set('brandType', []);
+//                        清空筛选规则
+                        todayData.$set('chooseData.twoType','');
+                        counter=1;
+                        todayData.loadlist();
+                        todayData.changeBanner();
+                        todayData.loadChooselist();
+                    },
+                    clickSort: function(id){
+//                         选择品类
+                        if ($("#sort"+id).hasClass('btn-active')) {
+                            todayData.$set('chooseData.twoType','');
+                            $(".sortC").removeClass('btn-active');
+                        } else{
+                            $(".sortC").removeClass('btn-active');
+                            todayData.$set('chooseData.twoType',id);
+                            $("#sort"+id).addClass('btn-active');
+                        }
+                        
+                    },
+                    clickUse:function (id) {
+//                        选择用途
+                        if ($("#use"+id).hasClass('btn-active')) {
+                            todayData.$set('chooseData.use','');
+                            $(".useC").removeClass('btn-active');
+                        } else {
+                            todayData.$set('chooseData.use',id);
+                            $(".useC").removeClass('btn-active');
+                            $("#use"+id).addClass('btn-active');
+                        }
+                        
+                    },
+                    clickBrand:function (id) {
+//                        选择品牌
+                        if ($("#brand"+id).hasClass('btn-active')) {
+                            todayData.$set('chooseData.brandId','');
+                            $(".brandC").removeClass('btn-active');
+                        } else {
+                            todayData.$set('chooseData.brandId',id);
+                            $(".brandC").removeClass('btn-active');
+                            $("#brand"+id).addClass('btn-active');
+                        }
+                        
+                    },
+                    toChoose:function () {
+                        todayData.$set('chooseStatus',1);
+                        todayData.hiddenScreen();
+                        todayData.$set('goodsList',[]);
+                        $('#select').removeClass('select');
+                        $('#select').addClass('selected');
+                        $('#select').addClass('color-main');
+                        counter=1;
+                        Util.scrollMar.setPos("sortsList"+todayData.classify,0,2,todayData.listStyle);
+                        todayData.loadlist();
+                    },
+                    chooseReload: function() {
+                        if ($('#select').hasClass('selected') || $('#select').hasClass('color-main')) {
+                            $('#select').removeClass('selected');
+                            $('#select').removeClass('color-main');
+                            $('#select').addClass('select');
+                        }
+                        $(".brandC").removeClass('btn-active');
+                        $(".useC").removeClass('btn-active');
+                        $(".sortC").removeClass('btn-active');
+                        todayData.$set('chooseData.brandId','');
+                        todayData.$set('chooseData.use','');
+                        todayData.$set('chooseData.twoType','');
+                        todayData.$set('chooseData.startPrice','');
+                        todayData.$set('chooseData.endPrice','');
+                        todayData.hiddenScreen();
+                        todayData.moren();
+                    },
+                    removeStyle: function(){
+                        $("#price").removeClass('up');
+                        $("#price").removeClass('down');
+                        $("#price").removeClass('color-main');
+                        $("#price").addClass('default');
+                        $("#sale").removeClass('up');
+                        $("#sale").removeClass('down');
+                        $("#sale").removeClass('color-main');
+                        $("#sale").addClass('default');
+                    },
+                    moren: function() {
+                        $("#moren").addClass('color-main');
+                        if ($('#select').hasClass('selected') || $('#select').hasClass('color-main')) {
+                            $('#select').removeClass('selected');
+                            $('#select').removeClass('color-main');
+                            $('#select').addClass('select');
+                        }
+                        todayData.removeStyle();
+//                        清空筛选规则
+                        $(".brandC").removeClass('btn-active');
+                        $(".useC").removeClass('btn-active');
+                        $(".sortC").removeClass('btn-active'); 
+                        todayData.$set('chooseData.brandId','');
+                        todayData.$set('chooseData.use','');
+                        todayData.$set('chooseData.twoType','');
+                        todayData.$set('chooseData.startPrice','');
+                        todayData.$set('chooseData.endPrice','');
+                        todayData.$set('goodsList',[]);
+                        Util.scrollMar.setPos("sortsList"+todayData.classify,0,2,todayData.listStyle);
+                        counter=1;
+                        todayData.loadlist();
+                    },
+                    saleNum:function () {
+                        Util.scrollMar.setPos("sortsList"+todayData.classify,0,2,todayData.listStyle);
+                        $("#moren").removeClass("color-main");
+                        if($("#sale").hasClass('default')){
+                            $("#sale").removeClass('default');
+                            $("#sale").addClass('up');
+                            $("#sale").addClass('color-main');
+                            this.rank(0,0);
+
+                            $("#price").removeClass('up');
+                            $("#price").removeClass('down');
+                            $("#price").removeClass('color-main');
+                            $("#price").addClass('default');
+                        }else {
+                            if($("#sale").hasClass('up')){
+                                $("#sale").removeClass('up');
+                                $("#sale").addClass('down');
+                                this.rank(0,1);
+                            }else {
+                                $("#sale").removeClass('down');
+                                $("#sale").addClass('up');
+                                this.rank(0,0);
+                            }
+                        }
+                    },
+                    priceNum:function () {
+                        Util.scrollMar.setPos("sortsList"+todayData.classify,0,2,todayData.listStyle);
+                        $("#moren").removeClass("color-main");
+                        if($("#price").hasClass('default')){
+                            $("#price").removeClass('default');
+                            $("#price").addClass('up');
+                            $("#price").addClass('color-main');
+                            this.rank(1,0);
+
+                            $("#sale").removeClass('up');
+                            $("#sale").removeClass('down');
+                            $("#sale").removeClass('color-main');
+                            $("#sale").addClass('default');
+                        }else {
+                            if($("#price").hasClass('up')){
+                                $("#price").removeClass('up');
+                                $("#price").addClass('down');
+                                this.rank(1,1);
+                            }else {
+                                $("#price").removeClass('down');
+                                $("#price").addClass('up');
+                                this.rank(1,0);
+                            }
+                        }
+                    },
+                    rank:function (type,num) {
+                        if(type==0){
+//                            按销量
+                            counter=1;
+                            var condition={saleNumSort: num , priceSort: ""};
+                            todayData.$set("rankstr",condition);
+                            var emp=[];
+                            todayData.$set("goodsList",emp);
+                            todayData.loadlist(condition);
+
+                        }else {
+//                          按价格
+                            counter=1;
+                            var emp=[];
+                            todayData.$set("goodsList",emp);
+                            var condition={saleNumSort: "", priceSort: num};
+                            todayData.$set("rankstr",condition);
+                            todayData.loadlist(condition);
+                        }
+                    },
+                    getCartCount: function () {
+//            获取购物车内商品数
+
+                        var url ="/weixin/cart/getCartCount.do";
+                        var param = {"userId": sessionStorage.getItem("userid"), "shopId": sessionStorage.getItem("shopId")};
+
+                        Util.common.executeAjaxCallback(url, param, function (data) {
+                            if(data != '' && data != null && data!=0) {
+                                if (data*1 > 100) {
+                                    data = '99+';
+                                }
+                                todayData.$set('cartCount',data);
+                            } else {
+                                todayData.$set('cartCount',0);
+                            }
+                        });
+                    },
+                    gotoMessage: function() {
+                    //客服
+                        location.href = ysf.url();
+                    },
+                }
+            });
+
+
+            function goodSearchFocus() {
+                window.location.href="search.html?shopId="+sessionStorage.getItem("shopId")+"&userId="+sessionStorage.getItem("userid");
+
+            }
+        </script>
+</body>
+</html>

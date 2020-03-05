@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app-api.iml" filepath="$PROJECT_DIR$/app-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../base-service/base-service.iml" filepath="$PROJECT_DIR$/../base-service/base-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../base-service/base-service-base/base-service-base.iml" filepath="$PROJECT_DIR$/../base-service/base-service-base/base-service-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../base-service/base-service-biz/base-service-biz.iml" filepath="$PROJECT_DIR$/../base-service/base-service-biz/base-service-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../shanguo-b2b/shanguo-b2b.iml" filepath="$PROJECT_DIR$/../shanguo-b2b/shanguo-b2b.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../shanguo-b2c/shanguo-b2c.iml" filepath="$PROJECT_DIR$/../shanguo-b2c/shanguo-b2c.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../shanguoyinyi/shanguoyinyi.iml" filepath="$PROJECT_DIR$/../shanguoyinyi/shanguoyinyi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../shop-service-admin/shop-service-admin.iml" filepath="$PROJECT_DIR$/../shop-service-admin/shop-service-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../shop-service-define/shop-service-define.iml" filepath="$PROJECT_DIR$/../shop-service-define/shop-service-define.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../user-service/user-service.iml" filepath="$PROJECT_DIR$/../user-service/user-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../user-service/user-service-base/user-service-base.iml" filepath="$PROJECT_DIR$/../user-service/user-service-base/user-service-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../user-service/user-service-biz/user-service-biz.iml" filepath="$PROJECT_DIR$/../user-service/user-service-biz/user-service-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../yaoming-common/yaoming-common.iml" filepath="$PROJECT_DIR$/../yaoming-common/yaoming-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../yaoming-mall-common/yaoming-mall-common.iml" filepath="$PROJECT_DIR$/../yaoming-mall-common/yaoming-mall-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../yaoming-parent/yaoming-parent.iml" filepath="$PROJECT_DIR$/../yaoming-parent/yaoming-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../yaoming-security/yaoming-security.iml" filepath="$PROJECT_DIR$/../yaoming-security/yaoming-security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../yaoming-ueditor/yaoming-ueditor.iml" filepath="$PROJECT_DIR$/../yaoming-ueditor/yaoming-ueditor.iml" />
+    </modules>
+  </component>
+</project>

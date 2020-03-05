@@ -1,0 +1,206 @@
+.list-post {
+    padding: 0 1rem 1rem 1rem;
+}
+.item-li {
+    margin: 0.3rem 0;
+}
+.item-post {
+    display: block;
+    width: 90%;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 0.8125rem;
+    border: 1px solid #d7d7d7;
+    box-sizing: border-box;
+    padding: 0 4%;
+    margin: 0 auto;
+    border-radius: 3px;
+}
+.item-post-active {
+    border: 1px solid #CC9B4B;
+    box-sizing: border-box;
+    color: #CC9B4B;
+    border-radius: 3px;
+}
+
+.tax-btn {
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+.div-10 {
+    width: 100%;
+    height: 0.5rem;
+}
+
+.order-sub .choose-list .choose .big-btn {
+    border: 1px solid #d7d7d7;
+    display: block;
+    margin: 0.5rem auto;
+    padding-left: 0.5rem;
+    text-align: left;
+}
+
+.taxtit-view {
+    margin: 0;
+    padding: 0;
+}
+
+.taxtit-view p {
+    padding: 0.5rem 0 !important;
+    border-top: 1px solid #d7d7d7;
+}
+
+.order-msg3 {
+    padding-bottom: 0;
+}
+.order-sub .msg3 p span input {
+    border: none;
+    text-align: right;
+    font-size: 0.875rem;
+}
+.zengpin {
+    font-size: 0.75rem;
+    color: #f05353;
+    border-radius: 3px;
+    padding: 0 0.2rem;
+    border: 1px solid #f05353;
+}
+.sales{
+    background: #ffffff;
+    font-size: 0.875rem;
+    padding: 0.5rem 0.5rem;
+    border-bottom: 0.6125rem solid #F2F2F2;
+    text-align: left;
+    text-indent: 0.5rem;
+}
+.sales span{
+    display:inline-block;
+    float: right;
+}
+.sales span a{
+    color:#F05353;
+}
+.messageList {
+    background: #ffffff;
+    font-size: 0.875rem;
+    padding: 0.5rem 0.5rem;
+    border-bottom: 1px solid #dbdbdb;
+    color: black;
+    margin: 0 0.5rem;
+}
+#saleswindow{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
+}
+#saleswindow .saleswindow-box{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #ffffff;
+    width: 100%;
+    height: 70vh;
+    overflow: scroll;
+    padding-bottom: 5rem;
+    box-sizing: border-box;
+}
+#saleswindow .saleswindow-box .saleswindow-box-title{
+    color: #000000;
+    background: #fff;
+    text-align: center;
+    padding: 0.8125rem 0;
+}
+#saleswindow .saleswindow-box .saleswindow-box-activity{
+    background: #fff;
+    margin: -0.5rem 0.5rem 0 0.5rem;
+}
+#saleswindow .saleswindow-box .saleswindow-box-activity .box-activity-li{
+    display: table;
+    width: 100%;
+    background: #fff;
+    font-size: 0.875rem;
+    border-bottom: 1px solid #D7D7D7;
+}
+#saleswindow .saleswindow-box .saleswindow-box-activity .box-activity-li-top{
+    margin: 0.5rem 0;
+}
+#saleswindow .saleswindow-box .saleswindow-box-activity .box-activity-li .label{
+    color: #fff;
+    border-radius: 3px;
+    font-size: 0.7125rem;
+    padding: 0 0.4rem;
+    margin-right: 0.2rem;
+    background: #e32a32;
+}
+#saleswindow .saleswindow-box .saleswindow-box-activity .box-activity-li .illustrate{
+    color: #000000;
+    font-size: 0.7125rem;
+}
+#saleswindow .saleswindow-box #saleswindow-box-btn{
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 999;
+}
+#saleswindow .saleswindow-box #saleswindow-box-btn span{
+    display: block;
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 0.875rem;
+    background: #CC9B4B;
+    color: #ffffff;
+    border-color: #CC9B4B;
+}
+.rule-intro {
+    margin: 0.5rem 0 0 5.5rem;
+    color: #000;
+    font-size: 0.875rem;
+}
+.goods-content{
+    display: flex;
+    width:100%;
+    height:auto;
+    padding-top: 0.5rem;
+    padding-bottom:0.5rem;
+}
+.goods-content img{
+    display: flex;
+    justify-content: flex-start;
+    width:2.5rem;
+    height:2.5rem;
+    border-radius: 4px;
+    /*margin-left: 0.5rem;*/
+}
+.goods-content .goods-content-right{
+    flex-grow: 7;
+    flex-basis:70%;
+    justify-content: flex-start;
+    padding-bottom: 0.8rem;
+}
+.goods-content .goods-content-right .goods-content-name{
+    font-size: 0.7125rem;
+    color:#333;
+    text-indent: 1.5rem;
+    min-height: 1.5rem;
+    display: inline-block;
+}
+.goods-content .goods-content-right .goods-content-num{
+    font-size: 0.7125rem;
+    color:#666;
+    text-indent: 1.5rem;
+}
+.right-arrow2{
+    width: 2rem;
+    float: right;
+    display: flex;
+    justify-content: flex-end;
+}
+.good-border{
+    border-bottom:1px solid #D7D7D7;
+}

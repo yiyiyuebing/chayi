@@ -1,0 +1,13 @@
+package pub.makers.shop.tradegoods.service;
+
+import pub.makers.shop.base.vo.Paging;
+import pub.makers.shop.base.vo.ResultList;
+
+import java.util.Map;
+
+/**
+ * Created by daiwenfa on 2017/5/23.
+ */
+public interface NewGoodsMgrBizService {
+    ResultList<Map<String,Object>> newTradeGoodsPage(Map<String, Object> map, Paging pg);
+}

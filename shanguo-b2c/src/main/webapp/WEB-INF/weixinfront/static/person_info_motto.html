@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>个性签名</title>
+</head>
+<body id="editInfo" class="bg-main motto">
+        <div id="sign" style="display: none" class="sign clearfix">
+        <textarea  v-model="motto" rows="10" maxlength="20" placeholder="请输入个性签名" onkeydown="countChar();" onkeyup="countChar();"></textarea>
+            <span class="fr" id="counter">20/20</span>
+        </div>
+        <input style="display: none" id="tel" v-model="telNum" type="text" placeholder="请输入您的手机号码" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')">
+    <div v-on:click="submit()" class="big-btn btn-active">保存</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    $(function () {
+        info.editInfo();
+        //                微信分享
+        Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+    })
+
+    var type=Util.common.getParameter("editType");
+
+    var info=new Vue({
+        el:'#editInfo',
+        data:{
+            userInfo:{},
+            telNum:'',
+
+            motto:''
+        },
+        computed:{
+
+        },
+        methods:{
+            editInfo:function () {
+                if(type=='motto'){
+                    $("#sign").css("display",'block');
+                }
+                if(type=='tel'){
+                    $("#tel").css("display",'block');
+                }
+
+            },
+            submit:function () {
+                if(type=='motto'){
+                    sessionStorage.setItem('motto',info.motto);
+                    history.back();
+                }
+                if(type=='tel'){
+                    if(info.telNum=='' || info.telNum.length<11){
+                        new Toast({context:$('body'),message:"手机号码格式错误"}).show();
+                    }else {
+                        sessionStorage.setItem('telNum',info.telNum);
+                        history.back();
+                    }
+
+                }
+
+            }
+        }
+    });
+    
+    function countChar() {
+        var num=20-$('textarea').val().length;
+        $("#counter").html(num+'/20');
+    }
+
+</script>
+</html>

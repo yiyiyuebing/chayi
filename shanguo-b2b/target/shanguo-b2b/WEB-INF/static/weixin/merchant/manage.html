@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>批量管理</title>
+</head>
+<body class="bg-main cart-con">
+<div id="manage">
+    <div style="display: none" id="hasGoods">
+        <ul class="mycart mar0">
+            <template v-for="list in goodsList">
+                <li class="dis-tabel">
+                    <div class="dis-cell part1"><input type="checkbox" class="check" v-on:click="checksingle(list.id)" id="check{{list.id}}"><label class="left0" for="check{{list.id}}"></label></div>
+                    <div class="dis-cell part2"><img :src="list.showPicture" alt=""></div>
+                    <div class="dis-cell part3">
+                        <div class="dis-tabel part3-1">
+                            <div class="dis-cell">
+                                <h4>{{list.goodName}}</h4>
+                                <p ><i>销量{{list.saleNum}}</i><i>库存{{list.stock}}</i><i>收藏{{list.storeNum}}</i></p>
+                            </div>
+                        </div>
+                        <div class="dis-tabel part3-2">
+                            <div class="dis-cell">
+                                <i class="color-main fs-16">¥{{list.salePrice}}</i>
+                            </div>
+                            <div class="dis-cell part3-01">{{list.createTime}}</div>
+                        </div>
+                    </div>
+                </li>
+            </template>
+
+        </ul>
+        <div class="br4"></div>
+
+        <div id="checkAll" class="w100 dis-tabel part1 checkall" >
+                <div class="dis-cell ta-c w20"><input type="checkbox" v-on:click="checkall()" id="allGoods"><label for="allGoods"></label>全选</div>
+                <div class="dis-cell fs-10 color-grey">已选择{{allNum}}件商品</div>
+                <div v-on:click="toUp()" id="UpDown" class="dis-cell ta-c w20  va-m"></div>
+            </div>
+        </div>
+    </div>
+    <div style="display:none;height: 100%;padding-top: 20%;background: #FFFFFF" id="emptyTip" >
+        <div class="empty-icon"><img src="img/icons/no1.png" alt=""></div>
+        <p class="fs-14 ta-c">暂无<i id="UpDown2"></i>商品!</p>
+    </div>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+//    console.log(document.referrer);
+    Util.common.addloadingAnimate();
+
+    $(function () {
+        manageData.loadlist(0);
+
+        $(window).scroll(function() {
+//            if ($(window).scrollTop() > 0) {
+//                $(".cart").fadeIn(800);
+//            } else {
+//                $(".cart").fadeOut(800);
+//            }
+
+            if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                manageData.loadlist();
+                if(manageData.checkalldata==true){
+                    $("#allGoods").attr("checked", "checked");
+                }
+            }
+        });
+
+    });
+    var counter=1;
+    var pagesize=6;
+
+    var manageData=new Vue({
+        el:'#manage',
+        data:{
+            sortType:0,
+            goodsList:[],
+            allNum:0,
+            checkalldata:false,
+            checkallsign:''
+
+        },
+        computed:{
+
+        },
+        methods:{
+//          加载需批量管理的数据
+            loadlist:function () {
+                var type= Util.common.getParameter("sortType");
+                this.sortType=type;
+                var url ="mobile/good/getGoodList.do?brandId=&classifyId=&goodName=&pageSize="+pagesize+"&shopId="+ localStorage.getItem("shopId")+"&sortType="+type;
+                var param={"pageNum":counter,};
+                Util.common.executeAjaxCallback(url,param,function (data) {
+                    counter=counter+1;
+                    if (data==null || data.length==0){
+                        console.log(manageData.goodsList.length);
+                        if( manageData.goodsList.length==0){
+                            $("#emptyTip").css('display','block');
+                            $("#hasGoods").css("display",'none');
+                        }
+                    }else {
+                        for (x in data){
+                            if(data[x].createTime != null && data[x].createTime != undefined){
+                                data[x].createTime=data[x].createTime.substr(0,10);
+                            }
+                            manageData.goodsList.push(data[x]);
+                            $("#hasGoods").css("display",'block');
+                            $("#emptyTip").css("display",'none');
+
+                            if(manageData.checkalldata==true){
+
+                                setTimeout(function () {
+                                        $(".check").attr("checked", "checked");
+                                },100);
+                            }
+                        }
+                    }
+                    Util.common.removeloadingAnimate('manage');
+
+                });
+
+                if(type==0){
+                    $("#UpDown").html("下架");
+                    $("#UpDown2").html("出售中");
+                    $("#UpDown").addClass("xiajia-manage");
+                }else {
+                    $("#UpDown").html("上架");
+                    $("#UpDown2").html("已下架");
+                    $("#UpDown").addClass("shangjia-manage");
+                }
+
+                $("#allGoods").attr("checked",false);
+
+            },
+            checkall:function() {
+                if ($("#allGoods").attr("checked")=="checked") {
+                    $(".check").attr("checked", "checked");
+                    manageData.$set('checkalldata',true);
+                    this.allNum='全部';
+                    manageData.$set('checkallsign','&all=1');
+
+                }else {
+                    $(".check").attr("checked", false);
+                    this.allNum=0;
+                    manageData.$set('checkalldata',false);
+                    manageData.$set('checkallsign','');
+                }
+            },
+            checksingle:function (id) {
+
+                var num=$(".check:checked").length;
+                this.allNum=num;
+
+                if(num<this.goodsList.length){
+                    $("#allGoods").attr("checked",false);
+                }else {
+                    $("#allGoods").attr("checked","checked");
+                }
+            },
+            toUp:function () {
+                if(manageData.checkalldata==true){
+                    var str = '';
+                }else {
+                    var count = 0;
+                    var str = '';
+                    for (x in this.goodsList) {
+                        if ($("#check" + this.goodsList[x].id).attr("checked") == "checked") {
+                            count += 1;
+                            str += this.goodsList[x].id + ',';
+                        }
+                    }
+                }
+                if (count == 0) {
+                    new Toast({context:$('body'),message:"请选择商品"}).show();
+                    return;
+                }
+
+                if (this.sortType==0){
+//                    商品下架
+                    var url='mobile/good/setGoodOutShelve.do?goodIds='+str+'&shopId='+localStorage.getItem("shopId")+manageData.checkallsign;
+                    Util.common.executeAjaxCallback(url,{},function (data) {
+                        console.log(data.msg);
+                        param={func:function () {
+                            manageData.$set('goodsList',[]);
+                            counter=1;
+                            manageData.loadlist();
+                        }};
+                        if(data.code==0) {
+                            new ToastImg({context: $('body'), message: "<img src='img/icons/down1.png'>"}).show(param);
+                        }
+                    });
+                }else {
+//                    商品上架
+                    var url='mobile/good/setGoodShelve.do?goodIds='+str+'&shopId='+localStorage.getItem("shopId")+manageData.checkallsign;
+                    Util.common.executeAjaxCallback(url,{},function (data) {
+                        console.log(data.msg);
+                        param={func:function () {
+                            manageData.$set('goodsList',[]);
+                            counter=1;
+                            manageData.loadlist();
+                        }};
+                        if(data.code==0){
+                            new ToastImg({context:$('body'),message:"<img src='img/icons/up1.png'>"}).show(param);
+                        }
+                    });
+                }
+
+            }
+        }
+    });
+
+    window.canGoBack=function () {
+        history.back(-1);
+    }
+</script>
+</html>

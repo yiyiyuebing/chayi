@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--清除浏览器缓存-->
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <!--设备 IE  最高版本-->
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <!--定义 语言类型-->
+    <meta http-equiv="CONTENT-TYPE" content="text/html" charset="utf-8">
+    <!--设置视口宽度与设备宽度， 禁止用户缩放-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--X5内核 全屏显示-->
+    <meta name="x5-fullscreen" content="true">
+    <!--uc内核  全屏显示-->
+    <meta name="full-screen" content="yes">
+    <!--描述-->
+    <meta name="description" content="山国饮艺">
+    <!--关键字-->
+    <meta name="keywords" content="山国饮艺">
+    <title>个人中心</title>
+    <!--公共部分-->
+    <!--HTML标签样式重置-->
+    <link href="css/normalize.css" rel="stylesheet">
+    <!--移动端css重置-->
+    <link href="css/reset.css" rel="stylesheet">
+    <!--rem适配  设计图750*1334-->
+     <script src="js/viewport_rem.js"></script> 
+    <!--公共部分   ending-->
+    <!--单独样式-->
+    <link href="css/person_center_index.css" rel="stylesheet">
+    <link href="css/gg_common.css" rel="stylesheet">
+</head>
+
+<body id="personIndex">
+    <header>
+        <img src="img/g_person_center_index_bg.png" class="header-bg">
+        <div class="header-content">
+            <a href="person_center_setting.html" class="icon-set"></a>
+            <div class="content-name pull-left clearfix">
+                <div class="img-box pull-left">
+                    <img :src="headImgUrl || './img/icons/tea.png'">
+                </div>
+                <div class="name pull-left">{{shopName}}</div>
+            </div>
+            <a href="shopInfo_manage.html" class="content-manage pull-right">账户管理<i class="icon-right"></i></a>
+        </div>
+    </header>
+
+    <section class="order-all">
+        <a href="myorder.html" class="order-link clearfix">
+            <i class="icon-order"></i>全部订单
+            <i class="icon-right"></i>
+        </a>
+    </section>
+
+    <nav class="clearfix">
+        <a href="myorder.html?status=pay" class="group pull-left waiting-pay">
+            <i>
+                <template v-if="payCount <= 99 && payCount > 0">
+                    <sup>{{payCount}}</sup>
+                </template>
+                <template v-if="payCount > 100">
+                    <sup>99+</sup>
+                </template>
+            </i>
+            <span>待付款</span>
+        </a>
+        <a href="myorder.html?status=ship" class="group pull-left waiting-send">
+            <i>
+                <template v-if="shipCount <= 99 && shipCount > 0">
+                    <sup>{{shipCount}}</sup>
+                </template>
+                <template v-if="shipCount > 100">
+                    <sup>99+</sup>
+                </template>
+            </i>
+            <span>待发货</span>
+        </a>
+        <a href="myorder.html?status=receive" class="group pull-left waiting-receipt">
+            <i>
+                <template v-if="receiveCount <= 99 && receiveCount > 0">
+                    <sup>{{receiveCount}}</sup>
+                </template>
+                <template v-if="receiveCount > 100">
+                    <sup>99+</sup>
+                </template>
+            </i>
+            <span>待收货</span>
+        </a>
+        <a href="myorder.html?status=evaluate" class="group pull-left waiting-recommend">
+            <i>
+                <template v-if="evaluateCount <= 99 && evaluateCount > 0">
+                    <sup>{{evaluateCount}}</sup>
+                </template>
+                <template v-if="evaluateCount > 100">
+                    <sup>99+</sup>
+                </template>
+            </i>
+            <span>待评价</span>
+        </a>
+        <a href="aftersale_order.html" class="group pull-left after-sale">
+            <i>
+                <template v-if="afterSaleCount <= 99 && afterSaleCount > 0">
+                    <!--<sup>{{afterSaleCount}}</sup>-->
+                </template>
+                <template v-if="afterSaleCount > 100">
+                    <sup>99+</sup>
+                </template>
+            </i>
+            <span>退款/售后</span>
+        </a>
+    </nav>
+
+    <section class="link">
+        <div class="big-group">
+            <a href="wallet.html" class="group my-wallet">
+                <i class="left-icon"></i>我的钱包
+                <i class="icon-right"></i>
+            </a>
+            <a href="person_center_mycollect.html" class="group my-collect">
+                <i class="left-icon"></i>我的收藏
+                <i class="icon-right"></i>
+            </a>
+            <a href="person_center_mytrack.html" class="group my-track">
+                <i class="left-icon"></i>我的足迹
+                <i class="icon-right"></i>
+            </a>
+        </div>
+        <div class="big-group">
+            <a class="group message-center" v-on:click="kefu()">
+                <i class="left-icon"></i>消息中心
+                <i class="icon-right"></i>
+            </a>
+            <a href="notice.html" class="group shop-message">
+                <i class="left-icon"></i>店铺公告
+                <sup class="gg-num" v-if="ggNum > 0">{{ggNum}}</sup>
+                <i class="icon-right"></i>
+            </a>
+            <a href="person_address.html?type=person" class="group address">
+                <i class="left-icon"></i>收货地址
+                <i class="icon-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <footer class="footer-nav clearfix">
+        <a href="index.html" class="index pull-left">
+            <i></i>
+            <span>首页</span>
+        </a>
+        <a href="sorts.html" class="category pull-left">
+            <i></i>
+            <span>分类</span>
+        </a>
+        <a href="cart.html" class="shopping-cart pull-left">
+            <i>
+                <sup v-if="cartCount">{{cartCount}}</sup></sup>
+            </i>
+            <span>购物车</span>
+        </a>
+        <a href="javascript:;" class="person-center active pull-left">
+            <i></i>
+            <span>个人中心</span>
+        </a>
+    </footer>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    Util.common.addloadingAnimate();
+    $(function () {
+        personIndex.getOrderCount();
+        personIndex.getAfterSaleCount();
+        personIndex.getShopInfo();
+        personIndex.getCartCount();
+        personIndex.getOrderNum();
+        personIndex.loadKefu();
+        personIndex.ggUnReader();
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+    });
+    var personIndex = new Vue({
+        el: '#personIndex',
+        data: {
+            cartCount: '',
+            shopName:'',
+            headImgUrl: '',
+            allCount:0,//订单总数
+            doneCount:0,//已完成订单
+            evaluateCount:0, //待评价
+            payCount:0, //待付款
+            receiveCount:0, //待收货
+            shipCount:0,  //待发货
+            afterSaleCount:0,
+            ggNum: 0,
+        },
+        computed: {},
+        methods: {
+            /*获取售后订单的数量*/
+            getAfterSaleCount:function(){
+                var url = 'weixin/afterSale/getOrderNum';
+                var params = null;
+                Util.common.b2bPostCallback(url,params,function(result){
+                    if(result.success){
+                        personIndex.afterSaleCount = result.counts;
+                    }else {
+                        new Toast({context:$('body'),message: result.msg }).show();
+                    }
+                });
+            },
+            /*获取订单数量*/
+            getOrderCount:function(){
+                var url = 'weixin/order/orderCount';
+                var params = null;
+                Util.common.b2bPostCallback(url,params,function(result){
+                    if(result.success){
+                        personIndex.allCount = parseInt( result.data.allCount );
+                        personIndex.doneCount = parseInt( result.data.doneCount );
+                        personIndex.evaluateCount = parseInt( result.data.evaluateCount );
+                        personIndex.payCount = parseInt( result.data.payCount );
+                        personIndex.receiveCount = parseInt( result.data.receiveCount );
+                        personIndex.shipCount = parseInt( result.data.shipCount );
+                    }else{
+                        new Toast({context:$('body'),message: result.msg }).show();
+                    }
+                });
+            },
+            /*获取店铺名称*/
+            getShopInfo:function(){
+                var url = "weixin/user/userInfo";
+                var params = null;
+                Util.common.b2bPostCallback(url,params,function(result){
+                    if(result.success){
+                        Util.common.removeloadingAnimate();
+                        personIndex.shopName = result.data.name;
+                        personIndex.headImgUrl = result.data.headImgUrl;
+                    }else{
+                        new Toast({context:$('body'),message: result.msg }).show();
+                    }
+                });
+            },
+            getOrderNum: function() {
+                var url = 'weixin/order/orderCount';
+                Util.common.b2bPostCallback(url, {}, function(data) {
+                    if (data.success && data.data) {
+
+                    }
+                });
+            },
+            getCartCount: function () {
+                //            获取购物车内商品数
+                var url = "weixin/cart/getCartCount";
+                Util.common.b2bPostCallback(url, {}, function (data) {
+                    if (data.success && data.data && data.data.num) {
+                        var count = data.data.num;
+                        if (count * 1 > 100) {
+                            count = '99+';
+                        }
+                        personIndex.$set('cartCount', count);
+                    } else {}
+                });
+            },
+            loadKefu:function() {
+                var userInfo = JSON.parse(localStorage.getItem('user'));
+                ysf.on({
+                    'onload': function(){
+                        ysf.config({
+                            uid: userInfo.id,
+                            "data":JSON.stringify([
+                                {"key":"real_name", "value": userInfo.name},
+                                {"key":"mobile_phone","value": userInfo.mobile},
+                                {"key":"avatar", "value": userInfo.headImgUrl},
+                                {"key":"departmentNum","label":"部门编码","value": userInfo.departmentNum},
+                                {"key":"storeId","label":"店铺编码","value": userInfo.storeId},
+                            ])
+                        })
+                    },
+                });
+            },
+            kefu:function() {
+                location.href = ysf.url();
+            },
+            //公告未读条数
+            ggUnReader: function() {
+                var url = 'weixin/markting/countUnreaded';
+                Util.common.b2bPostCallback(url, {"target": "bizapp","classifys": "tw,wz,sp"}, function (data) {
+                    if (data.success) {
+                        personIndex.$set('ggNum', data.data.countUnreaded);
+                    } else {}
+                });
+            }
+        }
+    });
+</script>
+<script src="https://qiyukf.com/script/1a8fad464c1c676e72fd62c3d82937c0.js" charset="UTF-8"></script>
+</html>

@@ -1,0 +1,58 @@
+.person-wrap {background-color: #f5f5f5;}
+.person-wrap * {font-size: 12px; box-sizing: border-box;}
+.order-state {padding-bottom: 100px;}
+.order-state .state-cont {position: relative; min-height: 290px; margin-top: 40px; padding-left: 320px; background-color: #fff; border: 1px solid #f0f0f0; overflow: hidden;}
+.order-state .state-cont .state-lcol {position: absolute; top: 0; left: 0; width: 320px; height: 100%; padding: 20px; text-align: center; border-right: 1px solid #f0f0f0; overflow: hidden;}
+.order-state .state-top {margin-bottom: 30px; color: #666;}
+.order-state .state-txt {font-size: 24px;}
+.order-state .remain-time {display: block; margin-top: 10px; color: #999;}
+.order-state .remain-time .time-icon {padding-left: 20px; background: url("../images/order-time.png") no-repeat left;}
+.order-state .state-btns {margin: 30px 0 20px 0;}
+.order-state .state-btns a {display: block; width: 100px; margin: 10px auto 0; font-size: 14px; line-height: 30px; border-radius: 4px;}
+.order-state .state-btns a.pay {background-color: #fff; border: 1px solid #e32a32;}
+.order-state .state-btns a.pay:hover {color: #fff; background-color: #e32a32; border: 1px solid #fff;}
+.order-state .state-btns a.cancel {color: #666; background-color: #f5f5f5; border: 1px solid #dbdbdb;}
+.order-state .state-btns a.cancel:hover {color: #fff; background-color: #e32a32; border: 1px solid #e32a32;}
+.order-state .state-rcol {width: 860px; padding: 20px 0 38px 20px;}
+.order-state .state-rtop {height: 70px; overflow: hidden;}
+.order-state .order-process {margin-top: 40px; margin-bottom: 20px;}
+.order-process .node {position: relative; float: left; width: 170px; padding-top: 50px; text-align: center;}
+.order-process .node.ready {margin-left: -30px;}
+.order-process .node.finish {margin-right: -40px;}
+.order-process .node .node-icon {position:absolute; top: 0; left: 0; width: 100%; height: 40px; background-repeat: no-repeat; background-position: top;}
+.order-process .node .node-icon.icon-start {background-image: url("../images/order-start.png");}
+.order-process .node .node-icon.icon-pay {background-image: url("../images/order-pay.png");}
+.order-process .node .node-icon.icon-store {background-image: url("../images/order-store.png");}
+.order-process .node .node-icon.icon-express {background-image: url("../images/order-express.png");}
+.order-process .node .node-icon.icon-finish {background-image: url("../images/order-finsh.png");}
+.order-state .state-cont.track-cont {min-height: 140px; margin-top: 30px;}
+.track-lcol .p-img {float: left; width: 100px; height: 100px;}
+.track-lcol .p-img img {width: 100%; height: 100%;}
+.track-lcol .p-info {width: 150px; margin-left: 15px; text-align: left;}
+.track-list .afterdate {position: relative; padding-left: 15px; line-height: 30px;}
+.track-list .afterdate .dot-icon {position: absolute; top: 13px; left: 0; width: 5px; height: 5px; background-color: #cc9b4b; border-radius: 50%;}
+.order-info {margin-top: 20px; padding: 10px 0; background-color: #fff; border: 1px solid #f0f0f0; overflow: hidden;}
+.order-info .ui-switchable-body .dl {float: left; height: 180px; padding: 0 10px 0 20px; border-left: 1px solid #dbdbdb; overflow: hidden;}
+.order-info .ui-switchable-body .dl:first-child {border-left: none;}
+.order-info .ui-switchable-body .dt {margin-bottom: 5px; font-size: 14px;}
+.order-info .item {color: #666; font-weight: bold; line-height: 24px;}
+.order-info .label {float: left; width: 84px;}
+.order-info .info-rcol {float: left; width: 178px; max-height: 72px; overflow: hidden;}
+.order-goods {margin-top: 20px; background-color: #fff; border: 1px solid #f0f0f0;}
+.order-goods .goods-list .tb-order {width: 100%;}
+.order-goods .goods-list .tb-order thead {text-align: center; background-color: #fafafa; border-bottom: 1px solid #f0f0f0; line-height: 40px;}
+.goods-list tbody tr {border-bottom: 1px solid #f0f0f0;}
+.goods-list tbody td {padding: 17px 0 20px; text-align: center; vertical-align: top;}
+.goods-list .grap {width: 20px; padding: 0;}
+.goods-list .good-w {width: 400px;}
+.goods-list .option-w {width: 200px;}
+.goods-list .p-img {float: left; width: 60px; height: 60px;}
+.goods-list .p-img img {width: 100%; height: 100%;}
+.goods-list .p-info {float: left; width: 280px; height: 60px; margin-left: 15px; text-align: left; overflow: hidden;}
+.goods-list .p-info .p-name {font-size: 14px; line-height: 20px;}
+.goods-total {padding: 20px;}
+.goods-total ul {float: right;}
+.goods-total li {line-height: 28px;}
+.goods-total .label {float: left; width: 200px; color: #666; font-weight: bold; text-align: right;}
+.goods-total .txt {float: left; width: 130px; color: #666; text-align: right;}
+.goods-total .count {color: #f05353; font-size: 18px; font-weight: bold;}

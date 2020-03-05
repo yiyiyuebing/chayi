@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>pub.makers.shop</groupId>
+	<artifactId>user-service</artifactId>
+	<version>2.1.6</version>
+	<packaging>pom</packaging>
+
+	<name>user-service</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>DevSnapshots</id>
+			<url>http://112.74.79.135:6683/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+
+		<repository>
+			<id>DevReleases</id>
+			<url>http://112.74.79.135:6683/nexus/content/repositories/releases</url>
+		</repository>
+	</distributionManagement>
+	<repositories>
+		<repository>
+			<id>PublicRepositories</id>
+			<name>PublicRepositories</name>
+			<url>http://112.74.79.135:6683/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<!-- 更新发生的频率always 或者 never 或者 daily（默认的）或者 interval:X（X是分钟数） -->
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<modules>
+		<module>user-service-base</module>
+		<module>user-service-biz</module>
+	</modules>
+</project>

@@ -1,0 +1,12 @@
+package pub.makers.shop.bill.service;
+
+import pub.makers.shop.bill.vo.Actor;
+import pub.makers.shop.bill.vo.BillItemVo;
+
+public interface BillHandler {
+
+	/**
+	 * 记录账务
+	 */
+	void recordBill(Actor actor, BillItemVo billItem);
+}

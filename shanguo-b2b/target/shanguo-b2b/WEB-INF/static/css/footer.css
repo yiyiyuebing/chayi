@@ -1,0 +1,166 @@
+.footer-banner{
+    background: #0ec416;
+}
+.footer-banner img{
+    width: 1200px;
+    margin: 0 auto;
+}
+.footer-list-wrap{
+    background: #eaeaea;
+}
+.footer-list-wrap .footer-list{
+    width: 1200px;
+    margin: 0 auto;
+    padding-top: 27px;
+}
+.footer-list-wrap .footer-list dl{
+    margin: 0;
+    width: 160px;
+    padding-left: 10px;
+}
+.footer-list-wrap .footer-list dl dt{
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    line-height: 44px;
+    text-align: left;
+}
+.footer-list-wrap .footer-list dl dd a{
+    font-size: 12px;
+    color: #333;
+    line-height: 22px;
+    text-align: left;
+}
+.footer-list-wrap .footer-list dl dd a:hover{
+    color: #cc9b4b;
+}
+.footer-list-wrap .footer-list .footer-code{
+    width: 134px;
+    margin-right: 38px;
+    margin-top: 20px;
+}
+.footer-list-wrap .footer-list .footer-code .footer-code-wrap{
+    background: #fff;
+    width: 134px;
+    height: 129px;
+    border-radius: 6px;
+    padding-top: 5px;
+}
+.footer-list-wrap .footer-list .footer-code .footer-code-wrap img{
+    width: 124px;
+    height: 124px;
+    margin: 0 auto;
+}
+.footer-list-wrap .footer-list .footer-code p{
+    font-size: 14px;
+    line-height: 32px;
+    text-align: center;
+    color: #666;
+    margin-bottom: 10px;
+}
+.footer-link-wrap{
+    width: 100%;
+    background: #eaeaea;
+    border-top:1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
+}
+.footer-link-wrap .footer-link{
+    width: 1200px;
+    margin: 0 auto;
+}
+.footer-link-wrap .footer-link span{
+    font-size: 14px;
+    line-height: 46px;
+    font-weight: bold;
+    color: #333;
+}
+.link-vertical-line{
+    width: 2px;
+    height: 14px;
+    background: #7c7c7c;
+    display: inline-block;
+    vertical-align: middle;
+}
+.footer-link-wrap .footer-link a{
+    margin-left: 14px;
+    margin-right: 14px;
+    font-size: 12px;
+    line-height: 46px;
+    color: #666;
+}
+.footer-link-wrap .footer-link .more{
+    font-size: 14px;
+}
+.footer-link-wrap .footer-link a:hover{
+    color: #cc9b4b;
+}
+.footer-bottom{
+    background: #eaeaea;
+    padding-bottom: 30px;
+}
+.footer-bottom .footer-bottom-link{
+    width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+.footer-bottom .footer-bottom-link a{
+    margin-left: 14px;
+    margin-right: 14px;
+    font-size: 12px;
+    line-height: 46px;
+    color: #666;
+}
+.footer-bottom .footer-bottom-link a:hover{
+    color: #cc9b4b;
+}
+.footer-bottom p{
+    font-size: 12px;
+    line-height: 30px;
+    color: #999;
+    text-align: center;
+}
+.footer-bottom .footer-bottom-net{
+    width: 640px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+.footer-bottom .footer-bottom-net .footer-bottom-net-group{
+    width: 16.666%;
+}
+.footer-bottom .footer-bottom-net .footer-bottom-net-group i{
+    width: 32px;
+    height: 30px;
+    margin-right: 5px;
+}
+.footer-bottom .footer-bottom-net .footer-bottom-net-group .footer-icon-info{
+    background: url(../images/footer_icon_info.png) no-repeat center;
+    background-size: contain;
+}
+.footer-bottom .footer-bottom-net .footer-bottom-net-group .footer-icon-recommend{
+    background: url(../images/footer_icon_recommend.png) no-repeat center;
+    background-size: contain;
+}
+.footer-bottom .footer-bottom-net .footer-bottom-net-group .footer-icon-police{
+    background: url(../images/footer_icon_police.png) no-repeat center;
+    background-size: contain;
+}
+.footer-bottom .footer-bottom-net .footer-bottom-net-group .footer-icon-net{
+    background: url(../images/footer_icon_net.png) no-repeat center;
+    background-size: contain;
+}
+.footer-bottom .footer-bottom-net .footer-bottom-net-group .footer-icon-center{
+    background: url(../images/footer_icon_center.png) no-repeat center;
+    background-size: contain;
+}
+.footer-bottom .footer-bottom-net .footer-bottom-net-group .footer-icon-app{
+    background: url(../images/footer_icon_app.png) no-repeat center;
+    background-size: contain;
+}
+.footer-bottom .footer-bottom-net .footer-bottom-net-group span{
+    font-size: 12px;
+    line-height: 15px;
+    color: #666;
+    width: 60px;
+}
+
+

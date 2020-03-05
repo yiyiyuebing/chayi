@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yaoming.module.security.dao.SecurityGlobalResourcePatternExtendMapper" >
+
+	<select id="selectAll" resultMap="com.yaoming.module.security.dao.base.SecurityGlobalResourcePatternMapper.BaseResultMap">
+		select * from _security_global_resource_pattern order by id asc;
+	</select>
+	
+	<insert id="replace" parameterType="com.yaoming.module.security.dao.base.po.SecurityGlobalResourcePattern">
+	    replace into _security_global_resource_pattern (id, pattern, authority, note)
+	    values (#{id,jdbcType=BIGINT}, #{pattern,jdbcType=VARCHAR}, #{authority,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="updateByOldId">
+	    update _security_global_resource_pattern
+	    set pattern = #{pattern,jdbcType=VARCHAR},
+	      authority = #{authority,jdbcType=VARCHAR},
+	      note = #{note,jdbcType=VARCHAR},
+	      id = #{id,jdbcType=BIGINT}
+	    where id = #{oldId,jdbcType=BIGINT}
+	</update>
+</mapper>

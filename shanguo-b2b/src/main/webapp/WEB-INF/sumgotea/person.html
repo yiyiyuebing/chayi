@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>个人中心</title>
+</head>
+<body id="person" class="bg-main person">
+<div id="personCon" class="op0">
+    <div class="info-part1">
+        <div class="info-head">
+            <div class="info-img">
+                <img :src="userInfo.headimgurl" alt="" v-on:click="goto('person_info')">
+            </div>
+            <img class="img-edit" src="img/icons/edit.png" alt="">
+        </div>
+
+        <h2>{{userInfo.nickname}}</h2>
+    </div>
+    <ul class="lists mar0">
+        <!--<li onclick="jumpTo('wallet')" class="dis-tabel border-b1 bg-white w100">-->
+            <!--<div class="dis-cell lists-icon"><img src="img/icons/person1.png" alt=""></div>-->
+            <!--<p class="dis-cell">我的钱包</p>-->
+            <!--<div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>-->
+        <!--</li>-->
+        <li onclick="jumpTo('myorder')" class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell lists-icon"><img src="img/icons/person2.png" alt=""></div>
+            <p class="dis-cell">我的订单</p>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+        <li onclick="jumpTo('person_collect')" class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell lists-icon"><img src="img/icons/person3.png" alt=""></div>
+            <p class="dis-cell">我的收藏</p>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+        <li  v-on:click="gotoMessage()" class="dis-tabel border-b1 bg-white w100 mar-b1">
+            <div class="dis-cell lists-icon"><img src="img/icons/person4.png" alt=""></div>
+            <p class="dis-cell">消息中心 </p>
+            <!--<div class="right-arrow"><p class="dis-cell ta-r badge color-white">64</p></div>-->
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+        <!--<li class="dis-tabel bg-white w100 mar-b1">-->
+            <!--<div class="dis-cell lists-icon"><img src="img/icons/person5.png" alt=""></div>-->
+            <!--<p class="dis-cell">推荐有奖</p>-->
+            <!--<div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>-->
+        <!--</li>-->
+        <li onclick="javascript:window.location.href='person_address.html?type=person';" class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell lists-icon"><img src="img/icons/person6.png" alt=""></div>
+            <p class="dis-cell">地址管理</p>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+        <li  onclick="jumpTo('notice')" class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell lists-icon"><img src="img/icons/person8.png" alt=""></div>
+            <p class="dis-cell">店铺公告</p>
+            <div class="right-arrow" v-if="countUnreaded != 0"><p class="dis-cell ta-r badge" style="color: white;">{{countUnreaded}}</p></div>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+        <li onclick="jumpTo('person_setting')" class="dis-tabel bg-white w100">
+            <div class="dis-cell lists-icon"><img src="img/icons/person7.png" alt=""></div>
+            <p class="dis-cell">设置中心</p>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+        <li class="br4">
+
+        </li>
+    </ul>
+    <ul class="footer clearfix">
+        <li v-on:click="gotoIndex()" class="fl w25">
+            <div><img src="img/icons/footer1.png" alt=""></div>
+            <p >首页</p>
+        </li>
+        <li onclick="jumpTo('sorts')" class="fl w25">
+            <div><img src="img/icons/footer2.png" alt=""></div>
+            <p>分类</p>
+        </li>
+        <li onclick="jumpTo('cart')" class="fl w25">
+            <div class="footer-cart"><img src="img/icons/footer3.png" alt=""> <i v-if="cartCount != 0">{{cartCount}}</i></div>
+            <p>购物车</p>
+        </li>
+        <li class="fl w25">
+            <div><img src="img/icons/footer4a.png" alt=""></div>
+            <p class="color-main">个人中心</p>
+        </li>
+    </ul>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+ <!--客服-->
+    <script src="https://qiyukf.com/script/1a8fad464c1c676e72fd62c3d82937c0.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+        var userInfo = sessionStorage.getItem("userInfo");
+        var storeName = sessionStorage.getItem("shopName");
+        ysf.on({
+            'onload': function(){
+                ysf.config({
+                    uid: userInfo.id,
+                    "data":JSON.stringify([
+                        {"key":"real_name", "value":userInfo.nickname},
+                        {"key":"mobile_phone","value": userInfo.tel},
+                        {"key":"avatar", "value":userInfo.headimgurl},
+                        {"key":"storeName","label":"店铺名称","value":storeName}
+                    ])
+                });
+            }
+        });
+        ysf.on({
+            unread : function(msg){
+                if(msg.total){
+                    // 处理逻辑
+                }
+            }
+        });
+    </script>
+<script>
+    Util.common.addloadingAnimate();
+
+    $(function () {
+        personData.loadInfo();
+        personData.getCartCount();
+        personData.getNoticeNum();
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+        window.sessionStorage.removeItem('noticeStyle');
+    })
+
+//    初始化一个新的Vue实例
+    var personData=new Vue({
+        el:'#person',
+        data:{
+            userInfo:{},
+            cartCount:'',
+            countUnreaded: 0,
+        },
+        computed:{
+
+        },
+        methods:{
+            goto:function (name) {
+                window.location.href=name+".html";
+            },
+            gotoIndex:function () {
+                window.location.href="index.html?storeId="+sessionStorage.getItem('shopId')+"&userId="+sessionStorage.getItem('userid');
+            },
+            loadInfo:function () {
+                var url ="/weixin/weixinClient/loadMyInfo.do?id=" + sessionStorage.getItem("userid");
+                var param = {"userId": sessionStorage.getItem("userid")};
+                Util.common.executeAjaxCallback(url, param, function (data) {
+                    console.log(data.msg);
+
+                    if(data.success){
+                        Util.common.removeloadingAnimate('personCon');
+                        personData.$set("userInfo",data.msg);
+                        sessionStorage.setItem("userInfo",data.msg);
+                        sessionStorage.setItem("openid",personData.userInfo.openid);
+                    }
+                });
+            },
+//             获取公告未读条数
+            getNoticeNum: function() {
+                var url = "/weixin/toutiao/countUnreaded.do";
+                var param = {"userId": sessionStorage.getItem("userid"),"classifys": "tw,wz,sp"}
+                Util.common.executeAjaxCallback(url, param, function (data) {
+                    console.log(data);
+
+                    if(data.success){
+                        personData.$set("countUnreaded",data.data.countUnreaded);
+                    }
+                });
+
+            },
+            getCartCount: function () {
+//            获取购物车内商品数
+
+                var url ="/weixin/cart/getCartCount.do";
+                var param = {"userId": sessionStorage.getItem("userid"), "shopId": sessionStorage.getItem("shopId")};
+
+                Util.common.executeAjaxCallback(url, param, function (data) {
+                    console.log(data);
+                    if(data != '' && data != null && data !=0) {
+                        if (data*1 > 100) {
+                            data = '99+';
+                        }
+                        personData.$set('cartCount',data);
+                    } else {
+                        personData.$set('cartCount',0);
+                    }
+                });
+            },
+            gotoMessage: function() {
+            //客服
+                location.href = ysf.url();
+            }
+            
+        }
+    });
+
+</script>
+</html>

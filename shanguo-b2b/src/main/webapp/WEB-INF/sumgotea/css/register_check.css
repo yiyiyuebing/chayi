@@ -1,0 +1,47 @@
+body{
+    background: #fff;
+}
+.register-tips{
+    padding-top: 5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.register-tips .register-icon{
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    background: url("../img/gg_icon_register_check.png") no-repeat center;
+    background-size: contain;
+}
+.register-tips p{
+    text-align: center;
+    font-size: 0.6rem;
+    color: #333;
+    line-height: 0.64rem;
+    margin: 0;
+    padding: 0;
+}
+
+.register-txt{
+    width: 9.9rem;
+    margin: 0 auto;
+    font-size: 0.48rem;
+    color: #999;
+    text-align: center;
+}
+
+.go-back{
+    padding-top: 4rem;
+    text-align: center;
+}
+.go-back a{
+    width: 13.2rem;
+    height: 1.76rem;
+    background: #cc9b4b;
+    color: #fff;
+    text-align: center;
+    line-height: 1.76rem;
+    border-radius: 3px;
+    display: inline-block;
+    font-size:0.6rem;
+}

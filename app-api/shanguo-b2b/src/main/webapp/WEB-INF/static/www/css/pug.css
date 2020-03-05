@@ -1,0 +1,32 @@
+.right-cont-wrap {position: relative;}
+.right-cont-wrap .top-right-box {position: absolute; top: 0; right: 0; min-width: 150px; padding: 14px 10px;}
+.top-right-box .option-wrap .batch-btn {float: left; padding: 5px 10px; color: #333; font-size: 12px; background-color: #f0f0f0; line-height: 16px;}
+.top-right-box .option-wrap .check-box {line-height: 25px;}
+.top-right-box .option-wrap .check-box .option-btn {float: left; margin-left: 20px; padding-left: 20px; font-size: 12px; background-repeat: no-repeat; background-position: left;}
+.top-right-box .option-wrap .check-box .option-btn.cart {background-image: url("../images/cart_icon.png");}
+.top-right-box .option-wrap .check-box .option-btn.cart:hover {color: #f05353; background-image: url("../images/cart_icon_active.png");}
+.top-right-box .option-wrap .check-box .option-btn.del {margin-right: 40px; background-image: url("../images/collect_icon.png");}
+.top-right-box .option-wrap .check-box .option-btn.del:hover {color: #f05353; background-image: url("../images/collect_icon_hover.png");}
+.top-right-box .option-wrap .check-box, .top-right-box .option-wrap.check .nomal-box {display: none;}
+.top-right-box .option-wrap.check .check-box {display: block;}
+.pug-wrap {margin-top: -1px; padding-bottom: 50px; border-top: 1px solid #f0f0f0;}
+.pug-wrap .pug-item {margin-top: 10px;}
+.pug-wrap .pug-item:first-child {margin-top: 0;}
+.pug-wrap .pug-title {padding: 15px 10px;}
+.pug-wrap .pug-title .big-text {color: #666; font-size: 16px;}
+.pug-wrap .pug-title .small-text {margin-left: 15px; color: #999; font-size: 12px;}
+.pug-wrap .list-wrap {margin-top: -20px; margin-left: -20px;}
+.list-wrap .list-item {position: relative; float: left; width: 221px; margin-top: 20px; margin-left: 20px; padding-bottom: 10px; border: 1px solid #f0f0f0;}
+.list-wrap .list-item:hover {box-shadow: 0px 3px 10px rgba(0,0,0,.1);}
+.list-wrap .list-item .img-cover {width: 221px; height: 200px;}
+.list-wrap .list-item .img-cover img {width: 100%; height: 100%;}
+.list-wrap .list-item .p-name {display: block; padding: 0 10px; color: #333; font-size: 12px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; line-height: 25px;}
+.list-wrap .list-item .p-price {margin-top: 5px; text-align: center; line-height: 20px;}
+.list-wrap .item-check {display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.3); cursor: pointer;}
+.list-wrap .item-check .i-check {position: absolute; top: 0; right: 0; width: 36px; height: 36px; background: url("../images/collect_check.png") no-repeat center;}
+.list-wrap.check .item-check {display: block;}
+.list-wrap .list-item.active .item-check .i-check {background: url("../images/coolect_check_active.png") no-repeat center;}
+.list-wrap .list-item.active, .list-wrap.check .list-item:hover {border-color: #f05353;}
+.list-wrap.check .list-item:hover {box-shadow: none;}
+
+

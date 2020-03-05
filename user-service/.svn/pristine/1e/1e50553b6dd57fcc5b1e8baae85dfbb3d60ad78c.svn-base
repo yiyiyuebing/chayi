@@ -1,0 +1,78 @@
+package pub.makers.shop.bill.service;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.google.common.collect.Maps;
+import org.springframework.beans.factory.annotation.Autowired;
+import pub.makers.daotemplate.vo.Conds;
+import pub.makers.shop.base.util.IdGenerator;
+import pub.makers.shop.bill.entity.IndentBill;
+import pub.makers.shop.bill.vo.BillVo;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+
+/**
+ * 常规的分润算法实现
+ * 供应商拿走成本价
+ * 各级参与者按照比例或者固定金额依次拿走部分利润
+ * 卖家拿走剩余的部分
+ * @author apple
+ *
+ */
+@Service(version = "1.0.0")
+public class BillBizServiceImpl implements BillBizService{
+
+	@Autowired
+	private IndentBillService billService;
+	
+	/**
+	 * 按照原有逻辑简单实现的记账
+	 */
+	@Override
+	public void recordBill(BillVo billVo) {
+		
+		IndentBill bill = new IndentBill();
+		bill.setId(IdGenerator.getDefault().nextId());
+		bill.setIndentId(Long.valueOf(billVo.getOrderId()));
+		bill.setStatus(1);
+		bill.setCreateTime(new Date());
+		
+		billService.insert(bill);
+	}
+
+	@Override
+	public IndentBill getBill(String indentId) {
+		return billService.get(Conds.get().eq("indent_id", indentId));
+	}
+
+	@Override
+	public Map<String, IndentBill> getBill(List<String> indentIdList) {
+		List<IndentBill> indentBillList = billService.list(Conds.get().in("indent_id", indentIdList));
+		Map<String, IndentBill> indentBillMap = Maps.newHashMap();
+		for (IndentBill indentBill : indentBillList) {
+			indentBillMap.put(indentBill.getIndentId().toString(), indentBill);
+		}
+		return indentBillMap;
+	}
+
+//	private ActorService actorService;
+//	private BillHandler billHandler;
+//	
+//	@Override
+//	public void recordBill(BillVo billVo) {
+//		
+//		// 查找此交易的分润的参与者
+//		ActorGroup ag = actorService.findActor(billVo);
+//		// 交易的成本支付给供应商
+//		
+//		
+//		// 各级参与者依次拿走利润的各个部分	
+//		for (Actor actor : ag.getActors()){
+//			
+//		}
+//	}
+
+
+}

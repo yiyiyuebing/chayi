@@ -1,0 +1,12 @@
+package pub.makers.shop.purchaseGoods.service;
+
+import pub.makers.shop.purchaseGoods.entity.PurchaseGoods;
+
+/**
+ * Created by dy on 2017/4/14.
+ */
+public interface PurchaseGoodsBizService {
+
+    PurchaseGoods getPurGoods(PurchaseGoods goods);
+
+}

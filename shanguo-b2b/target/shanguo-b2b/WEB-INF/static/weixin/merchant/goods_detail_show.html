@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link href="//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/iSlider.min.css">
+
+    <title>商品详情</title>
+</head>
+<body id="goodsDetail" class="bg-main goods-detail isLoad" style="display: none;">
+    <div id="timer-out" class="goods-statu1" style="display: none;" >
+        <i class="title-show">距开始：</i>
+        <i class="day timer"></i>
+        <i class="timer">天</i>
+        <i class="hour timer"></i>
+        <i class="timer">时</i>
+        <i class="min timer"></i>
+        <i class="timer">分</i>
+        <i class="sec timer"></i>
+        <i class="timer">秒</i>
+    </div>
+    <div class="goods-img">
+        <div id="slider-content">
+
+        </div>
+    </div>
+    <div class="dis-tabel w100 goods-tit">
+        <div class="dis-cell w80">
+            <h4>{{detail.name}}</h4>
+        </div>
+
+        <!--<div id="share" class="dis-cell g-tit-icon">
+            <i  class="share"></i>
+            <p>分享</p>
+        </div>-->
+        <div v-if="isSubAccount == 'F'" v-on:click="toUp()" class="dis-cell g-tit-icon">
+            <template v-if="state==0">
+             <i class="xiajia1"></i>
+             <p>下架</p>
+         </template>
+         <template v-else>
+             <i class="shangjia1"></i>
+             <p>上架</p>
+         </template>
+        </div>
+    </div>
+    <h5 class="goodPrice">
+        <em class="color-red">¥{{detail.salePrice}}</em>
+        <i>¥{{detail.marketPrice}}</i>
+        <i class="tex-d" v-if="isSubAccount == 'F'">供货价：¥{{detail.supplyPrice}}</i>
+        <!--<span class="activity1">团购特卖</span>-->
+        <!--<span class="activity2">包邮</span>-->
+    </h5>
+
+    <div  class="goods-tit2 clearfix">
+        <i class=" fl ta-c">
+            月销量&nbsp;{{detail.saleAllNum}}
+        </i>
+        <i class=" fl ta-c">
+            库存&nbsp;{{detail.kucun}}
+        </i>
+    </div>
+    <div v-on:click="screen(0)" class="goods-choose">
+        <div class="dis-cell">查看规格</div>
+        <div class="right-arrow"><i class="iconfont">&#xe65e;</i></div>
+    </div>
+    <div v-on:click="jumpto('evaluation')" class="goods-choose">
+        <div class="dis-cell">买家评价</div>
+        <div class="right-arrow"><i class="iconfont">&#xe65e;</i></div>
+    </div>
+    <div class="mar-t1 border-b1 bg-white p10 ta-c fs-14 ">
+        <span class="tit-line" ></span>图文详情
+         <span class="tit-line" ></span>
+    </div>
+    <div class="mar-b2" >
+        <ul>
+            <template v-for="img in imgList">
+                <li><img :src="img.url" alt=""></li>
+            </template>
+        </ul>
+    </div>
+
+    <div class="br4"></div>
+
+     <div  class="up-down1" >
+        <div v-on:click="jumpToMess()" class="dis-cell w20">
+            <i class="csad_orange"></i><br/><i>客服</i>
+        </div>
+        <div v-on:click="gotoIndex()" class="dis-cell w20">
+            <i class="service-home1"></i><br/><i>商城首页</i>
+        </div>
+        <div id="share" class="dis-cell btn-active"><i class="share1 "></i>分享到微信</div>
+     </div>
+
+     <!--<div  v-on:click="toUp()" class="up-down dis-tabel w100" >-->
+         <!--<template v-if="state==0">-->
+             <!--<i class="xiajia dis-cell va-m w50 "></i>-->
+             <!--<p class="dis-cell va-m w50 ta-l">下架</p>-->
+         <!--</template>-->
+         <!--<template v-else>-->
+             <!--<i class="shangjia dis-cell va-m w50 "></i>-->
+             <!--<p class="dis-cell va-m w50 ta-l">上架</p>-->
+         <!--</template>-->
+
+     <!--</div>-->
+    
+    <div style="display: none;" id="skuCon" class="full-bg">
+        <div class="params-list clearfix">
+            <div class="fr dis-cell close-icon">
+                <i v-on:click="screen(0)" class="iconfont">&#xe6cc;</i>
+            </div>
+            <ul >
+                <li class="param-tit">
+                    <div class="dis-cell param-img"><img :src="detail.smallImage" alt=""></div>
+                    <div class="dis-cell w60">
+                        <h5>¥{{detail.salePrice}}<i>¥{{detail.marketPrice}}</i> <em>库存：{{detail.kucun}}</em></h5>
+                        <h4>{{detail.name}}</h4>
+                    </div>
+                </li>
+                <template v-for="item in detail.new_skuList">
+                    <template v-if="item.type !=undefined">
+                        <li >
+                            <p>{{item.type}}</p>
+                            <div class="clearfix">
+                                <template v-for="val in item.value">
+                                    <template v-if="$index ==0">
+                                        <input class="norms" type="radio" checked="checked" name="{{item.type}}" id="{{item.type}}{{val}}" value="{{val}}">
+                                        <label for="{{item.type}}{{val}}" class="fl">{{val}}</label>
+                                    </template>
+                                    <template v-else>
+                                        <input class="norms" type="radio" name="{{item.type}}" id="{{item.type}}{{val}}" value="{{val}}">
+                                        <label for="{{item.type}}{{val}}" class="fl">{{val}}</label>
+                                    </template>
+                                </template>
+                            </div>
+                        </li>
+                    </template>
+                </template>
+            </ul>
+        </div>
+    </div>
+<div style="display: none" class="cart1"></div>
+<div class="part-no bg-tr-grey"  style="display: none" v-on:click="gotoIndex()">
+		该商品暂时无货，可以选择上架显示～	
+	</div>
+
+<div id="slider-box" style="z-index: 100; width: 100%; height: 100%; display: none; background-color: black; position: absolute; top: 0;">
+    <div style="position: absolute; background-color: white; z-index: 999; top: 20px; right: 20px;" onclick="closeSilder()">关闭</div>
+    <div id="iSlider-wrapper" style="width: 100%; height: 100%;"><div>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="//cdn.bootcss.com/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+<script src="js/jquery.tmpl.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script type="text/x-jquery-tmpl" id="index_advertise_t">
+    <ul class="swiper-wrapper">
+    {{each(i,advertise) datas}}
+       <li class="swiper-slide">
+        <a href="javascript:showBigImg('${goodId}', ${i});" target="_top" type="${advertise.lineStatus}" typeId="${advertise.id}"><img src="${advertise.url}"></a>
+       </li>
+     {{/each}}
+    </ul>
+    <div class="swiper-pagination"></div>
+</script>
+<script src="js/iSlider.min.js"></script>
+<script src="js/iSlider.animate.min.js"></script>
+
+<script>
+$(function () {
+    goods.loadlist();
+    goods.loadstate();
+//    setInterval(timeCounter, 1000);
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 0) {
+            $(".cart1").fadeIn(800);
+        } else {
+            $(".cart1").fadeOut(800);
+        }
+
+    });
+
+    $(".cart1").click(function() {
+        $('html,body').animate({
+                    scrollTop: 0
+                },
+                500);
+        return false;
+    });
+})
+
+	var shopId = Util.common.getParameter("storeId") || localStorage.getItem("shopId");
+    var id = Util.common.getParameter("id");
+    if(shopId=='' || shopId == undefined || shopId=='undefined'){
+    shopId = "267701599602667520";
+    localStorage.setItem("shopId","267701599602667520");
+}
+    var goods=new Vue({
+        el:'#goodsDetail',
+        data:{
+            detail:{},
+            imgList:[],
+            state:0,
+//          是否子帐号
+            isSubAccount: localStorage.getItem('isSubAccount') || Util.common.getParameter("isSubAccount") || 'T',
+        },
+        computed:{
+
+        },
+        methods:{
+            gotoIndex:function() {
+                window.location.href="index.html?shopId="+shopId;
+            },
+            loadstate:function () {
+                goods.$set("state",localStorage.getItem("sortType"));
+
+            },
+            loadlist:function () {
+                //    获取商品详情
+                var url ="mobile/good/getGoodDetail.do?goodId="+Util.common.getParameter("id")+"&shopId="+shopId;
+                var param = {};
+                localStorage.setItem('goodId', Util.common.getParameter("id"));
+                Util.common.executeAjaxCallback(url, param, function (data) {
+                    // if (!data.goodSkuList) {
+                    //     window.setTimeout(function(){
+                    //         history.back();
+                    //     },2000)
+                    //     new Toast({context:$('body'),message:"商品数据异常"}).show();
+                    //     return;
+                    // }
+                    
+                    $("#share").on("click", function(){
+                        if(window.WebAppJS){
+                            WebAppJS.share(data.name, "", data.smallImage, Util.common.baseUrl +  "weixin/weixinClient/index.do?fromshanguo=weixinfront/static/goods_detail.html?storeId="+shopId+"&id="+id+"&type=weixinIndex");
+                        }
+                    });
+
+                    var datas ={"datas":data.showImages.images, goodId: Util.common.getParameter("id")};
+                    bigImgs = data.showImages.images.map(function(item){
+                        return {content: item.url};
+                    });
+                    Util.common.loadTemplate("#slider-content", "#index_advertise_t", datas);
+                    Util.common.initAdvertiseSlide();
+
+                    localStorage.setItem('skuId', data.goodSkuList[0].id);
+                    localStorage.setItem('postId', data.postId);
+
+                    $('.isLoad').css('display','block');
+//        获取商品规格列表
+                    var new_skuList = [];
+                    var items_1 = {}, items_2 = {}, items_3 = {};
+                    var item_value_1 = [], item_value_2 = [], item_value_3 = [];
+                    for (var i = 0; i < data.goodSkuList.length; i++) {
+                        var item_1 = data.goodSkuList[i].skuLong.split('!!');
+                        for (var j = 0; j < item_1.length; j += 3) {
+                            var item_2 = item_1[j].split("~");
+                            items_1.type = item_2[0];
+                            item_value_1.push(item_2[2]);
+                        }
+                        for (var j = 1; j < item_1.length; j += 3) {
+                            var item_2 = item_1[j].split("~");
+                            items_2.type = item_2[0];
+                            item_value_2.push(item_2[2]);
+                        }
+                        for (var j = 2; j < item_1.length; j += 3) {
+                            var item_2 = item_1[j].split("~");
+                            items_3.type = item_2[0];
+                            item_value_3.push(item_2[2]);
+                        }
+                    }
+                    var result_1 = [], hash_1 = {};
+                    var result_2 = [], hash_2 = {};
+                    var result_3 = [], hash_3 = {};
+                    for (var n = 0, elem; (elem = item_value_1[n]) != null; n++) {
+                        if (!hash_1[elem]) {
+                            result_1.push(elem);
+                            hash_1[elem] = true;
+                        }
+                    }
+                    for (var n = 0, elem; (elem = item_value_2[n]) != null; n++) {
+                        if (!hash_2[elem]) {
+                            result_2.push(elem);
+                            hash_2[elem] = true;
+                        }
+                    }
+                    for (var n = 0, elem; (elem = item_value_3[n]) != null; n++) {
+                        if (!hash_3[elem]) {
+                            result_3.push(elem);
+                            hash_3[elem] = true;
+                        }
+                    }
+                    items_1.value = result_1;
+                    items_2.value = result_2;
+                    items_3.value = result_3;
+                    new_skuList.push(items_1);
+                    new_skuList.push(items_2);
+                    new_skuList.push(items_3);
+                    console.log(new_skuList);
+                    data.new_skuList = new_skuList;
+
+                    console.log(data);
+                    var detailImg=JSON.stringify(data.detailImages.images);
+                    goods.$set("imgList",JSON.parse(detailImg));
+                    goods.$set("detail",data);
+                    var goodInfoObj={
+                        name:data.name,
+                        imgUrl:data.smallImage,
+                        salePrice:data.salePrice,
+                        cargoNo:data.cargoNo,
+                        id:Util.common.getParameter("id")
+                    }
+                    setInterval(timeCounter, 1000);
+                    if (goods.detail.kucun == 0) {
+                        $('.part-no').css('display','block');
+                    }
+                });
+
+            },
+//            规格弹窗
+            screen:function (type) {
+                if (type==0){
+//                    点击选择规格
+                    $("#btnType3").css("display","none");
+                    $("#btnType2").css("display","none");
+                    $("#btnType1").css("display","none");
+                    $("#btnType0").css("display","block");
+                    $("#skuCon").fadeToggle(10);
+                    if($("body").hasClass('hide')){
+                        $("body").removeClass("hide");
+                    }else{
+                        $("body").addClass("hide");
+                    }
+                }else if(type==1){
+//                    点击加入购物车
+                    $("#btnType3").css("display","none");
+                    $("#btnType2").css("display","none");
+                    $("#btnType0").css("display","none");
+                    $("#btnType1").css("display","block");
+                    $("#skuCon").fadeToggle(10);
+                    if($("body").hasClass('hide')){
+                        $("body").removeClass("hide");
+                    }else{
+                        $("body").addClass("hide");
+                    }
+
+                }else if(type==2){
+//                    点击自己要
+                    $("#btnType3").css("display","none");
+                    $("#btnType1").css("display","none");
+                    $("#btnType0").css("display","none");
+                    $("#btnType2").css("display","block");
+                    $("#skuCon").fadeToggle(10);
+                    if($("body").hasClass('hide')){
+                        $("body").removeClass("hide");
+                    }else{
+                        $("body").addClass("hide");
+                    }
+
+                }else {
+//                    点击我要送人
+                    $("#btnType1").css("display","none");
+                    $("#btnType2").css("display","none");
+                    $("#btnType0").css("display","none");
+                    $("#btnType3").css("display","block");
+                    $("#skuCon").fadeToggle(10);
+                    if($("body").hasClass('hide')){
+                        $("body").removeClass("hide");
+                    }else{
+                        $("body").addClass("hide");
+                    }
+
+                }
+
+            },
+            jumpto:function () {
+                window.location.href='evaluation.html?goodId='+Util.common.getParameter("id")+"&shopId="+localStorage.getItem("shopId");
+            },
+            //跳到客服页
+            jumpToMess: function() {
+                var info = {};
+                info.title = goods.detail.name + '(商城)';
+                info.desc = '';
+                info.pictureUrlString = goods.detail.smallImage;
+                info.note = '商品ID:' + goods.detail.tradeGoodId;
+                info.show = true;
+                info = JSON.stringify(info)
+                console.log(info);
+                if(window.WebAppJS){
+                    WebAppJS.gotoMessWithInfo(info);
+                } 
+            },
+            toUp:function () {
+
+                if (this.state==0){
+//                    商品下架
+                    var url='mobile/good/setGoodOutShelve.do?goodIds='+Util.common.getParameter("id")+'&shopId='+localStorage.getItem("shopId");
+                    Util.common.executeAjaxCallback(url,{},function (data) {
+                        console.log(data.msg);
+                        if(data.code==0) {
+                            param = {
+                                func: function () {
+                                    localStorage.setItem("sortType", 1);
+                                    goods.loadstate();
+
+                                }
+                            };
+                            new ToastImg({context: $('body'), message: "<img src='img/icons/down1.png'>"}).show(param);
+                        }
+                    });
+                }else {
+//                    商品上架
+                    var url='mobile/good/setGoodShelve.do?goodIds='+Util.common.getParameter("id")+'&shopId='+localStorage.getItem("shopId");
+                    Util.common.executeAjaxCallback(url,{},function (data) {
+                        console.log(data.msg);
+                        if(data.code==0) {
+                            param = {
+                                func: function () {
+                                    localStorage.setItem("sortType", 0);
+                                    goods.loadstate();
+                                }
+                            };
+                            new ToastImg({context: $('body'), message: "<img src='img/icons/up1.png'>"}).show(param);
+                        }
+                    });
+                }
+
+            }
+
+        }
+    });
+
+var timeCounter = function(){
+    console.log("111");
+    var $timer  = $("#timer-out");
+    if (!goods.detail.startDate || !goods.detail.endDate) {
+        return;
+    }
+    var startTime=goods.detail.startDate;
+    var ednTime=goods.detail.endDate;
+    startTime=startTime.replace(/\-/g,"/");
+    ednTime=ednTime.replace(/\-/g,"/");
+    console.log(startTime+"   "+ednTime);
+    var curTimer=new Date().getTime();
+    var startTimer=new Date(startTime).getTime();;
+    var endTimer=new Date(ednTime).getTime();;
+    var t=0;
+    if(startTimer>curTimer ){
+        $timer.find('.title-show').html("距开始:");
+        $("#timer-out").css('color','#fff');
+        t=startTimer-curTimer;
+        var d=Math.floor(t/1000/60/60/24);
+        var h=Math.floor(t/1000/60/60%24);
+        var m=Math.floor(t/1000/60%60);
+        var s=Math.floor(t/1000%60);
+        if(d<10&&d>=0){
+            $timer.find('.day').html('0'+d);
+        }else {
+            $timer.find('.day').html(d);
+        }
+        if(h<10&&h >=0){
+            $timer.find('.hour').html('0'+h);
+        }else{
+            $timer.find('.hour').html(h);
+        }
+        if(m<10&&m >=0){
+            $timer.find('.min').html('0'+m);
+        }else{
+            $timer.find('.min').html(m);
+        }
+        if(s<10 && s>=0){
+            $timer.find('.sec').html('0'+s);
+        }else{
+            $timer.find('.sec').html(s);
+        }
+        $timer.show();
+        
+    }else if(startTimer<curTimer && curTimer<endTimer){
+        $timer.find('.title-show').html("距结束:");
+        t=endTimer-curTimer;
+        $("#timer-out").css('color','#fff');
+        var d=Math.floor(t/1000/60/60/24);
+        var h=Math.floor(t/1000/60/60%24);
+        var m=Math.floor(t/1000/60%60);
+        var s=Math.floor(t/1000%60);
+        if(d<10&&d>=0){
+            $timer.find('.day').html('0'+d);
+        }else {
+            $timer.find('.day').html(d);
+        }
+        if(h<10&&h >=0){
+            $timer.find('.hour').html('0'+h);
+        }else{
+            $timer.find('.hour').html(h);
+        }
+        if(m<10&&m >=0){
+            $timer.find('.min').html('0'+m);
+        }else{
+            $timer.find('.min').html(m);
+        }
+        if(s<10 && s>=0){
+            $timer.find('.sec').html('0'+s);
+        }else{
+            $timer.find('.sec').html(s);
+        }
+        $timer.show();
+    }else{
+        $timer.find('.title-show').html("已结束");
+        $("#timer-out").css('color','red');
+        $timer.find('.timer').hide();
+    }
+};
+
+function showBigImg(goodId, index){
+    $(window).scrollTop(0);
+    if (!bigImgs){
+        Util.common.executeAjaxCallback("/weixin/good/listDetailImage.do", {goodId: goodId}, function (result) {
+            if (result.success && result.data && result.data.imageList){
+
+                bigImgs = result.data.imageList.map(function(item){
+                    return {content: item.picUrl};
+                });
+
+                showSlide(bigImgs, index);
+            }
+        });
+        
+    }
+    else {
+        showSlide(bigImgs, index);
+    }
+
+    
+}
+
+function showSlide(datas, index){
+
+    $("#slider-box").show();
+
+    // 数据重新排序
+    var newdatas = [];
+    for (var i = index; i < datas.length; i++){
+        newdatas.push(datas[i]);
+    }
+    for (var i = 0; i < index; i++){
+        newdatas.push(datas[i]);
+    }
+
+    console.log(newdatas);
+
+    var slider = new iSlider(document.getElementById('iSlider-wrapper'), newdatas, {
+        isAutoplay: 0,
+        isLooping: 1,
+        isOverspread: 1,
+        animateTime: 800
+    });
+}
+
+function closeSilder(){
+    $("#slider-box").hide();
+}
+
+</script>
+</html>

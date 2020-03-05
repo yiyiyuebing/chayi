@@ -1,0 +1,12 @@
+/Users/apple/Documents/workspace/wp_sg/shanguo-b2c/src/main/java/pub/makers/common/exception/BaseExceptionHandler.java
+/Users/apple/Documents/workspace/wp_sg/shanguo-b2c/src/main/java/pub/makers/common/interceptor/ApiAuthInterceptor.java
+/Users/apple/Documents/workspace/wp_sg/shanguo-b2c/src/main/java/pub/makers/common/utils/WxUserUtils.java
+/Users/apple/Documents/workspace/wp_sg/shanguo-b2c/src/main/java/pub/makers/common/interceptor/AccessLogInterceptor.java
+/Users/apple/Documents/workspace/wp_sg/shanguo-b2c/src/main/java/pub/makers/shop/user/controller/WxLoginController.java
+/Users/apple/Documents/workspace/wp_sg/shanguo-b2c/src/main/java/pub/makers/shop/user/utils/WxUserUtils.java
+/Users/apple/Documents/workspace/wp_sg/shanguo-b2c/src/main/java/pub/makers/common/interceptor/CrossInterceptor.java
+/Users/apple/Documents/workspace/wp_sg/shanguo-b2c/src/main/java/pub/makers/common/interceptor/CrossFilter.java
+/Users/apple/Documents/workspace/wp_sg/shanguo-b2c/src/main/java/pub/makers/wx/pojo/WeixinOauth2Token.java
+/Users/apple/Documents/workspace/wp_sg/shanguo-b2c/src/main/java/pub/makers/common/interceptor/WeixinInterceptor.java
+/Users/apple/Documents/workspace/wp_sg/shanguo-b2c/src/main/java/pub/makers/shop/user/service/WeixinUserAppService.java
+/Users/apple/Documents/workspace/wp_sg/shanguo-b2c/src/main/java/pub/makers/wx/pojo/AccessToken.java

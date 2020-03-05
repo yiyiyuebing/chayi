@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/about_us.css">
+    <title>关于我们</title>
+    <script src="js/isLogin.js"></script>
+</head>
+<body >
+    <div class="logo-box">
+        <img src="./img/icons/logo.png">
+    </div>
+    <p class="step">版本：V1.0.0</p>
+    <div id="content" style="font-size:0.87rem;width: 90%;margin: 0 auto;margin-top: 1rem;"></div>
+    <p class="company">厦门山国饮艺茶业有限公司  版权所有</p>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/main.js"></script>
+<script>
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+    // 通过下面这个API隐藏右上角按钮 
+        WeixinJSBridge.call('hideOptionMenu'); 
+    });
+    /*$(function () {
+        Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+    });*/
+
+    /*var url ="/module/text/mobile/our.do";
+    Util.common.executeAjaxCallback(url,{},function (data) {
+        console.log(data);
+        var imgs='<div class="aboutus"><img src="'+data.fileUrl+'" alt=""></div>';
+        $("#agreement").append(imgs);
+        $("#agreement").append(data.content);
+    });*/
+
+    var url = '/weixin/opinion/aboutUs';
+    var param = null;
+    Util.common.b2bPostCallback(url,param,function(result){
+        if(result.success){
+            $("#content").html(result.data.content);
+        }else{
+            new Toast({context:$('body'),message:"数据异常"}).show();
+        }
+    })
+
+</script>
+</html>

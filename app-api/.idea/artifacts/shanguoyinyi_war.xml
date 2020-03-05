@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="shanguoyinyi:war">
+    <output-path>$PROJECT_DIR$/../shanguoyinyi/target</output-path>
+    <root id="archive" name="shanguoyinyi.war">
+      <element id="artifact" artifact-name="shanguoyinyi:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link href="//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
+    <title>优茶联</title>
+</head>
+<body id="index" class="bg-main">
+    <div class="slider-con ">
+        <div class="top dis-tabel">
+            <div class="dis-row">
+                <div class="search dis-cell">
+                    <input class="search-icon" type="text" readonly placeholder="搜索您喜欢的茶" v-on:click="goodSearchFocus()">
+                </div>
+                <!--<div class="store-icon dis-cell"><img src="img/icons/store.png" alt=""></div>-->
+            </div>
+
+        </div>
+        <div class="slider">
+            <div id="slider-content">
+
+            </div>
+        </div>
+    </div>
+    <ul class="banner clearfix">
+        <template v-for="list in banner1">
+            <li v-if="$index < 5" v-on:click="classify(list.classify,list.text)" class="banner-icon w20 fl">
+                <div class="banner-img"><img :src="list.imgUrl" alt=""></div>
+                <p>{{list.text}}</p>
+            </li>
+        </template>
+
+    </ul>
+    <div class="line"></div>
+	<div class="noticeview" v-if="noticelist.length != 0">
+        <div class="fl">
+            <img  class="noticeImg" src="img/icons/notice.png" alt="">
+        </div>
+        <a class="noticeMore fr" onclick="jumpTo('notice')">更多</a>
+        <ul id="marquee" class="marquee border-l1">  
+            <template v-for="list in noticelist">
+                <li v-if="list.tag =='cx'"><a class="bg-red2 fl">促销</a><p v-on:click="goNoticeDetail(list)">&nbsp;{{list.title}}</p></li>
+                <li v-else><a class="bg-red2 fl">公告</a><p v-on:click="goNoticeDetail(list)">&nbsp;{{list.title}}</p></li>
+            </template>    
+        </ul>
+	</div>
+    <ul class="part1 clearfix">
+        <template v-for="list in activity">
+            <li  v-on:click="category(list.id,list.columnName)" v-if="$index<=1" class="fl w50 border-l1">
+                <img :src="list.showpicture" alt="">
+            </li>
+            <template v-else>
+                <li v-on:click="category(list.id,list.columnName)" class="fl w25 border-l1">
+                    <img :src="list.showpicture" alt="">
+                </li>
+            </template>
+        </template>
+    </ul>
+
+    <div class="part2">
+        <h3 onclick="jumpTo('theme')" class="clearfix"><em class="border-l1">主题馆</em>Special offer <a class="color-main fr" href="#"><i>MORE</i> <i class="iconfont">&#xf0030;</i></a></h3>
+        <ul class="clearfix">
+            <template v-for="list in themelist">
+
+                <li v-on:click="themes(list.id,list.name,list.introPhoto)" v-if="$index<8"  class="fl w25">
+                    <div><img :src="list.minPhoto" alt=""></div>
+                    <p>{{list.name}}</p>
+                </li>
+            </template>
+        </ul>
+    </div>
+    <div class="part3">
+        <!-- <h3 onclick="javascript:window.location.href = 'today_pack.html?showSearchMenu=true'"  class="clearfix"><em class="border-l1">套餐专区</em>Special offer <a class="color-main fr" href="#"><i>MORE</i> <i class="iconfont">&#xf0030;</i></a></h3> -->
+        <ul id="goodsList" class="mylist clearfix">
+            <template v-for="list in goodsList">
+                <li class="fl">
+                    <div class="relative">
+                        <a v-on:click="goodsDetail(list)" style="display: block;"><img v-bind:src="list.image.url" alt=""></a>
+                        <h4><span v-if="list.label" class="nameType">{{list.label}}</span>{{list.name}}</h4>
+                        <template v-if="list.promotionalInfo && list.promotionalInfo.activityList && list.promotionalInfo.activityList.length > 0">
+                            <h5>
+                                <template v-for="item in list.promotionalInfo.activityList">
+                                    <span v-if="item.activityType != 'manzeng' && item.activityType != 'manjian' " class="goodType bg-red">{{item.tag2}}</span>
+                                </template>
+                                <template v-if="list.isManjian">
+                                    <span class="goodType bg-red">满减</span>
+                                </template>
+                                <template v-if="list.isManzeng">
+                                    <span class="goodType bg-red">满赠</span>
+                                </template>
+                            </h5>
+                            <template v-if="list.promotionalInfo.activityList.length > 0 && list.promotionalInfo.bestActivity">
+                                <template v-if="isSubAccount == 'F'">
+                                    <h5>供货价：<span class="color-main fs-16"><sub>¥</sub>{{list.supplyPrice}}</span></h5>
+                                    <template v-if="list.promotionalInfo.bestActivity.activityType == 'sale' ">
+                                        <h5>促销价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}</span></h5>
+                                    </template>
+                                    <template v-if="list.promotionalInfo.bestActivity.activityType == 'presell' ">
+                                        <h5>预售价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}</span></h5>
+                                    </template>
+                                    <template v-if="list.promotionalInfo.bestActivity.activityType !== 'sale' && list.promotionalInfo.bestActivity.activityType !== 'presell' ">
+                                        <h5>零售价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}</span></h5>
+                                    </template>
+                                </template>
+                                <template v-else>
+                                    <h5></h5>
+                                    <template v-if="list.promotionalInfo.bestActivity.activityType == 'sale' ">
+                                        <h5>促销价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}</span></h5>
+                                    </template>
+                                    <template v-if="list.promotionalInfo.bestActivity.activityType == 'presell' ">
+                                        <h5>预售价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}</span></h5>
+                                    </template>
+                                    <template v-if="list.promotionalInfo.bestActivity.activityType !== 'sale' && list.promotionalInfo.bestActivity.activityType !== 'presell' ">
+                                        <h5>零售价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}</span></h5>
+                                    </template>
+                                </template>
+                            </template>
+                        </template>
+                        <template v-else>
+                            <h5>
+                            </h5>
+                            <h5><span v-if="isSubAccount == 'F'">供货价：¥{{list.supplyPrice}}</span></h5>
+                            <!--<h5>供货价：<span class="color-main fs-16"><sub>¥</sub>{{list.supplyPrice}}</span></h5>-->
+                            <h5>零售价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}</span></h5>
+                        </template>
+                        <h5>销量：{{list.saleNum || 0}}</h5>
+                        <i v-if="list.stock <= 0" class="sellover" v-on:click="goodsDetail(list)"></i>
+                    </div>
+                </li>
+            </template>
+        </ul>
+    </div>
+    <p class="ta-c copyright">客服热线：400-8396-815<br/>©2017&nbsp;山国饮艺版权所有&nbsp;仿冒必究</p>
+    <div class="br4"></div>
+    <div class="csad_gray" v-on:click="jumpToMess()"></div>
+    <ul class="footer clearfix">
+            <li class="fl w25">
+                <div><img src="img/icons/footer1a.png" alt=""></div>
+                <p class="color-main">商城首页</p>
+            </li>
+            <li onclick="jumpTo('sorts')" class="fl w25">
+                <div><img src="img/icons/footer2.png" alt=""></div>
+                <p>分类</p>
+            </li>
+            <li v-on:click="qrcode()" class="fl w25">
+                <div><img src="img/icons/footer3.png" alt=""></div>
+                <p>分享店铺</p>
+            </li>
+            <li v-on:click="jumptosale()" class="fl w25">
+                <div><img src="img/icons/footer4.png" alt=""></div>
+                <p>全部商品</p>
+            </li>
+        </ul>
+
+
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="//cdn.bootcss.com/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+    <script src="js/jquery.tmpl.min.js"></script>
+    <script src="js/jquery.marquee.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/bizhelp.js"></script>
+    <script type="text/x-jquery-tmpl" id="index_advertise_t">
+        <ul class="swiper-wrapper">
+        {{each(i,advertise) datas}}
+           <li class="swiper-slide">
+            <a href="{{if advertise.lineStatus==1}}goods_detail.html?id=${advertise.lineUrl}{{/if}}" target="_top" type="${advertise.lineStatus}" typeId="${advertise.id}"><img src="${advertise.picUrl}"></a>
+           </li>
+         {{/each}}
+        </ul>
+        <div class="swiper-pagination"></div>
+    </script>
+
+    <script>
+        $(function () {
+            indexData.slider();
+            indexData.banner();
+            indexData.getactivity();
+            indexData.getTheme();
+            indexData.getshopInfo();
+            indexData.notice();
+            //记录scrollTop值
+            window.sessionStorage.removeItem('noticeStyle');
+            Util.scrollMar.setPos("index", 0, 1,true); 
+            Util.scrollMar.init("index",function(data){
+                
+            });
+        });
+        //清空sortsList保存记录
+        var Sorts = {};
+        window.sessionStorage.setItem('Sorts', JSON.stringify(Sorts));
+        if(!Util.common.getParameter("shopId") || Util.common.getParameter("shopId") == null || Util.common.getParameter("shopId") == ''){
+            window.localStorage.setItem("shopId",window.localStorage.getItem("shopId"));
+        }else{
+            window.localStorage.setItem("shopId",Util.common.getParameter('shopId'));
+        }
+        localStorage.setItem("token",Util.common.getParameter('token'));
+//      是否子帐号
+        if (Util.common.getParameter('isSubAccount')) {
+            localStorage.setItem('isSubAccount', Util.common.getParameter('isSubAccount'));
+        }
+        console.log(localStorage.getItem('isSubAccount'))
+//        localStorage.setItem("shopId","267701599602667520");
+
+//          跳转到原生消息中心
+        $("#jumpToMess").on("click", function(){
+            if(window.WebAppJS){
+                WebAppJS.gotoMess();
+            }
+        });
+        var indexData=new Vue({
+            el:'#index',
+            data:{
+                goodsList:[],
+                banner1:[],
+                activity:[],
+                themelist:[],
+                noticelist:[],
+                shopId:localStorage.getItem("shopId"),
+//              是否子帐号
+                isSubAccount: localStorage.getItem('isSubAccount')
+            },
+            computed:{
+                
+            },
+            filters:{
+                /*sku filter函数*/
+                filterSku:function(value){
+                    if(value){
+                        var skuArr = value.split(",");
+                        var result;
+                        $.each(skuArr,function(i,item){
+                            if(item.indexOf("单位") != -1){
+                                result = item.split(":")[1];
+                            }
+                        });
+                        return result;
+                    }
+                },
+            },
+            methods:{
+                slider:function() {
+//        加载轮播图
+                    var url ="weixin/common/getImg.do?category=0";
+                    Util.common.executeAjaxCallback(url,{},function (data) {
+                        console.log(data);
+                        var datas ={"datas":data};
+                        Util.common.loadTemplate("#slider-content", "#index_advertise_t", datas);
+                        Util.common.initAdvertiseSlide(datas);
+                    });
+                },
+                goodsDetail: function(list) {
+                    window.location.href="goods_detail.html?id="+list.id+"&userId="+localStorage.getItem('shopId')+"&storeId="+localStorage.getItem('shopId');
+                },
+                notice: function() {
+//                	加载公告轮播
+                	var url = "/weixin/toutiao/toutiaoList.do";
+                    var param={"target":"bizapp"};
+                    Util.common.executeAjaxCallback(url,param,function (data) {
+                        var toutiaoList = data.data.toutiaoList;
+                        if (data.success && data.data) {
+                            for (x in data.data.toutiaoList) {
+                                if (isShow(data.data.toutiaoList[x].validStart, data.data.toutiaoList[x].validEnd)) {
+                                    indexData.noticelist.push(data.data.toutiaoList[x]);
+                                }
+                            };
+                            console.log(indexData.noticelist)
+                            indexData.$nextTick(function() {
+                                $("#marquee").marquee({yScroll: "bottom"}); 
+                            })
+                        }
+                    });
+                },
+                goNoticeDetail: function(datas) {
+//              跳转到公告详情页
+                    var url = getToutiaoUrl(datas.toutiaoId,datas.url,datas.classify);
+                    window.location.href = url;
+                },
+                banner:function () {
+//        加载banner
+                    var url ="weixin/good/firstSortType";
+                    Util.common.b2cPostCallback(url,{},function (data) {
+                        if (data.success && data.data){
+                            indexData.$set("banner1",data.data);
+                        }
+                    }); 
+                },
+                getactivity:function () {
+                    var url ="weixin/good/goodColumn/getAllGoodColumns";
+                    Util.common.b2cPostCallback(url,{},function (res) {
+                        if (res.success && res.data) {
+                            indexData.$set("activity",res.data);
+                        }
+                    });
+                },
+                getTheme:function () {
+                    var url ="weixin/good/goodColumn/getAllGoodTheme";
+                    Util.common.b2cPostCallback(url,{},function (res) {
+                        if (res.success && res.data) {
+                            indexData.$set("themelist",res.data); 
+                        }
+                    });
+                },
+                classify:function (classify,name) {
+                    window.location.href="sortsList.html?showSearchMenu=true&sortType=91&oneType="+classify+"&title="+name+"&banner1="+JSON.stringify(indexData.banner1);
+                },
+                category:function (category,name) {
+                    window.location.href="goods_list.html?showSearchMenu=true&sortType=92&category="+category+"&title="+name;
+                },
+                themes:function (theme,name,img) {
+                    window.location.href="goods_list.html?showSearchMenu=true&sortType=93&themes="+theme+"&title="+name+'&intro='+img;
+                },
+                qrcode:function () {
+                    window.location.href="code.html?showShareMenu=true";
+                },
+                getshopInfo:function () {
+                    var url ="/mobile/store/subbranch/loadInfo.do?shopId="+localStorage.getItem('shopId');
+                    var param = {};
+                    param.token = localStorage.getItem('token');
+                    Util.common.executeAjaxCallback(url, param, function (data) {
+                        console.log(data)
+                        localStorage.setItem('shopName',data.name);
+                        localStorage.setItem('shopImg',data.headImgUrl);
+                    });
+                },
+                jumptosale:function () {
+                    window.location.href="today_pack.html?showSearchMenu=true&title=全部商品";
+                },
+                //跳到客服页
+                jumpToMess: function() {
+                   if(window.WebAppJS){
+                        WebAppJS.gotoMess();
+                    } 
+                },
+                goodSearchFocus:function () {
+                    window.location.href="search.html?shopId="+localStorage.getItem("shopId");
+                }
+            }
+        });
+
+//        加载全部商品列表
+        var url ="weixin/good/getSearchGoodListSer?pageSize=4";
+        var param = {};
+        param.pageSize = 4;
+        param = JSON.stringify(param);
+        var param1 = {};
+        param1.json = param;
+        param1.userId = localStorage.getItem("shopId");
+        Util.common.b2cPostCallback(url, param1, function (data) {
+            if (data.success && data.data) {
+                var dataList = data.data;
+                dataList.forEach(function(item){
+                    item.isManjian = false;
+                    item.isManzeng = false;
+                    if(item.promotionalInfo && item.promotionalInfo.activityList){
+                        item.promotionalInfo.activityList.forEach(function(activeItem){
+                            if(activeItem.activityType == 'manjian'){
+                                item.isManjian = true;
+                            }
+                            if(activeItem.activityType == 'manzeng'){
+                                item.isManzeng = true;
+                            }
+                        })
+                    }
+                });
+                indexData.$set('goodsList',dataList);
+                console.log(indexData.goodsList);
+            } else {
+                // new Toast({context:$('body'),message: data.msg}).show();
+            }
+        });
+
+        var isShow = function(start,end) {
+            var isStart = new Date(start.replace(/\-/g,"/")).getTime();
+            var isEnd = new Date(end.replace(/\-/g,"/")).getTime();
+            var now = new Date().getTime();
+            if (isStart<now && now < isEnd ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+</script>
+</body>
+</html>

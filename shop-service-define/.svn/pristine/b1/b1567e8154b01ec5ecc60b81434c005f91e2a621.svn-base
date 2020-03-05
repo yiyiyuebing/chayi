@@ -1,0 +1,38 @@
+package pub.makers.shop.marketing.service;
+
+import pub.makers.shop.marketing.entity.OnlineStudy;
+import pub.makers.shop.marketing.vo.OnlineStudyVo;
+
+import java.util.List;
+
+public interface OnlineStudyBizService {
+	
+	
+	/**
+	 * 保存预览
+	 * @param onlineStudy
+	 * @return
+	 */
+	OnlineStudy savePreview(OnlineStudy onlineStudy);
+	
+	/**
+	 * 根据主键查询预览
+	 * @param id
+	 * @return
+	 */
+	OnlineStudy getPreviewById(String id);
+
+	/**
+	 * 通过文章标题查找文章列表数据
+	 * @param title
+	 * @return
+	 */
+	List<OnlineStudy> queryOnlineStudyByTitle(String title);
+
+	/**
+	 * 根据主键查找文章
+	 * @param id
+	 * @return
+	 */
+	OnlineStudy getOnlineStudyById(String id);
+}

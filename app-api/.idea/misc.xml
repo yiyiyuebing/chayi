@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$" />
+    <file type="web" url="file://$PROJECT_DIR$/../shanguo-b2b" />
+    <file type="web" url="file://$PROJECT_DIR$/../shanguo-b2c" />
+    <file type="web" url="file://$PROJECT_DIR$/../shanguoyinyi" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/../user-service/pom.xml" />
+        <option value="$PROJECT_DIR$/../shop-service-define/pom.xml" />
+        <option value="$PROJECT_DIR$/../shanguo-b2b/pom.xml" />
+        <option value="$PROJECT_DIR$/../shanguo-b2c/pom.xml" />
+        <option value="$PROJECT_DIR$/../shanguoyinyi/pom.xml" />
+        <option value="$PROJECT_DIR$/../yaoming-mall-common/pom.xml" />
+        <option value="$PROJECT_DIR$/../yaoming-common/pom.xml" />
+        <option value="$PROJECT_DIR$/../yaoming-parent/pom.xml" />
+        <option value="$PROJECT_DIR$/../yaoming-security/pom.xml" />
+        <option value="$PROJECT_DIR$/../yaoming-ueditor/pom.xml" />
+        <option value="$PROJECT_DIR$/../base-service/pom.xml" />
+        <option value="$PROJECT_DIR$/../shop-service-admin/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/api/branches" />
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/api/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://112.74.79.135/project/product/shanguo/service/api/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/shanguo-b2b">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/api/branches" />
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/api/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://112.74.79.135/project/product/shanguo/service/api/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../base-service">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/base-service/branches" />
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/base-service/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://112.74.79.135/project/product/shanguo/service/base-service/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../shanguo-b2b">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/api/branches" />
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/api/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://112.74.79.135/project/product/shanguo/service/api/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../shanguo-b2c">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/api/branches" />
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/api/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://112.74.79.135/project/product/shanguo/service/api/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../shanguoyinyi">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://112.74.79.135/project/product/shanguo/simatu/branches" />
+                  <option value="svn://112.74.79.135/project/product/shanguo/simatu/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://112.74.79.135/project/product/shanguo/simatu/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../shop-service-admin">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/shop-service/branches" />
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/shop-service/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://112.74.79.135/project/product/shanguo/service/shop-service/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../shop-service-define">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/shop-service/branches" />
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/shop-service/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://112.74.79.135/project/product/shanguo/service/shop-service/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../user-service">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/user-service/branches" />
+                  <option value="svn://112.74.79.135/project/product/shanguo/service/user-service/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://112.74.79.135/project/product/shanguo/service/user-service/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../yaoming-common">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://112.74.79.135/project/product/shanguo/simatu/branches" />
+                  <option value="svn://112.74.79.135/project/product/shanguo/simatu/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://112.74.79.135/project/product/shanguo/simatu/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../yaoming-mall-common">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://112.74.79.135/project/product/shanguo/simatu/branches" />
+                  <option value="svn://112.74.79.135/project/product/shanguo/simatu/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://112.74.79.135/project/product/shanguo/simatu/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../yaoming-parent">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://112.74.79.135/project/product/shanguo/simatu/branches" />
+                  <option value="svn://112.74.79.135/project/product/shanguo/simatu/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://112.74.79.135/project/product/shanguo/simatu/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../yaoming-security">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://112.74.79.135/project/product/shanguo/simatu/branches" />
+                  <option value="svn://112.74.79.135/project/product/shanguo/simatu/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://112.74.79.135/project/product/shanguo/simatu/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../yaoming-ueditor">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn://112.74.79.135/project/product/shanguo/simatu/branches" />
+                  <option value="svn://112.74.79.135/project/product/shanguo/simatu/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn://112.74.79.135/project/product/shanguo/simatu/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

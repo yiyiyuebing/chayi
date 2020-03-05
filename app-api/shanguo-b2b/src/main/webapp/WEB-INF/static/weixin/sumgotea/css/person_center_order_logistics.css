@@ -1,0 +1,83 @@
+body {
+  background: #f3f2f5;
+}
+.product-information {
+  padding-left: 0.4rem;
+  padding-top: 0.3rem;
+  padding-bottom: 0.4rem;
+  background: #fff;
+  margin-bottom: 0.4rem;
+}
+.product-information .product-img {
+  width: 3rem;
+  height: 2.8rem;
+  overflow: hidden;
+}
+.product-information .product-img img {
+  width: 100%;
+  height: 100%;
+}
+.product-information .product-txt {
+  width: 11.2rem;
+  text-align: left;
+  font-size: 0.48rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  line-height: 0.84rem;
+  color: #666;
+}
+.product-information .product-txt span {
+  display: block;
+}
+.logistics {
+  background: #fff;
+  padding-left: 0.6rem;
+  padding-right: 0.96rem;
+}
+.logistics .logistics-route li {
+  border-left: 1px solid #dbdbdb;
+  padding-top: 0.5rem;
+}
+.logistics .logistics-route li .route-location {
+  font-size: 0.48rem;
+  line-height: 0.8rem;
+  color: #999;
+  padding-left: 0.72rem;
+  position: relative;
+  text-align: left;
+}
+.logistics .logistics-route li .route-location .dot {
+  width: 0.32rem;
+  height: 0.32rem;
+  background: #cccccc;
+  border-radius: 50%;
+  position: absolute;
+  left: -0.2rem;
+  top: 0.2rem;
+  display: inline-block;
+}
+.logistics .logistics-route li .route-time {
+  font-size: 0.36rem;
+  line-height: 0.68rem;
+  text-align: left;
+  padding-bottom: 0.44rem;
+  border-bottom: 1px solid #dbdbdb;
+  margin-left: 0.72rem;
+  color: #999;
+}
+.logistics .logistics-route li:last-of-type .route-time {
+  border-bottom: none;
+}
+.logistics .logistics-route .active .route-location {
+  color: #cc9b4b;
+}
+.logistics .logistics-route .active .route-location .dot {
+  background: url(../images/person_center_logistics_icon_circle.png) no-repeat center bottom, #ffffff;
+  background-size: 0.48rem 0.48rem;
+  width: 0.48rem;
+  height: 0.48rem;
+  left: -0.28rem;
+  top: -0.48rem;
+  padding-bottom: 0.64rem;
+  border-radius: 0;
+}

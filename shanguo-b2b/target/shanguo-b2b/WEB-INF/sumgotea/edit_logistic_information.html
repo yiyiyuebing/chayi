@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--清除浏览器缓存-->
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <!--设备 IE  最高版本-->
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <!--定义 语言类型-->
+    <meta http-equiv="CONTENT-TYPE" content="text/html" charset="utf-8">
+    <!--设置视口宽度与设备宽度， 禁止用户缩放-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--X5内核 全屏显示-->
+    <meta name="x5-fullscreen" content="true">
+    <!--uc内核  全屏显示-->
+    <meta name="full-screen" content="yes">
+    <!--描述-->
+    <meta name="description" content="山国饮艺">
+    <!--关键字-->
+    <meta name="keywords" content="山国饮艺">
+    <title>填写退货物流信息</title>
+    <!--公共部分-->
+    <!--HTML标签样式重置-->
+    <link href="css/normalize.css" rel="stylesheet">
+    <!--移动端css重置-->
+    <link href="css/reset.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!--公共部分   ending-->
+    <!--单独样式-->
+    <link href="css/person_center_change_product_tracking_number.css" rel="stylesheet">
+</head>
+<body id="editLogistic">
+    <section class="tracking-information">
+        <input type="hidden" name="flowId" value="{{flowId}}">
+        <div class="tracking-group clearfix">
+            <label class="pull-left">快递公司：</label>
+            <input v-model="logisticCompany" class="pull-left" type="text" name="logisticCompany" placeholder="请填写快递公司名称">
+        </div>
+        <div class="tracking-group clearfix">
+            <label class="pull-left">物流单号：</label>
+            <input v-model="logisticNumber" class="pull-left" type="text" name="logisticNumber" placeholder="请填写物流快递单号">
+        </div>
+    </section>
+
+    <section class="submit">
+        <a href="#" class="submit-btn" v-on:click="submit()">提交</a>
+    </section>
+
+    <!--提交成功弹窗-->
+    <section class="popup">
+        <div class="popup-wrap">
+            提交成功
+        </div>
+    </section>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script src="js/bizhelp.js"></script>
+<script>
+    var flowId = Util.common.getParameter('flowId');
+    $(function () {
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+        editLogistic.$set("flowId",flowId);
+    })
+
+    var editLogistic = new Vue({
+        el:"#editLogistic",
+        data:{
+            /*物流公司*/
+            logisticCompany:"",
+            /*物流单号*/
+            logisticNumber:"",
+            /*订单编号*/
+            flowId:Util.common.getParameter("flowId")
+        },
+        computed:{
+
+        },
+        methods:{
+            submit:function(){
+                if(editLogistic.logisticCompany == ""){
+                    new Toast({context:$('body'),message:"物流公司不能为空！"}).show();
+                    return;
+                }
+                if(editLogistic.logisticNumber == ""){
+                    new Toast({context:$('body'),message:"物流单号不能为空！"}).show();
+                    return;
+                }
+                var url = "weixin/afterSale/editUserShipping";
+                var params = {};
+                params.flowId = editLogistic.flowId;
+                params.freightNo = editLogistic.logisticNumber;
+                params.freightCompany = editLogistic.logisticCompany;
+                Util.common.b2bPostCallback(url,params,function(data){
+                    if(data.success){
+                        new Toast({context:$("body"),message:"提交成功，请耐心等待！"}).show();
+                        setTimeout(function(){
+                            historyBack();
+                        },2000);
+                    }else{
+                        new Toast({context:$('body'),message: data.msg }).show();
+                    }
+                })
+            }
+        }
+    })
+
+</script>
+
+</html>

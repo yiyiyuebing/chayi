@@ -1,0 +1,48 @@
+.user-info-box {margin-top: -1px; padding-top: 30px; border-top: 1px solid #f0f0f0;}
+.user-info-box .enter-box {padding: 0 30px;}
+.user-info-box .enter-box .title-bar {color: #999;}
+.user-info-box .enter-box .enter-ipt {width: 150px; padding: 5px 10px; border: 1px solid #dbdbdb;}
+.user-info-box .enter-box .enter-textarea {width: 120%; height: 100px; padding: 10px; border: 1px solid #dbdbdb; outline: none; resize: none; line-height: 20px;}
+.user-info-box .enter-box .store-img {width: 100px; height: 100px;}
+.user-info-box .enter-box .store-img img {width: 100%; height: 100%;}
+.user-info-box .enter-box .bottom-line {color: #666; vertical-align: bottom;}
+.user-info-box .enter-box .orange-btn {display: block; width: 100%; color: #fff; text-align: center; background-color: #cc9b4b; line-height: 30px; border-radius: 4px;}
+.user-info-box .blue-btn {color: #2a6dbb;}
+.user-info-box .user-paperwork-wrap {margin-left: 100px;}
+.user-info-box .user-paperwork-wrap .small-tip {margin-left: 10px; color: #999; font-size: 12px;}
+.user-info-box .user-paperwork-wrap .upload-box {float: left; margin-top: 20px; margin-left: 40px;}
+.user-info-box .user-paperwork-wrap .upload-box:first-child {margin-left: 0;}
+.user-paperwork-wrap .upload-box .upload-img {width: 100px; height: 100px; background: url("../images/upload-none-icon.png") no-repeat center;}
+.user-paperwork-wrap .upload-box .upload-img img {width: 100%; height: 100%;}
+.user-paperwork-wrap .upload-box .btn-wrap {padding: 5px 0; text-align: center;}
+.user-paperwork-wrap .upload-box .ml15 {margin-left: 15px;}
+.user-paperwork-wrap .upload-box .tx-center {color: #666; font-size: 12px; text-align: center;}
+.user-paperwork-wrap .bottom-upload-box {margin-top: 40px;}
+.user-info-box .upload-header-img {padding: 0 60px; border-right: 1px solid #dbdbdb;}
+.upload-header-img .choose-btn {display: block; width: 200px; margin-bottom: 5px; color: #666; font-size: 14px; text-align: center; border: 1px solid #dbdbdb; line-height: 35px;}
+.upload-header-img .choose-btn .upload-icon {display: inline-block; padding-left: 25px; background: url("../images/upload-icon.png") no-repeat left;}
+.upload-header-img .has-upload {width: 470px; height: 240px; margin-top: 5px; background: #f5f5f5 url("../images/account-header.png") no-repeat center; border: 1px solid #dbdbdb;}
+.upload-header-img .recommend-wrap {width: 450px; padding: 10px; border: 1px solid #dbdbdb;}
+.upload-header-img .recommend-wrap .recommend-box {margin-top: -10px; margin-left: -10px;}
+.recommend-wrap .recommend-box .recommend-img {float: left; width: 50px; height: 50px; margin-top: 10px; margin-left: 10px; border: 1px solid transparent;}
+.recommend-wrap .recommend-box .recommend-img.active {border-color: #f05353;}
+.recommend-wrap .recommend-box .recommend-img img {width: 100%; height: 100%;}
+.recommend-wrap .save-btn {display: block; width: 90px; margin-top: 20px; color: #fff; text-align: center; background-color: #f05353; line-height: 30px; border-radius: 4px;}
+.recommend-wrap .save-btn.disable {background-color: #dedede;}
+.user-info-box .header-result-box {width: 300px; padding-left: 60px;}
+.user-info-box .header-result-box .big-img {width: 100px; height: 100px; margin-top: 20px; background-color: #f5f5f5;}
+.user-info-box .header-result-box .big-img img {width: 100%; height: 100%;}
+.user-info-box .header-result-box .small-img {width: 50px; height: 50px; margin-top: 40px; background-color: #f5f5f5;}
+.user-info-box .header-result-box .small-img img {width: 100%; height: 100%;}
+.modify-pwd-wrap {padding: 10px 20px;}
+.modify-pwd-wrap .data-table {width: 600px; margin-top: 50px; margin-left: 30px;}
+.modify-pwd-wrap .data-table .step-tip {width: 500px; height: 70px; margin: 0 auto; background-repeat: no-repeat; background-position: center;}
+.modify-pwd-wrap .data-table .step-tip.first {background-image: url("../images/title-bg.png");}
+.modify-pwd-wrap .data-table tbody td {padding: 10px;}
+.modify-pwd-wrap .data-table tbody td.left-td {color: #999; text-align: right;}
+.modify-pwd-wrap .data-table tbody .enter-ipt {width: 90%; padding: 0 10px; border: 1px solid #dbdbdb; outline: none; line-height: 35px;}
+.modify-pwd-wrap .data-table tbody .enter-ipt.phone-ipt {background-color: #f0f0f0;}
+.modify-pwd-wrap .data-table tbody .get-code {display: block; padding: 0 10px; color: #666; text-align: center; background-color: #f5f5f5; border: 1px solid #dbdbdb; line-height: 35px;}
+.modify-pwd-wrap .data-table tbody .code-img {float: left; width: 100px; height: 25px;}
+.modify-pwd-wrap .data-table tbody .change-btn {float: left; margin-left: 10px; color: #2a6dbb; line-height: 25px; cursor: pointer;}
+.modify-pwd-wrap .data-table tbody .commit-btn {display: block; width: 50px; font-size: 12px; color: #fff; text-align: center; background-color: #cc9b4b; line-height: 25px; border-radius: 4px;}

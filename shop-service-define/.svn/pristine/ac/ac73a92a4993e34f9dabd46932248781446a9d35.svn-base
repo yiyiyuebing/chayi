@@ -1,0 +1,62 @@
+package pub.makers.shop.purchaseOrder.service;
+
+import pub.makers.shop.order.enums.IndentCancelType;
+import pub.makers.shop.order.enums.IndentConfirmType;
+import pub.makers.shop.order.vo.OrderPayInfo;
+import pub.makers.shop.order.vo.ShippingInfo;
+import pub.makers.shop.purchaseOrder.entity.PurchaseOrder;
+import pub.makers.shop.purchaseOrder.vo.PurchaseOrderVo;
+
+/**
+ * Created by dy on 2017/4/10.
+ */
+public interface PurchaseOrderBizService {
+
+    /**
+     * 通过采购订单id查找微信回调的订单信息
+     * @param id
+     * @return
+     */
+    PurchaseOrder findPurchaseOrderById(Long id);
+
+    String getPackNum(String purPackingBagValue, String purPackingPrice, String number);
+    
+    /**
+     * 创建采购订单
+     * @param order
+     */
+    void createOrder(PurchaseOrderVo order);
+    
+    
+    /**
+     * 取消订单
+     */
+    void cancelOrder(String userId, String orderId, IndentCancelType cancelType);
+    
+    
+    /**
+     * 订单付款
+     */
+    void payOrder(OrderPayInfo payInfo);
+
+
+    /**
+     * 订单发货
+     * @param si
+     */
+    void shipmentOrder(ShippingInfo si);
+
+    /**
+     * 确认收货
+     * @param userId 订单所属用户ID
+     * @param orderId 订单ID
+     * @param confirmType 确认类型：主动确认还是超时自动确认
+     */
+    void confirmReceipt(String userId, String orderId, IndentConfirmType confirmType);
+    
+    
+    /**
+     * 订单免运费
+     */
+    void freeShipping();
+}

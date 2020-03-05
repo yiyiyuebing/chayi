@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>我的钱包</title>
+</head>
+<body class="bg-main person myteam wallet">
+<div  id="mywallet" class="op0">
+    <div class="info-part1">
+        <div class="info-head">
+            <div class="info-img">
+                <img :src="personInfo.headimgurl" alt="">
+            </div>
+        </div>
+        <h2>{{personInfo.nickname}}</h2>
+    </div>
+    <div class="amount">
+        <h1 >¥{{detail.settled}}</h1>
+        <p >总收入</p>
+    </div>
+    <div class="dis-tabel w100 part0">
+        <div onclick="jumpTo('my_card')" class="dis-cell border-l1">
+            <span class="img-con"><img src="img/icons/wallet2.png" alt=""></span>
+            <i>银行卡({{detail.bankCardNum}})</i>
+        </div>
+        <div onclick="jumpTo('trading_record')" class="dis-cell border-l1">
+            交易记录
+        </div>
+        <div onclick="jumpTo('trading_record')" class="dis-cell">
+            更多
+        </div>
+    </div>
+    <ul class="lists">
+        <li onclick="jumpTo('cash')" class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell lists-icon"><img src="img/icons/wallet1.png" alt=""></div>
+            <p class="dis-cell fs-14 ">提现 <i class="fr color-main">&nbsp;</i></p>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+    </ul>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    Util.common.addloadingAnimate();
+    $(function () {
+        wallet.loadData();
+        wallet.loadInfo();
+        //                微信分享
+        Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+    })
+    var wallet=new Vue({
+        el: "#mywallet",
+        data: {
+            personInfo:{},
+            detail:{}
+        },
+        computed: {},
+        methods: {
+            loadInfo:function () {
+                var url = "/weixin/weixinClient/loadMyInfo.do?id=" + sessionStorage.getItem("userid");
+                var param = {"userId": sessionStorage.getItem("userid")};
+                Util.common.executeAjaxCallback(url, param, function (data) {
+                    console.log(data.msg);
+                    Util.common.removeloadingAnimate('mywallet');
+                    if (data.success) {
+                        wallet.$set('personInfo',data.msg);
+                    }
+                });
+            },
+            loadData:function () {
+                var url ="mobile/user/getUserWalletHome.do?shopId="+sessionStorage.getItem('userid');
+                var param = {};
+                Util.common.executeAjaxCallback(url, param, function (data) {
+                    console.log(data);
+                    if(data.code==1){
+                        wallet.$set('detail',data.data);
+                    }
+                });
+            }
+        }
+    });
+</script>
+</html>

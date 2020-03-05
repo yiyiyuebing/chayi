@@ -1,0 +1,1 @@
+update ${table} set del_flag = 'T' where id in (${logIdList}) and user_id = '${userId}' and client_type = '${clientType}'

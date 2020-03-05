@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>文章详情</title>
+    
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+}
+.w30 {
+    width: 30%;
+}
+.w50 {
+    width: 50%;
+}
+.p10 {
+    padding: 10px;
+}
+
+.btn-active{
+    background: #CC9B4B;
+    color:#ffffff !important;
+    border-color:#CC9B4B !important;
+}
+.dis-cell{
+    display: table-cell;
+}
+.ta-c {
+    text-align: center;
+}
+.mauto {
+    margin: 0 auto;
+}
+.hovertreeContent {
+	margin: 5px auto;
+	height: auto;
+	overflow: hidden;
+	position: relative;
+    background: #fff;
+}
+.hewenqiToggle {
+	height: 20px;
+	position: relative;
+	bottom: 0px;
+	width: 100%;
+}
+.triangle-down-hovertree {
+	width: 0;
+	height: 0; 
+	position: absolute;
+	margin: 0px auto;
+	cursor: pointer;
+}
+.triangle-up-hovertree {
+	width: 0;
+	height: 0;
+	position: absolute;
+	margin: 0px auto;
+}
+.blank10{
+	margin-top:10px;
+}
+
+a {
+	text-decoration: none;;
+}
+
+body {
+	background: #f5f5f5;
+	margin: 0px;
+}
+
+h1, h2, h3, h4, h5 {
+	padding: 5px;
+	margin: 0px;
+	font-weight: normal;
+}
+ul {
+	margin: 0px;
+}
+
+.color-gray {
+	color: #787878;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+img {
+	max-width: 100%;
+}
+
+#title {
+	padding: 30px 15px 5px;
+	text-align: center;
+}
+
+#sub-title {
+	padding: 0px 30px;
+}
+
+#sub-title:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.article-body {
+	line-height: 28px;
+	padding: 0px 15px;
+	height: auto;
+    background: #fff;
+    margin-top: -15px;
+}
+
+video {
+	margin: 10px auto;
+	width: 100%;
+	height: 240px;
+}
+
+.store_box {
+	padding: 10px 15px;
+	border-bottom: 1px solid #e6e6e6;
+	background-color: #FFFFFF;
+}
+
+.clearfix:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.store_box .store-icon {
+	margin-right: 8px;
+}
+
+.store_box .store-icon img {
+	width: 46px;
+	height: 46px;
+	border: 1px solid #e6e6e6;
+	border-radius: 50%;
+}
+
+.store-contact {
+	background-color: #FFFFFF;
+	padding: 5px 15px;
+	position: relative;
+    margin-bottom: 5px;
+}
+
+.btn-phone {
+	position: absolute;
+	top: 5px;
+	right: 20px;
+	width: 30px;
+	height: 30px;
+}
+
+.btn {
+	border-radius: 5px;
+	display: inline-block;
+}
+
+.btn-primary {
+	padding: 8px 20px;
+	border: 1px solid #cc9b4b;
+	color: #cc9b4b;
+}
+
+.btn-gostore {
+	margin-top: 8px;;
+}
+
+.row {
+	line-height: 30px;
+}
+
+.video-body {
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.info-box {
+	background: #FFFFFF;
+	padding: 5px 15px;
+}
+
+.mt8 {
+	margin-top: 8px;
+}
+
+.tab {
+	display: table;
+	height: 30px;
+	padding: 10px 0px 0px;
+	width: 100%;
+	background: #FFFFFF;
+	margin-bottom: 2px;
+}
+
+.tab li {
+	display: table-cell;
+	width: 1%;
+}
+
+.tab li {
+	line-height: 30px;
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+}
+
+.tab li:after {
+	content: '';
+	display: inline;
+	border-right: 1px solid #e0e0e0;
+}
+
+.tab li:last-child:after {
+	border-right: 0px;
+}
+
+.tab li a {
+	display: inline-block;
+	width: 80%;
+	color: #797979;
+}
+
+.tab li.active a {
+	border-bottom: 2px solid #cc9b4b;
+	color: #cc9b4b;
+}
+
+.rcmd-list {
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+.rcmd-list .rcmd-item {
+	float: left;
+	margin: 1%;
+	width: 48%;
+	height: 220px;
+	background: #FFFFFF;
+}
+
+.goods-img {
+	display: block;
+	height: 160px;
+	text-align: center;
+}
+
+.goods-img img {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.goods-title {
+	line-height: 30px;
+	white-space: nowrap;
+	overflow: hidden;
+	padding: 0px 8px;
+	text-overflow: ellipsis;;
+}
+
+.goods-price {
+	padding: 0px 8px;
+	line-height: 30px;
+	color: #cc9b4b;
+}
+
+.comment-box {
+	position: fixed;
+	width: 100%;
+	height: 40px;
+	border-top: 1px solid #dddddd;
+	bottom: 0px;
+	z-index: 100;
+	background: #f5f5f5;
+}
+.comment-box span{
+    display:inline-block;
+    width:15%;
+    height:30px;
+    text-align:center;  
+    background:url("img/web/left.png") center center no-repeat;
+    background-size:2.0rem;
+}
+.comment-box div {
+    width: 50%;
+}
+.comment-box input {
+	border: 1px solid #dddddd;
+	line-height: 40px;
+	height: 38px;
+	border-radius: 5px;
+	width: 60%;
+	padding: 0px 3px;
+	outline: none;
+}
+.comment-box .divinput {
+    min-height: 20px;
+    max-height: 100px;
+    overflow-y: auto;
+    line-height: 20px;
+    width: 50%;
+    padding: 7px;
+    box-sizing: border-box;
+    border: 1px solid #999;
+    border-radius: 3px;
+    display: inline-block;
+    font-size: 0.931rem;
+    margin-top:5px;
+    background: #fff;
+}
+.comment-box button {
+	width: 15%;
+	background: #cc9b4b;
+	border-radius: 5px;
+	border: none;
+	height: 34px;
+	color: #ffffff;
+	font-size: 0.8125rem;
+}
+
+.btn-favorite, .btn-like, .btn-comment{
+	display: inline-block;
+	height: 50px;
+	line-height: 25px;
+	text-align: center;
+	font-size: 12px;
+}
+
+.btn-favorite i, .btn-like i, .btn-comment i{
+	display: block;
+	width: 25px;
+	height: 25px;
+	margin: 0px auto;
+}
+
+.icon-favorite {
+	background: url("img/web/icon-favorite.png") ;
+	background-size: 100% 100%;
+}
+.icon-comment {
+	background: url("img/web/comment.png") no-repeat;
+	background-size: 90% 90%;
+}
+.icon-like {
+	background: url("img/web/icon-like.png");
+	background-size: 100% 100%;
+}
+
+.active .icon-favorite {
+	background-image: url(img/web/icon-favorite-on.png);
+}
+
+.active .icon-like {
+	background-image: url(img/web/icon-like-on.png);
+}
+
+.article-title {
+	line-height: 30px;
+    padding: 10px 15px;
+    text-align: left;
+    font-size: 18px;
+    color: #000;
+    font-weight: 600;
+}
+
+.read-more {
+	background-image: url(img/web/arrow-right.png);
+	background-size: auto 14px;
+	padding-right: 30px;
+	text-align: center;
+	background-repeat: no-repeat;
+	background-position: right center;
+	display: inline-block;
+	line-height: 40px;
+	color: #aaaaaa;
+}
+
+.more-box {
+	text-align: center;
+	border-top: 1px solid #e0e0e0;
+}
+
+.comment-item, .visitor-item {
+	position: relative;
+	padding: 20px 15px 5px 70px;
+	border-bottom: 1px solid #f5f5f5;
+}
+
+.avatar {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	left: 15px;
+	top: 10px;
+}
+
+.avatar img {
+	width: 100%;
+	height: 100%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+}
+
+.comment-item .date {
+	position: absolute;
+	right: 15px;
+	top: 5px;
+	font-size: 12px;
+}
+
+.comment-item p {
+	margin: 0px;
+	padding: 0px;
+	line-height: 23px;
+	font-size: 0.8rem;
+}
+
+.comment-list, .visitor-list {
+	background: #FFFFFF;
+}
+
+.visitor-item .date {
+	position: absolute;
+	right: 15px;
+	top: 5px;
+	font-size: 12px;
+}
+
+.empty-box {
+	margin: 20px auto;
+	height: 60px;
+	background: url("img/web/empty.png") no-repeat;
+	background-position: center;
+	background-size: auto 100%;
+}
+
+.visitor-main {
+	height: 40px;
+}
+
+.o-price {
+	text-decoration: line-through;
+	color: #aaaaaa;
+	font-size: 12px;
+}
+#valuetxt {
+	background: #fff;
+	padding: 10px;
+	
+}
+.article-author {
+    font-size: 12px;
+    padding: 0px 15px;
+    margin-bottom: 40px;
+    color: #ccc;
+}
+.shouqi {
+    background-image: url(img/web/shouqi.png);
+	background-size: auto 10px;
+	padding-right: 30px;
+	text-align: center;
+	background-repeat: no-repeat;
+	background-position: right center;
+	display: inline-block;
+	line-height: 20px;
+	color: #000;
+}
+.zhankai {
+    background-image: url(img/web/zhankai.png);
+	background-size: auto 10px;
+	padding-right: 30px;
+	text-align: center;
+	background-repeat: no-repeat;
+	background-position: right center;
+	display: inline-block;
+	line-height: 20px;
+	color: #000;
+}
+.xiazai {
+    background: url("img/icons/xiazai.png") no-repeat;
+    background-size: 1.2rem;
+    width: 1.5rem;
+    height: 0.9rem;
+    line-height: 1rem;
+    text-align: center;
+    display: inline-block; 
+}
+.label {
+    margin-left: 15px;
+    font-size: 14px;
+    line-height: 28px;
+}
+.share1{
+    background: url("img/icons/share1.png")center center no-repeat;
+    background-size: 2rem;
+    width: 3rem;
+    height: 1rem;
+    display: inline-block;  
+    
+}
+.hot {
+    border: 1px solid #F05353;
+    font-size: 0.8125rem;
+    color: #F05353;
+    border-radius: 3px;
+    margin-right: 0.2rem;
+    padding: 0.1rem 0.2rem;
+}
+/*弹窗样式*/
+.dialog-con{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.4);
+    display: table;
+}
+.dialog{
+    display: table-cell;
+    vertical-align: middle;
+}
+.dialog-content{
+    background: #ffffff;
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 3px;
+    text-align: center;
+}
+.dialog-content h1{
+    font-size: 1rem;
+    color: #030303;
+    padding: 8% 0;
+}
+.dialog-content p{
+    font-size: 0.875rem;
+    color: #979797;
+    padding: 0 0.2rem 8%;
+}
+.dialog-content .w50{
+    padding: 4% 0;
+}
+.border-l1{
+    box-sizing: border-box;
+    border-right: 1px solid #d7d7d7;
+}
+.color-main{
+    color: #CC9B4B !important;
+}
+.border-b1{
+    border-bottom: 1px solid #d7d7d7 !important;
+}
+
+
+</style>
+</head>
+<div id="container" style="display:none; width: 100%;">
+    
+    <div class="hovertreeContent"> 
+        <div class="article-title">
+            <template v-for="item in tagList" track-by="$index">
+                <span class="hot">{{item}}</span>
+            </template>
+            {{article.title}}</div>
+        <div class="color-gray article-author">来源: {{article.author}} <span style="width: 5px;">&nbsp;</span>{{article.time}}</div>
+    	<div v-if="!article.videoUrl" class="article-body" v-html="article.content" v-on:click="hiddenComment()"></div>
+        <div v-if="article.videoUrl" class="video-body">
+            <video :src="article.videoUrl" :poster="article.covePicUrl"  controls="controls"></video>
+        </div>
+        <div style="margin-top: 20px;">
+            <div class="label" v-if="article.zeren"><span class="color-gray" >责任编辑：</span></div>
+            <div class="label" ><span class="color-gray"><span v-if="article.label != null" >关键词：{{article.label}} </span><br><span v-if="article.studyTypeName != null">#{{article.studyTypeName}}#</span></span> <div class="fr" v-if="article.file" v-on:click="downLoad(article.file)" style="height: 2rem;">下载:&nbsp;&nbsp;<i class="xiazai"></i></div></div>
+    	</div>
+        <div v-if="!article.videoUrl" id="valuetxt" class="hewenqiToggle more-box blank10"><span id="valuetxtIcon" class="shouqi">收起</span></div>
+	</div>
+    
+    
+    
+    <ul class="tab mt8">
+        <li class="active">
+            <a href="javascript:;" v-on:click="toggle('rcmd',$event)">
+                推荐 {{commandNum}}
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" v-on:click="toggle('comment',$event)">
+                互动 {{replyNum}}
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" v-on:click="toggle('visitor',$event)">
+                访客 {{visitorNum}}
+            </a>
+        </li>
+    </ul>
+    <ul id="rcmd-list" class="rcmd-list panel clearfix">
+        <li class="rcmd-item"  v-if="rcmdList && rcmdList.length > 0" v-for="rcmd in rcmdList">
+            <a href="javascript:;" v-on:click="ifWechat(rcmd.url,userId,rcmd.good_id)" class="goods-img"><img :src="rcmd.pic_url" /></a>
+            <div class="goods-title">
+                {{rcmd.name}}
+            </div>
+            <div class="goods-price">￥{{rcmd.sale_price}} <span class="o-price">￥{{rcmd.market_price}}</span></div>
+        </li>
+        <li  v-if="!rcmdList || rcmdList.length == 0" class="empty-box"></li>
+    </ul>
+    <div id="comment-list" class="comment-list panel" style="display: none;">
+        <div v-if="comments && comments.length > 0" v-for="comment in comments" class="comment-item">
+            <div class="avatar">
+                <img :src="comment.headImgUrl||'img\\icons\\defaultimg.png'" />
+            </div>
+            <div class="cmmt-main">
+                <div>{{comment.name||'　'}}</div>
+                <p>{{comment.content}}</p>
+            </div>
+            <div class="color-gray date">{{comment.createTime}}</div>
+        </div>
+        <div  v-if="!comments || comments.length == 0" class="empty-box"></div>
+    </div>
+    <div id="visitor-list" class="visitor-list panel" style="display: none;">
+        <div v-if="visitors && visitors.length > 0" v-for="visitor in visitors" class="visitor-item">
+            <div class="avatar">
+                <img :src="visitor.headImgUrl||'img\\icons\\defaultimg.png'" />
+            </div>
+            <div class="visitor-main">
+                <div>{{visitor.name||'　'}}</div>
+            </div>
+            <div class="color-gray date">{{visitor.createTime}}</div>
+        </div>
+        <div  v-if="!visitors || visitors.length == 0" class="empty-box"></div>
+    </div>
+     <div class="clearfix bottomBox" style="height:60px;"></div> 
+    <template v-if="article.isShare">
+        <div class="comment-box p10" id="commentdiv" style=" display: none;">
+          <div style="width:100%;position:relative;">
+            <span class="fl" v-on:click="hiddenComment()" style="position:absolute;bottom:5px;"></span>
+          <!--    <button type="button" class="fl" v-on:click="hiddenComment()" style="margin-right: 5px;">取消</button>  -->
+            <!--<input type="text" id="comment-content" v-model="reply.content" placeholder="写留言..." v-on:click="MaxScrll()"/>-->
+            <div contenteditable="true" placeholder="写留言..." id="comment-content"   v-on:click="MaxScrll()" class="divinput" style="width: 60%;margin-left:15%;"
+                >写留言...</div>
+            <button type="button" class="fr" style="right: 7%;position:absolute;bottom:0px;" v-on:click="postComment()">发送</button>
+          </div>
+        </div>
+        <div class="comment-box" style="background: #CC9B4B; height: 60px;" id="sharediv">
+            <div class="fl w50" style="background: #fff; padding-top: 10px;"> 
+                <a v-bind:class="{'btn-comment':true}" v-on:click="showComment()" class="w30">
+                    <i class="icon-comment"></i>
+                    评论
+                </a>
+                <a v-bind:class="{'btn-favorite':true,active:article.isLike}" v-on:click="toggleFavorite()" class="w30">
+                    <i class="icon-favorite"></i>
+                    喜欢
+                </a>
+                <a v-bind:class="{'btn-like':true,active:article.isZan}" v-on:click="toggleLike()" class="w30">
+                    <i class="icon-like"></i>
+                    赞
+                </a>
+            </div>
+            <div id="share" class="fl w50 dis-cell btn-active ta-c" style="height: 60px;line-height: 60px;" v-on:click="shareArticle()"><i class="share1"></i>分享</div>
+        </div>
+    </template>
+    <template v-else>
+        <div class="comment-box" style="min-height: 60px;max-height: 100px;padding-top: 10px;">
+          <div style="width:100%;position:relative;">
+            <div class="fl" style="width: 20%; padding-left: 10px;position:absolute;bottom:-10px;">
+                <a v-bind:class="{'btn-favorite':true,active:article.isLike}"
+                    v-on:click="toggleFavorite()"> <i class="icon-favorite"></i> 喜欢
+                </a> <a v-bind:class="{'btn-like':true,active:article.isZan}"
+                    v-on:click="toggleLike()"> <i class="icon-like"></i> 赞
+                </a>
+            </div>
+            <!--<input type="text" id="comment-content" v-model="reply.content"
+                placeholder="写留言..." style="width: 50%;" v-on:click="MaxScrll()"/>-->
+        <div contenteditable="true" placeholder="写留言..." id="comment-content"  v-on:click="MaxScrll()" class="divinput"
+           style="margin-left:25%">写留言...</div>
+            <button type="button" class="fr" v-on:click="postComment()" style="position:absolute;bottom:3px;right:5%;">发送</button>
+          </div>
+	    </div>
+    </template>
+</div>
+
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/main.js"></script>
+<script src="js/main.a.js"></script>
+<script src="js/vue.js"></script>
+<script>
+
+    var id = Util.common.getParameter("id");
+    sessionStorage.setItem('articleId',id);
+    //是否是子账号
+    localStorage.setItem('isSubAccount',Util.common.getParameter('isSubAccount') || 'T');
+    var storeId = Util.common.getParameter("storeId");
+    var userId = Util.common.getParameter("userId");
+    var covePicUrl = Util.common.getParameter("covePicUrl"); 
+    var toastInstance = new Toast({context:$('body')});
+    var shareUrl = Util.common.b2cUrlApi + "weixinfront/static/article.html?share=0&id=" + id + "&storeId=" + userId +"&type=weixinIndex&flag=T";
+    var shareData = {
+        "title" : "",
+        "desc" : "",
+        "link" : shareUrl,
+        "imgUrl" : covePicUrl,
+    };
+    var articleCtl = new Vue({
+        el: "#container",
+        data: {
+            userId:userId,
+            article: "",
+            store:"",
+            commandNum:"",
+            replyNum:"",
+            visitorNum:"",
+            rcmdList:"",
+            comments:"",
+            visitors:"",
+            reply:{
+                content:""
+            },
+            // 文章粘贴内容
+            material: '',
+            //          是否子帐号
+            isSubAccount: localStorage.getItem('isSubAccount') || Util.common.getParameter("isSubAccount") || 'T',
+            tagList: [],
+            showMoreUrl: Util.common.b2cUrlApi +  "weixinfront/static/article-detail.html?id="+ id +"&storeId=" + storeId + "&type=weixinIndex&userId=" + userId
+        },
+        methods: {
+            onload: function () {
+                this.loadArticle();
+                this.loadRcmd();
+                this.commentList();
+                this.loadVisitor();
+            },
+            loadArticle:function(){
+                var _this = this;
+
+                $.ajax({
+                    url:Util.common.baseUrl + "event/onlineStudy/mobile/findOneById.do?id=" + id +"&userId=" + userId,
+                    success:function(response){
+                        console.log(response)
+                        if (response.code == 1) {
+                                $("#container").show();
+                            if (response.data.detail.createTime) {
+                                response.data.detail.time = timerFun(response.data.detail.createTime);
+                            }
+                            if (response.data.detail.studyTag) {
+                                _this.tagList = response.data.detail.studyTag.split(',');
+                                console.log(_this.tagList)
+                            }
+                            if (response.data.detail.material) {
+                                articleCtl.material = response.data.detail.material;
+                                
+                            }
+                            _this.article = response.data.detail;
+                            _this.commandNum = response.data.commandNum;
+                            _this.replyNum = response.data.replyNum;
+                            _this.visitorNum = response.data.visitorNum;
+                            shareData.title = response.data.detail.title;
+                        }
+                    }
+                });
+            },
+           
+            postComment:function(){
+                $('.comment-box').css('position','fixed');
+                $('.bottomBox').css('display','block');
+                this.reply.content = $('#comment-content').text();
+                if(this.postLocked){
+                    return false;
+                }
+                if(this.reply.content == "" || this.reply.content == "写留言..."){
+                    new Toast({context:$('body'),message: "评论内容不能为空"}).show();
+                    return false;
+                }
+                this.reply.userId = userId;
+                this.reply.studyId = id;
+                this.postLocked = true;
+                var _this = this;
+                var _url = "event/onlineStudy/mobile/addReply1.do";
+                // $.ajax({
+                //     url: Util.common.baseUrl + "event/onlineStudy/mobile/addReply.do",
+                //     headers: {'Content-Type': 'application/json'},
+                //     type:"POST",
+                //     data:JSON.stringify(this.reply),
+                //     success:function(){
+                //         new Toast({context:$('body'),message: "评论成功"}).show();
+                //         _this.commentList();
+                //         _this.reply.content = "";
+                //     },
+                //     complete:function(){
+                //         _this.postLocked = false;
+                //     }
+                // });
+
+                Util.common.executeAjaxCallback(_url,this.reply,function (response) {
+                   if(response.code == 1){
+                        new Toast({context:$('body'),message: "评论成功"}).show();
+                        _this.commentList();
+                        _this.hiddenComment();
+                        $('#comment-content').text("写留言...");
+                        _this.replyNum +=1;
+                        _this.postLocked = false;
+                    } else {
+                        new Toast({context:$('body'),message: response.msg }).show();
+                    }
+                });
+
+            },
+            loadRcmd:function(){
+                var _this = this;
+                $.ajax({
+                    url:Util.common.baseUrl + "event/onlineStudy/mobile/findRecommendGoodsById.do?id="+ id +"&page=1",
+                    success:function(response){
+                        _this.rcmdList = response.data.resultList;
+                        console.log(response.data.resultList)
+                    }
+                });
+            },
+            commentList:function(){
+                var _this = this;
+                $.ajax({
+                    url:Util.common.baseUrl + "event/onlineStudy/mobile/findReplyList.do?id="+ id +"&page=1",
+                    success:function(response){
+                        _this.comments = response.data.resultList;
+                    }
+                });
+
+            },
+            loadVisitor:function(){
+                var _this = this;
+                $.ajax({
+                    url:Util.common.baseUrl + "event/onlineStudy/mobile/findVisitorList.do?userType=1&id="+ id +"&page=1",
+                    success:function(response){
+                        _this.visitors = response.data.resultList;
+
+                    }
+                });
+            },
+            toggle:function(panelName, e){
+                var li = $(e.target).closest("li");
+                li.addClass("active");
+                li.siblings().removeClass("active");
+                $(".panel").hide();
+                $("#" + panelName + "-list").show();
+            },
+            toggleLike:function(){
+                var _this = this;
+                var postLocked;
+                if(postLocked){
+                    return false;
+                }
+                var data = {"userId":userId,"studyId":id,"isZan":0};
+                if(!this.article.isZan){
+                    data.isZan = 1;
+                }
+                postLocked = true;
+                var _url = "event/onlineStudy/mobile/artStatus1.do";
+                Util.common.executeAjaxCallback(_url,data,function (response) {
+                   if(response.code == 0){
+                        var message = articleCtl.article.isZan ? "取消成功":"点赞成功";
+                        new Toast({context:$('body'),message: message}).show();
+                        articleCtl.article.isZan = !articleCtl.article.isZan;
+                        postLocked = false;
+                    }
+                });
+                 
+            },
+            toggleFavorite:function(){
+                var _this = this;
+                var postLocked;
+                if(postLocked){
+                    return false;
+                }
+                var data = {"userId":userId,"studyId":id,"isLike":0};
+                if(!this.article.isLike){
+                    data.isLike = 1;
+                }
+                postLocked = true;
+                var _url = "event/onlineStudy/mobile/artStatus1.do";
+                Util.common.executeAjaxCallback(_url,data,function (response) {
+                   if(response.code == 0){
+                        var message = _this.article.isLike ? "取消成功":"喜欢成功";
+                        new Toast({context:$('body'),message: message}).show();
+                        _this.article.isLike = !_this.article.isLike;
+                        postLocked = false;
+                    }
+                });
+            },
+            showComment: function() {
+                $('#sharediv').css('display','none');
+                $('#commentdiv').css('display','block');
+            },
+            hiddenComment: function() {
+                $('#commentdiv').css('display','none');
+                $('#sharediv').css('display','block');
+                $('.comment-box').css('position','fixed');
+                $('.bottomBox').css('display','block');
+            },
+            ifWechat:function(url,u_id,g_id){
+                console.log(url)
+                var ua = window.navigator.userAgent.toLowerCase();
+                var goUrl = url.substring(url.indexOf("=")+1,url.length);
+                var toUrl = "";
+                if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+                    toUrl = Util.common.b2cUrlApi+"weixinfront/static/goods_detail.html?share=0&flag=T&storeId="+storeId+"&type=weixinIndex&id="+goUrl;
+                }else{
+                    toUrl = url+"&storeId="+u_id+"&isSubAccount="+articleCtl.isSubAccount;
+                }
+                location.href = toUrl;
+            },
+            shareArticle: function() {
+                window.onShare();
+            },
+            downLoad: function(file) {
+                my_confirm({
+                    title:'提示',
+                    tips:"将通过微信分享的形式，您可在微信中进行下载操作",
+                    btnOk:'确定',
+                    btnNo:'取消',
+                    funcOk:function () {
+                        if(window.WebAppJS){
+                            WebAppJS.share(shareData.title, shareData.desc, shareData.imgUrl, file);
+                        }
+                    },
+                    funcNo:function () {
+
+                    }
+                });
+            },
+            MaxScrll: function() {
+                if ($('#comment-content').text() == '写留言...') {
+                    $('#comment-content').text('');
+                }
+                $('.comment-box').css('position','static');
+                setTimeout(function(){
+                    document.body.scrollTop = document.body.scrollHeight;
+                },10)
+                setTimeout(function(){
+                    document.body.scrollTop = document.body.scrollHeight;
+                },100)
+                
+                $('.bottomBox').css('display','none');
+                
+            }
+
+        }
+    });
+
+    window.onShare = function(){
+        if(window.WebAppJS){
+            WebAppJS.shareForArticle(shareData.title, shareData.desc, shareData.imgUrl, shareData.link, articleCtl.material);
+        }
+    };
+    articleCtl.onload();
+
+	
+	$(".hewenqiToggle").on("click", function () {
+	if ($(".hewenqiToggle").css('position') == "absolute") {
+		// $('#valuetxt').html('收起');
+        $('#valuetxtIcon').html('收起');
+        $('#valuetxtIcon').removeClass('zhankai');
+        $('#valuetxtIcon').addClass('shouqi');
+		$(".hovertreeContent").height("auto");
+		$(".hewenqiToggle").css({ "position": "relative" });
+	}
+	else
+	{
+		// $('#valuetxt').html('阅读全文');
+		$(".hovertreeContent").height("240");
+        $('#valuetxtIcon').html('阅读全文');
+        $('#valuetxtIcon').removeClass('shouqi');
+        $('#valuetxtIcon').addClass('zhankai');
+		$(".hewenqiToggle").css({ "position": "absolute" });
+	}
+	})
+    var timerFun = function(time) {
+        var Createtime = new Date(time.replace(/\-/g,"/")).getTime();
+        var current=new Date().getTime();
+        var newCurrent = new Date(current);
+        if (Createtime>current) {
+            var newCurrent = new Date(current);
+            var m = newCurrent.getMonth()+1;
+            var d = newCurrent.getDate();
+            var h = newCurrent.getHours();
+            var mm = newCurrent.getMinutes();
+            return add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm);
+        } else {
+            var d = Math.floor((current-Createtime)/1000/60/60/24);
+            if (d>365) {
+                var newCurrent = new Date(Createtime);
+                var y = newCurrent.getFullYear();
+                var m = newCurrent.getMonth()+1;
+                var d = newCurrent.getDate();
+                return y+'-'+add0(m)+'-'+add0(d);
+            } else {
+                var newCurrent = new Date(Createtime);
+                var m = newCurrent.getMonth()+1;
+                var d = newCurrent.getDate();
+                var h = newCurrent.getHours();
+                var mm = newCurrent.getMinutes();
+                return add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm);
+            }
+        }
+    }
+    var add0 =function(m){return m<10?'0'+m:m }
+</script>
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>订单详情</title>
+</head>
+<body id="orderSub"  class="bg-main order-sub">
+    <template v-if="addr.hasAddr==false">
+        <div class="dis-tabel w100 item mar-b1" onclick="jumpTo('person_address')">
+            <i class="dis-cell addr-icon"></i>
+            <p  class="dis-cell">选择收货地址</p>
+            <p class="dis-cell ta-c"><i class="iconfont ">&#xe65e;</i></p>
+        </div>
+    </template>
+    <template v-if="addr.hasAddr==true">
+        <div class="dis-tabel w100 item mar-b1" onclick="jumpTo('person_address')">
+            <i class="dis-cell addr-icon"></i>
+            <div  class="dis-cell" >
+                <p>{{addr.addrData.receiptName}}&nbsp;&nbsp;&nbsp;{{addr.addrData.mobile}}</p>
+                <div class="fs-10 ">{{addr.addrData.provinceName}}{{addr.addrData.cityName}}{{addr.addrData.areaName}}{{addr.addrData.detailAddr}}</div>
+            </div>
+            <p class="dis-cell va-m ta-c"><i class="iconfont ">&#xe65e;</i></p>
+        </div>
+    </template>
+    <div class="order-msg3">
+        <div class="order-msg3-shopname" style="display: none;">
+        <div class="item dis-tabel w100 border-b3">
+            <i class="dis-cell shop-icon "></i>
+            <p  class="dis-cell">{{shopname}}</p>
+        </div>
+        <ul class="mycart" style="border-bottom: 0.6125rem solid #F2F2F2;">
+            <template v-for="item in orderData.shopCarts">
+                <li v-if="item.good" class="border-b3">
+                    <div class="dis-tabel">
+                        <div class="dis-cell part2"><img :src="item.good.image.url" alt=""></div>
+                        <div class="dis-cell part3">
+                            <div class="dis-tabel part3-1">
+                                <div class="dis-cell">
+                                    <h4>{{item.good.name}}</h4>
+                                    <template v-for="norm in item.skuList">
+                                        <span v-if="norm!=undefined" class="fs-10 color-grey">{{norm}}</span>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="dis-tabel part3-2">
+                                <div class="dis-cell">
+                                    <template v-if="orderData.activityType">
+                                        <p v-if="orderData.activityType == 1" class="color-main fs-14">¥{{item.good.price}}</p>
+                                        <p v-if="orderData.activityType == 4" class="color-main fs-14">定金：¥{{item.good.price}}</p>
+                                        <p v-if="orderData.activityType == 5" class="color-main fs-14">预售价：¥{{item.good.price}}</p>
+                                    </template>
+                                    <template v-else>
+                                        <p class="color-main fs-14">¥{{item.good.price}}</p>
+                                    </template>
+                                </div>
+                                <div class="dis-cell part3-01">x{{item.goodsCount}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </template>
+            <div v-if="false" class="discount"><p class="clearfix"><i class="fl">优惠</i><em class="fr color-main">¥{{postPrice}}</em></p></div>
+        </ul>
+        <div>
+        <div class="msg3">
+            <p class="clearfix border-b3"><i class="fl">留言</i><span class="fr"><input name="buyerRemark" v-model="buyerRemark" type="text" placeholder="选填"></span></p>
+        </div>
+    </div>
+    <ul class="order-msg2" style="border-bottom: 0.6125rem solid #F2F2F2;">
+        <li class="clearfix border-b3"><p class="fl">支付方式</p><i class="fr ">微信支付</i></li>
+        <li class="clearfix border-b3"><p class="fl">配送信息</p><i class="fr">商家配送</i></li>
+        <!--<li class="clearfix border-b1">
+            <p class="fl">短信通知收件人</p>
+            <input  type="checkbox" id="mesg"><label class="fr" for="mesg"></label></li>-->
+        <li  class="clearfix border-b3" v-on:click="popUpwin()"><p class="fl">发票类型</p><span  class="fr"><em id="taxcontent">不开发票</em><i class="iconfont ">&#xe65e;</i></span></li>
+        <template v-if="orderData.activityType == 4 && orderData.bestActivity">
+            <li class="clearfix" style="padding: 0.4rem 0;"><p class="fl color-red1">阶段1</p><i class="fr color-red1">定金：¥{{orderData.bestActivity.firstAmount}}</i></li>
+            <li class="clearfix border-b3" style="padding: 0.4rem 0;"><p class="fl">阶段2<br><span class="fs-10 color-grey">({{orderData.bestActivity.paymentStart}} 开始支付尾款)</span></p><i class="fr">尾款：¥{{orderData.bestActivity.remainingAmount}}</i></li>
+            <li class="clearfix"><p class="fl">尾款通知号码</p><i class="fr">{{phone}}</i></li>
+        </template>
+    </ul>
+    <ul class="order-msg5" style="border-bottom: 0.6125rem solid #F2F2F2;">
+        <li class="clearfix"><p class="fl">商品金额</p><i class="fr color-red1">¥{{(orderData.all*1).toFixed(2)}}</i></li>
+        <li class="clearfix"><p class="fl">运费</p><i class="fr color-red1">+ ¥{{postPrice}}</i></li>
+    </ul>
+    <ul class="order-msg2" v-if="orderData.activityType == 4 || orderData.activityType == 5">
+        <li class="clearfix border-b3"><p class="fl">同意支付定金</p><span class="fl color-grey">(预售商品，定金不退哦！)</span><i class="fr "></i></li>
+    </ul>
+    <div class="h70px bg-main"></div>
+    <div class="buybtnView">
+        <template v-if="orderData.activityType == 4 || orderData.activityType == 5">
+            <div v-on:click="showWarn()" class="sub-btn bg-red2 fr">立即下单</div>
+        </template>
+        <template v-else>
+            <div v-on:click="submit()" class="sub-btn bg-red2 fr">立即下单</div>
+        </template>
+        <div class="color-red1 fr">实付款：¥<span class="fs-16">{{(orderData.all*1+postPrice*1).toFixed(2)}}</span></div>
+    </div>
+    <div class="br4"></div>
+    <div id="taxWin" style="display: none;" class="full-bg">
+        <div class="choose-list">
+            <ul>
+                <li class="choose">
+                    <p>发票类型</p>
+                    <div class="clearfix">
+                        <i v-on:click="choosTax(0)" id="noTax" class="fl btn-active">不要发票</i>
+                        <i v-on:click="choosTax(1)" id="hasTax" class="fl">纸质普通发票</i>
+                    </div>
+                </li>
+                <li id="taxTypeCon" style="display: none;border-top: 1px solid #D7D7D7;"  class="choose">
+                    <p>发票类型</p>
+                    <div class="clearfix">
+                        <span class="fl"><input name="taxType" id="taxType1" value="个人"  type="radio" v-on:click="chooseTax2()"><label for="taxType1"></label>个人</span>
+                        <span class="fl"><input name="taxType" id="taxType2" value="公司" checked="checked" type="radio" v-on:click="chooseTax2()"><label for="taxType2"></label>单位</span>
+                    </div>
+                    <input  id="taxTit" class="big-btn " placeholder="请输入单位的发票抬头">
+                </li>
+            </ul>
+            <div v-on:click="subTaxType()" class="big-btn btn-active">确认</div>
+        </div>
+
+    </div>
+
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $(function () {
+//        new Toast({context:$('body'),message:'测试测试信息测试信息信息'}).show();
+//        my_confirm({});
+        order.loadPage();
+        // Util.common.addloadingAnimate(); 
+
+//                微信分享
+        //Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+    });
+
+
+
+    var oneclick=false;
+
+    var order=new Vue({
+        el:"#orderSub",
+        data:{
+            orderData:{},
+            needInvoice:false,
+            invoiceName:'',
+            invoiceContent:'',
+            addr:{
+                hasAddr:false,
+                addrData:{}
+            },
+            phone: '',
+            postPrice:0,
+            expressId:'',
+            expressCompany:'',
+            //是否匹配运费模版
+            isCarriage: false,
+            buyerRemark:"",
+            shopname:''
+        },
+        computed:{
+
+        },
+        methods:{
+//            加载订单信息
+            loadPage:function () {
+                order.$set('shopname',sessionStorage.getItem('shopName'));
+                var shopCartInfo =sessionStorage.getItem('orderSubInfo');
+                // console.log(shopCartInfo)
+                var shopCartInfoJson = JSON.parse(shopCartInfo);
+                for ( i in shopCartInfoJson.shopCarts){
+                    var arr=[];
+                    if(shopCartInfoJson.shopCarts[i].good.skuName !=null && shopCartInfoJson.shopCarts[i].good.skuName !=undefined){
+                        var norm=shopCartInfoJson.shopCarts[i].good.skuName.split(",");
+                        if(norm.length>1){
+                            for(j in norm){
+                                var n=norm[j].split(":");
+                                arr.push(n[1]);
+                            }
+                        }else{
+                            arr.push(shopCartInfoJson.shopCarts[i].good.skuName);
+                        }
+                        console.log(arr);
+                    }else{
+                        arr.push("套餐");
+                    }
+
+                    shopCartInfoJson.shopCarts[i].skuList=arr;
+                }
+                console.log(shopCartInfoJson);
+                this.$set("orderData",shopCartInfoJson);
+                $('.order-msg3-shopname').css('display','block');
+                $('.msg3').css('display','block');
+//                自己买，选择收货地址
+                if(Util.common.getParameter("buyType") == 0) {
+                    var url ="/weixin/addr/query.do";
+                    var param = {"userId": sessionStorage.getItem('userid')};
+                    Util.common.executeAjaxCallback(url , param , function(data){
+                        console.log(data)
+                        if (data.length>0){
+                            for( x in data){
+                                if(data[x].status==1){
+                                    order.$set("addr.hasAddr",true);
+                                    order.$set("addr.addrData",data[x]);
+                                    var phone = data[x].mobile.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+                                    order.$set("phone",phone);
+                                    order.postCount();
+                                }
+                            }
+                        }
+                    });
+                }else{
+                    var address=sessionStorage.getItem('one_location');
+                    address=JSON.parse(address);
+                    console.log(address);
+                    order.$set("addr.hasAddr",true);
+                    order.$set("addr.addrData",address);
+                    order.postCount();
+                }
+            
+            },
+//            发票弹窗
+            popUpwin:function () {
+                $("#taxWin").css("display","block");
+                $("body").addClass("hide");
+            },
+//            选择发票类型
+            choosTax:function (type) {
+                if(type==0){
+                    $("#noTax").addClass("btn-active");
+                    $("#hasTax").removeClass("btn-active");
+                    $("#taxTypeCon").css("display","none");
+                }else {
+                    $("#hasTax").addClass("btn-active");
+                    $("#noTax").removeClass("btn-active");
+                    $("#taxTypeCon").css("display","block");
+                }
+            },
+            chooseTax2:function () {
+                if($("#taxType2").attr("checked")=="checked"){
+                    $("#taxTit").css("display","block");
+
+                }else {
+                    $("#taxTit").css("display","none");
+
+                }
+            },
+//            提交发票类型
+            subTaxType:function () {
+                if($("#noTax").hasClass("btn-active")==false){
+                    order.$set("needInvoice",true);
+                    var tax=$("input[name=taxType]:checked").val();
+                    order.$set("invoiceName",tax);
+                    if(tax=="公司"){
+                        var str=$("#taxTit").val();
+                        if(str==""){
+                            new Toast({context:$('body'),message:"请输入正确的单位发票抬头"}).show();
+                            return;
+                        }else {
+                            order.$set("invoiceContent",str);
+                            $("#taxcontent").html(str);
+                        }
+                    }else {
+                        $("#taxcontent").html("个人发票");
+                    }
+                }else {
+                    $("#taxcontent").html("不要发票");
+                }
+                $("#taxWin").css("display","none");
+                $("body").removeClass("hide");
+            },
+//            计算邮费
+            postCount:function () {
+                var url = Util.common.baseUrlApi +'feright/showOptions';
+                var tradeContextJson = {};
+                tradeContextJson.city = order.addr.addrData.cityName;
+                tradeContextJson.area = order.addr.addrData.areaName;
+                var param2= {};
+                var indentList =[];
+                var shopCartInfo = Util.common.getParameter("shopCartInfo");
+                var shopCartInfoJson = JSON.parse(shopCartInfo);
+                for(var i = 0; i < shopCartInfoJson.shopCarts.length; i++){
+                    var shopCart = shopCartInfoJson.shopCarts[i];
+                    var indent = {};
+                    indent.number  = shopCart.goodsCount;
+                    indent.tradeGoodAmount = shopCart.good.price;
+                    indent.tradeGoodSkuId  = shopCart.goodsId;
+                    indentList.push(indent);
+                }
+                param2 = {"indentJson": JSON.stringify({"indentList": indentList}),"tradeContextJson": JSON.stringify(tradeContextJson)};
+                console.log(param2)
+                var postPrice = 0;
+                var expressId = '';
+                var expressCompany = '';
+                $.post(url, param2, function (data) {
+                    if (data.success && data.data && data.data.result) {
+                        var servicerList = data.data.result.servicerList;
+                        console.log(servicerList)
+                        if (servicerList.length > 0) {
+                           postPrice = servicerList[0].totalFreight;
+                           expressId = servicerList[0].servicerId;
+                           expressCompany = servicerList[0].servicerName;
+                           order.$set("isCarriage",true);
+                        } 
+                        order.$set("postPrice",postPrice);
+                        order.$set("expressId",expressId);
+                        order.$set("expressCompany",expressCompany);
+                        
+                        // if(Number(postPrice)!=0){
+                        //     my_confirm({
+                        //         title:'提示',
+                        //         tips:"尊敬的顾客：您好，您所购买的商品中包含不包邮物品，系统将自动为您生成订单邮费，请您知悉。感谢您对我们的信任与支持。",
+                        //         btnOk:'确定',
+                        //         btnNo:'取消',
+                        //         funcOk:function () {
+
+                        //         },
+                        //         funcNo:function () {
+                        //         }
+                        //     });
+                        // }
+                    } else {
+                        new Toast({context: $('body'), message: "邮费加载异常"}).show();
+                    }
+                }, 'json');
+            },
+            showWarn:function(){
+                my_confirm({
+                    title:'提示',
+                    tips:"预售商品，定金不退<br>确定继续下单？",
+                    btnOk:'同意下单',
+                    btnNo:'再想想',
+                    funcOk:function () {
+                        order.submit();
+                    },
+                    funcNo:function () {
+                    }
+                });
+            },
+//            提交订单
+            submit:function(){
+                if (!this.addr.hasAddr) {
+                    new Toast({context: $('body'), message: "请先选择收货地址"}).show();
+                    return;
+                }
+                if (!order.isCarriage) {
+                    new Toast({context:$('body'),message:"该商品暂不支持该地区销售"}).show();
+                    return;
+                }
+                var modelJson = {};
+                modelJson.subbranchId = sessionStorage.getItem("shopId");
+                modelJson.buyerId = sessionStorage.getItem("userid");
+                //
+                if(Util.common.getParameter('buyType') == 0) {
+                    modelJson.buyType = "z";
+                } else {
+                    modelJson.buyType = "s";
+                }
+                modelJson.type = "1";
+                modelJson.ticketNum = "";
+                modelJson.buyerCarriage = this.postPrice;
+                modelJson.expressId = this.expressId;
+                modelJson.expressCompany = this.expressCompany;
+                modelJson.province =this.addr.addrData.provinceName;
+                modelJson.city =this.addr.addrData.cityName;
+                modelJson.town =this.addr.addrData.areaName;
+                modelJson.townCode =this.addr.addrData.areaCode;
+                modelJson.address =this.addr.addrData.detailAddr;
+                modelJson.receiver =this.addr.addrData.receiptName;
+                modelJson.receiverPhone =this.addr.addrData.mobile;
+                modelJson.buyerRemark =this.buyerRemark;
+                modelJson.needInvoice =this.needInvoice;
+                modelJson.invoiceName =this.invoiceName;
+                modelJson.invoiceContent =this.invoiceContent;
+                var indentList =[];
+                var goodCount =this.orderData.count;
+                var all =this.orderData.all*1 + this.postPrice*1;
+
+                var shopCartInfo = Util.common.getParameter("shopCartInfo");
+                var shopCartInfoJson = JSON.parse(shopCartInfo);
+                var cartIds = [];
+                for(var i = 0; i < shopCartInfoJson.shopCarts.length; i++){
+                    var shopCart = shopCartInfoJson.shopCarts[i];
+                    var indent = {};
+                    indent.number  = shopCart.goodsCount;
+                    indent.finalAmount  = shopCart.good.price;
+                    indent.tradeGoodSkuId  = shopCart.goodsId;
+                    indentList.push(indent);
+                    if (shopCart.id) {
+                        cartIds.push(shopCart.id);
+                    }
+                }
+                modelJson.indentList = indentList;
+            //    console.log(modelJson);
+                var url = '';
+                // 商品活动类型(activityType) 1:普通商品; 2：促销商品; 3:团购商品; 4:预售商品(定金) 5:预售商品（全款）
+                if (shopCartInfoJson.activityType == 4 || shopCartInfoJson.activityType == 5) {
+                    url = 'trade/corder/createPresellOrder';
+                } else {
+                    url ="trade/corder/createNormalOrder";
+                }
+                var param = {"modelJson":JSON.stringify(modelJson), "cartIds": cartIds.join()};
+                console.log(param);
+                if (oneclick) {
+                    return false;
+                } else {
+                    oneclick = true;
+                    if (this.addr.hasAddr) {
+                        Util.common.b2cPostCallback(url, param, function (data) {
+                            if (data.success && data.data) {
+                                var dataInfo = data.data;
+                                var waitpayAmount = 0;
+                                if (shopCartInfoJson.activityType == 4) {
+                                    waitpayAmount = dataInfo.presellExtra.presellFirst;
+                                } else {
+                                    waitpayAmount = dataInfo.waitpayAmount;
+                                }
+                                document.location.href = "order_pay.html"+"?waitpayAmount=" + waitpayAmount + '&orderId=' + dataInfo.id;
+                            }
+                            else {
+                                oneclick = false;
+                                if (data.msg) {
+                                    new Toast({context: $('body'), message: data.msg}).show();
+                                }
+                                else {
+                                    new Toast({context: $('body'), message: "库存不足"}).show();
+                                }
+                            }
+                        });
+                    } else {
+                        console.log(this.addr.hasAddr);
+                        oneclick = false;
+                        new Toast({context: $('body'), message: "请填写收货地址"}).show();
+
+                    }
+                }
+            }
+        }
+    });
+
+
+</script>
+</html>

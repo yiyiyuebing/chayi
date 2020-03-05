@@ -1,0 +1,76 @@
+.edit-top {
+    display: inline-block;
+    color: #666;
+    width: 2.12rem;
+    height: 1.62rem;
+    padding: 0.4rem 0;
+    /* line-height: 1.62rem; */
+    font-size: 0.52rem;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.empty-icon {
+    width: 25%;
+    margin: 0% auto;
+    padding: 20% 0 3%;
+}
+.may-like {
+    padding-top: 0;
+}
+.margin-bo-3 {
+    margin-bottom: 3vh;
+}
+.mycart .dis-tabel .part1 {
+    width: 7%;
+}
+.mycart .dis-tabel .part2 {
+    padding: 0 1rem;
+}
+.mycart .dis-tabel .part2 a{
+    display: inline-block;
+    position: relative;
+}
+.mycart .dis-tabel .part2 .stock{
+    width: 5rem;
+    height:1.5rem;
+    line-height: 1.5rem;
+    position: absolute;
+    z-index: 1;
+    left:0;
+    bottom:0.3rem;
+    background: rgba(0,0,0,.5);
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.875rem;
+}
+.mycart .dis-tabel .part3 {
+    padding-left: 0.2rem;
+}
+.shelves {
+    position: absolute;
+    z-index: 1;
+    left: .3rem;
+    top: 2.5rem;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    color: #fff;
+    font-size: 0.8125rem;
+    border-radius: 3px;
+    padding: 0 .3rem;
+    background: rgba(0,0,0,0.4);
+}
+.sellover{
+    background: url(../img/icons/sellover2.png)center center no-repeat;
+    background-size: 3rem;
+    height: 3rem;
+    width: 3rem;
+    position: fixed;
+    z-index: 2;
+    bottom: 2rem;
+    left: 4.6rem;
+    border-radius: 4rem;
+}

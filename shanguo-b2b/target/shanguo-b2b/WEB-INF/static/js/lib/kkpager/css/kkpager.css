@@ -1,0 +1,132 @@
+#kkpager{
+	clear:both;
+	color:#999;
+	padding:5px 0px 5px 0px;
+	font-size:13px;
+	text-align: right;
+}
+#kkpager a{
+	font-size: 14px;
+	line-height: 36px;
+	color: #333;
+	padding-left: 14px;
+	padding-right: 14px;
+	border: 1px solid #dbdbdb;
+	margin-right: 8px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	cursor: pointer;
+	display: inline-block;
+}
+
+
+#kkpager .disabled{
+	font-size: 14px;
+	line-height: 36px;
+	color: #333;
+	padding-left: 14px;
+	padding-right: 14px;
+	border: 1px solid #dbdbdb;
+	margin-right: 8px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	cursor: pointer;
+	display: inline-block;
+}
+#kkpager span.curr{
+	font-size: 14px;
+	line-height: 36px;
+	padding-left: 14px;
+	padding-right: 14px;
+	margin-right: 8px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	display: inline-block;
+	border: none;
+	color: #cc9b4b;
+	cursor: not-allowed;
+	background: #fff;
+}
+#kkpager a:hover{
+	border:1px solid #cc9b4b;
+	background-color:#cc9b4b;
+	color:#fff;
+}
+#kkpager span.normalsize{
+}
+#kkpager_gopage_wrap{
+	position:relative;
+	left:0px;
+	top:0px;
+}
+#kkpager_btn_go {
+	width:44px;
+	height:30px;
+	border:0px;
+	overflow:hidden;
+	line-height:140%;
+	padding:0px;
+	margin:0px;
+	text-align:center;
+	cursor:pointer;
+	background-color:#cc9b4b;
+	color:#FFF;
+	position:absolute;
+	left:0px;
+	top:-5px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	display:none;
+}
+#kkpager_btn_go_input{
+	text-align:center;
+	position:relative;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	left:0px;
+	top:0px;
+	outline:none;
+	border: 1px solid #dbdbdb;
+	border-radius: 2px;
+	font-size: 12px;
+	line-height: 22px;
+	color: #333;
+	width: 34px;
+	height: 32px;
+	margin-left: 5px;
+	margin-right: 5px;
+	display: inline-block;
+}
+
+#kkpager_btn_go_input.focus{
+	border-color:#cc9b4b;
+}
+
+#kkpager .pageBtnWrap{
+	display: inline-block;
+}
+#kkpager .infoTextAndGoPageBtnWrap{
+	margin-left: 10px;
+	font-size: 14px;
+	color: #333;
+	line-height: 36px;
+	margin-left: 60px;
+	margin-right: 10px;
+}
+#kkpager .spanDot{
+	margin-right:5px;
+}
+
+#kkpager .currPageNum{
+	color:#CC9B4B;
+}
+
+#kkpager .infoTextAndGoPageBtnWrap{
+	padding-top:5px;
+}
+#kkpager .infoTextAndGoPageBtnWrap .goPageBox{
+	margin-left: 10px;
+}

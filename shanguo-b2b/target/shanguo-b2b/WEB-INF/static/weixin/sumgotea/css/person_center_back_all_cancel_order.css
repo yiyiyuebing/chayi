@@ -1,0 +1,311 @@
+body {
+  background: #f3f2f5;
+}
+header {
+  height: 2.04rem;
+  background: -webkit-gradient(linear, center top, center bottom, from(#f5e35b), to(#f8c179));
+  background: -moz-linear-gradient(top, #f5e35b, #f8c179);
+  background: -o-linear-gradient(top, #f5e35b, #f8c179);
+  padding-left: 0.46rem;
+  color: #fff;
+  line-height: 2.04rem;
+  font-size: 0.6rem;
+  text-align: left;
+}
+.customer-information {
+  background: #fff;
+  padding-left: 0.5rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.2rem;
+  margin-bottom: 0.4rem;
+}
+.customer-information .location-icon {
+  width: 0.52rem;
+  height: 0.68rem;
+  background: url(../images/g_icon_location.png) no-repeat center;
+  background-size: contain;
+  margin-right: 0.48rem;
+}
+.customer-information .customer {
+  width: 13.32rem;
+}
+.customer-information .customer .customer-name .name {
+  font-size: 0.52rem;
+  color: #333;
+  line-height: 0.7rem;
+  text-align: left;
+  margin-right: 1.56rem;
+  letter-spacing: 1px;
+}
+.customer-information .customer .customer-name .tel {
+  font-size: 0.52rem;
+  color: #333;
+  line-height: 0.7rem;
+  text-align: left;
+  letter-spacing: 1px;
+}
+.customer-information .customer .customer-location {
+  line-height: 1.12rem;
+  font-size: 0.48rem;
+  text-align: left;
+  color: #666;
+}
+.product-information {
+  background: #fff;
+  padding-left: 0.4rem;
+}
+.product-information .order-number {
+  font-size: 0.48rem;
+  text-align: left;
+  color: #666;
+  line-height: 1.56rem;
+  margin-bottom: 0.26rem;
+}
+.product-information .product .product-img {
+  width: 2.86rem;
+  height: 2.8rem;
+  overflow: hidden;
+  margin-right: 0.44rem;
+}
+.product-information .product .product-img img {
+  width: 100%;
+  height: 100%;
+}
+.product-information .product .product-txt {
+  width: 10.76rem;
+}
+.product-information .product .product-txt .product-data .name {
+  font-size: 0.48rem;
+  text-align: left;
+  line-height: 0.72rem;
+  color: #333;
+  width: 6.84rem;
+  height: 1.44rem;
+  overflow: hidden;
+}
+.product-information .product .product-txt .product-data .price {
+  font-size: 0.44rem;
+  color: #666;
+  line-height: 0.56rem;
+  margin-top: 0.12rem;
+}
+.product-information .product .product-txt .product-size .size {
+  font-size: 0.48rem;
+  line-height: 0.76rem;
+  text-align: left;
+  color: #999;
+}
+.product-information .product .product-txt .product-size .count {
+  font-size: 0.48rem;
+  line-height: 0.76rem;
+  text-align: left;
+  color: #666;
+}
+.product-information .product .product-txt .order-category {
+  margin-top: 0.06rem;
+}
+.product-information .product .product-txt .order-category span {
+  height: 0.56rem;
+  text-align: center;
+  border: 1px solid #f05353;
+  border-radius: 0.12rem;
+  font-size: 0.4rem;
+  padding-left: 0.16rem;
+  padding-right: 0.16rem;
+  color: #f05353;
+  line-height: 0.6rem;
+  margin-right: 0.2rem;
+}
+.product-information .draw-back {
+  height: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.2rem;
+  text-align: center;
+  color: #1a1a1a;
+  font-size: 0.48rem;
+  line-height: 1.04rem;
+  margin-right: 0.46rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.64rem;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+}
+.order-information {
+  background: #fff;
+  padding-left: 0.48rem;
+  padding-right: 0.48rem;
+  margin-bottom: 0.4rem;
+}
+.order-information table {
+  width: 100%;
+}
+.order-information table td {
+  font-size: 0.4rem;
+  color: #1c1c1c;
+  line-height: 0.76rem;
+}
+.order-information table td:first-of-type {
+  text-align: left;
+}
+.order-information table td:last-of-type {
+  text-align: right;
+}
+.order-information .order-price {
+  border-top: 1px solid #dbdbdb;
+  width: 13.9rem;
+}
+.order-information .order-price label {
+  font-size: 0.48rem;
+  line-height: 1.16rem;
+  color: #1c1c1c;
+  font-weight: bold;
+}
+.order-information .order-price span {
+  font-size: 0.5rem;
+  line-height: 1.16rem;
+  color: #cc9b4b;
+}
+.order-information .contact-server {
+  text-align: center;
+  padding-bottom: 0.4rem;
+  padding-top: 0.1rem;
+}
+.order-information .contact-server a {
+  display: inline-block;
+  width: 13.08rem;
+  height: 1.12rem;
+  text-align: center;
+  border: 1px solid #dbdbdb;
+  font-size: 0.44rem;
+  line-height: 1.16rem;
+  border-radius: 0.2rem;
+}
+.order-information .contact-server a i {
+  display: inline-block;
+  width: 0.8rem;
+  height: 0.68rem;
+  background: url(../images/g_icon_contact_server.png) no-repeat center;
+  background-size: contain;
+  vertical-align: sub;
+  margin-right: 0.26rem;
+}
+.customer-message {
+  background: #fff;
+  padding-left: 0.48rem;
+  padding-right: 0.48rem;
+  margin-bottom: 0.4rem;
+}
+.customer-message .message {
+  text-align: left;
+  padding-bottom: 0.4rem;
+}
+.customer-message .message .message-title {
+  font-size: 0.52rem;
+  color: #1c1c1c;
+  line-height: 0.8rem;
+  font-weight: bold;
+}
+.customer-message .message .message-content {
+  font-size: 0.48rem;
+  color: #666;
+  line-height: 0.76rem;
+  font-weight: bold;
+}
+.customer-message .message-group {
+  border-top: 1px solid #dbdbdb;
+}
+.customer-message .message-group span {
+  font-size: 0.52rem;
+  font-weight: bold;
+  line-height: 1.48rem;
+}
+footer {
+  padding-left: 0.48rem;
+  padding-right: 0.48rem;
+  padding-top: 0.3rem;
+  background: #fff;
+}
+footer .order-time {
+  font-size: 0.4rem;
+  line-height: 0.64rem;
+  text-align: left;
+  color: #666;
+  padding-bottom: 0.3rem;
+}
+footer .order-operation {
+  border-top: 1px solid #dbdbdb;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  text-align: right;
+}
+footer .order-operation a {
+  display: inline-block;
+  margin-left: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 0.12rem;
+  font-size: 0.48rem;
+  color: #1c1c1c;
+  line-height: 1.16rem;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+}
+footer .order-operation a.confirm {
+  border-color: #cc9b4b;
+  background: #cc9b4b;
+  color: #fff;
+}
+
+.popup{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top:0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+}
+.popup .popup-wrap{
+  background: #fff;
+  width: 11.28rem;
+  height: 5.68rem;
+  position: absolute;
+  left: 50%;
+  top:50%;
+  margin-left: -5.64rem;
+  margin-top: -2.84rem;
+  border-radius: 0.4rem;
+  padding-top: 0.24rem;
+}
+.popup .popup-wrap h4{
+  text-align: center;
+  font-size: 0.56rem;
+  line-height: 1.3rem;
+  color: #1c1c1c;
+  margin: 0;
+}
+.popup .popup-wrap p{
+  text-align: center;
+  font-size: 0.56rem;
+  line-height: 1.04rem;
+  color: #666;
+  margin: 0;
+}
+.popup .popup-wrap .button-group{
+  margin-top: 0.48rem;
+  border-top: 1px solid #dbdbdb;
+}
+.popup .popup-wrap .button-group a{
+  width: 50%;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 0.56rem;
+  line-height: 1.76rem;
+}
+.popup .popup-wrap .button-group a.cancel{
+  color: #666;
+  border-right: 1px solid #dbdbdb;
+}
+.popup .popup-wrap .button-group a.confirm{
+  color: #cc9b4a;
+}
+

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>今日推荐</title>
+</head>
+<body id="today" class="bg-main today">
+       <!--  <div class="top dis-tabel">
+            <div class="dis-row">
+                <div class="search dis-cell">
+                    <input class="search-icon" onfocus="searchEven()"  type="text" placeholder="搜索商品名称/关键字">
+                </div>
+                <div class="store-icon dis-cell"><img src="img/icons/footer3.png" alt=""></div>
+            </div>
+
+        </div> -->
+
+    <div class="part3">
+        <div class="clearfix condition">
+            <span class="border-l1 fl w50 ta-c"><i class="default">销量&nbsp;</i></span>
+            <span class="border-l1 fl w50 ta-c"><i class="default">价格</i></span>
+            <!-- <span v-on:click="screen()" class="fl w33 ta-c"><i class="select">筛选</i></span> -->
+        </div>
+        <ul class="clearfix">
+            <template v-for="list in goodsList" >
+                <li class="fl">
+                    <a style="display: block" href="goods_detail.html?id={{list.id}}"><img v-bind:src="list.showPicture" alt=""></a>
+                    <h4>{{list.goodName}}</h4>
+                    <h5>¥{{list.salePrice}} <i>¥{{list.marketPrice}}</i></h5>
+                    <p>销售量：{{list.saleNum}}<i class="btn-active fr" style="border-radius: 3px; padding: 0 0.5rem;" >特价</i></p>
+                </li>
+            </template>
+        </ul>
+    </div>
+    <p class="ta-c copyright">努力加载中...</p>
+
+    <div onclick="jumpTo('manage')" style="background: #fff;border-top: 1px solid #d7d7d7; padding: 1rem 0;text-align: center;font-size: 0.875rem;position:fixed;bottom:0;width:100%;"><i class="guanli"></i>批量管理</div>
+
+    <div id="screenWin" style="display: none;" class="choose-list">
+        <ul>
+            <li class="choose">
+                <p>品类</p>
+                <div class="clearfix">
+                    <i class="fl btn-active">全部品类</i>
+                    <i class="fl">全部品类</i>
+                    <i class="fl">红茶</i>
+                    <i class="fl">绿茶</i>
+                    <i class="fl">正山小种</i>
+                    <i class="fl">白茶</i>
+                </div>
+            </li>
+            <li class="choose">
+                <p>品类</p>
+                <div class="clearfix">
+                    <i class="fl btn-active">全部品类</i>
+                    <i class="fl">全部品类</i>
+                    <i class="fl">红茶</i>
+                    <i class="fl">绿茶</i>
+                    <i class="fl">正山小种</i>
+                    <i class="fl">白茶</i>
+                </div>
+            </li>
+            <li class="clearfix choose-price">
+                <p class="fl">价格区间：</p>
+                <div class="fl choose-input">
+                    <input type="text" placeholder="最低价">
+                    <em>&nbsp;&nbsp;&nbsp;</em>
+                    <input type="text" placeholder="最高价">
+                </div>
+
+            </li>
+        </ul>
+        <div class="choose-btn-con clearfix">
+            <i class="fr btn-active">确定</i>
+            <i class="fr">重置</i>
+        </div>
+    </div>
+        <div class="cart" >
+        </div>
+
+        <script src="js/jquery-1.8.2.min.js"></script>
+        <script src="//cdn.bootcss.com/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+        <script src="js/vue.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+//            localStorage.setItem("shopId","267701599602667520");
+
+            var todayData=new Vue({
+                el:'#today',
+                data:{
+                    goodsList:[]
+                },
+                computed:{
+
+                },
+                methods:{
+                    screen:function () {
+                        $("#screenWin").slideToggle(350);
+                    }
+                }
+            });
+
+            //        加载全部商品列表
+            var url ="/weixin/good/getGoodList.do";
+            Util.common.executeAjaxCallback(url,{},function (data) {
+                console.log(data);
+                todayData.$set('goodsList',data);
+            });
+
+            function searchEven() {
+                window.location.href="search.html?searchContent=";
+            }
+
+        </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+.logo{
+    padding: 3rem 0;
+}
+.logo a{
+    display: block;
+    height: 3rem;
+    width: 100%;
+}
+.logo a img{
+    display: block;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+}
+.input-group{
+    position: relative;
+    width: 94%;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+}
+.input-group input{
+    width: 100%;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    font-size: 0.87rem;
+    line-height: 1.2rem;
+    padding: 0.6rem 2.4rem;
+    color: #333;
+}
+.input-group i{
+    width: 2.4rem;
+    height: 2.4rem;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 1px;
+}
+.input-group .tel-icon{
+    background: url(../img/icons/mobile_icon.png) no-repeat center;
+    background-size: 1.6rem;
+}
+.input-group .code-icon{
+    background: url(../img/icons/login_verifi.png) no-repeat center;
+    background-size: 1.6rem;
+}
+#code input{
+    padding-right: 5rem;
+}
+.input-group .verifiCode{
+    position: absolute;
+    right: 0rem;
+    top:1px;
+    font-size: 0.87rem;
+    line-height: 2.4rem;
+    padding-right: 0.4rem;
+}
+.input-group .password-icon{
+    background: url(../img/icons/login_ps.png) no-repeat center;
+    background-size: 1.6rem;
+}
+.input-group .password-eye-hide{
+    background: url(../img/icons/login_hide.png) no-repeat center;
+    background-size: 1.6rem;
+    right: 0;
+    left: auto;
+}
+.input-group .password-eye-show{
+    background: url(../img/icons/login_show.png) no-repeat center;
+    background-size: 1.6rem;
+    right: 0;
+    left: auto;
+}
+.input-group .person-icon{
+    background: url(../img/icons/login_person.png) no-repeat center;
+    background-size: 1.6rem;
+}
+.btnView{
+    font-size: 0.8125rem;
+    position: relative;
+    width: 94%;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+}
+.btnView .login-agree{
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    background: url("../img/icons/login_agree.png") no-repeat center;
+    background-size: contain;
+    vertical-align: baseline;
+    margin-right: 0.4rem;
+}
+.input-group p{
+    font-size: 0.67rem;
+    color: #666;
+    line-height: 1.2rem;
+}
+.input-group .imgCode{
+    position: absolute;
+    right: 0.4rem;
+    top: 0;
+    height: calc(2.4rem + 2px);
+    box-sizing: border-box;
+    padding: 0.4rem 0;
+}
+.input-group .imgCode img{
+    height: 100%;
+}
+.input-group .imgCode-icon{
+    background: url(../img/icons/login_ps.png) no-repeat center;
+    background-size: 1.6rem;
+}

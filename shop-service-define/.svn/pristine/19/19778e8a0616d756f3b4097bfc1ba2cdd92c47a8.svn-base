@@ -1,0 +1,46 @@
+package pub.makers.shop.bill.vo;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+public class BillVo implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/** 售价 */
+	private BigDecimal sellPrice;
+	
+	/** 成本价 */
+	private BigDecimal cost;
+	
+	/** 利润 */
+	private BigDecimal profit;
+
+	public BigDecimal getSellPrice() {
+		return sellPrice;
+	}
+
+	public void setSellPrice(BigDecimal sellPrice) {
+		this.sellPrice = sellPrice;
+	}
+
+	public BigDecimal getCost() {
+		return cost;
+	}
+
+	public void setCost(BigDecimal cost) {
+		this.cost = cost;
+	}
+
+	public BigDecimal getProfit() {
+		return profit;
+	}
+
+	public void setProfit(BigDecimal profit) {
+		this.profit = profit;
+	}
+	
+}

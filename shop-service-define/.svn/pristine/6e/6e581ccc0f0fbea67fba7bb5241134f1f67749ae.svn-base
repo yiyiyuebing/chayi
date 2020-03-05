@@ -1,0 +1,79 @@
+package pub.makers.shop.base.vo;
+
+import java.io.Serializable;
+
+import javax.servlet.http.HttpServletRequest;
+
+public class Paging implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private int ps;
+	private int pn;
+	
+	public int getPs() {
+		return ps;
+	}
+	public void setPs(int ps) {
+		this.ps = ps;
+	}
+	public int getPn() {
+		return pn;
+	}
+	public void setPn(int pn) {
+		this.pn = pn;
+	}
+	
+	public static Paging build(HttpServletRequest request){
+		
+		Paging pg = new Paging();
+		int pageStart = 0;
+		try{
+			pageStart = Integer.valueOf(request.getParameter("start"));
+		}
+		catch (Exception e){
+			pageStart = 0;
+		}
+		
+		int pageNumber = 20;
+		try{
+			pageNumber = Integer.valueOf(request.getParameter("limit"));
+		}
+		catch (Exception e){
+			pageNumber = 20;
+		}
+		
+		pg.setPs(pageStart);
+		pg.setPn(pageNumber);
+		
+		return pg;
+	}
+
+	public static Paging build2(HttpServletRequest request){
+
+		Paging pg = new Paging();
+		int pageSize = 0;
+		try{
+			pageSize = Integer.valueOf(request.getParameter("pageSize"));
+		}
+		catch (Exception e){
+			pageSize = 20;
+		}
+
+		int pageNum = 0;
+		try{
+			pageNum = Integer.valueOf(request.getParameter("pageNum"));
+		}
+		catch (Exception e){
+			pageNum = 1;
+		}
+
+		pg.setPs((pageNum - 1) * pageSize);
+		pg.setPn(pageSize);
+
+		return pg;
+	}
+}

@@ -1,0 +1,83 @@
+package pub.makers.shop.afterSale.vo;
+
+import pub.makers.shop.afterSale.enums.OrderAsType;
+import pub.makers.shop.logistics.enums.OrderType;
+
+import java.io.Serializable;
+
+/**
+ * 售后申请
+ * @author apple
+ *
+ */
+public class AfterSaleApply implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String orderListId;
+	private OrderType orderType;
+	private OrderAsType asType;
+	private Integer applyType; //售后类型 1：退款、2：换货、3：退货
+	private String operDesc;
+	private String operManId;
+	private String operManType;
+
+	public String getOrderListId() {
+		return orderListId;
+	}
+
+	public void setOrderListId(String orderListId) {
+		this.orderListId = orderListId;
+	}
+
+	public OrderType getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(OrderType orderType) {
+		this.orderType = orderType;
+	}
+
+	public OrderAsType getAsType() {
+		return asType;
+	}
+
+	public void setAsType(OrderAsType asType) {
+		this.asType = asType;
+	}
+
+	public Integer getApplyType() {
+		return applyType;
+	}
+
+	public void setApplyType(Integer applyType) {
+		this.applyType = applyType;
+	}
+
+	public String getOperDesc() {
+		return operDesc;
+	}
+
+	public void setOperDesc(String operDesc) {
+		this.operDesc = operDesc;
+	}
+
+	public String getOperManId() {
+		return operManId;
+	}
+
+	public void setOperManId(String operManId) {
+		this.operManId = operManId;
+	}
+
+	public String getOperManType() {
+		return operManType;
+	}
+
+	public void setOperManType(String operManType) {
+		this.operManType = operManType;
+	}
+}

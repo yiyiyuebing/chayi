@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/may-like.css">
+    <link rel="stylesheet" href="css/search.css">
+    <style>
+        .top .search{position: relative}
+        .clear { display: none; position: absolute;left: 92%;top: 50%; width: 1rem; height:1rem;margin-top: -0.5rem;margin-left: -0.5rem; background: url("img/icons/clear.png") no-repeat; outline: none;background-size:1rem; }
+        .input::-ms-clear { display: none; }
+        .input:valid + .clear { display: inline; }
+    </style>
+    <title>搜索</title>
+</head>
+<body  class="empty bg-main">
+<div id="search-div" >
+    <div class="top dis-tabel">
+        <div class="dis-row">
+            <div  class="dis-cell search-left" onclick="javascript:history.back();"><i class="search-left-icon"></i></div>
+            <div class="search dis-cell">
+                <form action="" onsubmit="return false;">
+                    <input class="search-icon input" required  type="text" placeholder="商品分类、名称、品牌名称" onfocus="goodSearchFocus()" id="search" onkeypress="if(event.keyCode==13) {searchGoods('');}" ><a href="javascript:$('#search').val('');" class="clear"></a>
+                </form>
+            </div>
+            <div onclick="searchGoods('')"  class="dis-cell search-text">搜索</div>
+        </div>
+
+    </div>
+    <div id="searchHistory" class="searchG w100">
+        <div v-if="keywordList.length>0" class="bg-white">
+            <div class="keyword-view">热门搜索</div>
+            <ul class="clearfix keyword-list">
+                <template v-for="item in keywordList">
+                    <li class="fl w25 item-li"><span class="keyword-item" v-on:click="keywordFun(item)">{{item.keyword}}</span></li>
+                </template>
+            </ul>
+        </div>
+        <div class="keyword-view">搜索历史</div>
+        <ul id="goodSearchListview" class="lists  bg-white">
+
+        </ul>
+        <div id="clearHository" class="clear-btn bg-white">清空历史搜索</div>
+    </div>
+    <div style="display: none;" id="emptyTip">
+        <div class="empty-icon"><img src="img/icons/no.png" alt=""></div>
+        <p class="fs-14 ta-c">暂无此类商品，<br/>客官逛逛其他商品吧~</p>
+        <div class="may-like" v-if="maylikeInfo">
+            <h4><i class="like"></i>{{maylikeInfo.modelName}}<i class="color-line"></i></h4>
+            <ul class="like-wrap clearfix">
+                <template v-for="item in maylikeInfo.goodList">
+                    <li>
+                        <a href="goods_detail.html?id={{item.id}}">
+                            <img :src="item.image.url">
+                            <p><i v-if="item.label" class="sale">{{item.label}}</i>{{item.name}}</p>
+                            <template v-if="item.promotionalInfo && item.promotionalInfo.bestActivity && item.promotionalInfo.bestActivity.activityName != '赠品'">
+                                <p>
+                                    <template v-if="item.promotionalInfo.bestActivity && list.promotionalInfo.bestActivity.tag2">
+                                        <i class="group-shopping">{{item.promotionalInfo.bestActivity.tag2}}</i>
+                                    </template>
+                                </p>
+                                <div v-if="isLoginFlag" class="sku"><label>供货价：</label><sub>￥</sub>{{item.promotionalInfo.bestActivity.presellAmount}}/{{item.skuName | filterSku}}</div>
+                            </template>
+                            <template v-else>
+                                <p></p>
+                                <div v-if="isLoginFlag" class="sku"><label>供货价：</label><sub>￥</sub>{{item.price}}/{{item.skuName | filterSku}}</div>
+                            </template>
+                            <div v-if="!isLoginFlag" class="consult"><sub>￥</sub>询价</div>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $(function() {
+        window.localStorage.setItem("todayScroll",0);
+        window.localStorage.setItem("todayStatus","true");
+        window.localStorage.setItem("todayPrice",null);
+        window.localStorage.setItem("todaySaleNum",null);
+
+        searchData.isLogin();
+        console.log(searchData.isLoginFlag);
+
+        searchData.mylikeData();
+        setTimeout(function () {
+            $('#search').focus();
+        }, 30);
+        searchData.getHeadkey();
+        window.sessionStorage.removeItem('classifyId');
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+    });
+    var searchData = new Vue ({
+        el: "#search-div",
+        data: {
+            keywordList: [],
+            maylikeInfo:[],
+            isLoginFlag:false,
+        },
+        filters:{
+            /*sku filter函数*/
+            filterSku:function(value){
+                var index = value.indexOf("单位");
+                var startIndex = index + 3;
+                return value.substr(startIndex,1);
+            },
+        },
+        methods: {
+            getHeadkey:function() {
+                var url = 'weixin/index/headKeyword';
+                Util.common.b2bPostCallback(url, {}, function(data) {
+                    if (data.success && data.data && data.data.length>0) {
+                        searchData.$set('keywordList', data.data);
+                    }
+                })
+            },
+            keywordFun:function(item) {
+                if (!item.linkId) {
+                    return;
+                }
+                if(item.linkType == 'good') {
+                    window.location.href = 'goods_detail.html?id=' + item.linkId;
+                } else {
+                    window.location.href = 'today.html?classifyIds=' + item.linkId;
+                }
+            },
+            /*获取猜你喜欢数据*/
+            mylikeData: function () {
+                var url = '/weixin/index/indexTpl';
+                var param = null;
+                Util.common.b2bPostCallback(url,param,function(result){
+                    if(result.success){
+                        searchData.$set('maylikeInfo',result.data);
+                    }else{
+                        new Toast({context:$('body'),message:result.msg}).show();
+                    }
+                })
+            },
+            /*判断是否登录*/
+            isLogin:function(){
+                var login = localStorage.getItem('token');
+                if(login && login != null ){  //token不为空  表示登录
+                    searchData.isLoginFlag = true;
+                }else{
+                    searchData.isLoginFlag = false;
+                }
+            },
+        }
+    })
+    function searchGoods(str) {
+        
+        if(str==''){
+            goodSearchSaveStroage();
+            str=$("#search").val();
+        }
+        
+        var url ="weixin/purchaseGoods/getSearchGoodsList";
+        var postParams = {
+                "keyword":str,  //关键字
+                "minPrice":"",
+                "maxPrice":"",  //价格区间
+                "classifyIds":"",  //分类ID
+                "brandIds":"",   //品牌ID
+                "classifyAttrIds":"",  //属性id
+                "priceSort":"",          //价格排序 1升序，0降序
+                "saleNumSort":"",      //销量排序 1升序，0降序
+                "createTimeSort":"0",   //添加时间
+                "pageNum":"1",          //分页页码
+                "pageSize":"1"         //分页大小
+            };
+        var paramsStr ={};
+        paramsStr.modelJson = JSON.stringify(postParams);
+        Util.common.b2bPostCallback(url, paramsStr,function (data) {
+            if(data.success && data.data && data.data.goodsList && data.data.goodsList.length>0){
+                str=encodeURI(str);
+                window.location.href="today.html?sortType=2&keyword="+str;
+            }else {
+                $("#emptyTip").show();
+                $("#searchHistory").hide();
+            }
+        });
+    }
+    function goodSearchFocus() {
+        var storage = window.sessionStorage;
+        $("#goodSearchListview").empty();
+        console.log('--------------------------');
+        for(var j = storage.length-1; j >= 0; j--) {
+            var key = storage.key(j);
+            var value = storage.getItem(key);
+            if(key.indexOf('search_') != -1) {
+                console.log(key+ ':' +value);
+                var keystr = "'"+key+"'";
+                var list = '<li onclick="searchGoods('+"'"+value+"'"+')">'+value+'</li>';
+                $("#goodSearchListview").append(list);
+            }
+        }
+    }
+
+    function goodSearchSaveStroage() {
+        var searchVal = $('#search').val();
+        if(searchVal != null && searchVal != '') {
+            var storage = window.sessionStorage;
+            console.log(storage);
+            for(var j = storage.length-1; j >= 0; j--) {
+                var key = storage.key(j);
+                var value = storage.getItem(key);
+                if(key.indexOf('search_') != -1) {
+                    console.log(searchVal);
+                    console.log(value);
+                    if (searchVal == value) {
+                        sessionStorage.removeItem(key);
+                    }
+                }
+            }
+            storage.setItem("search_" + (new Date().getTime()),searchVal);
+
+        }
+    }
+
+    $('#clearHository').bind('click', function (event) {
+        window.sessionStorage.clear();
+        $('.lists').remove();
+        $('#clearHository').hide();
+        
+    });
+</script>
+</html>

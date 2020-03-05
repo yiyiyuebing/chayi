@@ -1,0 +1,50 @@
+package pub.makers.shop.index.service;
+
+import pub.makers.shop.base.entity.SysDict;
+import pub.makers.shop.base.vo.Paging;
+import pub.makers.shop.base.vo.ResultList;
+import pub.makers.shop.index.entity.IndexAdImages;
+import pub.makers.shop.index.entity.IndexModule;
+import pub.makers.shop.index.vo.IndexAdImagesVo;
+import pub.makers.shop.index.vo.IndexFloorVo;
+import pub.makers.shop.index.vo.IndexHotSaleVo;
+import pub.makers.shop.index.vo.IndexModuleGoodVo;
+import pub.makers.shop.tradeGoods.entity.TradeGoodsClassify;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by daiwenfa on 2017/6/13.
+ */
+public interface IndexAdminService {
+    ResultList<IndexAdImagesVo> getIndexAdImagesPageList(IndexAdImages indexAdImages, Paging pg);
+
+    void addOrUpdateIndexAdImages(IndexAdImages indexAdImages);
+
+    boolean ableOrDisableIndexAdImages(String id, String operation, long userId);
+
+    boolean removeIndexAdImages(String id);
+
+    List<TradeGoodsClassify> getOneGoodsClassify();
+
+    IndexAdImages getIndexAdImagesData(String id);
+
+    ResultList<IndexHotSaleVo> getIndexModuleGoodPageList(IndexModule indexModule, Paging pg);
+
+    boolean removeIndexModule(String id);
+
+    void addOrUpdateIndexModuleGood(IndexModule indexModule);
+
+    IndexModule getIndexModuleGoodData(String id);
+
+    void editRelevance(IndexModule indexModule);
+
+    ResultList<IndexFloorVo> getIndexFloorPageList(Paging pg);
+
+    void addOrUpdateIndexFloor(IndexModule indexModule);
+
+    IndexModule getIndexFloorData(String id);
+
+    List<SysDict> getNoticeType();
+}

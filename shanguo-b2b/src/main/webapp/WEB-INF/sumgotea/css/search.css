@@ -1,0 +1,85 @@
+.top {
+    font-size: 0.875rem;
+    background: #fff !important;
+    border: 1px solid rgb(245, 246, 246);
+}
+
+.top .search {
+    width: 70%;
+    vertical-align: middle;
+}
+
+.top .search-left {
+    width: 30px;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.top .search-left-icon {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    background: url("../img/icons/search-left-icon.png") no-repeat 96% center;
+    background-size: 22px;
+}
+
+.top .search input {
+    font-size: 0.8755rem;
+    height: 1.875rem;
+    width: 95%;
+    display: block;
+    margin: 0 auto;
+    background-color: rgb(245, 245, 245);
+    border: none;
+    border-radius: 1.875rem;
+    box-sizing: border-box;
+    padding-left: 2.5rem;
+    color: #000;
+}
+
+.search-text {
+    width: 40px;
+    font-size: 0.875rem;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.keyword-view {
+    padding: 0.8125rem;
+    font-size: 0.875rem;
+}
+.keyword-list {
+    padding: 0 0.8125rem 0.8125rem 0.8125rem;
+}
+.item-li {
+    margin: 0.3rem 0;
+}
+.keyword-item {
+    display: block;
+    width: 90%;
+    font-size: 0.8125rem;
+    box-sizing: border-box;
+    padding: 0.4rem 4%;
+    margin: 0 auto;
+    text-align: center;
+    text-overflow:ellipsis;
+    white-space:nowrap; 
+    overflow:hidden;
+    border-radius: 3px;
+    background: rgb(245, 245, 245);
+}
+
+.searchG .lists {
+    margin: 0;
+}
+.searchG .lists li {
+    margin: 0 0.8125rem;
+    border-bottom: 1px solid #d7d7d7;
+    font-size: 0.875rem;
+}
+
+.clear-btn {
+    padding: 0.8125rem;
+    font-size: 0.875rem;
+    text-align: center;
+}

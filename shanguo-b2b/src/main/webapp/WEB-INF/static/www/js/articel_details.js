@@ -1,0 +1,39 @@
+/**
+ * Created by Administrator on 2017/5/11.
+ */
+var  ProductList = {
+    init:function(){
+        ProductList.navFn($(".nav-product"));
+        ProductList.swicthFn($(".nav-product-aside-group"),$(".nav-product-content-group"),"nav-product-aside-active");
+    },
+    /*所有商品分类展开*/
+    navFn:function(obj){
+        obj.find(".nav-product-wrap").hide();
+        obj.hover(function(){
+            obj.find(".nav-product-wrap").show();
+        },function(){
+            obj.find(".nav-product-wrap").hide();
+        });
+    },
+    /*商品类别切换*/
+    swicthFn:function(obj,target,className){
+        target.hide();
+        obj.hover(function(){
+            $(this).addClass(className).siblings().removeClass(className);
+            target.eq($(this).index()).show().siblings().hide();
+            target.eq($(this).index()).hover(function(){
+                $(this).show();
+                obj.eq($(this).index()).addClass(className).siblings().removeClass(className);
+            },function(){
+                $(this).hide();
+            });
+        },function(){
+            target.hide();
+            $(this).removeClass(className);
+        })
+    }
+};
+
+$(function(){
+    ProductList.init();
+});

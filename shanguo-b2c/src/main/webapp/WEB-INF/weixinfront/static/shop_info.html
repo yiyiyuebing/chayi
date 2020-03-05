@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/iSlider.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>店铺信息</title>
+</head>
+<body class="bg-main shop-info">
+    <div id="shop_info">
+
+        <div class="info-part1">
+            <div class="img-con">
+                <div style=" background: url('{{detail.headImgUrl}}') center center no-repeat;background-size:cover;">
+                </div>
+                <!--<div>
+                    <img :src="detail.headImgUrl" alt="">
+                </div>-->
+            </div>
+            <h2>{{detail.name}}</h2>
+            <div>
+                <p><i class="color-grey">茶掌柜：</i> {{detail.userName}}</p>
+                <a class="color-main phone dis-b" href="tel://{{detail.phone}}"><i class="color-grey">门店电话：</i>{{detail.phone}}</a>
+                <p><i class="color-grey">门店地址：</i>
+                    <template v-if="detail.provinceName != '---请选择---' && detail.cityName != '---请选择---' &&detail.address != '---请选择---'">
+                    {{detail.provinceName}}{{detail.cityName}}{{detail.address}}
+                    </template>
+                </p>
+                <p><i class="color-grey">加入平台时间：</i>{{detail.createTime}}</p>
+            </div>
+        </div>
+        <div class="info-part2">
+            <div class="clearfix border-b1">
+                <i class="fl color-grey">主营产品：</i>
+                <p class="fl">
+                    <template v-if="detail.businessContent != null ">
+                        {{detail.businessContent}}
+                    </template>
+                </p>
+            </div>
+            <div class="clearfix">
+                <i class="fl color-grey">店铺介绍：</i>
+                <p class="fl">{{detail.description}}</p>
+            </div>
+        </div>
+        <div class="info-part2">
+            <div class="clearfix border-b1">
+                <i class="fl color-grey">店内照片：</i>
+                <em class="fr">共{{detail.imgNum}}张</em>
+            </div>
+            <ul class="clearfix shop-img">
+                <template v-for="list in detail.picList">
+                    <li class="fl w33">
+                        <div class="img-con" v-on:click="screenImg(detail.picList, $index)" style="background: url('{{list.url}}') center center no-repeat;background-size:contain;">
+                            <!--<img :src="list.url" alt="">-->
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </div>
+    <div id="slider-box" style="z-index: 100; width: 100%; height: 100%; display: none; background-color: black; position: fixed; top: 0;">
+    <div style="position: absolute; color: #fff; z-index: 999; top: 20px; right: 20px;" onclick="closeSilder()">关闭</div>
+    <div id="iSlider-wrapper" style="width: 100%; height: 100%;"><div>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script src="js/iSlider.min.js"></script>
+<script src="js/iSlider.animate.min.js"></script>
+<script>
+    Util.common.addloadingAnimate();
+
+    $(function () {
+        shopInfo.loadData();
+        //                微信分享
+        Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+    })
+    var bigImgs = null;
+    var shopInfo=new Vue({
+        el: "#shop_info",
+        data: {
+            detail:{},
+        },
+        computed: {
+
+        },
+        methods: {
+            loadData:function () {
+                var url ="/mobile/store/subbranch/loadInfo.do?shopId="+sessionStorage.getItem('shopId');
+                var param = {};
+                Util.common.executeAjaxCallback(url, param, function (data) {
+                    Util.common.removeloadingAnimate('trading_record');
+                    if(data.picList!=undefined){
+                        data.imgNum=data.picList.length;
+                    }else {
+                        data.imgNum=0;
+                    }
+                        shopInfo.$set('detail',data);
+                });
+            },
+            screenImg:function(imgList, index) {
+                bigImgs = imgList.map(function(item) {
+                    return {content: item.url};
+                });
+                showBigImg('', index);
+            }
+        }
+    });
+function showBigImg(goodId, index){
+    // $(window).scrollTop(0);
+    showSlide(bigImgs, index);
+}
+
+function showSlide(datas, index){
+
+    $("#slider-box").show();
+
+    // 数据重新排序
+    var newdatas = [];
+    for (var i = index; i < datas.length; i++){
+        newdatas.push(datas[i]);
+    }
+    for (var i = 0; i < index; i++){
+        newdatas.push(datas[i]);
+    }
+
+    console.log(newdatas);
+
+    var slider = new iSlider(document.getElementById('iSlider-wrapper'), newdatas, {
+        isAutoplay: 0,
+        isLooping: 1,
+        isOverspread: 1,
+        animateTime: 800
+    });
+}
+
+function closeSilder(){
+    $("#slider-box").hide();
+}
+</script>
+</html>

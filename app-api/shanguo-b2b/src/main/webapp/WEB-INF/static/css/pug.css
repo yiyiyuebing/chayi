@@ -1,0 +1,57 @@
+.right-cont-wrap {position: relative;}
+.right-cont-wrap .top-right-box {position: absolute; top: 0; right: 0; min-width: 150px; padding: 14px 10px;}
+.pug-wrap {margin-top: -1px; padding-bottom: 50px; border-top: 1px solid #f0f0f0;}
+.pug-wrap .pug-item {margin-top: 10px;}
+.pug-wrap .pug-title {padding: 15px 10px;}
+.pug-wrap .pug-title .big-text {color: #666; font-size: 16px;}
+.pug-wrap .pug-title .small-text {margin-left: 15px; color: #999; font-size: 12px;}
+.list-item .item-inner{
+    width: 25%;
+    text-align: left;
+    margin-bottom: 20px;
+    position: relative;
+}
+.list-item .item-inner .item-box{
+    width: 220px;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+}
+.list-item .item-inner .item-box .img-cover{
+    display: block;
+}
+.list-item .item-inner .item-box .img-cover img{
+    width: 220px;
+    height: 210px;
+}
+.list-item .item-inner .item-box .p-name{
+    font-size: 12px;
+    color: #666;
+    line-height: 20px;
+    text-align: center;
+    display: block;
+    height: 20px;
+    overflow: hidden;
+    width: 90%;
+    margin: 0 auto;
+}
+.list-item .item-inner .item-box .p-price{
+    text-align: center;
+}
+.list-item .week-tips{
+    font-size: 12px;
+    color: #666;
+    margin-left: 8px;
+}
+
+.item-inner .off-sale-icon{
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    background: url(/static/images/buhuoing.png) no-repeat center;
+    background-size: contain;
+    position: absolute;
+    right: 32px;
+    top: 94px;
+}
+
+

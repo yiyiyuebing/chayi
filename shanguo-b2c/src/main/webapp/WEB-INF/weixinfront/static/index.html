@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link href="//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css?v=2.1.1">
+    <link rel="stylesheet" href="css/ui-box.css?v=2.1.1">
+    <link rel="stylesheet" href="css/style.css?v=2.1.1">
+    <link rel="stylesheet" href="css/index.css">
+    <title>优茶联</title>
+</head>
+<body  class="bg-main">
+<div id="allmap" style="display: none"></div>
+<div id="index">
+    <div class="slider-con bg-white">
+        <div class="top dis-tabel">
+            <div class="dis-row">
+                <div class="search dis-cell">
+                    <input class="search-icon"  type="text" placeholder="搜索商品名称/关键字" v-on:click="goodSearchFocus()">
+                </div>
+                <div onclick="jumpTo('shop_info')" class="store-icon dis-cell">
+                    <div class="btn-active">了解店铺</div>
+                </div>
+            </div>
+        </div>
+        <div class="slider">
+            <div id="slider-content">
+			
+            </div>
+        </div>
+    </div>
+    <ul class="banner clearfix">
+        <template v-for="list in banner1">
+            <li v-if="$index < 5" v-on:click="classify(list.classify,list.text)" class="banner-icon w20 fl">
+                <div class="banner-img"><img :src="list.imgUrl" alt=""></div>
+                <p>{{list.text}}</p>
+            </li>
+        </template>
+    </ul>
+    <div class="line"></div>
+	<div class="noticeview" v-if="noticelist.length != 0">
+        <div class="fl">
+            <img  class="noticeImg" src="img/icons/notice.png" alt="">
+        </div>
+        <a class="noticeMore fr" onclick="jumpTo('notice')">更多</a>
+        <ul id="marquee" class="marquee border-l1"> 
+            <template v-for="list in noticelist">
+                <li v-if="list.tag =='cx'"><a class="bg-red2 fl">促销</a><p v-on:click="goNoticeDetail(list)">&nbsp;{{list.title}}</p></li>
+                <li v-else><a class="bg-red2 fl">公告</a><p v-on:click="goNoticeDetail(list)">&nbsp;{{list.title}}</p></li>
+            </template>    
+        </ul>
+	</div>
+
+    <ul class="part1 clearfix">
+        <template v-for="list in activity">
+
+            <li v-on:click="category(list.id,list.columnName)" v-if="$index<=1" class="fl w50 border-l1"><img class="dis-b" :src="list.showpicture" alt=""></li>
+            <template v-else>
+                <li v-on:click="category(list.id,list.columnName)" class="fl w25 border-l1"><img class="dis-b" :src="list.showpicture" alt=""></li>
+            </template>
+        </template>
+    </ul>
+
+    <div class="part2">
+        <h3 onclick="jumpTo('theme')" class="clearfix"><em class="border-l1">主题馆</em>Special offer <a class="color-main fr" href="#"><i>MORE</i> <i class="iconfont">&#xf0030;</i></a></h3>
+        <ul class="clearfix">
+            <template v-for="list in themelist">
+
+                <li v-on:click="themes(list.id,list.name,list.introPhoto)" v-if="$index<8"  class="fl w25">
+                    <div><img :src="list.minPhoto" alt=""></div>
+                    <p>{{list.name}}</p>
+                </li>
+            </template>
+        </ul>
+    </div>
+    <div class="part3">
+        <!-- <h3 onclick="jumpTo('today_pack')" class="clearfix"><em class="border-l1">套餐专区</em>Special offer<a class="color-main fr" href="#"><i>MORE</i> <i class="iconfont">&#xf0030;</i></a></h3> -->
+        <ul id="goodsList" class="mylist clearfix">
+            <template v-for="list in goodsList">
+                <li class="fl">
+                    <div class="relative">
+                        <a v-on:click="goodsDetail(list)" style="display: block;"><img v-bind:src="list.image.url" alt=""></a>
+                        <h4><span v-if="list.label" class="nameType">{{list.label}}</span>{{list.name}}</h4>
+                        <template v-if="list.promotionalInfo && list.promotionalInfo.activityList && list.promotionalInfo.activityList.length > 0">
+                            <h5>
+                                <template v-for="item in list.promotionalInfo.activityList">
+                                    <template v-if="item.activityType != 'manzeng' && item.activityType != 'manjian'">
+                                        <span class="goodType bg-red">{{item.tag2}}</span>
+                                    </template>
+                                </template>
+                                <template v-if="list.isManjian">
+                                    <span class="goodType bg-red">满减</span>
+                                </template>
+                                <template v-if="list.isManzeng">
+                                    <span class="goodType bg-red">满赠</span>
+                                </template>
+                            </h5>
+                            <template v-if="list.promotionalInfo.activityList.length > 0 && list.promotionalInfo.bestActivity">
+                                <template v-if="list.promotionalInfo.bestActivity.activityType == 'sale' ">
+                                    <h5>促销价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}<sup></sup></span></h5>
+                                </template>
+                                <template v-if="list.promotionalInfo.bestActivity.activityType == 'presell' ">
+                                    <h5>预售价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}<sup></sup></span></h5>
+                                </template>
+                                <template v-if="list.promotionalInfo.bestActivity.activityType !== 'sale' && list.promotionalInfo.bestActivity.activityType !== 'presell' ">
+                                    <h5>零售价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}<sup></sup></span></h5>
+                                </template>
+                            </template>
+                        </template>
+                        <template v-else>
+                            <h5>
+                            </h5>
+                            <h5>零售价：<span class="color-main fs-16"><sub>¥</sub>{{list.price}}<sup></sup></span></h5>
+                        </template>
+	                    <h5>销量：{{list.saleNum || 0}}</h5>
+                        <i v-if="list.stock <= 0" class="sellover" v-on:click="goodsDetail(list.id)"></i>
+                    </div>
+                </li>
+            </template>
+        </ul>
+    </div>
+    <div class="csad_gray" style="position: fixed;bottom: 5.5rem;right: 1rem;" v-on:click="gotoMessage()"></div>
+    <div class="teaShop" v-if="show_map == 'T'" onclick="jumpTo('home_map')"></div>
+    <p class="ta-c copyright p0625">客服热线：400-8396-815<br/>©2017&nbsp;山国饮艺版权所有&nbsp;仿冒必究</p>
+    <div class="br4"></div>
+    <ul class="footer clearfix">
+            <li class="fl w25">
+                <div><img src="img/icons/footer1a.png" alt=""></div>
+                <p class="color-main">首页</p>
+            </li>
+            <li onclick="jumpTo('sorts')" class="fl w25">
+                <div><img src="img/icons/footer2.png" alt=""></div>
+                <p>分类</p>
+            </li>
+            <li onclick="jumpTo('cart')" class="fl w25">
+                <div class="footer-cart"><img src="img/icons/footer3.png" alt=""> <i id="carNum" style="display: none;" >{{cartCount}}</i></div>
+                <p>购物车</p>
+            </li>
+            <li onclick="jumpTo('person')" class="fl w25">
+                <div><img src="img/icons/footer4.png" alt=""></div>
+                <p>个人中心</p>
+            </li>
+        </ul> 
+        <!--附近的茶点    -->
+        <span v-if="selectedShop" v-on:click="showNear()" style="display: none;" class="selectedShop">{{selectedShop.addrName}}&nbsp;<i class="downIcon"></i></span>
+        <div class="full-bg" style="display: none;">
+        <div class="near-bg clearfix"  v-on:click="hideNear()">
+            <div class="bg-white nearView">
+                <div class="top border-b1">选店</div>
+                <ul class="nearUl">
+                <template v-for="list in shopInfoList">
+                    <template v-if="list.id == selectedShop.id">
+                    <span class="listNum fl color-main">{{$index+1}}</span><li class="border-b1" style="margin-left: 0.8125rem;" v-on:click="selectShop(list)">
+                        <span class="address color-main">{{list.addrDetail}}</span>
+                        <br><span >{{list.distance}}km</span><span style="margin-left: 0.8125rem;">({{list.name}})</span>
+                    </li>
+                    </template>
+                    <template v-else>
+                    <span class="listNum fl">{{$index+1}}</span><li class="border-b1" style="margin-left: 0.8125rem;" v-on:click="selectShop(list)">
+                        <span class="address">{{list.addrDetail}}</span>
+                        <br><span >{{list.distance}}km</span><span style="margin-left: 0.8125rem;">({{list.name}})</span>
+                    </li>
+                    </template>
+                </template> 
+                </ul>
+            </div>
+        </div>
+        </div>
+</div>
+
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="//cdn.bootcss.com/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+    <script src="js/jquery.marquee.js"></script>
+    <script src="js/jquery.tmpl.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/main.js?v=2.1.1"></script>
+    <script src="js/bizhelp.js?v=2.1.1"></script>
+    <script type="text/x-jquery-tmpl" id="index_advertise_t">
+        <ul class="swiper-wrapper">
+        {{each(i,advertise) datas}}
+           <li class="swiper-slide">
+            <a href="{{if advertise.lineStatus==1}}goods_detail.html?id=${advertise.lineUrl}{{/if}}"  target="_top" type="${advertise.lineStatus}" typeId="${advertise.id}"><img src="${advertise.picUrl}"></a>
+           </li>
+         {{/each}}
+        </ul>
+        <div class="swiper-pagination"></div>
+    </script>
+    <!--客服-->
+    <script src="https://qiyukf.com/script/1a8fad464c1c676e72fd62c3d82937c0.js" charset="UTF-8"></script>
+     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Wn6viYpMDx4Xwvjdhg0nKO5ApKO6IgwP"></script>
+    <script type="text/javascript">
+        var url = 'customservice/getContext';
+        var param = {};
+        param.userId = Util.common.getParameter("userId");
+        param.shopId = Util.common.getParameter("storeId");
+        sessionStorage.setItem('userid', Util.common.getParameter("userId"))
+        Util.common.b2cPostCallback(url, param, function (data) {
+            if(data.success && data.data){
+                var userInfo = data.data.user;
+//                console.log(userInfo+"AAAAAAAAAAAAAAAAAA");
+                var shopName = data.data.shop ? data.data.shop.name : '优茶联' ;
+                sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+                sessionStorage.setItem("openid",userInfo.openid);
+                sessionStorage.setItem("shopName",shopName);
+                ysf.on({
+                    'onload': function(){
+                        ysf.config({
+                            uid: userInfo.id,
+                            "data":JSON.stringify([
+                                {"key":"real_name", "value":userInfo.nickname},
+                                {"key":"mobile_phone","value": userInfo.tel},
+                                {"key":"avatar", "value":userInfo.headimgurl},
+                                {"key":"storeName","label":"店铺名称","value":shopName}
+                            ])
+                        });
+                    }
+                });
+                
+            }
+        });
+    </script>
+    <script >
+        var show_map = Util.common.getParameter("show_map") ? Util.common.getParameter("show_map") : sessionStorage.getItem("show_map") ;
+        var selectShopInfo = {};
+        if (Util.common.getParameter("shopInfo")) {
+            selectShopInfo = JSON.parse(Util.common.getParameter("shopInfo"));
+            sessionStorage.setItem('selectShopInfo',Util.common.getParameter("shopInfo"));
+            
+        } else {
+            selectShopInfo = JSON.parse(sessionStorage.getItem('selectShopInfo'));
+        }
+        
+        //获取当前位置
+        var map = new BMap.Map("allmap");
+        if (show_map == 'T' && selectShopInfo) {
+
+            sessionStorage.setItem('show_map',show_map);
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r){
+                if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                    map.panTo(r.point);
+                    indexData.getNearShop(selectShopInfo.lng,selectShopInfo.lat);
+                }
+                else {
+                    new Toast({context:$('body'),message:"定位加载失败，请重试"}).show();
+                }         
+            },{enableHighAccuracy: false})
+        }
+        
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+
+        Util.common.addloadingAnimate();
+
+        $(function () {
+            var shopId = Util.common.getParameter("storeId") || sessionStorage.getItem("shopId");
+            if(shopId=="" ||shopId==undefined || shopId=="undefined" || shopId==null || shopId=="null"){
+
+            }else{
+                sessionStorage.setItem("shopId",shopId);
+                 // 记录最近一次的shopId
+                localStorage.setItem('b2c-shopId', Util.common.getParameter("storeId"));
+            }
+            indexData.slider();
+            indexData.getshopInfo();
+            indexData.getInfo(shopId);
+            indexData.notice();
+            indexData.banner();
+            indexData.getactivity();
+            indexData.getTheme();
+            indexData.getCartCount();
+            //记录scrollTop值
+           Util.scrollMar.setPos("index", 0, 1,true); 
+           Util.scrollMar.init("index",function(data){
+           
+           });
+           
+        });
+        //清空sortsList保存记录
+        var Sorts = {};
+        window.sessionStorage.setItem('Sorts', JSON.stringify(Sorts));
+
+        
+        var indexData=new Vue({
+            el:'#index',
+            data:{
+                shopid:'',
+                goodsList:[],
+                banner1:[],
+                activity:[],
+                themelist:[],
+                cartCount:'',
+                noticelist:[],
+                shopName: '',
+                userInfo: {},
+                shopInfoList: [],
+                selectedShop: {},
+                show_map: show_map,
+            },
+            computed: {
+                
+            },
+            filters:{
+                /*sku filter函数*/
+                filterSku:function(value){
+                    if(value){
+                        var skuArr = value.split(",");
+                        var result;
+                        $.each(skuArr,function(i,item){
+                            if(item.indexOf("单位") != -1){
+                                result = item.split(":")[1];
+                            }
+                        });
+                        return result;
+                    }
+                },
+            },
+            methods:{
+                getNearShop: function(lng,lat) {
+                    var url = Util.common.baseUrlApi + "store/subbranch/findNearBy";
+                    var param = {};
+                    param.lat = lat;
+                    param.lng = lng;
+                    param.distance = 1000;
+                    $.post(url, param, function (data) {
+                        console.log(data)
+                        if (data.success && data.data && data.data.data.length> 0) {
+                            var shopInfoList = data.data.data.slice(0,5);
+                            for (x in shopInfoList) {
+                                if (shopInfoList[x].lat && shopInfoList[x].lng) {
+                                    var distance  = map.getDistance(map.getCenter(),new BMap.Point(shopInfoList[x].lng, shopInfoList[x].lat));
+                                    shopInfoList[x].distance = (distance/1000).toFixed(2);
+                                }
+                                shopInfoList[x].addrDetail = shopInfoList[x].provinceName.substring(0,shopInfoList[x].provinceName.length - 1)  + shopInfoList[x].cityName.substring(0,shopInfoList[x].cityName.length - 1) + shopInfoList[x].countryName + shopInfoList[x].address;
+                                shopInfoList[x].addrName = shopInfoList[x].provinceName.substring(0,shopInfoList[x].provinceName.length - 1)  + shopInfoList[x].cityName.substring(0,shopInfoList[x].cityName.length - 1) + shopInfoList[x].countryName + shopInfoList[x].name;
+                                if(shopInfoList[x].id == selectShopInfo.id) {
+                                    indexData.$set('selectedShop',shopInfoList[x]);
+                                }
+                            }
+                            indexData.$set('shopInfoList',shopInfoList);
+                            
+                            $('.selectedShop').css('display','');
+                        } else {
+
+                        }
+                    },'json');
+                },
+                goodsDetail: function(list) {
+                    window.location.href="goods_detail.html?id="+list.id+"&userId="+sessionStorage.getItem('userid')+"&storeId="+sessionStorage.getItem('shopId');
+                },
+                getInfo:function (storeId) {
+                    // var storeId = Util.common.getParameter("storeId");
+                    if(storeId=="" ||storeId==undefined || storeId=="undefined" || storeId==null || storeId=="null"){
+                        storeId = Util.common.getParameter("shopId");
+                    }
+                    sessionStorage.setItem("shopId",storeId);
+                    var userId = Util.common.getParameter("userId");
+                    sessionStorage.setItem("userid",userId);
+                    sessionStorage.setItem("shopId",storeId);
+                    indexData.$set("shopid",storeId);
+//                  电脑测试用例id
+                    //sessionStorage.setItem("shopId","322457995533078528");
+                    //sessionStorage.setItem("userid",'316917094539743232');
+                    //indexData.$set("shopid","322457995533078528");
+
+                },
+                slider:function() {
+//                  加载轮播图
+                    var url ="weixin/common/getImg.do?category=0";
+                    Util.common.executeAjaxCallback(url,{},function(data) {
+                        console.log(data);
+                        var datas ={"datas":data};
+                        Util.common.loadTemplate("#slider-content", "#index_advertise_t", datas);
+                        Util.common.initAdvertiseSlide(datas);
+                        Util.common.removeloadingAnimate('index');
+                    });
+                },
+                goNoticeDetail: function(datas) {
+//                  跳转到公告详情页
+                    var url = getToutiaoUrl(datas.toutiaoId,datas.url,datas.classify);
+                    window.location.href = url;
+                },
+                notice: function() {
+//                	加载公告轮播
+                	var url = "/weixin/toutiao/toutiaoList.do";
+
+                    var param={"target":"userwx"};
+                    Util.common.executeAjaxCallback(url,param,function (data) {
+                        if (data.success && data.data) {
+                            console.log(data.data)
+                            for (x in data.data.toutiaoList) {
+                                if (isShow(data.data.toutiaoList[x].validStart, data.data.toutiaoList[x].validEnd)) {
+                                    indexData.noticelist.push(data.data.toutiaoList[x]);
+                                    
+                                }
+                            }
+                            indexData.$nextTick(function() {
+                                $("#marquee").marquee({yScroll: "bottom"}); 
+                            })
+                        }
+                    });
+                },
+                banner:function () {
+//        加载banner
+                    var url ="weixin/good/firstSortType";
+                    Util.common.b2cPostCallback(url,{},function (data) {
+                        if (data.success && data.data) {
+                            indexData.$set("banner1",data.data);
+                        }
+                    });
+                },
+                getCartCount: function () {
+//            获取购物车内商品数
+                    var url ="weixin/cart/countCartList";
+                    var param = {"userId": sessionStorage.getItem("userid"), "shopId": sessionStorage.getItem("shopId")};
+                    var param1 = {};
+                    param1.json = JSON.stringify(param);
+                    Util.common.b2cPostCallback(url, param1, function (data) {
+                        console.log(data);
+                        if(data.success && data.data && data.data.count) {
+                            var count = data.data.count;
+                            if (count > 0) {
+                                $('#carNum').css('display','block');
+                            }   
+                            if (count*1 > 100) {
+                                count = '99+';
+                            }
+                            indexData.$set('cartCount',count);
+                        } else {
+                            indexData.$set('cartCount',0);
+                        }
+                    });
+                },
+                getactivity:function () {
+                    var url ="weixin/good/goodColumn/getAllGoodColumns";
+                    Util.common.b2cPostCallback(url,{},function (res) {
+                        if (res.success && res.data) {
+                            indexData.$set("activity",res.data);
+                        }
+                    });
+                },
+                getTheme:function () {
+                    var url ="weixin/good/goodColumn/getAllGoodTheme";
+                    Util.common.b2cPostCallback(url,{},function (res) {
+                        if (res.success && res.data) {
+                            indexData.$set("themelist",res.data); 
+                        }
+                    });
+                },
+                classify:function (classify,name) {
+                    window.location.href="sortsList.html?sortType=91&oneType="+classify+"&title="+name+"&banner1="+JSON.stringify(indexData.banner1);
+                },
+                category:function (category,name) {
+                    if(name=='活动专区'){
+                        window.location.href="group.html?sortType=92&category="+category+"&title="+name;
+                    }
+                    else {
+                        window.location.href="today.html?sortType=92&category="+category+"&title="+name;
+                    }
+                },
+                themes:function (theme,name,img) {
+                    window.location.href="today.html?sortType=93&themes="+theme+"&title="+name+'&intro='+img;
+                },
+                getshopInfo:function () {
+                    var url ="/weixin/store/subbranch/getShopName.do?id="+sessionStorage.getItem('shopId');
+                    console.log(sessionStorage.getItem('shopId'))
+                    var param = {};
+                    Util.common.executeAjaxCallback(url, param, function (data) {
+                        console.log(data)
+                        if(data.code==1){
+                            sessionStorage.setItem('shopName',data.data.name);
+                            sessionStorage.setItem('shopImg',data.data.headImgUrl);
+//                          微信分享
+                            Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+
+//                            设置当前网页标题
+                            $(document).attr('title',data.data.name);
+                            
+                            var $body = $('body');
+                            document.title = data.data.name;
+                            var $iframe = $("<iframe style='display:none;' src='/favicon.ico'></iframe>");
+                            $iframe.on('load',function() {
+                                setTimeout(function() {
+                                    $iframe.off('load').remove();
+                                }, 0);
+                            }).appendTo($body);
+                        }else{
+                            sessionStorage.setItem('shopName',"优茶联");
+                            $(document).attr('title',"优茶联");
+                            var $body = $('body');
+                            document.title = "优茶联";
+                        }
+                    });
+                },
+                gotoMessage: function() {
+                //客服
+                    location.href = ysf.url();
+                },
+                selectShop: function(list) {
+                //选择附近的茶店
+                    indexData.$set('selectedShop',list);
+                    sessionStorage.setItem('selectShopInfo',JSON.stringify(list));
+                    console.log(list)
+                    indexData.getInfo(list.id);
+                    indexData.getshopInfo();
+                },
+                hideNear: function() {
+                    $('.full-bg').css('display','none');
+                },
+                showNear: function() {
+                    $('.full-bg').css('display','');
+                },
+                goodSearchFocus:function() {
+                    window.location.href="search.html?shopId="+sessionStorage.getItem("shopId")+"&userId="+sessionStorage.getItem("userid")+"&shopName="+sessionStorage.getItem('shopName');
+                }
+            }
+        });
+//        加载全部商品列表
+        var url ="weixin/good/getSearchGoodListSer?pageSize=4";
+        var param = {};
+        param.pageSize = 4;
+        param = JSON.stringify(param);
+        var param1 = {};
+        param1.json = param;
+        Util.common.b2cPostCallback(url,param1,function (data) {
+            if (data.success && data.data) {
+//                indexData.$set('goodsList',data.data);
+                var dataList = data.data;
+                dataList.forEach(function(data){
+                    data.isManjian = false;
+                    data.isManzeng = false;
+                    if(data.promotionalInfo && data.promotionalInfo.activityList){
+                        data.promotionalInfo.activityList.forEach(function(item){
+                            if(item.activityType == 'manjian'){
+                                data.isManjian = true;
+                            }
+                        });
+
+                        data.promotionalInfo.activityList.forEach(function(item){
+                            if(item.activityType == 'manzeng'){
+                                data.isManzeng = true;
+                            }
+                        })
+                    }
+                    indexData.goodsList.push(data);
+                });
+            } else {
+                // new Toast({context:$('body'),message: data.msg}).show();
+            }
+        });
+        var isShow = function(start,end) {
+        var isStart = new Date(start.replace(/\-/g,"/")).getTime();
+        var isEnd = new Date(end.replace(/\-/g,"/")).getTime();
+        var now = new Date().getTime();
+        if (isStart<now && now < isEnd ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    </script>
+    
+</body>
+</html>

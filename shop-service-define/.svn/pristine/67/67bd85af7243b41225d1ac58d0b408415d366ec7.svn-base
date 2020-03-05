@@ -1,0 +1,73 @@
+package pub.makers.shop.order.enums;
+
+/**
+ * Created by dy on 2017/5/8.
+ */
+public enum IndentListStatus1 {
+
+    待付款("pay", 1), 待发货("ship", 2), 待收货("receive", 3), 退货退款申请("return", 4), 退款申请("refund", 5), 换货申请("exchange", 6), 待评价("evaluate", 7),
+    已退款("refunded", 8), 已退货("returned", 9), 已完成("done", 10), 到货确认("received", 11);
+
+    private String name;
+    private int dbData;
+
+    IndentListStatus1(String name, int dbData) {
+        this.name = name;
+        this.dbData = dbData;
+    }
+
+
+    @Override
+    public String toString() {
+        return this.dbData + "";
+    }
+
+    public static int getDbDataByName(String name) {
+        for (IndentListStatus1 c : IndentListStatus1.values()) {
+            if (c.getName().equals(name)) {
+                return c.dbData;
+            }
+        }
+        return 0;
+    }
+
+    public static String getTextByDbData(Integer status) {
+        String result = "";
+        if(status != null){
+            for (IndentListStatus1 c : IndentListStatus1.values()) {
+                if (c.getDbData() == status) {
+                    return c.name();
+                }
+            }
+        }
+        return result;
+    }
+
+    public static IndentListStatus1 getStatusByDbData(Integer status) {
+        if(status != null){
+            for (IndentListStatus1 c : IndentListStatus1.values()) {
+                if (c.getDbData() == status) {
+                    return c;
+                }
+            }
+        }
+        return null;
+    }
+    
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getDbData() {
+        return dbData;
+    }
+
+    public void setDbData(int dbData) {
+        this.dbData = dbData;
+    }
+}

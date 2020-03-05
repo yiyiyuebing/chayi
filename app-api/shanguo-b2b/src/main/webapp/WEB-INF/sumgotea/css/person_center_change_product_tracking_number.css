@@ -1,0 +1,56 @@
+.tracking-information {
+  padding: 0 0.8125rem;
+}
+.tracking-information .tracking-group {
+  border-bottom: 1px solid #dbdbdb;
+}
+.tracking-information .tracking-group label {
+  font-size: 0.875rem;
+  color: #1c1c1c;
+  padding: 0.8125rem;
+}
+.tracking-information .tracking-group input {
+  width: 10rem;
+  outline: none;
+  border: none;
+  font-size: 0.875rem;
+  padding: 0.8125rem;
+}
+.submit {
+  margin-top: 7.1rem;
+}
+.submit .submit-btn {
+  display: block;
+  margin: 0 auto;
+  color: #fff;
+  background: #cc9b4b;
+  text-align: center;
+  width: 86%;
+  margin: 4rem auto 0;
+  text-align: center;
+  font-size: 0.875rem;
+  border-radius: 3px;
+  padding: 0.75rem 0;
+}
+.popup {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+}
+.popup .popup-wrap {
+  background: #666;
+  color: #fff;
+  font-size: 0.52rem;
+  line-height: 1.08rem;
+  border-radius: 0.12rem;
+  text-align: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+}

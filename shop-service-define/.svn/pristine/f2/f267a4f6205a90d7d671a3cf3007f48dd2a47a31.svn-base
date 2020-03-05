@@ -1,0 +1,23 @@
+package pub.makers.shop.afterSale.enums;
+
+/**
+ * Created by dy on 2017/5/15.
+ */
+public enum OrderAsType {
+    refund("退款中"), exchange("换货中"), refund_return("仅退款退货中");
+
+    private String displayName;
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    private OrderAsType(String displayName){
+        this.displayName = displayName;
+    }
+    
+}

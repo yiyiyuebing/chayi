@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--清除浏览器缓存-->
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <!--设备 IE  最高版本-->
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <!--定义 语言类型-->
+    <meta http-equiv="CONTENT-TYPE" content="text/html" charset="utf-8">
+    <!--设置视口宽度与设备宽度， 禁止用户缩放-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--X5内核 全屏显示-->
+    <meta name="x5-fullscreen" content="true">
+    <!--uc内核  全屏显示-->
+    <meta name="full-screen" content="yes">
+    <!--描述-->
+    <meta name="description" content="山国饮艺">
+    <!--关键字-->
+    <meta name="keywords" content="山国饮艺">
+    <title>我的足迹</title>
+    <!--公共部分-->
+    <!--HTML标签样式重置-->
+    <link href="css/normalize.css" rel="stylesheet">
+    <!--移动端css重置-->
+    <link href="css/reset.css" rel="stylesheet">
+    <!--rem适配  设计图750*1334-->
+    <script src="js/viewport_rem.js"></script>
+    <!--公共部分   ending-->
+    <!--单独样式-->
+    <link href="css/gg_common.css" rel="stylesheet">
+    <link href="css/person_center_mytrack.css" rel="stylesheet">
+</head>
+<body id="myTrack">
+
+<template v-if="isHasFlag">
+    <header>
+        我的足迹
+        <a href="javascript:;" id="editorBtn">编辑</a>
+        <a href="javascript:;" id="completeBtn" style="display: none;">完成</a>
+    </header>
+    <template v-for="time in timeList">
+        <section class="wrap track-group">
+            <template v-if="!time.isNull">
+                <div class="track-time clearfix">
+                    <label class="pull-left" style="display: none;"></label>
+                    <div class="time pull-left">{{ time.time | timefilter }}</div>
+                </div>
+            </template>
+            <ul class="productList">
+                <template v-for="item in TrackList">
+                    <template v-if="item.updateDate >= time.time && item.updateDate < time.time + 24*3600*1000">
+                        <li class="clearfix" data-slide="true" data-id="{{item.id}}" data-goodId="{{item.goodsSkuId}}" :data-isPresale="item.good.promotionalInfo && item.good.promotionalInfo.bestActivity.activityType=='presell'?1:0">
+                            <template v-if="item.good.stock > 0 && item.good.status == 1">
+                                <label class="pull-left label-check">
+                                </label>
+                            </template>
+                            <template v-if="item.good.stock <= 0 || item.good.status == 0">
+                                <span class="pull-left off-sale">
+                                    <i>售罄</i>
+                                </span>
+                            </template>
+                            <div class="product-information pull-left">
+                                <div class="information clearfix" style="position: relative;">
+                                    <a class="hot-link" href="goods_detail.html?id={{item.goodsId}}"></a>
+                                    <div class="product-img pull-left" style="position: relative;">
+                                        <template v-if="item.good.stock <= 0 || item.good.status == 0">
+                                            <i class="off-sale-img"></i>
+                                        </template>
+                                        <img :src="item.imageUrl">
+                                    </div>
+                                    <div class="product-txt pull-left">
+                                        <h6>
+                                            <!--<i>代销</i>-->
+                                            {{item.name}}
+                                        </h6>
+                                        <div class="tips clearfix">
+                                            <template v-if="item.good.promotionalInfo && item.good.promotionalInfo.bestActivity.activityName != '赠品' ">
+                                                <span class="pull-left">{{item.good.promotionalInfo.bestActivity.tag2}}</span>
+                                            </template>
+                                        </div>
+                                        <div class="price">供货价：<sub>¥</sub><span class="single-price">{{item.goodsPrice}}</span><sup>/{{ item.skuName | unitFilter}}</sup></div>
+                                        <div class="quantity">销量：123</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="delete-box pull-right"  v-on:touchstart="delSingle(item.id)">
+                                <a href="javascript:;" class="delete-btn">删除</a>
+                            </div>
+                        </li>
+                    </template>
+                </template>
+            </ul>
+        </section>
+    </template>
+    <footer class="clearfix" id="operationBtn">
+        <a class="cart pull-left" href="javascript:;" v-on:click="addToCart()">加入购物车</a>
+        <a class="delete pull-right" href="javascript:;" v-on:click="delFromCart()">批量删除</a>
+    </footer>
+</template>
+<template v-if="!isHasFlag">
+    <header>
+        我的足迹
+    </header>
+    <div id="emptyTip">
+        <div class="empty-icon">
+            <img src="img/icons/no.png" alt="">
+        </div>
+        <p class="empty-txt">暂时没有您的足迹，<br>赶紧去逛逛吧~</p>
+        <a href="index.html" class="empty-link-btn">去逛逛</a>
+    </div>
+</template>
+</body>
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/person_center_mytrack.js"></script>
+    <script>
+        /*--调用方法*/
+        $(function(){
+            myTrack.isLogin();
+            myTrack.getTrackList();
+            document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+            // 通过下面这个API隐藏右上角按钮 
+                WeixinJSBridge.call('hideOptionMenu'); 
+            });
+        });
+        /*--ending  调用方法*/
+        var myTrack = new Vue({
+            el:"#myTrack",
+            data:{
+                TrackList:[],
+                isHasFlag:true,
+                timeList:[],
+                isActive:false
+            },
+            computed:{
+
+            },
+            filters:{
+                /*时间管道*/
+                timefilter:function(val){
+                    var timeOutput = $.formatDate("MM月dd日",new Date( val ));
+                    return timeOutput;
+                },
+                /*单位管道*/
+                unitFilter:function(value){
+                    var skuArr = value.split(",");
+                    var result;
+                    $.each(skuArr,function(i,item){
+                        if(item.indexOf("单位") != -1){
+                            result = item.split(":")[1];
+                        }
+                    });
+                    return result;
+                    /*var index = value.indexOf("单位");
+                     var startIndex = index + 3;
+                     return value.substr(startIndex,1);*/
+                }
+            },
+            methods:{
+                /*判断是否登录*/
+                isLogin:function(){
+                    if(!$.isLogin()){
+                        window.location.href = 'login.html';
+                    }
+                },
+                /*列表重新加载确定位置*/
+                listPosition:function(){
+                        console.log(2);
+                        for(var i=0;i<$(".track-time").length;i++){
+                            $(".track-time").eq(i).find("label").removeClass("checkbox-active");
+                            $(".track-time").eq(i).find("label").show();
+                        }
+                        for(var j=0;j<$(".productList").find("li").length;j++){
+                            console.log(1);
+                            $(".productList").find("li").eq(j).find(".label-check").removeClass("checkbox-active");
+                            $(".productList").find("li").eq(j).attr("data-slide","false");
+                            $(".productList").find("li").eq(j).css("margin-left",0);
+                            $(".productList").find("li").eq(j).addClass("li-left-active");
+                        }
+
+                },
+                /*获取足迹列表*/
+                getTrackList:function(){
+                    var todayTime = new Date();
+                    var nowDate = $.formatDate("yyyy-MM-dd",new Date( new Date().setHours(0,0,0,0) - 30*23*3600*1000 ));
+                    var endDate =  $.formatDate("yyyy-MM-dd",new Date( new Date().setHours(0,0,0,0) )); //当前天数
+                    var params = {startDate:nowDate,endDate:endDate,classifyId:''};
+                    var url = "/weixin/goodsBrowseLog/getBrowseLogList";
+
+                    console.log(myTrack.timeList);
+                    Util.common.b2bPostCallback(url,params,function(result){
+                        if(result.success){
+                            console.log(result);
+                            if(result.data.logList && result.data.logList.length > 0){
+                                var logList = result.data.logList;
+                                myTrack.$set('TrackList',logList);
+                                myTrack.isHasFlag = true;
+                                //重组日期数据
+                                var timeArr = [];
+                                for(var i = 0;i < 30;i++){
+                                    var TimeDate = {};
+                                    TimeDate.time = todayTime.setHours(0,0,0,0) - i*23*3600*1000;
+                                    TimeDate.isNull = true;
+                                    $.each(logList,function(i,item){
+                                        if(item.updateDate > TimeDate.time && item.updateDate < TimeDate.time + 24*3600*1000){
+                                            TimeDate.isNull = false;
+                                        }
+                                    });
+                                    timeArr.push(TimeDate);
+                                }
+                                myTrack.$set("timeList",timeArr);
+                                Vue.nextTick(function(){
+                                    myCollect.init();
+                                    if(myTrack.isActive){
+                                        myTrack.listPosition();
+                                    }
+
+                                });
+                                /*加载交互的JS*/
+                            }else{
+                                myTrack.isHasFlag = false;
+                            }
+                        }else{
+                            new Toast({context:$('body'),message:result.msg}).showQ("1000");
+                        }
+                    })
+                },
+                /*删除单个商品的足迹*/
+                delSingle:function(id){
+                    my_confirm({
+                        title:'提示',
+                        tips:"确定删除该商品吗？",
+                        btnOk:'确定',
+                        btnNo:'取消',
+                        funcOk:function(){
+                            var url = '/weixin/goodsBrowseLog/delBrowseLogById';
+                            var logIds = id;
+                            var param = {};
+                            param.logIds = logIds;
+                            Util.common.b2bPostCallback(url,param,function(result){
+                                if(result.success){
+                                    new Toast({context:$('body'),message: '删除成功'}).showQ("1000");
+                                    setTimeout(function(){
+                                        myTrack.getTrackList();
+                                    },2000);
+                                }else{
+                                    new Toast({context:$('body'),message: result.msg}).showQ();
+                                }
+                            });
+                        },
+                        funcNo:function(){}
+                    })
+                },
+                /*删除多个商品的足迹*/
+                delFromCart:function(){
+                    var url = '/weixin/goodsBrowseLog/delBrowseLogById';
+                    var idList = [];
+                    for(var i= 0;i<$(".track-group").length;i++){
+                        for(var j = 0 ; j < $(".track-group").eq(i).find(".productList>li").length;j++){
+                            if($(".track-group").eq(i).find('.productList>li').eq(j).find("label.label-check").hasClass('checkbox-active')){
+                                idList.push($(".track-group").eq(i).find('.productList>li').eq(j).attr('data-id'));
+                            }
+                        }
+                    }
+
+                    console.log(idList);
+                    if(idList.length > 0){
+                        my_confirm({
+                            title:'提示',
+                            tips:"确定删除选中商品吗？",
+                            btnOk:'确定',
+                            btnNo:'取消',
+                            funcOk:function(){
+                                var goodsIds = idList.join(',');
+                                var params = {};
+                                params.logIds = goodsIds;
+                                Util.common.b2bPostCallback(url,params,function(result){
+                                    if(result.success){
+                                        new Toast({context:$('body'),message: "删除成功"}).showQ("1000");
+                                        myTrack.isActive = true;
+                                        setTimeout(function(){
+                                            myTrack.getTrackList();
+                                        },2000);
+                                    }else{
+                                        new Toast({context:$('body'),message: result.msg}).showQ();
+                                    }
+                                });
+                            },
+                            funcNo:function(){}
+                        });
+                    }else{
+                        new Toast({context:$('body'),message: '请先选择需要删除的商品'}).showQ();
+                    }
+                },
+                /*批量加入购物车*/
+                addToCart:function(){
+                    var url = '/weixin/cart/batchAddToCart';
+                    var idList = [];
+
+                    /*选中的预售商品的数量*/
+                    var presaleCount = 0;
+
+                    for(var i= 0;i<$(".track-group").length;i++){
+                        for(var j = 0 ; j < $(".track-group").eq(i).find(".productList>li").length;j++){
+                            if($(".track-group").eq(i).find('.productList>li').eq(j).find("label.label-check").hasClass('checkbox-active') && $(".track-group").eq(i).find('.productList>li').eq(j).attr("data-ispresale") == '0' ){
+                                idList.push({
+                                    "goodsId":$(".track-group").eq(i).find('.productList>li').eq(j).attr('data-goodId'),
+                                    "goodsCount":"1"
+                            });
+                            }
+                        }
+                    }
+
+                    /*计算选中的是预售商品的数量*/
+                    for(var i= 0;i<$(".track-group").length;i++){
+                        for(var j = 0 ; j < $(".track-group").eq(i).find(".productList>li").length;j++){
+                            if($(".track-group").eq(i).find('.productList>li').eq(j).find("label.label-check").hasClass('checkbox-active') && $(".track-group").eq(i).find('.productList>li').eq(j).attr("data-ispresale") == '1' ){
+                                presaleCount++;
+                            }
+                        }
+                    }
+
+                    console.log(idList);
+                    console.log(presaleCount);
+                    if (idList.length > 0) {
+                        var params = {};
+                        params.queryJson = JSON.stringify( idList );
+                        Util.common.b2bPostCallback(url, params, function (result) {
+                            if (result.success) {
+                                if(presaleCount > 0){
+                                    new Toast({context: $('body'), message: "加入购物车成功！当前有"+presaleCount+"款预售商品不支持加入购物车。"}).showQ("3000");
+                                }else{
+                                    new Toast({context: $('body'), message: "添加成功"}).showQ("1000");
+                                }
+                                myTrack.listPosition();
+                            } else {
+                                new Toast({context: $('body'), message: result.msg}).showQ();
+                            }
+                        });
+
+                    }else{
+                        if(presaleCount > 0){
+                            new Toast({context: $('body'), message: "预售商品不支持加入购物车。您可直接点击购买！"}).showQ("3000");
+                        }else{
+                            new Toast({context:$('body'),message: '请先选择需要加入购物车的商品'}).showQ();
+                        }
+                    }
+                },
+            }
+        });
+    </script>
+</html>

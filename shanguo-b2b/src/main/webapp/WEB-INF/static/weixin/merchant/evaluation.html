@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>买家评价</title>
+</head>
+<body id="evaluation">
+    <div style="display: none;" class="evaluate">
+        <div class="dis-tabel w100 sumEva">
+            <p class="dis-cell">商品满意度：{{detail.score}}</p>
+            <span class="dis-cell">
+                 <template v-for="x in 5-detail.score">
+                    <i class="dis-cell star"></i>
+                </template>
+                <template v-for="i in detail.score">
+                     <i class="dis-cell stara"></i>
+                 </template>
+
+            </span>
+        </div>
+        <ul>
+            <template v-for="list in detail.goodEvaluationList">
+                <li class="score">
+                    <p class="dis-tabel w100 pad17">
+                        <em class="dis-cell">{{list.username}}</em>
+                        <span class="dis-cell">
+                            <template v-for="i in list.score">
+                                 <i class="dis-cell stara"></i>
+                            </template>
+                            <template v-for="x in 5-list.score">
+                                <i class="dis-cell star"></i>
+                            </template>
+
+
+                        </span>
+                        <em class="date dis-cell ta-r">{{list.evaluateTime.substr(0,10)}}</em>
+                    </p>
+
+                    <div class="text pad17">
+                        <p>{{list.content}}</p>
+                        <!--<div  class="clearfix">-->
+                            <!--<div class="fl w25">-->
+                                <!--<img src="img/1.png" alt="">-->
+                            <!--</div>-->
+                            <!--<div  class="fl w25">-->
+                                <!--<img src="img/1.png" alt="">-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                    </div>
+                    <p class="date ta-r">规格：{{list.skuName}}</p>
+                </li>
+            </template>
+        </ul>
+
+    </div>
+    <div style="display: none;" id="emptyTip">
+        <div class="empty-icon"><img src="img/icons/no.png" alt=""></div>
+        <p class="fs-14 ta-c">暂无商品评价~</p>
+    </div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    var goods=new Vue({
+        el:'#evaluation',
+        data:{
+            detail:{},
+        },
+        computed:{
+
+        },
+        methods: {
+
+        }
+    });
+
+    var url ="mobile/good/getGoodDetail.do?goodId="+Util.common.getParameter("goodId")+"&shopId="+localStorage.getItem("shopId");
+    var param = {};
+
+    localStorage.setItem('goodId', Util.common.getParameter("id"));
+    Util.common.executeAjaxCallback(url, param, function (data) {
+        goods.$set("detail",data);
+        console.log(data);
+        if(data.goodEvaluationList==undefined || data.goodEvaluationList=="undefined" ||data.goodEvaluationList==null ||data.goodEvaluationList==''){
+            $("#emptyTip").css('display','block');
+        }else {
+            $(".evaluate").css('display','block');
+        }
+    });
+</script>
+</html>

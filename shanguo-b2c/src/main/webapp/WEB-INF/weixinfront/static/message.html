@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>我的消息</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" href="css/fonts/iconfont.css">
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/ui-box.css">
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		.svc_time {  width: 100%;  height: 4.6rem;  line-height: 4.6rem;  font-size: 0.875rem;  text-align: center;  color: #989898;  }
+		.svc_fix {  position: fixed;  width: 100%;  height: 4.3rem;  bottom: 0;  background: #ffffff;  line-height: 4.3rem;  }
+		.svc_fix_l, .svc_fix_r {  width: 15%;  float: left;  text-align: center;  }
+		.svc_fix_l img {  vertical-align: middle;  width: 1.6rem;  }
+
+		.svc_fix_c {  width: 70%;  float: left;  }
+		.svc_fix_c input{  width: 95%;  margin: 0 auto;  height: 2rem;  border: 1px solid #d7d7d7;  border-radius: 3px;  }
+		.svc_fix_r div {  width: 80%;  margin: 1.15rem auto;  font-size: 0.875rem;  line-height: 2rem;  color: #ffffff;  text-shadow: none;  background: #CC9B4B;  border-radius: 3px;  }
+		.svc_left {  width: 100%;  overflow: hidden;  padding: 0 1.6rem;  -webkit-box-sizing: border-box;  -moz-box-sizing: border-box;  box-sizing: border-box;  margin-bottom: 2rem;  }
+
+		.svc_left_l {  position: relative;  float: left;  margin-right: 5%;  width: 15%;  }
+		.svc_left_l img {  display: block;  border-radius: 50%;  }
+		.svc_left_r {  position: relative;  max-width: 80%;  float: left;  font-size:0.875rem;  line-height: 2rem;  background: #ffffff;  padding: 0.8rem 1rem;  border: solid 1px #ffffff;  border-radius: 5px;  box-sizing: border-box;  }
+		.svc_right_l {  float: right;  margin-right: 0;  margin-left:5%;  width: 15%;  }
+		.svc_left_icon {  display: block;  position: absolute;  width: 1rem;  height: 1rem;  top: 1rem;  left: -1rem;  background: #ffffff;  transform-origin: 100% 100%;  -webkit-transform: rotate(45deg);  -moz-transform: rotate(45deg);  -ms-transform: rotate(45deg);  -o-transform: rotate(45deg);  transform: rotate(45deg);  border-radius: 3px;  }
+		.svc_right_icon {  display: block;  position: absolute;  width: 1rem;  height: 1rem;  top: 1rem;  right: -1rem;  transform-origin: 0% -30%;  background: #CC9B4B;  -webkit-transform: rotate(45deg);  -moz-transform: rotate(45deg);  -ms-transform: rotate(45deg);  -o-transform: rotate(45deg);  transform: rotate(45deg);  border-radius: 3px;  }
+		.rg_red {  float: right;  background: #CC9B4B;  color: #ffffff;  text-shadow: none;  }
+
+
+		.svc_good {
+			width: 100%;
+			background: #ffffff;
+			padding: 1.6rem;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			position: fixed;
+			z-index: 10000;
+			top:0;
+		}
+		.svc_good_t {
+			position: relative;
+			width: 100%;
+			height: 6rem;
+			margin-bottom: 0rem;
+		}
+		.svc_good_m {
+			height: 2rem;
+			line-height: 2rem;
+			text-align: center;
+			margin: 0 32%;
+			color: #CC9B4B;
+			font-size: 0.875rem;
+			border: solid 1px #CC9B4B;
+			border-radius: 5px;
+		}
+		.svc_good_t img {
+			position: absolute;
+			width: 5rem;
+			height:5rem;
+			left: 0;
+			top: 0;
+		}
+		.svc_good_t_r {
+			position: relative;
+			min-height: 5rem;
+			margin-left: 5.8rem;
+		}
+		.svc_good_t_r h3 {
+			margin: 0;
+			line-height: 1.8rem;
+			font-size: 0.875rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			white-space: normal;
+			font-weight: normal;
+			color: #000000;
+		}
+		.svc_good_t_r div {
+			position: absolute;
+			bottom: 0;
+			color: #CC9B4B;
+			font-size: 0.875rem;
+		}
+	</style>
+
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="js/jquery-1.8.2.min.js"></script>
+</head>
+<body id="bodyContent" class="bg-main">
+<div data-role="page">
+	<div id="goodContent" >
+		
+	</div>
+	<!--<div class="svc_time">今天 15:34</div>-->
+	<div id="msgContent">
+	</div>
+	<div class="svc_fix">
+		<div id="container">
+			<div class="svc_fix_l" id="pickfiles"><img src="img/icons/camera.png"/></div>
+		</div>
+		
+		<div class="svc_fix_c"><input class="svc_fix_c_input" type="text" placeholder="输入聊天" valign="" name="" id="inputContent"/></div>
+		<div class="svc_fix_r" id="sendMsgBtn"><div>发送</div></div>
+	</div>
+	<div style="width: 100%;height:4.3rem;" >
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	$(document).bind('mobileinit',function(){
+		$.mobile.changePage.defaults.changeHash = false;
+		$.mobile.hashListeningEnabled = false;
+		$.mobile.pushStateEnabled = false;
+	});
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/main.js"></script>
+<script type="text/javascript" src="js/qiniu/moxie.js"></script>
+<script type="text/javascript" src="js/qiniu/plupload.dev.js"></script>
+<script type="text/javascript" src="js/qiniu/zh_CN.js"></script>
+<script type="text/javascript" src="js/qiniu/ui.js"></script>
+<script type="text/javascript" src="js/qiniu/qiniu.js"></script>
+<script>
+	Date.prototype.format =function(format){
+		var o = {
+			"M+" : this.getMonth()+1, //month
+			"d+" : this.getDate(),    //day
+			"h+" : this.getHours(),   //hour
+			"m+" : this.getMinutes(), //minute
+			"s+" : this.getSeconds(), //second
+			"q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+			"S" : this.getMilliseconds() //millisecond
+		}
+		if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+				(this.getFullYear()+"").substr(4- RegExp.$1.length));
+		for(var k in o)if(new RegExp("("+ k +")").test(format))
+			format = format.replace(RegExp.$1,
+					RegExp.$1.length==1? o[k] :
+							("00"+ o[k]).substr((""+ o[k]).length));
+		return format;
+	}
+	var uploaderImg=function(){
+		var default_options={
+			runtimes: 'html5,flash,html4',
+			browse_button:'',
+			container: '',
+			tigger_container:'',
+			//chunk_size: '4mb',
+			uptoken_url:"/weixin/qiniu/getToken.do",
+//		uptoken:"jiZNnKPEiZpRe5L5jkkTYnAFJQ1TnJ0GOQnIYwQQ:dadglDQc7pqHHd5BWkUVvJP1Pco=:eyJzY29wZSI6InNoYW5ndW95aW55aSIsImRlYWRsaW5lIjoxNTA3NDE1NDU1fQ==",
+			domain: 'http://o7o0uv2j1.bkt.clouddn.com/',
+			flash_swf_url : 'qiniu/Moxie.swf',
+			silverlight_xap_url : 'qiniu/Moxie.xap',
+			multi_selection: !(mOxie.Env.OS.toLowerCase()==="ios"),
+			filters : {
+				max_file_size : '100mb',
+				prevent_duplicates: false,
+				mime_types: [
+					{title : "Image files", extensions : "jpg,jpeg,gif,png,bmp"}
+				]
+			},
+			get_new_uptoken: false,
+			auto_start: true,
+			log_level: 5,
+			resize : {
+				width : 200,
+				height : 200,
+				quality : 72,
+				crop: true // crop to exact dimensions
+			},
+			init: {
+				'FilesAdded': function(up, files) {
+					var op=up.getOption();
+					var targetContainer=op.tigger_container;
+					plupload.each(files, function(file) {
+						var progress = new FileProgress(file, targetContainer);
+						progress.bindUploadCancel(up);
+						up.refresh();
+
+					});
+				},
+				'BeforeUpload': function(up, file) {
+					var op=up.getOption();
+//				var targetContainer=op.tigger_container;
+//              var progress = new FileProgress(file, targetContainer);
+//              var chunk_size = plupload.parseSize(this.getOption('chunk_size'));
+//              if (up.runtime === 'html5' && chunk_size) {
+//                  progress.setChunkProgess(chunk_size);
+//              }
+					readyImg(file.id);
+				},
+				'UploadComplete': function() {
+					console.log("ssss");
+				},
+				'FileUploaded': function(up, file, info) {
+					var op=up.getOption();
+					var targetContainer=op.tigger_container;
+					var progress = new FileProgress(file, targetContainer);
+					var url=progress.getCompleteImg(up, info, "-img");
+					senImg(url,file.id);
+
+				},
+				'Error': function(up, err, errTip) {
+					var op=up.getOption();
+					var targetContainer=op.tigger_container;
+					var progress = new FileProgress(err.file, targetContainer);
+					progress.setError();
+					progress.setStatus(errTip);
+				},
+				'Key': function(up, file) {
+					var key = "";
+					var timestamp=new Date().getTime();
+					var imgType=file.name.substr(file.name.lastIndexOf(".")).toLowerCase();
+					var randomStr = function(len){
+						var targetStr="";
+						var hexDigits = "0123456789abcdef";
+						for(var i=0;i<len;i++){
+							targetStr+=hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+						}
+						return targetStr;
+					}
+					key=timestamp+randomStr(7)+imgType;
+					return key;
+				}
+			}
+		};
+		var _init=function(options){
+			return $.extend(true, default_options, options);
+		}
+		var _create=function(options){
+			var op=_init(options);
+			var uploader = Qiniu.uploader(op);
+			return uploader;
+		}
+		return {
+			createUploader:function(options){
+				_create(options);
+			}
+		}
+	};
+	$(function () {
+		//                微信分享
+		Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+
+		customer.message.init();
+		$("#sendMsgBtn").on("click",function(e){
+			var msg =$("#inputContent").val();
+			if(customer.message.msgId !="-1" && msg !=""){
+				var url ="/weixin/message/news/add.do";
+				var modelJson={
+					messageId:customer.message.msgId,
+					senderId:customer.message.userId,
+					content:msg,
+					type:'0',
+					sendType:'0'
+				};
+				var param = {
+					modelJson:JSON.stringify(modelJson)
+				};
+				var msgobj=addMsg(modelJson);
+				if(msgobj.isShowTime){
+					var dateTime=$('<div class="svc_time">'+showDate(msgobj.showTime)+'</div>');
+					$("#msgContent").append(dateTime);
+				}
+				var userMsg=$('<div class="svc_left">'+
+						'<div class="svc_left_l svc_right_l "><img src="'+customer.message.userImg+'" /></div>'+
+						'<div class="svc_left_r rg_red"><i class="svc_right_icon"></i>'+msg+'</div></div>');
+				$("#msgContent").append(userMsg);
+				$("#bodyContent").scrollTop($("#msgContent").height());
+				Util.common.executeAjaxCallback(url, param, function (data) {
+					console.log(data);
+					$("#inputContent").val("");
+					if(data.msg){
+						var msgobj=addMsg(data.msg);
+						if(msgobj.isShowTime){
+							var dateTime=$('<div class="svc_time">'+showDate(msgobj.showTime)+'</div>');
+							$("#msgContent").append(dateTime);
+						}
+						var userMsg=$('<div class="svc_left">'+
+								'<div class="svc_left_l"><img src="'+customer.message.cusImg+'" /></div>'+
+								'<div class="svc_left_r"><i class="svc_left_icon"></i>'+data.msg.content+'</div></div>');
+						$("#msgContent").append(userMsg);
+						$("#bodyContent").scrollTop($("#msgContent").height());
+					}
+				});
+			}
+
+
+		});
+		$("#sendGoodBtn").on("click",function(e){
+			var infoObj=customer.message.infoObj;
+			var msg ="<p>"+infoObj.name+"</p>"+
+					"<p>商品编号："+infoObj.id+"</p>"+
+					"<p>货品编号："+infoObj.cargoNo+"</p>";
+			if(customer.message.msgId !="-1" && msg !=""){
+				var url ="/weixin/message/news/add.do";
+				var modelJson={
+					messageId:customer.message.msgId,
+					senderId:customer.message.userId,
+					content:msg,
+					type:'0',
+					sendType:'0'
+				};
+				var param = {
+					modelJson:JSON.stringify(modelJson)
+				};
+				var msgobj=addMsg(modelJson);
+				if(msgobj.isShowTime){
+					var dateTime=$('<div class="svc_time">'+showDate(msgobj.showTime)+'</div>');
+					$("#msgContent").append(dateTime);
+				}
+				var userMsg=$('<div class="svc_left">'+
+						'<div class="svc_left_l svc_right_l "><img src="'+customer.message.userImg+'" /></div>'+
+						'<div class="svc_left_r rg_red"><i class="svc_right_icon"></i>'+msg+'</div></div>');
+				$("#msgContent").append(userMsg);
+				$("#bodyContent").scrollTop($("#msgContent").height());
+				Util.common.executeAjaxCallback(url, param, function (data) {
+					console.log(data);
+					$("#inputContent").val("");
+					if(data.msg){
+						var msgobj=addMsg(data.msg);
+						if(msgobj.isShowTime){
+							var dateTime=$('<div class="svc_time">'+showDate(msgobj.showTime)+'</div>');
+							$("#msgContent").append(dateTime);
+						}
+						var userMsg=$('<div class="svc_left">'+
+								'<div class="svc_left_l"><img src="'+customer.message.cusImg+'" /></div>'+
+								'<div class="svc_left_r"><i class="svc_left_icon"></i>'+data.msg.content+'</div></div>');
+						$("#msgContent").append(userMsg);
+						$("#bodyContent").scrollTop($("#msgContent").height());
+					}
+				});
+			}
+		});
+	})
+	function readyImg(fileName){
+		var msg="<img id='"+fileName+"' src='images/hdpi/loadiing.gif'>";
+		if(customer.message.msgId !="-1" && msg !=""){
+			var modelJson={
+				messageId:customer.message.msgId,
+				senderId:customer.message.userId,
+				content:msg,
+				type:'1',
+				sendType:'0',
+				fileName:fileName
+			};
+			var msgobj=addMsg(modelJson);
+			if(msgobj.isShowTime){
+				var dateTime=$('<div class="svc_time">'+showDate(msgobj.showTime)+'</div>');
+				$("#msgContent").append(dateTime);
+			}
+			var userMsg=$('<div class="svc_left">'+
+					'<div class="svc_left_l svc_right_l "><img src="'+customer.message.userImg+'" /></div>'+
+					'<div class="svc_left_r rg_red"><i class="svc_right_icon"></i>'+msg+'</div></div>');
+			$("#msgContent").append(userMsg);
+			$("#bodyContent").scrollTop($("#msgContent").height());
+		}
+	}
+	function senImg(imgUrl,fileName){
+		var msg="<img src='"+imgUrl+"'>";
+		if(customer.message.msgId !="-1" && msg !=""){
+			var msgInfo=null;
+			if(customer.message.msgData){
+				var msgData=customer.message.msgData;
+				if(msgData.contents){
+					for(var i=0;i<msgData.contents.length;i++){
+						if(msgData.contents[i].type==1|| msgData.contents[i].type=='1'){
+							if(msgData.contents[i].fileName&&msgData.contents[i].fileName){
+								msgData.contents[i].content=msg;
+								msgInfo=msgData.contents[i];
+							}
+						}
+					}
+				}
+			}
+			$("#"+fileName).attr("src",imgUrl);
+			var url ="/weixin/message/news/add.do";
+			if(msgInfo){
+				var param = {
+					modelJson:JSON.stringify(msgInfo)
+				};
+				Util.common.executeAjaxCallback(url, param, function (data) {
+					console.log(data);
+					$("#inputContent").val("");
+					if(data.msg){
+						var msgobj=addMsg(data.msg);
+						if(msgobj.isShowTime){
+							var dateTime=$('<div class="svc_time">'+showDate(msgobj.showTime)+'</div>');
+							$("#msgContent").append(dateTime);
+						}
+						var userMsg=$('<div class="svc_left">'+
+								'<div class="svc_left_l"><img src="'+customer.message.cusImg+'" /></div>'+
+								'<div class="svc_left_r"><i class="svc_left_icon"></i>'+data.msg.content+'</div></div>');
+						$("#msgContent").append(userMsg);
+						$("#bodyContent").scrollTop($("#msgContent").height());
+					}
+				});
+			}
+			return;
+
+		}
+	}
+	function isShowDate(obj){
+		for(var i=0;i<obj.length;i++){
+			var msgTime=obj[i].sendTime;
+			msgTime= msgTime.replace(/\-/g,"/");
+			if(i==0){
+				obj[i].showTime=msgTime;
+				obj[i].isShowTime=true;
+			}else{
+				var msgDate=new Date(msgTime).getTime();
+				var lastDate=new Date(obj[i-1].showTime).getTime();
+				var flagDate=msgDate-lastDate;
+				if(flagDate>360000){
+					obj[i].showTime=msgTime;
+					obj[i].isShowTime=true;
+				}else{
+					obj[i].showTime=obj[i-1].showTime;
+					obj[i].isShowTime=false;
+				}
+			}
+		}
+		return obj;
+	}
+	function concatTime(num){
+		if(num<10)
+			return "0"+num;
+		return num;
+	}
+	function showDate(showTime){
+		var showDate=new Date(showTime);
+		var curDate=new Date();
+		var yestoday=new Date();
+		yestoday.setDate(curDate.getDate()-1);
+		var showD={
+			year:showDate.getFullYear(),
+			month:showDate.getMonth(),
+			day:showDate.getDate()
+		}
+		var curD={
+			year:curDate.getFullYear(),
+			month:curDate.getMonth(),
+			day:curDate.getDate()
+		}
+		var yesD={
+			year:yestoday.getFullYear(),
+			month:yestoday.getMonth(),
+			day:yestoday.getDate()
+		}
+		if(showD.day==curD.day&&showD.month==curD.month&&showD.year==curD.year){
+			return "今天 "+concatTime(showDate.getHours())+":"+concatTime(showDate.getMinutes());
+		}else if(showD.day==yesD.day&&showD.month==yesD.month&&showD.year==yesD.year){
+			return "昨天 "+concatTime(showDate.getHours())+":"+concatTime(showDate.getMinutes());
+		}
+
+		return concatTime(showDate.getMonth()+1)+"-"+concatTime(showDate.getDate())+" "+concatTime(showDate.getHours())+":"+concatTime(showDate.getMinutes());
+	}
+	function addMsg(msg){
+		var curDate=new Date().format("yyyy-MM-dd hh:mm:ss");
+		msg.sendTime=curDate;
+		var msgTime= curDate.replace(/\-/g,"/");
+		var msgData=customer.message.msgData;
+		if (msgData){
+			if(msgData.contents){
+				var len=msgData.contents.length;
+				var content =msgData.contents[len-1];
+				var msgDate=new Date(msgTime).getTime();
+				var lastDate=new Date(content.showTime).getTime();
+				var flagDate=msgDate-lastDate;
+				if(flagDate>360000){
+					msg.showTime=msgTime;
+					msg.isShowTime=true;
+				}else{
+					msg.showTime=content.showTime;
+					msg.isShowTime=false;
+				}
+				msgData.contents.push(msg);
+			}else{
+				var contents=[];
+				msg.showTime=msgTime;
+				msg.isShowTime=true;
+				contents.push(msg);
+				msgData.contents=contents;
+			}
+			customer.message.msgData=msgData
+		}
+		return msg;
+	}
+
+	var customer = customer || {};
+	customer.message = {
+		userId:'-1',
+		shopId:'-1',
+		goodId:'-1',
+		msgId:"-1",
+		msgData:{},
+		userImg:'',
+		cusImg:'',
+		infoObj:{},
+		init:function(){
+			customer.message.goodId = Util.common.getParameter("goodId");
+			customer.message.userId = sessionStorage.getItem("userid");
+//		customer.message.userId ="255687948111192064";
+			customer.message.shopId = sessionStorage.getItem("shopId");
+//		customer.message.shopId="277050247008686080";
+			var options={
+				browse_button: 'pickfiles',
+				container: 'container',
+				tigger_container:''}
+			var uploader = new uploaderImg();
+			uploader.createUploader(options);
+			if(customer.message.goodId){
+				var goodInfoObj=sessionStorage.getItem('goodInfoObj');
+
+				if(goodInfoObj){
+					var infoObj=JSON.parse(goodInfoObj);
+					customer.message.infoObj=infoObj;
+					var goodInfo=$('<div class="svc_good" >'
+							+'<div class="svc_good_t">'
+							+'<img src="'+infoObj.imgUrl+'" />'
+							+'<div class="svc_good_t_r">'
+							+'<h3>'+infoObj.name+'</h3>'
+							+'<div>￥'+infoObj.salePrice+'</div>'
+							+'</div>'
+							+'</div>'
+							+'<div class="svc_good_m" id="sendGoodBtn">发送宝贝信息</div>'
+							+'</div>');
+					$("#goodContent").append(goodInfo);
+					$("#msgContent").css("margin-top","16.6rem");
+				}
+			}
+			var url ="/weixin/message/news/queryMessage.do";
+			var param = {
+				"clientId":customer.message.userId ,
+				"storeId":customer.message.shopId
+			};
+			Util.common.executeAjaxCallback(url, param, function (data) {
+				console.log(data);
+				if(data){
+//				$("#pageTitle").val(data.storeName);
+//					Util.common.setWxTitle(data.storeName);
+					customer.message.msgId=data.id;
+					if(data.clientPic){
+						customer.message.userImg=data.clientPic;
+					}else{
+						customer.message.userImg="images/test-img/details/svc_photo.jpg";
+					}
+//				if(data.storePic){
+//					customer.message.cusImg=data.storePic;
+//				}else{
+					customer.message.cusImg="img/icons/service.jpg";
+//				}
+					if(data.contents){
+						var contents=isShowDate(data.contents);
+						data.contents=contents;
+						for(var i=0;i<contents.length;i++){
+							if(contents[i].senderId==customer.message.userId){
+								if(contents[i].isShowTime){
+									var dateTime=$('<div class="svc_time">'+showDate(contents[i].showTime)+'</div>');
+									$("#msgContent").append(dateTime);
+								}
+								var userMsg=$('<div class="svc_left">'+
+										'<div class="svc_left_l svc_right_l "><img src="'+customer.message.userImg+'" /></div>'+
+										'<div class="svc_left_r rg_red"><i class="svc_right_icon"></i>'+contents[i].content+'</div></div>');
+
+							}else{
+								var userMsg=$('<div class="svc_left">'+
+										'<div class="svc_left_l"><img src="'+customer.message.cusImg+'" /></div>'+
+										'<div class="svc_left_r"><i class="svc_left_icon"></i>'+contents[i].content+'</div></div>');
+							}
+							$("#msgContent").append(userMsg);
+						}
+						setTimeout(function(){
+							$("#bodyContent").scrollTop($("#msgContent").height()+500);
+						},1000);
+					}
+					customer.message.msgData=data;
+				}
+			});
+		}
+	}
+</script>
+
+
+
+

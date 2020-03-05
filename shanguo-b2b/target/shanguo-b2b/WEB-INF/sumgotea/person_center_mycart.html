@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--清除浏览器缓存-->
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <!--设备 IE  最高版本-->
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <!--定义 语言类型-->
+    <meta http-equiv="CONTENT-TYPE" content="text/html" charset="utf-8">
+    <!--设置视口宽度与设备宽度， 禁止用户缩放-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--X5内核 全屏显示-->
+    <meta name="x5-fullscreen" content="true">
+    <!--uc内核  全屏显示-->
+    <meta name="full-screen" content="yes">
+    <!--描述-->
+    <meta name="description" content="山国饮艺">
+    <!--关键字-->
+    <meta name="keywords" content="山国饮艺">
+    <title>我的购物车</title>
+    <!--公共部分-->
+    <!--HTML标签样式重置-->
+    <link href="css/normalize.css" rel="stylesheet">
+    <!--移动端css重置-->
+    <link href="css/reset.css" rel="stylesheet">
+    <!--rem适配  设计图750*1334-->
+    <script src="js/viewport_rem.js"></script>
+    <!--公共部分   ending-->
+    <!--单独样式-->
+    <link href="css/gg_common.css" rel="stylesheet">
+    <link href="css/person_center_mycart.css" rel="stylesheet">
+</head>
+<body id="cartList" v-bind:class="{'paddingBottom':!isHasFlag}">
+    <template v-if="isHasFlag">
+    <header>
+        购物车
+        <a href="javascript:;" id="editor">编辑</a>
+        <a href="javascript:;" id="complete" style="display: none;">完成</a>
+    </header>
+    <section class="wrap">
+        <ul id="productList">
+            <template v-for="item in cartInfo">
+                <li class="clearfix" data-id="{{item.id}}" data-startNum="{{item.good.startNum}}" data-onSalesNo="item.good.onSalesNo" data-mulNumFlag="{{item.good.mulNumFlag}}">
+                    <label class="pull-left label-check"></label>
+                    <div class="product-information pull-left">
+                        <a href="goods_detail.html?goodsId={{item.goodsId}}" class="information clearfix">
+                            <div class="product-img pull-left">
+                                <img :src="item.good.image.url || './img/icons/tea.png'">
+                            </div>
+                            <div class="product-txt pull-left">
+                                <h6>{{item.good.name}}</h6>
+                                <div class="tips clearfix">
+                                    <span class="pull-left">{{item.good.skuName | filterSku}}</span>
+                                </div>
+                                <div class="price">供货价：¥<span class="single-price">{{item.good.price}}</span>/盒</div>
+                            </div>
+                        </a>
+                        <div class="count clearfix">
+                            <a href="javascript:;" class="minus pull-left"></a>
+                            <span class="pull-left single-quantity">{{item.goodsCount > item.good.startNum ? item.goodsCount : item.good.startNum}}</span>
+                            <a href="javascript:;" class="plus pull-left"></a>
+                        </div>
+                    </div>
+                    <div class="delete pull-right">
+                        <a href="javascript:void(0)" class="delete-btn" v-on:touchstart="delSingle(item.id)">删除</a>
+                    </div>
+                </li>
+            </template>
+        </ul>
+    </section>
+    </template>
+    <template v-if="!isHasFlag">
+        <header>优茶联</header>
+        <section class="noCart">
+            <div class="noCart-tips clearfix">
+                <img src="./img/icons/no.png">
+                <p>亲，购物车空空如也，快去逛逛！</p>
+                <a href="sorts.html">看茶去</a>
+            </div>
+        </section>
+        <div class="may-like">
+            <h4><i class="like"></i>猜你喜欢<i class="color-line"></i></h4>
+            <ul class="like-wrap clearfix">
+                <li>
+                    <a href="#">
+                        <img src="./img/g_product_list_img_default.png">
+                        <p><i class="sale">代销</i>组合组合组合组合组合组合组合组合</p>
+                        <p><i class="group-shopping">团购</i></p>
+                        <div class="sku"><label>供货价：</label><sub>￥</sub>234.00/盒</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="./img/g_product_list_img_default.png">
+                        <p><i class="sale">代销</i>组合组合组合组合组合组合组合组合</p>
+                        <p><i class="group-shopping">团购</i></p>
+                        <div class="sku"><label>供货价：</label><sub>￥</sub>23400.00/盒</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="./img/g_product_list_img_default.png">
+                        <p><i class="sale">代销</i>组合组合组合组合组合组合组合组合</p>
+                        <p><i class="group-shopping">团购</i></p>
+                        <div class="sku"><label>供货价：</label><sub>￥</sub>23400.00/盒</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="./img/g_product_list_img_default.png">
+                        <p><i class="sale">代销</i>组合组合组合组合组合组合组合组合</p>
+                        <p><i class="group-shopping">团购</i></p>
+                        <div class="sku"><label>供货价：</label><sub>￥</sub>23400.00/盒</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </template>
+    <footer class="footer-nav">
+        <template v-if="isHasFlag">
+            <div class="footer-operation-delete clearfix" style="display: none;" id="operationDelete">
+                <label class="delete-all pull-left" id="deleteAll">
+                    <i class="checkbox-icon"></i>全选
+                </label>
+                <a href="javascript:;" v-on:click="delFromCart()" class="footer-delete pull-right">删除</a>
+            </div>
+            <div class="footer-operation-account clearfix" id="operationAccount">
+                <label class="account-all pull-left" id="accountAll">
+                    <i class="checkbox-icon"></i>全选
+                </label>
+            <span class="cashAll pull-left">
+                <span>总计：</span>
+                <span class="money">¥<i id="moneyNumber">0.00</i></span>
+            </span>
+                <a v-on:click="goCount()" class="footer-count pull-right">
+                    去结算<sub id="quantity">(0)</sub>
+                </a>
+            </div>
+        </template>
+        <div class="footer-nav-wrap clearfix">
+            <a href="index.html" class="index pull-left">
+                <i></i>
+                <span>首页</span>
+            </a>
+            <a href="sorts.html" class="category pull-left">
+                <i></i>
+                <span>分类</span>
+            </a>
+            <a href="javascript:;" class="shopping-cart active pull-left">
+                <i>
+                    <!--<sup class="dot">12</sup>-->
+                </i>
+                <span>购物车</span>
+            </a>
+            <a href="person_center_index.html" class="person-center pull-left">
+                <i></i>
+                <span>个人中心</span>
+            </a>
+        </div>
+    </footer>
+
+</body>
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/person_center_mycart.js"></script>
+    <script>
+        $(function(){
+            Util.common.addloadingAnimate();
+            cartList.isLogin();
+            myCart.init();
+            cartList.getList();
+        });
+        var cartList = new Vue({
+            el:"#cartList",
+            data:{
+                cartInfo:[],
+                isHasFlag:true
+            },
+            filters:{
+                /*sku filter函数*/
+                filterSku:function(value){
+                    var index = value.indexOf("单位");
+                    var startIndex = index + 3;
+                    return value.substr(startIndex,1);
+                },
+            },
+            methods:{
+                /*判断是否登录*/
+                isLogin:function(){
+                    if(!$.isLogin()){
+                        window.location.href = 'login.html';
+                    }
+                },
+
+                /*数据初始化*/
+                getList:function(){
+                    var url = '/weixin/cart/getCartList';
+                    $.post(url,function(result){
+                        if(result.success && result.data){
+                            Util.common.removeloadingAnimate();
+                            var cartData = result.data.cartList;
+                            if(cartData.length > 0){
+                                cartList.isHasFlag = true;
+                            }else{
+                                cartList.isHasFlag = false;
+                            }
+                            cartList.$set('cartInfo',cartData);
+                        }else{
+                            new Toast({context:$('body'),message: result.msg}).show();
+                        }
+                    });
+                },
+                /*批量删除购物车*/
+                delFromCart:function(){
+                    var url = '/weixin/cart/delFromCart';
+                    var idList = [];
+                    for(var i = 0 ; i < $("#productList>li").length;i++){
+                        if($('#productList>li').eq(i).find("label.label-check").hasClass('checkbox-active')){
+                            idList.push($('#productList>li').eq(i).attr('data-id'));
+                        }
+                    }
+                    console.log(idList);
+                    if(idList.length > 0){
+                        my_confirm({
+                            title:'提示',
+                            tips:"确定删除所有商品吗？",
+                            btnOk:'确定',
+                            btnNo:'取消',
+                            funcOk:function(){
+                                var goodsIds = idList.join(',');
+                                var params = {idList:goodsIds};
+                                $.post(url,params,function(result){
+                                    if(result.success){
+                                        new Toast({context:$('body'),message: "删除成功"}).show();
+                                        setTimeout(function(){
+                                            cartList.getList();
+                                        },2000);
+
+                                    }else{
+                                        new Toast({context:$('body'),message: result.msg}).show();
+                                    }
+                                });
+                            },
+                            funcNo:function(){}
+                        });
+                    }else{
+                        new Toast({context:$('body'),message: '请先选择需要删除的商品'}).show();
+                    }
+                },
+                /*单独删除商品*/
+                delSingle:function(id){
+                    my_confirm({
+                        title:'提示',
+                        tips:"确定删除该商品吗？",
+                        btnOk:'确定',
+                        btnNo:'取消',
+                        funcOk:function(){
+                            var url = '/weixin/cart/delFromCart';
+                            var goodId = id;
+                            var param = {idList:goodId} ;
+                            $.post(url,param,function(result){
+                                if(result.success){
+                                    new Toast({context:$('body'),message: '删除成功'}).show();
+                                    setTimeout(function(){
+                                        cartList.getList();
+                                    },2000);
+
+                                }else{
+                                    new Toast({context:$('body'),message: result.msg}).show();
+                                }
+                            });
+                        },
+                        funcNo:function(){}
+                    })
+                },
+                /*去结算*/
+                goCount:function(){
+                    //选中的购物商品的信息结合
+                    var shopCartInfo = {};
+                    var goodsList = [];
+                    /*总商品数*/
+                    var count = 0;
+                    /*获取选中的商品的信息*/
+                    for(var i = 0;i < $("#productList").find("li").length;i++){
+                        /*单个商品的信息*/
+                        var singleInfo = {};
+                        singleInfo.id = cartList.cartInfo[i].id;
+                        singleInfo.goodsId = cartList.cartInfo[i].goodsId;
+                        singleInfo.good = cartList.cartInfo[i].good;
+                        singleInfo.goodsCount =  $("#productList").find("li").eq(i).find(".single-quantity").html();
+                        if($("#productList").find("li").eq(i).find("label").hasClass('checkbox-active')){
+                            goodsList.push(singleInfo);
+                            count += parseInt( $("#productList").find("li").eq(i).find(".single-quantity").html() );
+                        }
+                    }
+                    /*获取总价*/
+                    shopCartInfo.all = parseFloat( $("#moneyNumber").html() );
+                    shopCartInfo.count = count;
+                    shopCartInfo.shopCarts = goodsList;
+                    if( goodsList.length > 0){
+                        sessionStorage.setItem('orderSubInfo',JSON.stringify(shopCartInfo));
+                        document.location.href = "order_sub.html?buyType=0&shopCartInfo=" + JSON.stringify(shopCartInfo);
+                    }else{
+                        new Toast({context:$('body'),message: '请先选择需要购买的商品'}).show();
+                    }
+
+
+                }
+            }
+        });
+    </script>
+</html>

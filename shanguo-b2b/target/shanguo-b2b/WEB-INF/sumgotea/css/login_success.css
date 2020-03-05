@@ -1,0 +1,22 @@
+#login_success{
+    padding-top: 8rem;
+}
+.login-yes img{
+    display: block;
+    margin: 0 auto;
+}
+.login-yes .color-black{
+    text-align: center;
+    font-size: 0.87rem;
+    line-height: 1.6rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+.login-yes .text{
+    width: 80%;
+    color: #999;
+    font-size: 0.8125rem;
+    line-height: 1.4rem;
+    text-align: center;
+    margin: 0 auto;
+}

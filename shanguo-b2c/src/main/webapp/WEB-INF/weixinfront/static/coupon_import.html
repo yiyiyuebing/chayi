@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .big-btn{
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 0.95rem 0;
+        }
+    </style>
+    <title>确认兑换</title>
+</head>
+<body class="bg-main address-edit">
+    <ul class="lists">
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">收货人：</div>
+            <p class="dis-cell">
+                <input type="text" name="receiptName" placeholder="请输入收货人姓名">
+            </p>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">手机号码：</div>
+            <p class="dis-cell">
+                <input type="text" name="mobile" placeholder="请输入联系人手机号码">
+            </p>
+        </li>
+        <li  class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">所在地区：</div>
+            <p class="dis-cell ">
+                <ul id="demo_treelist"></ul>
+
+                <a href="javascript:void(0)" target="_top" data-role="none" class="btn-right-a" id="pca_value"></a>
+            </p>
+            <input type="hidden" name="provinceName" value="" data-label="province" data-id="" class="cityPickerInput" value="请选择省"/>
+            <input type="hidden" name="cityName" value="" data-label="city" data-id="" class="cityPickerInput" value="请选择市"/>
+            <input type="hidden" name="areaName" value="" data-label="district" data-id="" class="cityPickerInput" value="请选择区"/>
+            <input type="hidden" name="provinceCode" value="">
+            <input type="hidden" name="cityCode" value="">
+            <input type="hidden" name="areaCode" value="">
+            <div class="right-arrow right"></div>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">详细地址：</div>
+            <p class="dis-cell">
+                <input type="text" name="detailAddr" placeholder="请输入详细地址">
+            </p>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">兑换券编码：</div>
+            <p class="dis-cell">
+                <input type="text" name="couponCode" placeholder="请输入兑换券编码" >
+            </p>
+        </li>
+        <li class="dis-tabel bg-white w100">
+            <div class="dis-cell info-name">兑换券密码：</div>
+            <p class="dis-cell">
+                <input type="text" name="couponPsd" placeholder="请输入兑换券密码" >
+            </p>
+        </li>
+    </ul>
+    <div id="saveBtn" class="big-btn btn-active" >确认兑换</div>
+
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/main.js"></script>
+
+    <script src="lib/js/mobiscroll.core.js"></script>
+    <script src="lib/js/mobiscroll.frame.js"></script>
+    <script src="lib/js/mobiscroll.scroller.js"></script>
+    <script src="lib/js/mobiscroll.listbase.js"></script>
+    <script src="lib/js/mobiscroll.treelist.js"></script>
+    <script src="lib/js/mobiscroll.android-holo-light.js"></script>
+    <script src="lib/js/i18n/mobiscroll.i18n.zh.js"></script>
+    <script src="lib/js/city-picker.data.js"></script>
+    <script src="lib/js/mobile-cityPicker.js"></script>
+
+    <link href="lib/css/mobiscroll.animation.css" rel="stylesheet" type="text/css" />
+    <link href="lib/css/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
+    <link href="lib/css/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
+    <link href="lib/css/mobiscroll.frame.wp.css" rel="stylesheet" type="text/css" />
+    <link href="lib/css/mobiscroll.scroller.css" rel="stylesheet" type="text/css" />
+    <link href="lib/css/mobiscroll.scroller.android-holo.css" rel="stylesheet" type="text/css" />
+    <link href="lib/css/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+
+        .dwfl{flex:1;}
+        #demo_treelist_dummy{
+            position: absolute;
+            left: 0;
+            opacity: 0;
+        }
+        #pca_value{color: #1c1c1c;}
+    </style>
+    <script>
+
+        $(function () {
+            //                微信分享
+            Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+        });
+
+        var data = {};
+
+        if ($.mobileCityPicker) {
+            $.mobileCityPicker({
+                id: 'demo_treelist',//容器id
+                inputClass: 'cityPickerInput',//
+                inputClick: true,
+                option: {
+                    defaultValue: [0, 0, 0],//默认选项
+                    label: ['province', 'city', 'district'],
+                    theme: 'android-holo-light',
+                    mode: 'scroller',
+                    inputClass: 'hidden',
+                    display: 'bottom',
+                    lang: 'zh',
+                },
+                callback: function (val, citys) {
+                    var vals = val.split(' ');
+                    $("input[name=provinceCode]").val(vals[0]);
+                    $("input[name=cityCode]").val(vals[1]);
+                    if (vals.length > 1) {
+                        $("input[name=areaCode]").val(vals[2]);
+                    }
+                    $("#pca_value").html(citys.join('-'));
+                    sessionStorage.setItem('fName',citys[0]);
+                    sessionStorage.setItem('sName',citys[1]);
+                    sessionStorage.setItem('aName',citys[2]);
+                    if($("input[name=areaCode]").val()==""){
+                        $("input[name=areaCode]").val("");
+                        $("input[name=areaName]").val("");
+                        $("input[name=areaName]").attr("data-id","");
+                        $("input[name=areaName]").attr("data-cs","");
+                    }
+                    console.log(val);
+                    console.log(citys);
+                }
+            });
+        }
+
+
+//        判断为新增收货地址或是编辑现有地址
+    $("#saveBtn").on("click",function() {
+            saveAddr();
+    });
+
+
+
+    var oneclick=false;
+//  新增地址
+    function saveAddr() {
+
+
+        var url ="/weixin/good/validateCoupon.do";
+        var couponCode = $("input[name=couponCode]").val();
+        var couponPsd = $("input[name=couponPsd]").val();
+        var v_param ={
+            "goodId": Util.common.getParameter('goodsId'),
+            "code":couponCode,
+            "password":couponPsd
+        };
+
+        var receiptName = $("input[name=receiptName]").val();
+        var mobile = $("input[name=mobile]").val();
+        var detailAddr = $("input[name=detailAddr]").val();
+
+        var provinceName = $("input[name=provinceName]").val();
+        var cityName = $("input[name=cityName]").val();
+        var areaName = $("input[name=areaName]").val();
+        var provinceCode = $("input[name=provinceName]").attr("data-cs");
+        var cityCode = $("input[name=cityName]").attr("data-cs");
+        var areaCode = $("input[name=areaName]").attr("data-cs");
+        if(areaName == undefined || areaCode == undefined){
+            areaName="";
+            areaCode="";
+        }
+
+        if(receiptName=='' || mobile=='' || provinceName=='' || detailAddr=='' || couponCode=='' || couponPsd=='') {
+            new Toast({context: $('body'), message:'信息填写不完整'}).show();
+        }else {
+            if (oneclick) {
+                return false;
+            } else {
+                oneclick = true;
+                var order_url ="/weixin/indent/add.do";
+                var modelJson = {};
+                modelJson.buyType = 'z';
+                modelJson.subbranchId = sessionStorage.getItem("shopId");
+                modelJson.buyerId = sessionStorage.getItem("userid");
+                modelJson.province = provinceName;
+                modelJson.city = cityName;
+                modelJson.town = areaName;
+                modelJson.address = detailAddr;
+                modelJson.receiver = receiptName;
+                modelJson.receiverPhone = mobile;
+                //
+                modelJson.type = "2";
+                modelJson.ticketNum = couponCode;
+                modelJson.buyerCarriage = "";
+                modelJson.needInvoice = false;
+                modelJson.invoiceName = "";
+                modelJson.invoiceContent = "";
+
+                var indentList =[];
+                var shopCartInfo =Util.common.getParameter("shopCartInfo");
+                var shopCartInfoJson = JSON.parse(shopCartInfo);
+                for(var i = 0; i < shopCartInfoJson.shopCarts.length; i++){
+                    var shopCart = shopCartInfoJson.shopCarts[i];
+                    var indent = {};
+                    indent.number  = shopCart.goodCount;
+                    indent.finalAmount  = shopCart.salePrice;
+                    indent.tradeGoodSkuId  = shopCart.skuId;
+                    indentList.push(indent);
+                }
+                modelJson.indentList = indentList;
+
+                Util.common.executeAjaxCallback(url, v_param, function (data) {
+                    if(data.success == true) {
+                        sessionStorage.setItem("shopId", data.shopId);
+                        modelJson.subbranchId = data.shopId;
+                        var param = {"modelJson":JSON.stringify(modelJson)};
+                        Util.common.executeAjaxCallback(order_url, param, function (result) {
+                            if(result.code == 1) {
+                                console.log(result);
+                                window.location.href='coupon_success.html?orderId='+result.msg;
+                            }
+                        });
+
+                    } else {
+//                        new Toast({context: $('body'), message:data.msg}).show();
+                        my_alert({
+                            title:'提示',
+                            tips:data.msg,
+                            btnOk:'确认',
+                        });
+                    }
+                });
+            }
+        }
+    }
+
+    </script>
+</body>
+</html>

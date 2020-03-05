@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/city_picker.css">
+    <title>管理收货地址</title>
+</head>
+<body class="bg-main address-edit">
+<div id="address-edit">
+    <ul class="lists">
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">收货人：</div>
+            <p class="dis-cell">
+                <input type="text" name="receiptName" placeholder="请输入收货人姓名">
+            </p>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">手机号码：</div>
+            <p class="dis-cell">
+                <input type="number" name="mobile" pattern="[0-9]*" placeholder="请输入联系人手机号码">
+            </p>
+        </li>
+        <li  class="dis-tabel border-b1 bg-white w100" v-on:click="chooseAdd()">
+            <div class="dis-cell info-name">所在地区：</div>
+            <p class="dis-cell ">
+                <template  v-if="paramCity">
+                    <div>{{paramProvince}}{{paramCity}}{{paramArea}}</div>
+                </template>
+            </p>
+            <div class="right-arrow right"></div>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">详细地址：</div>
+            <p class="dis-cell">
+                <input type="text" name="detailAddr" placeholder="请输入详细地址">
+            </p>
+        </li>
+    </ul>
+    <div id="saveBtn" class="big-btn btn-active" v-on:click="saveBtn()">保存</div>
+    <!--居住地址三级联动选项-->
+    <template v-if="showChose">
+            <section class="showChose" >
+            <section class="address">
+                <section class="title">
+                <h4>所在地区 <span @click="closeAdd()">×</span></h4>
+                </section>
+                <section class="title title-top">
+                <div class="area" @click="provinceSelected()" :class="[showProvince ? 'active' : '']">{{Province?Province:info[0].name}}</div>
+                <div class="area" @click="citySelected()" :class="[showCity ? 'active' : '']">{{City?City:'请选择'}}</div>
+                <div class="area" @click="districtSelected()" :class="[showDistrict ? 'active' : '' ]" v-show="City">{{District?District:'请选择'}}</div>
+                </section>
+                <ul>
+                <li class="addList" v-for="v in info" @click="getProvinceId(v.id, v.name, $index)" v-show="showProvince" :class="[v.name == Province  ? 'active' : '']" >{{v.name}}</li>
+                <li class="addList" v-for="v in showCityList" @click="getCityId(v.id, v.name, $index)" v-show="showCity" :class="[v.name ==  City ? 'active' : '']">{{v.name}}</li>
+                <li class="addList" v-for="v in showDistrictList" @click="getDistrictId(v.id, v.name, $index)" v-show="showDistrict" :class="[v.name == District ? 'active' : '']">{{v.name}}</li>
+                </ul>
+            </section>
+            </section>
+        </template>
+</div>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script src="js/common.js"></script>
+<script src="js/citydata.js"></script>
+<script>
+
+    $(function () {
+        addrEdit.loadAddr();
+        //                微信分享
+        //Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+    });
+    var oneclick = false;
+    var addrEdit = new Vue({
+        el: '#address-edit',
+        data: {
+            showChose: false,
+            showProvince: true,
+            showCity: false,
+            showDistrict: false,
+            showCityList: false,
+            showDistrictList: false,
+            province: 110000,
+            city: 110100,
+            district: 110101,
+            GetProvinceId: 2,
+            District: false,
+            Province: false,
+            City: false,
+            // v-for循环判断是否为当前
+            selected: false,
+            info: citydata,
+            //提交城市数据
+            paramProvince: '',
+            paramCity: '',
+            paramArea: '',
+            paramProvinceCode: '',
+            paramCityCode: '',
+            paramAreaCode: ''
+        },
+        computed:{
+
+        },
+        methods:{
+            chooseAdd: function() {
+                this.showChose = true;
+
+            },
+            closeAdd: function() {
+                this.showChose = false;
+            },
+            _filter(add,name,code) {
+                let result = [];
+                for(let i=0;i<add.length;i++) {
+                    if(code == add[i].id){
+                    result = add[i][name];
+                    }
+                }
+                return result;
+            },
+            getProvinceId: function(code,input,index) {
+                this.province = code;
+                this.Province = input;
+                this.showProvince=false;
+                this.showCity=true;
+                this.showDistrict = false;
+                this.showCityList = this._filter(this.info,'city',this.province);
+                // 点击选择当前
+                this.info.map( a => a.selected = false );
+                this.info[index].selected = true;
+            },
+            provinceSelected: function() {
+                // 清除市级和区级列表
+                this.showCityList = false;
+                this.showDistrictList = false;
+                // 清除市级和区级选项
+                this.City = false;
+                this.District = false;
+                // 选项页面的切换
+                this.showProvince = true;
+                this.showCity = false;
+                this.showDistrict = false;
+            },
+            getCityId: function(code, input, index) {
+                if (this.City != input) {
+                    this.District = false;
+                }
+                this.city = code;
+                this.City = input;
+                this.showProvince=false;
+                this.showCity=false;
+                this.showDistrict = true;
+                this.showDistrictList = this._filter(this.showCityList,'district',this.city);
+                // 选择当前添加active
+                this.showCityList.map( a => a.selected = false );
+                this.showCityList[index].selected = true;
+                console.log(this.showDistrictList)
+                if (this.showDistrictList && this.showDistrictList.length === 0) {
+                    //选中地址后，为提交地址信息赋值
+                    this.paramProvince = this.Province;
+                    this.paramCity = this.City;
+                    this.paramArea = '';
+                    this.paramProvinceCode = this.province;
+                    this.paramCityCode = this.city;
+                    this.paramAreaCode = '';
+                    this.showChose = false;
+                    this.citySelected();
+                }
+            },
+            citySelected: function() {
+                this.showProvince=false;
+                this.showCity=true;
+                this.showDistrict = false;
+            },
+            getDistrictId: function(code, input, index) {
+                this.district = code;
+                this.District = input;
+
+                //选中地址后，为提交地址信息赋值
+                this.paramProvince = this.Province;
+                this.paramCity = this.City;
+                this.paramArea = this.District;
+                this.paramProvinceCode = this.province;
+                this.paramCityCode = this.city;
+                this.paramAreaCode = this.district;
+                
+                // 选择当前添加active
+                this.showDistrictList.map( a => a.selected = false );
+                this.showDistrictList[index].selected = true;
+                // 选取市区选项之后关闭弹层
+                this.showChose = false;
+            },
+            districtSelected: function() {
+                this.showProvince=false;
+                this.showCity=false;
+                this.showDistrict = true;
+            },
+            loadAddr:function() {
+                // 编辑地址操作获取默认地址
+                var updateAddr = Util.common.getParameter("updateAddr");
+                if (updateAddr){
+                    updateAddr = JSON.parse(updateAddr);
+                    $("input[name=mobile]").val(updateAddr.mobile);
+                    $("input[name=receiptName]").val(updateAddr.receiptName);
+                    $("input[name=detailAddr]").val(updateAddr.detailAddr);
+
+                    //初始化地址选择器为用户地址
+                    addrEdit.Province = updateAddr.provinceName;
+                    addrEdit.City = updateAddr.cityName;
+                    addrEdit.District = updateAddr.areaName;
+                    addrEdit.province = updateAddr.provinceCode;
+                    addrEdit.city = updateAddr.cityCode;
+                    addrEdit.district = updateAddr.areaCode;
+                    addrEdit.showCityList = addrEdit._filter(addrEdit.info,'city',updateAddr.provinceCode);
+                    addrEdit.showDistrictList = addrEdit._filter(addrEdit.showCityList,'district',updateAddr.cityCode);
+                    addrEdit.showProvince = false;
+                    addrEdit.showDistrict = true;
+                    if (addrEdit.showDistrictList && addrEdit.showDistrictList.length === 0) {
+                        addrEdit.citySelected();
+                    }
+                    //初始化提交地址信息
+                    addrEdit.paramProvince = updateAddr.provinceName;
+                    addrEdit.paramCity = updateAddr.cityName;
+                    addrEdit.paramArea = updateAddr.areaName;
+                    addrEdit.paramProvinceCode = updateAddr.provinceCode;
+                    addrEdit.paramCityCode = updateAddr.cityCode;
+                    addrEdit.paramAreaCode = updateAddr.areaCode;
+                    addrEdit.paramStatus = updateAddr.status;
+                }
+            },
+            saveBtn: function() {
+                //        判断为新增收货地址或是编辑现有地址
+                if("edit" == Util.common.getParameter("type")){
+                    addrEdit.upDateAddr();
+                }else{
+                    addrEdit.saveAddr();
+                }
+            },
+            upDateAddr: function() {
+                var url ="weixin/user/updateAddress";
+                var mobile = $("input[name=mobile]").val();
+                var receiptName = $("input[name=receiptName]").val();
+                // var postcode = $("input[name=postcode]").val();
+
+                var provinceName = addrEdit.paramProvince;
+                var cityName = addrEdit.paramCity;
+                var areaName = addrEdit.paramArea;
+                var provinceCode = addrEdit.paramProvinceCode;
+                var cityCode = addrEdit.paramCityCode;
+                var areaCode = addrEdit.paramAreaCode;
+                var status = addrEdit.paramStatus;
+                var detailAddr = $("input[name=detailAddr]").val();
+                var param ={
+                    "id":Util.common.getParameter('id'),
+                    "status": status,
+                    // "mailbox":postcode, 
+                    "receiptName":receiptName,
+                    "mobile":mobile,
+                    "fiexdPhone":"",
+                    "receiptEmail":"",
+                    "provinceName":provinceName,
+                    "provinceCode":provinceCode,
+                    "cityCode":cityCode,
+                    "cityName":cityName,
+                    "areaName":areaName,
+                    "areaCode":areaCode,
+                    "detailAddr":detailAddr
+                };
+                var param1 = {};
+                param1.modelJsonStr = JSON.stringify(param);
+                if(receiptName=='' || mobile=='' || provinceName=='' || detailAddr=='') {
+                    new Toast({context: $('body'), message:'信息填写不完整'}).show();
+        
+                }else if(!isPhone(mobile)){
+                    new Toast({context: $('body'), message:'手机号码不合法'}).show();
+                }else {
+                    if (oneclick) {
+                        return false;
+                    } else {
+                        oneclick = true;
+                        Util.common.b2bPostCallback(url, param1, function (data) {
+                            if (data.success && data.data) {
+                                setTimeout(function () {
+                                    history.back();
+                                }, 300);
+                            } else {
+                                new Toast({context: $('body'), message: data.msg}).show();
+                            }
+                            oneclick = false;
+                        });
+        
+                    }
+                }
+            },
+            saveAddr:function() {
+                var url ="weixin/user/addAddress";
+                var receiptName = $("input[name=receiptName]").val();
+                var mobile = $("input[name=mobile]").val();
+                var detailAddr = $("input[name=detailAddr]").val();
+
+                var provinceName = addrEdit.paramProvince;
+                var cityName = addrEdit.paramCity;
+                var areaName = addrEdit.paramArea;
+                var provinceCode = addrEdit.paramProvinceCode;
+                var cityCode = addrEdit.paramCityCode;
+                var areaCode = addrEdit.paramAreaCode;
+                if(areaName == undefined || areaCode == undefined){
+                    areaName="";
+                    areaCode="";
+                }
+                var param ={
+                    //"userId":"1",
+                    "userId": sessionStorage.getItem('userid'),
+                    "status":"0",
+                    /* "mailbox":postcode, */
+                    "receiptName":receiptName,
+                    "mobile":mobile,
+                    "fixedPhone":"",
+                    "receiptEmail":"",
+                    "provinceName":provinceName,
+                    "provinceCode":provinceCode,
+                    "cityCode":cityCode,
+                    "cityName":cityName,
+                    "areaName":areaName,
+                    "areaCode":areaCode,
+                    "detailAddr":detailAddr
+                };
+                var param1 = {};
+                param1.modelJsonStr = JSON.stringify(param);
+                if(receiptName=='' || mobile=='' || provinceName=='' || detailAddr=='') {
+                    new Toast({context: $('body'), message:'信息填写不完整'}).show();
+        
+                }else if(!isPhone(mobile)){
+                    new Toast({context: $('body'), message:'手机号码不合法'}).show();
+                }else {
+                    if (oneclick) {
+                        return false;
+                    } else {
+                        oneclick = true;
+                        console.log(param);
+                        if (Util.common.getParameter('use') == 'now') {
+                            //我要送人地址
+                            sessionStorage.setItem('one_location', JSON.stringify(param));
+                            //
+                            document.location.href = 'order_sub.html?buyType=1&shopCartInfo=' + Util.common.getParameter('shopCartInfo');
+        
+                        } else {
+                            Util.common.b2bPostCallback(url, param1, function (data) {
+                                if (data.success && data.data) {
+                                    // history.back();
+                                    // window.location.href = 'person_address.html?type=' + Util.common.getParameter('listType');
+                                    if (/(iPhone|iPad|iPod)/i.test(navigator.userAgent)) {
+                                            changeCurrentUrl();             
+                                            window.location.href = window.document.referrer;
+                                    } else { window.history.go("-1"); }
+                                } else {
+                                    new Toast({context: $('body'), message: data.msg}).show();
+                                }
+                                oneclick = false;
+                            });
+                        }
+        
+                    }
+                }
+            }
+        }
+    })
+    function changeCurrentUrl(){
+        var replaceUrl = window.location.href+"?i="+new Date().getTime();
+        history.replaceState(null,"",replaceUrl);
+    }
+
+    </script>
+</body>
+</html>

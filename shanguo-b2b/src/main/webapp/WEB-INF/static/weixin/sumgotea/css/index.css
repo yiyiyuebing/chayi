@@ -1,0 +1,238 @@
+#views{
+    width: 100%;
+    overflow: hidden;
+}
+#views .swiper-slide a{
+    display: block;
+    height: 4rem;
+}
+#views .swiper-slide a img{
+    width: 100%;
+    height: 100%;
+}
+#views .swiper-pagination{
+    width: 100%;
+    bottom: 4px;
+    right: 0px;
+    text-align: right;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+#views .swiper-pagination .swiper-pagination-bullet{
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 100%;
+    background:#000;
+    opacity: .2;
+    margin: 0 2px;
+}
+#views .swiper-pagination .swiper-pagination-bullet-active{
+    background: #cc9b4b;
+    opacity: 1;
+}
+.section h4{
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 2.4rem;
+    color: #000;
+}
+.section h4 .floor{
+    display: inline-block;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    background: #333;
+    color: #fff;
+    font-style: normal;
+    line-height: 1.2rem;
+    margin-right: 0.4rem;
+    vertical-align: baseline;
+}
+.section h4 .color-line{
+    width: 0.8rem;
+    height: 0.8rem;
+    background: url(../img/index_icon_title_bg.png) no-repeat center;
+    background-size: contain;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left:0.4rem ;
+}
+.section .section-body{
+    background: #fff;
+}
+.section .section-body .section-product .product-left{
+    width:50%;
+}
+.section .section-body .section-product .product-left a{
+    display: block;
+    padding: 0.8rem;
+}
+.section .section-body .section-product .product-left a img{
+    width: 100%;
+    height: 100%;
+}
+.section .section-body .section-product .product-left a p{
+    font-size: 0.67rem;
+    line-height: 1rem;
+    text-align: left;
+    color: #666;
+    height: 2rem;
+    overflow: hidden;
+}
+.section .section-body .section-product .product-left a span{
+    font-size: 0.9rem;
+    margin-left: -3px;
+}
+.section .section-body .section-product .product-left a .consult{
+    color: #cc9b4b;
+}
+.section .section-body .section-product .product-left a .price{
+    color: #f05353;
+}
+.section .section-body .section-product .product-right{
+    width: 50%;
+    border-left: 2px solid #f3f2f5;
+    box-sizing: border-box;
+}
+.section .section-body .section-product .product-right .group {
+    padding: 1.2rem 0.6rem;
+    display: block;
+}
+.section .section-body .section-product .product-right .group .group-left{
+    width: 50%;
+}
+.section .section-body .section-product .product-right .group .group-left p{
+    font-size: 0.67rem;
+    line-height: 1rem;
+    text-align: left;
+    color: #666;
+    height: 2rem;
+    overflow: hidden;
+}
+.section .section-body .section-product .product-right .group .group-left span{
+    font-size: 0.9rem;
+    margin-left: -3px;
+}
+.section .section-body .section-product .product-right .group .group-left .consult{
+    color: #cc9b4b;
+}
+.section .section-body .section-product .product-right .group .group-left .price{
+    color: #f05353;
+}
+.section .section-body .section-product .product-right .group .group-right{
+    width: 50%;
+}
+.section .section-body .section-product .product-right .group .group-right img{
+    width: 100%;
+}
+.borderBottom{
+    border-bottom: 2px solid #f3f2f5;
+}
+.section .section-link li{
+    width: 25%;
+}
+.section .section-link li a{
+    border-top: 2px solid #f3f2f5;
+    border-left: 2px solid #f3f2f5;
+    display: block;
+    font-size: 0.8125rem;
+    line-height: 3rem;
+    text-align: center;
+}
+.may-like h4{
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 2.4rem;
+    color: #000;
+}
+.may-like h4 .like{
+    width: 1.2rem;
+    height: 1.2rem;
+    background: url(../img/index_icon_may_like.png) no-repeat center;
+    background-size: contain;
+    display: inline-block;
+    vertical-align: sub;
+    margin-right:0.4rem ;
+}
+.may-like h4 .color-line{
+    width: 0.8rem;
+    height: 0.8rem;
+    background: url(../img/index_icon_title_bg.png) no-repeat center;
+    background-size: contain;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left:0.4rem ;
+}
+.may-like .like-wrap li{
+    width: 49%;
+    background: #fff;
+    box-sizing: border-box;
+    padding: 0.6rem;
+    margin-bottom: 0.3rem;
+}
+.may-like .like-wrap li:nth-of-type(odd){
+    float: left;
+}
+.may-like .like-wrap li:nth-of-type(even){
+    float: right;
+}
+.may-like .like-wrap li a{
+    display: block;
+}
+.may-like .like-wrap li a img{
+    width: 100%;
+}
+.may-like .like-wrap li a p{
+    font-size: 0.8125rem;
+    color: #333;
+    line-height: 1.2rem;
+    height: 1.2rem;
+    overflow: hidden;
+}
+.may-like .like-wrap li a p .sale{
+    font-size: 0.67rem;
+    line-height: 1rem;
+    background: #cc9b4b;
+    border-radius: 2px;
+    padding: 0 0.1rem;
+    color: #fff;
+    display: inline-block;
+    margin-right: 0.2rem;
+}
+.may-like .like-wrap li a p .group-shopping{
+    font-size: 0.67rem;
+    line-height: 1rem;
+    background: #f05353;
+    border-radius: 2px;
+    padding: 0 0.1rem;
+    color: #fff;
+    display: inline-block;
+    margin-right: 0.2rem;
+}
+.may-like .like-wrap li a .sku{
+    font-size: 0.9125rem;
+    color: #f05353;
+    line-height: 2rem;
+    letter-spacing: -1px;
+}
+.may-like .like-wrap li a .sku label{
+    font-size: 0.67rem;
+    color: #666;
+    line-height: 2rem;
+}
+.may-like .like-wrap li a .sku sub{
+    font-size: 0.67rem;
+    vertical-align: baseline;
+    color: #f05353;
+}
+.may-like .like-wrap li a .consult{
+    font-size: 0.9125rem;
+    color: #cc9b4b;
+    line-height: 2rem;
+    letter-spacing: -1px;
+}
+.may-like .like-wrap li a .consult sub{
+    font-size: 0.67rem;
+    vertical-align: baseline;
+}

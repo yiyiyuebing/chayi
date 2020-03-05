@@ -1,0 +1,63 @@
+package pub.makers.shop.store.service;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.lantu.base.common.entity.BoolType;
+import com.lantu.base.util.ListUtils;
+
+import pub.makers.daotemplate.vo.Conds;
+import pub.makers.shop.base.util.SqlHelper;
+import pub.makers.shop.base.vo.ResultData;
+import pub.makers.shop.store.entity.Subbranch;
+
+
+@Service(version="1.0.0")
+public class SubbranchBizServiceImpl implements SubbranchBizService{
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	@Autowired
+	private SubbranchService subbranService;
+	
+	
+	public BigDecimal querySuppliersPrice(String shopId, String skuId) {
+		
+		String stmt = SqlHelper.getSql("sql/querySuppliersPriceByShipIdAndSkuId.sql");
+		System.out.println(String.format("stmt\t%s\t%s", stmt, shopId, skuId));
+		BigDecimal suppliersPrice = jdbcTemplate.queryForObject(stmt, BigDecimal.class, skuId, shopId);
+		
+		return suppliersPrice;
+	}
+
+
+	@Override
+	public ResultData querySummary(String subbranchId) {
+		
+		// 查询店铺
+		return null;
+	}
+
+
+	@Override
+	public Set<Long> getChildren(Long subbranchId) {
+		
+		List<Subbranch> subbranchList = subbranService.list(Conds.get("id").eq("parentSubranchId", subbranchId).eq("isSubAccount", BoolType.T.name()));
+		Set<Long> idsSet = ListUtils.getIdSet(subbranchList, "id");
+		idsSet.add(subbranchId);
+		
+		return idsSet;
+	}
+
+
+	@Override
+	public Subbranch getById(String shopId) {
+		return subbranService.getById(shopId);
+	}
+
+}

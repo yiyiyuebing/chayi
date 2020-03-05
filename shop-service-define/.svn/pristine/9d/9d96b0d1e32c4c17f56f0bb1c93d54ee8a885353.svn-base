@@ -1,0 +1,8 @@
+package pub.makers.shop.cargo.service;
+
+/**
+ * Created by dy on 2017/5/22.
+ */
+public interface CargoMgrBizService {
+
+}

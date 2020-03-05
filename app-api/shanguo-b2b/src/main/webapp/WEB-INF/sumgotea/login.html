@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+    <title>登录</title>
+</head>
+<body id="login" class="bg-main">
+    <div class="wrap">
+        <div class="logo">
+            <a>
+                <img src="./img/logo.png">
+            </a>
+        </div>
+
+        <div class="input-group">
+            <i class="tel-icon"></i>
+            <input class="tel" v-on:input="checkPhone()" type="tel"  maxlength="11" v-model="telNumber" name="tel" placeholder="请输入手机号码" required autocomplete="false">
+        </div>
+        <div class="input-group">
+            <i class="pwd-icon"></i>
+            <input class="pwd" type="password" v-model="password" name="tel" placeholder="请输入密码" required>
+            <template v-if="isShowPwd">
+                <i class="password-eye-show" v-on:click="isShowPwdFun()"></i>
+            </template>
+            <template v-else>
+                <i class="password-eye-hide" v-on:click="isShowPwdFun()"></i>
+            </template>
+        </div>
+        <div class="operation clearfix">
+            <a href="register.html" class="fl color-main">注册用户</a>
+            <a href="reset_password.html" class="fr">忘记密码</a>
+        </div>
+        <div class="submit-btn">
+            <a href="javascript:;" v-on:click="doLogin()">立即登录</a>
+        </div>
+    </div>
+</body>
+
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script src="js/common.js"></script>
+<script src="js/md5.js"></script>
+<script>
+
+    $(function () {
+
+        login.delAllCookie();
+        localStorage.clear();
+        console.log(localStorage.getItem('token'));
+
+        //                微信分享
+        //Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+
+
+    });
+    var start = 0;
+    var login=new Vue({
+        el:'#login',
+        data:{
+            telNumber:'',
+            password:'',
+            historyUrl:Util.common.getParameter('url'),
+            isShowPwd:false,
+            isHasCard:false,  //登录用户是否绑定银行卡
+        },
+        computed:{
+
+        },
+        methods:{
+            delAllCookie:function(){
+                var strCookie=document.cookie;
+
+                var arrCookie=strCookie.split("; "); // 将多cookie切割为多个名/值对
+
+                for(var i=0;i <arrCookie.length;i++)// 遍历cookie数组，处理每个cookie对
+
+                {   var arr=arrCookie[i].split("=");
+
+                    if(arr.length>0)
+
+                        $.delCookie(arr[0]);
+
+                }
+            },
+            isShowPwdFun:function() {
+                if (login.isShowPwd) {
+                    login.isShowPwd = false;
+                    $(".pwd").prop("type",'password');
+                } else {
+                    login.isShowPwd = true;
+                    $(".pwd").prop("type",'text');
+                }
+            },
+            checkPhone:function(){
+                if(!$.validatePhone(login.telNumber) && login.telNumber.length == 11){
+                    new Toast({context:$('body'),message:"手机号码不合法！"}).show();
+                }
+            },
+            checkPassword:function(){
+                if(login.password.length <= 0 ){
+                    login.formFlag = false;
+                    new Toast({context:$('body'),message:"密码不能为空！"}).show();
+                }
+            },
+            doLogin:function(){
+                if(login.telNumber == '' || login.telNumber == null){
+                    new Toast({context:$('body'),message:"手机号码不能为空！"}).show();
+                    return;
+                }
+                if(!$.validatePhone(login.telNumber)){
+                    new Toast({context:$('body'),message:"手机号码不合法！"}).show();
+                    return;
+                }
+                if(login.password.length <= 0 ){
+                    login.formFlag = false;
+                    new Toast({context:$('body'),message:"密码不能为空！"}).show();
+                    return;
+                }
+                var url = '/weixin/user/doLogin';
+                var params = {phone:login.telNumber,password:hex_md5(login.password)};
+                Util.common.b2bPostCallback(url,params,function(result){
+                    if(result.success){
+                        if(result.data){
+
+
+                            //存用户信息
+                            var userInfo = result.data;
+                            localStorage.setItem('user', JSON.stringify(userInfo));
+                            /*存储后台直接添加用户的信息*/
+                            localStorage.setItem("adminUser",result.data.loginToken);
+
+                            /*//判断是否绑定银行卡
+                            var cardUrl = '/weixin/bankCard/detail';
+                            var cardParam = null;
+                            Util.common.b2bPostCallback(cardUrl,cardParam,function(result){
+                                if(result.success){
+                                    if(result.data.bankCard && result.data.bankCard != ''){
+                                        login.isHasCard = true;
+                                    }else{
+                                        login.isHasCard = false;
+                                    }
+                                }else{
+                                    new Toast({context:$('body'),message:result.msg}).show();
+                                }
+                            });*/
+
+
+                            /*后台直接添加用户  没有用户信息  需要先填写用户信息*/
+                            if(result.data.name == null || result.data.name == ''){
+                                var id = result.data.id;
+                                window.location.href = 'shopInfo_edit.html';
+                            }else{
+                                /*注册成功的用户  直接登录*/
+
+                                //登陆验证token
+                                var token = result.data.loginToken;
+                                localStorage.setItem('token', token);
+
+                                new Toast({context:$('body'),message:'登录成功'}).show();
+                                setTimeout(function(){
+                                    if(login.historyUrl && login.historyUrl != null){
+                                        window.location.href = login.historyUrl;
+                                    }else {
+                                        window.location.href = 'index.html';
+                                    }
+
+                                },2000);
+                            }
+                        }else{
+                            new Toast({context:$('body'),message:'数据异常'}).show();
+                        }
+                    }else{
+                        new Toast({context:$('body'),message:result.msg}).show();
+                    }
+                });
+            }
+        }
+    });
+
+</script>
+</html>

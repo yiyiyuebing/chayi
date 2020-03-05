@@ -1,0 +1,142 @@
+package pub.makers.shop.promotion.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class SaleActivity implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	/**  */
+	private String id;		
+	
+	/** 活动名称 */
+	private String name;		
+	
+	/** 活动备注 */
+	private String memo;		
+	
+	/** 活动开始时间 */
+	private Date startTime;		
+	
+	/** 活动结束时间 */
+	private Date endTime;		
+	
+	/** 活动范围 */
+	private String scope;		
+	
+	/** 提醒设置 */
+	private Integer notifyHours;		
+	
+	/** 创建人 */
+	private String createBy;		
+	
+	/** 是否有效 */
+	private String isValid;		
+	
+	/** 删除状态 */
+	private String delFlag;		
+	
+	/** 创建时间 */
+	private Date dateCreated;		
+	
+	/** 更新时间 */
+	private Date lastUpdated;		
+	
+
+	public void setId(String id){
+		this.id = id;
+	}
+	
+	public String getId(){
+		return id;
+	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public void setMemo(String memo){
+		this.memo = memo;
+	}
+	
+	public String getMemo(){
+		return memo;
+	}
+	
+	public void setStartTime(Date startTime){
+		this.startTime = startTime;
+	}
+	
+	public Date getStartTime(){
+		return startTime;
+	}
+	
+	public void setEndTime(Date endTime){
+		this.endTime = endTime;
+	}
+	
+	public Date getEndTime(){
+		return endTime;
+	}
+	
+	public void setScope(String scope){
+		this.scope = scope;
+	}
+	
+	public String getScope(){
+		return scope;
+	}
+	
+	public void setNotifyHours(Integer notifyHours){
+		this.notifyHours = notifyHours;
+	}
+	
+	public Integer getNotifyHours(){
+		return notifyHours;
+	}
+	
+	public void setCreateBy(String createBy){
+		this.createBy = createBy;
+	}
+	
+	public String getCreateBy(){
+		return createBy;
+	}
+	
+	public void setIsValid(String isValid){
+		this.isValid = isValid;
+	}
+	
+	public String getIsValid(){
+		return isValid;
+	}
+	
+	public void setDelFlag(String delFlag){
+		this.delFlag = delFlag;
+	}
+	
+	public String getDelFlag(){
+		return delFlag;
+	}
+	
+	public void setDateCreated(Date dateCreated){
+		this.dateCreated = dateCreated;
+	}
+	
+	public Date getDateCreated(){
+		return dateCreated;
+	}
+	
+	public void setLastUpdated(Date lastUpdated){
+		this.lastUpdated = lastUpdated;
+	}
+	
+	public Date getLastUpdated(){
+		return lastUpdated;
+	}
+	
+}

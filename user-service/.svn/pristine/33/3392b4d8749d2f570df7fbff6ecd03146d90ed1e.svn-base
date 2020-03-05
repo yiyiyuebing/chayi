@@ -1,0 +1,1 @@
+update ${table} set del_flag = 'T' where update_date >= '${startDate}' and update_date < '${endDate}' and user_id = '${userId}' and client_type = '${clientType}'

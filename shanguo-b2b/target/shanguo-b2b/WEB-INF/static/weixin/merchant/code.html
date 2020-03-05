@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>&nbsp;</title>
+</head>
+<body class="bg-main">
+    <div id="code" class="codeStyle">
+        <div class="codeimg">
+            <div class="qrcodeimg"></div>
+            <p>扫一扫，关注我的店铺</p>
+        </div>
+        <div class="shareBtn bg-green" id="shareWX">分享到我的微信</div>
+        <div class="shareBtn bg-white box-shadowW" id="saveCode">保存二维码到手机</div>
+    </div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="js/jquery.qrcode.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/jbase64.js"></script>
+<script>
+    var storeId = getRequestParameter("storeId") || localStorage.getItem("shopId");
+    var qrcode=Util.common.baseUrl+ "/weixin/weixinClient/index.do?" + "fromshanguo=weixinfront/static/index.html&storeId="+ storeId +"&type=weixinIndex";
+    var base64code = BASE64.encoder(qrcode);
+    var qrcodeUrl=Util.common.baseUrl+ "/weixin/common/getQRcode.do?text=" + base64code;
+    $('.qrcodeimg').qrcode({width:120,height:120,text:qrcode});
+    $(document).attr('title',localStorage.getItem('shopName'));
+
+    var img_url=localStorage.getItem('shopImg');
+    if(img_url==undefined || img_url=="undefined"){
+        img_url='';
+    }
+    
+    $('#shareWX').click(function() {
+        window.onShare();
+    });
+    $('#saveCode').click(function() {
+       my_confirm({
+            title:'提示',
+            tips:"将通过微信分享的形式，您可在微信中进行保存二维码操作",
+            btnOk:'确定',
+            btnNo:'取消',
+            funcOk:function () {
+                window.ShareCode();
+            },
+            funcNo:function () {
+
+            }
+        });
+    });
+    
+    var shareData = {
+        "title" : localStorage.getItem('shopName'),
+        "desc" : "这么多好茶汇聚的店铺，不分享给你看看，臣妾做不到啊!",
+        "link" :qrcode,
+        "imgUrl" :img_url,
+    };
+    window.onShare = function(){
+        if(window.WebAppJS){
+            WebAppJS.share(shareData.title, shareData.desc, shareData.imgUrl, shareData.link);
+        }
+    };
+    var shareCodeData = {
+        "title" : localStorage.getItem('shopName'),
+        "desc" : "二维码已成功分享，点击打开长按保存！",
+        "link" :qrcodeUrl,
+        "imgUrl" :img_url,
+    };
+    window.ShareCode = function(){
+        console.log(shareCodeData.link);
+        if(window.WebAppJS){
+            WebAppJS.share(shareCodeData.title, shareCodeData.desc, shareCodeData.imgUrl, shareCodeData.link);
+        }
+    };
+
+    window.getShareData = function(){
+        return JSON.stringify(shareData);
+    };
+
+    Util.scrollMar.setPos("code", 0, 1);
+</script>
+</html>

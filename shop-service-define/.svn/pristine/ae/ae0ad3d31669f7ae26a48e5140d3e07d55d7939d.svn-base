@@ -1,0 +1,40 @@
+package pub.makers.shop.store.service;
+
+/**
+ * 供应商登陆服务
+ * @author apple
+ *
+ */
+public interface SubbranchLoginBizService {
+
+	/**
+	 * 获取登陆TOKEN
+	 * @param subbranchId
+	 * @return
+	 */
+	String getLoginToken(String subbranchId);
+	
+	
+	/**
+	 * 清除登陆TOKEN
+	 * @param subbranchId
+	 */
+	void cleanLoginToken(String subbranchId);
+	
+	
+	/**
+	 * token 是否有效
+	 * @param token
+	 * @return
+	 */
+	boolean isTokenValid(String token);
+	
+	
+	/**
+	 * 根据token获取当前登陆用户信息
+	 * @param token
+	 * @return
+	 */
+	String getShopIdByToken(String token);
+	
+}

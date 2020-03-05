@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link href="css/normalize.css" rel="stylesheet">
+    <link href="css/reset.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link href="css/person_center_back_all.css" rel="stylesheet">
+    <link href="css/person_center_server_choose_index.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>服务选择</title>
+</head>
+<body id="after-sale" class="bg-main after-sale">
+<div class="choose-wrap">
+    <section class="choose-section">
+        <a v-on:click="selectServer('退款退货')" class="back-money-product clearfix">
+            <div class="icon-wrap clearfix">
+                <i class="pull-left"></i>
+                <span class="pull-left">退货退款</span>
+            </div>
+            <p>已收到货，需要退还已收到的货物</p>
+            <i class="iconfont floatright">&#xe65e;</i>
+        </a>
+        <a v-on:click="selectServer('仅退款')" class="back-money clearfix">
+            <div class="icon-wrap clearfix">
+                <i class="pull-left"></i>
+                <span class="pull-left">仅退款</span>
+            </div>
+            <p>未收到货，或与客服协商同意前提下申请</p>
+            <i class="iconfont floatright">&#xe65e;</i>
+        </a>
+        <a v-on:click="selectServer('换货')" class="change-product clearfix">
+            <div class="icon-wrap clearfix">
+                <i class="pull-left"></i>
+                <span class="pull-left">换货</span>
+            </div>
+            <p>对已收到的货物不满意，联系客服协商换货</p>
+            <i class="iconfont floatright">&#xe65e;</i>
+        </a>
+    </section>
+</div>
+<div>
+    <section class="product-wrap">
+        <h5>售后商品</h5>
+        <div class="product clearfix">
+            <template v-if="goodInfo.goods && goodInfo.goods.length == 1">
+                <template v-for="item in goodInfo.goods">
+                    <div class="product-img pull-left">
+                        <img :src="item.tradeGoodImgUrl">
+                    </div>
+                    <div class="product-txt pull-left">
+                        {{item.tradeGoodName}}
+                    </div>
+                </template>
+            </template>
+            <template v-else>
+                <template v-for="item in goodInfo.goods">
+                    <div class="product-img pull-left" v-if="$index<3">
+                        <img :src="item.tradeGoodImgUrl">
+                    </div>
+                </template>
+                <div v-if="goodInfo.goods" class="product-txt pull-left" style="width: 50%; text-align: right;">
+                    {{goodInfo.goods.length}}个商品
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <section class="operation">
+        <div class="operation-group">
+            <a v-on:click="showServerView()" id="serverCategory">
+                <label><span>*</span>申请服务：</label>
+                <input type="text" v-model="selectedServer" name="category" disabled>
+                <i class="icon-right"></i>
+            </a>
+        </div>
+        <div class="operation-group">
+            <a v-on:click="showReasonView()" id="serverReason">
+                <template  v-if="selectedServer == '换货'">
+                    <label><span>*</span>换货原因：</label>
+                </template>
+                <template v-else>
+                    <label><span>*</span>退款原因：</label>
+                </template>
+                <input type="text" v-model="selectedReason" name="category" disabled>
+                <i class="icon-right"></i>
+            </a>
+        </div>
+        <div class="operation-group" id="backMoney" v-if="selectedServer !='换货'">
+            <a href="#">
+                <label><span>*</span>退款金额：</label>
+                <template v-if="refundType == 'T'">
+                    <label><span>¥{{maxAmount}}</span></label>
+                </template>
+                <template v-else>
+                    <input v-model="refundAmount" type="number" pattern="[0-9]*">
+                </template>
+
+            </a>
+            <p class="tips">最多¥{{maxAmount}}<span v-if="goodInfo.goods[0].statusStr != '待收货'" class="tips">, 含发货邮费¥{{freight}}</span></p>
+        </div>
+        <div class="operation-group">
+            <a href="#" id="serverExplain" class="clearfix">
+                <template v-if="selectedServer == '换货'">
+                    <label class="pull-left">换货说明：</label>
+                </template>
+                <template v-else>
+                    <label class="pull-left">退款说明：</label>
+                </template>
+                <input name="operDesc" v-model="operDesc" type="text" placeholder="选填">
+            </a>
+        </div>
+    </section>
+
+    <section class="certificate">
+        <h4>上传凭证</h4>
+        <div class="certificate-img clearfix" id="container">
+            <label class="camera pull-left" id="cameraIcon">
+                <div class="camera-icon">
+                    <i></i>
+                    <span>上传凭证</span>
+                    <span>(最多3张)</span>
+                </div>
+            </label>
+            <div id="imgContainer"></div>
+        </div>
+        <div class="br4"></div>
+    </section>
+    <section class="submit" v-on:click="submit()">
+        <a  id="submit-btn">提交</a>
+    </section>
+
+    <!--input  选择弹窗-->
+    <!--申请服务-->
+    <template v-if="isShowServerView">
+        <section class="popup-input" id="categoryPopup">
+            <div class="input-wrap">
+                <ul class="input-body" id="categoryChoose">
+                    <template v-for="item in serverType">
+                        <li><a v-on:click="selectServer(item)">{{item}}</a></li>
+                    </template>
+
+                </ul>
+                <div class="input-footer">
+                    <a v-on:click="hideServerView()" id="cancel">取消</a>
+                </div>
+            </div>
+        </section>
+    </template>
+    <!--换货原因-->
+    <template v-if="isShowReasonView">
+        <section  class="popup-input-another" id="reasonPopup">
+            <div class="popup-wrap">
+                <template v-if="selectedServer == '换货'">
+                    <h5 style="font-size: 1rem;">换货原因</h5>
+                </template>
+                <template v-else>
+                    <h5 style="font-size: 1rem;">退款原因</h5>
+                </template>
+                <ul class="input-body" id="reasonChoose">
+                    <template v-for="item in reason">
+                        <li class="clearfix" v-on:click="chooseReason(item.value)">
+                            <span class="pull-left" style="font-size: 1rem;">{{item.value}}</span>
+                            <i class="pull-right"></i>
+                        </li>
+                    </template>
+                </ul>
+                <div class="input-footer">
+                    <a v-on:click="hideReasonView()" id="close">关闭</a>
+                </div>
+            </div>
+        </section>
+    </template>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/jquery.tmpl.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script type="text/javascript" src="js/qiniu/moxie.js"></script>
+<script type="text/javascript" src="js/qiniu/plupload.dev.js"></script>
+<script type="text/javascript" src="js/qiniu/zh_CN.js"></script>
+<script type="text/javascript" src="js/qiniu/ui.js"></script>
+<script type="text/javascript" src="js/qiniu/qiniu.js"></script>
+<script type="text/x-jquery-tmpl" id="goodsinfo-t"></script>
+<script src="js/bizhelp.js"></script>
+<script>
+    //    Util.common.addloadingAnimate();
+    //整个订单申请退款
+    var refundAll = Util.common.getParameter('refundAll') ? Util.common.getParameter('refundAll') : '';
+    var refund = Util.common.getParameter('refund');
+    console.log(refund)
+    $(function () {
+        //当申请售后的时候，弹出服务选择窗
+//        if (refund != 'T') {
+//            $('.choose-wrap').css('display', 'block')
+//        }
+        //                微信分享
+        //Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+        var goodInfo = Util.common.getParameter('goodInfo');
+        afterSale.$set('goodInfo', JSON.parse(goodInfo));
+        console.log(afterSale.goodInfo)
+        afterSale.loadMoneyInfo();
+        afterSale.loadReason();
+    })
+
+
+    var afterSale=new Vue({
+        el:'#after-sale',
+        data:{
+            serverType: ['换货', '退款退货', '仅退款'],
+            reason: [],
+            //显示选择售后类型页面
+            isShowServerView: false,
+            selectedServer: '仅退款',
+            isShowReasonView: false,
+            selectedReason: '请选择',
+            goodInfo: {},
+            operDesc: '',
+            maxAmount: 0,
+            freight: 0,
+            //待发货前进行申请退款
+            refundType: refund,
+            refundAmount: 0,
+        },
+        computed:{
+
+        },
+        methods:{
+            loadReason:function() {
+                url = 'weixin/afterSale/getReturnReason';
+                Util.common.b2cPostCallback(url, {}, function(data) {
+                    if (data.success && data.data) {
+                        var reasonList = data.data.reasonList;
+                        afterSale.$set('reason', reasonList);
+                    }
+                })
+
+            },
+            showServerView:function() {
+                //如果refund == T 表示申请退款
+//                if (refund == 'T') {
+//                    return;
+//                }
+                $('.choose-wrap').css('display', 'block');
+//                afterSale.isShowServerView = true;
+            },
+            hideServerView:function() {
+                afterSale.isShowServerView = false;
+            },
+            selectServer:function(serverType) {
+                afterSale.$set('selectedServer', serverType);
+                afterSale.hideServerView();
+                $('.choose-wrap').css('display', 'none')
+            },
+            showReasonView:function() {
+                afterSale.isShowReasonView = true;
+            },
+            hideReasonView:function() {
+                afterSale.isShowReasonView =false;
+            },
+            chooseReason:function(reason) {
+                afterSale.$set('selectedReason', reason);
+                afterSale.hideReasonView();
+            },
+            loadMoneyInfo:function(){
+                var param = {};
+                if (afterSale.selectedServer == '换货') {
+                    param.asType = 'exchange';
+                } else if (afterSale.selectedServer == '退款退货') {
+                    param .asType = 'refund_return';
+                } else {
+                    param.asType = 'refund';
+                }
+                //如果不是对整个订单退款
+                if (!refundAll) {
+                    var idarr = [];
+                    idarr.push(afterSale.goodInfo.goods[0].id);
+                    param.orderListIdList = idarr;
+                }
+                param.operManId = sessionStorage.getItem('userid');
+                param.orderId = afterSale.goodInfo.orderId;
+                param.orderType =afterSale.goodInfo.orderType;
+                var param1 = {};
+                var url = 'weixin/afterSale/queryTkResult';
+                param1.modelJson = JSON.stringify(param);
+                Util.common.b2cPostCallback(url, param1, function (data) {
+                    Util.common.removeloadingAnimate('after-sale');
+                    if (data.success && data.data) {
+                        var dataInfo = data.data;
+                        afterSale.$set("maxAmount", dataInfo.maxAmount);
+                        afterSale.$set("refundAmount", dataInfo.maxAmount);
+                        afterSale.$set("freight", dataInfo.freight);
+                    } else {
+                        new Toast({context:$('body'),message: data.msg }).show();
+                    }
+                })
+            },
+            submit:function() {
+
+                if ((!afterSale.selectedServer && !afterSale.selectedReason && !afterSale.goodInfo.waitpayAmount) || afterSale.selectedReason=='请选择') {
+                    new Toast({context:$('body'),message:"信息填写不完整"}).show();
+                    return;
+                }
+                //验证退款金额
+                if (afterSale.refundAmount > afterSale.maxAmount) {
+                    new Toast({context:$('body'),message: "退款金额不能大于商品金额" }).show();
+                    return;
+                }
+
+                var param = {};
+                if (afterSale.selectedServer == '换货') {
+                    param.asType = 'exchange';
+                } else if (afterSale.selectedServer == '退款退货') {
+                    param .asType = 'refund_return';
+                } else {
+                    param.asType = 'refund';
+                }
+                //判断是否是对整个商品进行退款
+                var url = '';
+                if (refundAll) {
+                    url = 'weixin/afterSale/applyOrderAfterSale';
+                    param.orderId = afterSale.goodInfo.orderId;
+                } else {
+                    url = 'weixin/afterSale/applyAfterSale';
+                    var idarr = [];
+                    idarr.push(afterSale.goodInfo.goods[0].id);
+                    param.orderListIdList = idarr;
+                }
+                var imgList = [];
+                for(var i=0;i<$("#imgContainer").find("img").length;i++){
+                    var src = $("#imgContainer").find("img").eq(i).attr("src");
+                    imgList.push(src);
+                }
+                param.returnReason = afterSale.selectedReason;
+                param.returnAmount = afterSale.refundAmount;
+                param.operManId = sessionStorage.getItem('userid');
+                param.operDesc = afterSale.operDesc;
+                param.attachment = imgList.join(",");
+                var param1 = {};
+                param1.modelJson = JSON.stringify(param);
+                Util.common.b2cPostCallback(url, param1, function (data) {
+                    if (data.success) {
+                        new Toast({context:$('body'),message: "提交成功，请耐心等候！" }).show();
+                        window.setTimeout(function(){
+                            historyBack();
+                        },2000);
+                    } else {
+                        new Toast({context:$('body'),message: data.msg }).show();
+                    }
+                })
+            },
+            /*获取上传图片的列表*/
+            // GetImgList:function(){
+            //     var imgList = [];
+            //     for(var i=0;i<$("#imgContainer").find("img").lenght;i++){
+            //         var src = $("#imgContainer").find("img").eq(i).prop("src");
+            //         imgList.push(src);
+            //     }
+            //     var imgListStr = imgList.join(",");
+            // },
+            MaxScrll:function(){
+                setTimeout(function(){
+                    document.body.scrollTop = document.body.scrollHeight;
+                },10)
+                setTimeout(function(){
+                    document.body.scrollTop = document.body.scrollHeight;
+                },100)
+            },
+        }
+    });
+
+    var uploaderImg=Qiniu.uploader({
+        runtimes: 'html5,flash,html4',
+        browse_button:'cameraIcon',
+        container: 'container',
+        tigger_container:'imgContainer',
+        //chunk_size: '4mb',
+        uptoken:sessionStorage.getItem('qiniu_token'),
+        uptoken_url: Util.common.baseUrl+"/weixin/qiniu/getToken.do",
+        domain: 'http://o7o0uv2j1.bkt.clouddn.com/',
+        flash_swf_url : 'qiniu/Moxie.swf',
+        silverlight_xap_url : 'qiniu/Moxie.xap',
+        multi_selection: !(mOxie.Env.OS.toLowerCase()==="ios"),
+        filters : {
+            max_file_size : '100mb',
+            prevent_duplicates: false,
+            mime_types: [
+                {title : "Image files", extensions : "jpg,jpeg,gif,png,bmp"}
+            ]
+        },
+        get_new_uptoken: false,
+        auto_start: true,
+        log_level: 5,
+        resize : {
+            width : 200,
+            height : 200,
+            quality : 72,
+            crop: true // crop to exact dimensions
+        },
+        init: {
+            'FilesAdded': function(up, files) {
+                var op=up.getOption();
+                var targetContainer=op.tigger_container;
+                plupload.each(files, function(file) {
+                    var progress = new FileProgress(file, targetContainer);
+                    progress.bindUploadCancel(up);
+                    up.refresh();
+
+                });
+            },
+            'BeforeUpload': function(up, file) {
+                var op=up.getOption();
+                var targetContainer=op.tigger_container;
+                var progress = new FileProgress(file, targetContainer);
+                var chunk_size = plupload.parseSize(this.getOption('chunk_size'));
+                if (up.runtime === 'html5' && chunk_size) {
+                    progress.setChunkProgess(chunk_size);
+                }
+            },
+            'UploadComplete': function() {
+                console.log("ssss");
+            },
+            'FileUploaded': function(up, file, info) {
+                var op=up.getOption();
+                var targetContainer=op.tigger_container;
+                var progress = new FileProgress(file, targetContainer);
+                progress.setComplete(up, info, "");
+            },
+            'Error': function(up, err, errTip) {
+                var op=up.getOption();
+                var targetContainer=op.tigger_container;
+                var progress = new FileProgress(err.file, targetContainer);
+                progress.setError();
+                progress.setStatus(errTip);
+            },
+            'Key': function(up, file) {
+                var key = "";
+                var timestamp=new Date().getTime();
+                var imgType=file.name.substr(file.name.lastIndexOf(".")).toLowerCase();
+                var randomStr = function(len){
+                    var targetStr="";
+                    var hexDigits = "0123456789abcdef";
+                    for(var i=0;i<len;i++){
+                        targetStr+=hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+                    }
+                    return targetStr;
+                }
+                key=timestamp+randomStr(7)+imgType;
+                return key;
+            }
+        }
+    });
+
+</script>
+</html>

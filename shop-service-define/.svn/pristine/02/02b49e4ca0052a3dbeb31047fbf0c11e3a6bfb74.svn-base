@@ -1,0 +1,18 @@
+package pub.makers.shop.order.enums;
+
+/**
+ * Created by kok on 2017/5/18.
+ */
+public enum IndentConfirmType {
+    user("用户确认"), timeout("超时确认");
+
+    private String desc;
+
+    private IndentConfirmType(String desc) {
+        this.desc = desc;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+}

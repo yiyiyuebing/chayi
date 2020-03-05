@@ -1,0 +1,346 @@
+.trading-record-header{
+    border: 1px solid #f0f0f0;
+}
+.password-header{
+    width: 1198px;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+.password-header .nav-logo{
+    width: 201px;
+    height: 62px;
+    display: inline-block;
+}
+.password-header .nav-logo img{
+    width: 201px;
+    height: 62px;
+}
+.password-header .trading-record-nav{
+    margin-left: 60px;
+}
+.password-header .trading-record-nav .record-index{
+    font-size: 16px;
+    color: #1a1a1a;
+    line-height: 30px;
+    margin-right: 30px;
+}
+.password-header .trading-record-nav{
+    padding-top: 30px;
+    padding-bottom: 24px;
+}
+.password-header .trading-record-nav .record-message{
+    font-size: 16px;
+    color: #1a1a1a;
+    line-height: 30px;
+    position: relative;
+}
+.password-header .trading-record-nav .record-message a{
+    font-size: 16px;
+    color: #1a1a1a;
+    line-height: 30px;
+}
+.password-header .trading-record-nav .record-message .dot{
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f05353;
+    position: absolute;
+    top:5px;
+    right: -1px;
+}
+.trading-record-header .password-header .nav-input {
+    padding-top: 30px;
+    margin-right: 40px;
+}
+.trading-record-header .password-header .nav-input input{
+    outline: none;
+    width: 242px;
+    height: 30px;
+    font-size: 14px;
+    text-align: left;
+    padding-left: 8px;
+    border: 1px solid #dbdbdb;
+    margin: 0;
+}
+.trading-record-header .password-header .nav-input .nav-search{
+    border: 1px solid #dbdbdb;
+    border-left: none;
+    font-size: 16px;
+    color: #666;
+    background: #f5f5f5;
+    width: 70px;
+    text-align: center;
+    line-height: 32px;
+    cursor: pointer;
+}
+/*侧边栏导航*/
+.trading-content{
+    width: 1120px;
+    margin: 0 auto;
+}
+.trading-content .person-aside-nav{
+    width: 100px;
+    border: 1px solid #f0f0f0;
+    padding: 15px 40px 15px 60px;
+    border-top: none;
+}
+.trading-content .person-aside-nav .list-btn{
+    font-size: 12px;
+    font-weight: bold;
+    display:block;
+    text-align: left;
+    color: #cc9b4b;
+    line-height: 24px;
+    cursor: pointer;
+}
+.trading-content .person-aside-nav .list-btn i{
+    width: 13px;
+    height: 13px;
+    display: inline-block;
+    background: url(../images/icon_person_center_navlist.png) no-repeat center;
+    background-size: contain;
+    vertical-align: sub;
+    margin-left: 15px;
+}
+.trading-content .person-aside-nav .nav-list{
+    padding-left: 10px;
+}
+.trading-content .person-aside-nav .nav-list li a{
+    font-size: 12px;
+    line-height: 16px;
+    text-align: left;
+    color: #1a1a1a;
+}
+
+.sales-return{
+    width: 870px;
+    margin-left: 48px;
+}
+.sales-return .sales-return-title{
+    border-bottom: 2px solid #dbdbdb;
+    height: 44px;
+}
+.sales-return .sales-return-title h5{
+    font-size: 16px;
+    color: #cc9b4b;
+    font-weight: normal;
+    line-height: 42px;
+    border-bottom: 2px solid #cc9b4b;
+    width: 108px;
+    text-align: center;
+}
+.sales-return .sales-return-search{
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.sales-return .sales-return-search .return-search-group label{
+    font-size: 14px;
+    color: #333;
+    line-height: 34px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.sales-return .sales-return-search .return-search-group .input-select{
+    position: relative;
+}
+.sales-return .sales-return-search .return-search-group .input-select .list-btn{
+    width: 130px;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 32px;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    position: relative;
+    background: url(../images/icon_down_black.png) no-repeat 96% center;
+    background-size: 14px 8px;
+    color: #333;
+    text-decoration: none;
+}
+.sales-return .sales-return-search .return-search-group .input-select .input-select-list{
+    position: absolute;
+    left: 0;
+    top: 32px;
+    background: #fff;
+    width: 150px;
+    z-index: 999;
+    border:1px solid #dbdbdb;
+    border-top:none;
+    border-radius: 3px;
+    display: none;
+}
+.sales-return .sales-return-search .return-search-group .input-select .input-select-list li{
+    border-top: 1px solid #dbdbdb;
+    font-size: 14px;
+    line-height: 32px;
+    padding-left: 10px;
+    cursor: pointer;
+}
+.sales-return .sales-return-search .return-search-group .input-select .input-select-list li:hover{
+    color: #cc9b4b;
+}
+.sales-return .sales-return-search .return-search-group input{
+    width: 130px;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 32px;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+.sales-return .sales-return-search-btn{
+    margin-bottom: 40px;
+}
+.sales-return .sales-return-search-btn a{
+    width: 200px;
+    height: 30px;
+    background: #e32a32;
+    color: #fff;
+    font-size: 16px;
+    line-height: 30px;
+    border-radius: 3px;
+    display: inline-block;
+    text-align: center;
+}
+.sales-return .product-table{
+    padding-bottom: 80px;
+}
+.sales-return .product-table .product-table-header{
+    border: 1px solid #dbdbdb;
+    background: #f5f5f5;
+    font-size: 12px;
+    color: #333;
+    line-height: 44px;
+    text-align: center;
+}
+.sales-return .product-table .product-table-header .table-header01{
+    width: 325px;
+}
+.sales-return .product-table .product-table-header .table-header02{
+    width: 111px;
+}
+.sales-return .product-table .product-table-header .table-header03{
+    width: 158px;
+}
+.sales-return .product-table .product-table-header .table-header04{
+    width: 90px;
+}
+.sales-return .product-table .product-table-header .table-header05{
+    width: 90px;
+}
+.sales-return .product-table .product-table-header .table-header06{
+    width: 94px;
+}
+.sales-return .product-table .product-table-group{
+    margin-top: 12px;
+}
+.sales-return .product-table .product-table-group h4{
+    font-size: 12px;
+    color: #333;
+    font-weight: normal;
+    background: #eaf8ff;
+    padding-left: 30px;
+    line-height: 42px;
+    border-top: 1px solid #91cfff;
+}
+.sales-return .product-table .product-table-group .product-table-content{
+    border: 1px solid #dbdbdb;
+    padding-top: 25px;
+    padding-bottom: 15px;
+}
+.sales-return .product-table .product-table-group .product-table-content .product{
+    width: 325px;
+}
+.sales-return .product-table .product-table-group .product-table-content .product img{
+    width: 80px;
+    height: 80px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.sales-return .product-table .product-table-group .product-table-content .product span{
+    width: 190px;
+    font-size: 14px;
+    color: #333;
+    line-height: 24px;
+    max-height:72px;
+    overflow: hidden;
+}
+.sales-return .product-table .product-table-group .product-table-content .price{
+    width: 111px;
+    text-align: center;
+    font-size: 14px;
+    color: #e32a32;
+    line-height: 24px;
+}
+.sales-return .product-table .product-table-group .product-table-content .time{
+    width: 158px;
+    font-size: 12px;
+    color: #666;
+    line-height: 24px;
+    text-align: center;
+}
+.sales-return .product-table .product-table-group .product-table-content .server{
+    width: 90px;
+    text-align: center;
+    font-size: 12px;
+    color: #333;
+    line-height: 24px;
+}
+.sales-return .product-table .product-table-group .product-table-content .status{
+    width: 90px;
+    text-align: center;
+    font-size: 12px;
+    color: #2a6dbb;
+    line-height: 24px;
+}
+.sales-return .product-table .product-table-group .product-table-content .details{
+    width: 94px;
+}
+.sales-return .product-table .product-table-group .product-table-content .details a{
+    width: 94px;
+    font-size: 12px;
+    color: #f05353;
+    line-height: 24px;
+    text-align: center;
+    display: block;
+}
+.disabled {
+    pointer-events: none;
+    cursor: pointer;
+    background-color: #f8f8f8!important;
+}
+
+a{
+    text-decoration: none!important;
+}
+
+.check-box{
+    position: relative;
+    min-height: 49px;
+    padding: 15px 0;
+}
+.check-box .option-wrap {
+    position: absolute;
+    top: 13px;
+    right: 0;
+}
+.check-box .option-wrap .option-btn {
+    float: left;
+    padding: 3px 10px;
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    margin-left: 4px;
+}
+.check-box .option-wrap .option-btn.disable {
+    color: #999;
+    pointer-events: none;
+}
+*{
+    box-sizing: content-box!important;
+}

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>订单详情</title>
+    <link rel="stylesheet" href="../css/cssresets.css">
+    <link rel="stylesheet" href="../css/public.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/asidebar.css">
+    <link rel="stylesheet" href="../css/person.css">
+    <link rel="stylesheet" href="../css/person.list.css">
+    <link rel="stylesheet" href="../css/order04.css">
+</head>
+<body>
+    <!--顶部-->
+    <div class="header-wrap">
+        <div class="header clearfix">
+            <div class="location pull-left">
+                <p class="loaction-show">福建<i></i></p>
+                <div class="location-wrap">
+                    <h5>请选择所在的收货地区</h5>
+                    <ul class="location-group pull-left">
+                        <li class="pull-left">福建</li>
+                        <li class="pull-left">湖南</li>
+                        <li class="pull-left">湖北</li>
+                        <li class="pull-left">河南</li>
+                        <li class="pull-left">河北</li>
+                        <li class="pull-left">山西</li>
+                        <li class="pull-left">辽宁</li>
+                        <li class="pull-left">吉林</li>
+                        <li class="pull-left">黑龙江</li>
+                        <li class="pull-left">江苏</li>
+                        <li class="pull-left">浙江</li>
+                        <li class="pull-left">安徽</li>
+                        <li class="pull-left">江西</li>
+                        <li class="pull-left">山东</li>
+                        <li class="pull-left">海南</li>
+                        <li class="pull-left">四川</li>
+                        <li class="pull-left">贵州</li>
+                        <li class="pull-left">云南</li>
+                        <li class="pull-left">陕西</li>
+                        <li class="pull-left">甘肃</li>
+                        <li class="pull-left">青海</li>
+                        <li class="pull-left">台湾</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pull-left welcome">欢迎光临优茶联官网</div>
+            <div class="register-group clearfix pull-left">
+                <a class="pull-left" href="login.html">会员登录</a>
+                <i class="vertical-line pull-left"></i>
+                <a class="pull-left" href="register.html">免费注册</a>
+            </div>
+            <div class="mineYcl pull-left">
+                <a href="order.html" class="mineYcl-span">我的优茶联<i></i></a>
+                <ul class="minYcl-wrap clearfix">
+                    <li class="pull-left"><a href="userinfo.html">店铺资料</a></li>
+                    <li class="pull-left"><a href="#">子账户</a></li>
+                    <li class="pull-left"><a href="purchase.html">进货单</a></li>
+                    <li class="pull-left"><a href="#">卡券</a></li>
+                    <li class="pull-left"><a href="rechargeaccount.html">钱包</a></li>
+                    <li class="pull-left"><a href="person_center_change_password.html">设置</a></li>
+                </ul>
+            </div>
+            <div class="help-list pull-left clearfix">
+                <a class="pull-left" href="purchase.html">采购单</a>
+                <i class="vertical-line pull-left"></i>
+                <a class="pull-left" href="#">商务合作</a>
+                <i class="vertical-line pull-left"></i>
+                <div class="pull-left cooperation">
+                    <span>手机商城</span>
+                    <div class="cooperation-wrap">
+                        <img src="../images/cell_market_code.png">
+                        <p>微信扫一扫，关注一下</p>
+                    </div>
+                </div>
+                <i class="vertical-line pull-left"></i>
+                <a class="pull-left" href="help_center.html">帮助中心</a>
+            </div>
+            <div class="tel pull-left clearfix">
+                <a href="#" class="pull-left tel-icon"></a>
+                <span class="pull-left">客服电话：<mark>400-567-1234</mark></span>
+            </div>
+            <div class="collect pull-right clearfix">
+                <span class="pull-left">收藏</span>
+                <i class="vertical-line pull-left margin-line"></i>
+                <div class="web-nav web-nav-active pull-left">
+                    <span>网站导航</span>
+                    <div class="web-nav-content clearfix">
+                        <div class="web-nav-group pull-left">
+                            <h5>精品茶</h5>
+                            <ul class="clearfix">
+                                <li class="pull-left"><a href="product_details.html">铁观音</a></li>
+                                <li class="pull-left"><a href="product_details.html">红茶</a></li>
+                                <li class="pull-left"><a href="product_details.html">绿茶</a></li>
+                                <li class="pull-left"><a href="product_details.html">白茶</a></li>
+                                <li class="pull-left"><a href="product_details.html">岩茶</a></li>
+                                <li class="pull-left"><a href="product_details.html">普洱茶</a></li>
+                                <li class="pull-left"><a href="product_details.html">乌龙茶</a></li>
+                                <li class="pull-left"><a href="product_details.html">其他茶类</a></li>
+                                <li class="pull-left"><a href="product_details.html">五福金砖</a></li>
+                            </ul>
+                        </div>
+                        <i class="pull-left web-nav-line"></i>
+                        <div class="web-nav-group pull-left">
+                            <h5>茶具</h5>
+                            <ul class="clearfix">
+                                <li class="pull-left"><a href="product_details.html">茶具套组</a></li>
+                                <li class="pull-left"><a href="product_details.html">茶盘</a></li>
+                                <li class="pull-left"><a href="product_details.html">单壶</a></li>
+                                <li class="pull-left"><a href="product_details.html">个人杯</a></li>
+                                <li class="pull-left"><a href="product_details.html">电子</a></li>
+                                <li class="pull-left"><a href="product_details.html">茶宠摆件</a></li>
+                                <li class="pull-left"><a href="product_details.html">辅助工具</a></li>
+                            </ul>
+                        </div>
+                        <i class="pull-left web-nav-line"></i>
+                        <div class="web-nav-group pull-left">
+                            <h5>更多精选</h5>
+                            <ul class="clearfix">
+                                <li class="pull-left"><a href="product_details.html">茶食</a></li>
+                                <li class="pull-left"><a href="product_details.html">茶配套</a></li>
+                                <li class="pull-left"><a href="product_details.html">散茶</a></li>
+                                <li class="pull-left"><a href="product_details.html">包装</a></li>
+                                <li class="pull-left"><a href="product_details.html">定制茶</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 个人中心二级头部 -->
+    <div class="person-header-wrap">
+        <div class="header-cont clearfix">
+            <a class="logo"></a>
+            <div class="header-nav">
+                <a class="nav-item" href="index.html">首页</a>
+                <a class="nav-item" href="article_list_public.html">消息</a>
+            </div>
+            <div class="search-box clearfix">
+                <input class="search-ipt" type="text" placeholder="铁观音">
+                <label class="search-label">搜索</label>
+            </div>
+        </div>
+    </div>
+    <!-- END个人中心二级头部 -->
+    <!--侧边栏-->
+    <div class="asidebar-wrap">
+        <div class="code-wrap">
+            <div class="code-content">
+                <div class="code-triangle"></div>
+                <img src="../images/cell_market_code.png">
+                <p>微信扫一扫，下载App</p>
+            </div>
+        </div>
+        <a href="#" class="shopping-wrap">
+            <i></i>
+            <p>购</p>
+            <p>物</p>
+            <p>车</p>
+            <span>0</span>
+        </a>
+        <div class="person-center">
+            <a href="#" class="center-icon"></a>
+            <a href="#" class="center-txt">个人中心</a>
+        </div>
+        <div class="person-collect">
+            <a href="#" class="collect-icon"></a>
+            <a href="#" class="collect-txt">我的收藏</a>
+        </div>
+        <div class="person-card">
+            <a href="#" class="card-icon"></a>
+            <a href="#" class="card-txt">我的卡券</a>
+        </div>
+        <div class="person-history">
+            <a href="#" class="history-icon"></a>
+            <a href="#" class="history-txt">浏览历史</a>
+        </div>
+        <a href="#" class="person-qq"></a>
+        <div class="home-back-wrap">
+            <div class="home-back">
+                <i></i>
+                <span>TOP</span>
+            </div>
+        </div>
+    </div>
+    <!--侧边栏ending-->
+    <!-- 主内容 -->
+    <div class="person-wrap">
+        <div class="person-cont">
+            <div class="order-state">
+                <div class="state-cont">
+                    <div class="state-lcol">
+                        <div class="state-top">订单号：51563273654</div>
+                        <h3 class="state-txt red">等待收货</h3>
+                        <span class="remain-time">
+
+                        </span>
+                        <div class="state-btns">
+                            <a href="#" class="pay">确认收货</a>
+                            <a href="order.html" class="cancel">查看物流</a>
+                        </div>
+                    </div>
+                    <div class="state-rcol">
+                        <div class="state-rtop cl9">该订单会为您保留24.0小时（从下单之日算起），24.0小时之后如果还未付款，系统将自动取消该订单。</div>
+                        <div class="order-process clearfix">
+                            <div class="process-group pull-left submit-order">
+                               <i class="active"></i>
+                               <p>提交订单</p>
+                               <span>2017-09-08</span>
+                               <span>15:09:09</span>
+                            </div>
+                            <span class="process-route-line process-route-line-all  pull-left"></span>
+                            <div class="process-group pull-left pay-success">
+                                <i class="active"></i>
+                                <p>付款成功</p>
+                                <span>2017-09-08</span>
+                                <span>15:09:09</span>
+                            </div>
+                            <span class="process-route-line process-route-line-all pull-left"></span>
+                            <div class="process-group pull-left product-sending">
+                                <i class="active"></i>
+                                <p>商品出库</p>
+                                <span>2017-09-08</span>
+                                <span>15:09:09</span>
+                            </div>
+                            <span class="process-route-line process-route-line-all pull-left"></span>
+                            <div class="process-group pull-left waiting-car">
+                                <i class="active"></i>
+                                <p>等待收货</p>
+                            </div>
+                            <span class="process-route-line process-route-line-half pull-left"></span>
+                            <div class="process-group pull-left order-complete">
+                                <i></i>
+                                <p>完成</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="state-cont track-cont">
+                    <div class="state-lcol track-lcol">
+                        <div class="p-item clearfix">
+                            <div class="p-img">
+                                <img src="../images/index_nav_product_img01.png">
+                            </div>
+                            <div class="p-info pull-left cl6">送货方式：普通快递</div>
+                        </div>
+                    </div>
+                    <div class="state-rcol track-rcol">
+                        <div class="track-list">
+                            <ul>
+                                <li class="afterdate">
+                                    <i class="dot-icon"></i>
+                                    <span class="cl9">2017-04-25<span class="week">/周二15:13:37</span></span>
+                                    <strong class="ml20">您提交了订单，请等待系统确认</strong>
+                                </li>
+                                <li class="afterdate">
+                                    <i class="dot-icon"></i>
+                                    <span class="cl9">2017-04-25<span class="week">/周二15:13:37</span></span>
+                                    <strong class="ml20">您支付了订单</strong>
+                                </li>
+                                <li class="afterdate">
+                                    <i class="dot-icon"></i>
+                                    <span class="cl9">2017-04-25<span class="week">/周二15:13:37</span></span>
+                                    <strong class="ml20">确认收货</strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-info">
+                    <div class="ui-switchable-body clearfix">
+                        <div class="dl">
+                            <strong class="dt block">收货人信息</strong>
+                            <div class="dd">
+                                <div class="item clearfix">
+                                    <span class="label">收货人：</span>
+                                    <div class="info-rcol">哈哈哈</div>
+                                </div>
+                                <div class="item clearfix">
+                                    <span class="label">地址：</span>
+                                    <div class="info-rcol">详细地址是很远的一个地方详细地址是很远的一个地方</div>
+                                </div>
+                                <div class="item clearfix">
+                                    <span class="label">手机号码：</span>
+                                    <div class="info-rcol">133344444</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dl">
+                            <strong class="dt block">配送信息</strong>
+                            <div class="dd">
+                                <div class="item clearfix">
+                                    <span class="label">配送方式：</span>
+                                    <div class="info-rcol">普通快递</div>
+                                </div>
+                                <div class="item clearfix">
+                                    <span class="label">运费：</span>
+                                    <div class="info-rcol">¥0.00</div>
+                                </div>
+                                <div class="item clearfix">
+                                    <span class="label">送货日期：</span>
+                                    <div class="info-rcol">2017-5-25</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dl">
+                            <strong class="dt block">付款信息</strong>
+                            <div class="dd">
+                                <div class="item clearfix">
+                                    <span class="label">付款方式：</span>
+                                    <div class="info-rcol">在线支付</div>
+                                </div>
+                                <div class="item clearfix">
+                                    <span class="label">商品总额：</span>
+                                    <div class="info-rcol">¥0.00</div>
+                                </div>
+                                <div class="item clearfix">
+                                    <span class="label">应支付金额：</span>
+                                    <div class="info-rcol">¥0.00</div>
+                                </div>
+                                <div class="item clearfix">
+                                    <span class="label">运费金额：</span>
+                                    <div class="info-rcol">¥0.00</div>
+                                </div>
+                                <div class="item clearfix">
+                                    <span class="label">订单优惠：</span>
+                                    <div class="info-rcol">¥0.00</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dl">
+                            <strong class="dt block">发票信息</strong>
+                            <div class="dd">
+                                <div class="item clearfix">
+                                    <span class="label">发票类型：</span>
+                                    <div class="info-rcol">电子发票</div>
+                                </div>
+                                <div class="item clearfix">
+                                    <span class="label">发票抬头：</span>
+                                    <div class="info-rcol">个人</div>
+                                </div>
+                                <div class="item clearfix">
+                                    <span class="label">发票内容：</span>
+                                    <div class="info-rcol">明细</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-goods">
+                      <div class="mc">
+                        <div class="goods-list">
+                            <table class="tb-order">
+                                <thead>
+                                    <tr>
+                                        <td class="grap"></td>
+                                        <td class="good-w">宝贝</td>
+                                        <td>商品编号</td>
+                                        <td>商品总额</td>
+                                        <td>数量</td>
+                                        <td class="option-w">操作</td>
+                                        <td class="grap"></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="grap"></td>
+                                        <td>
+                                            <div class="p-item clearfix">
+                                                <div class="p-img">
+                                                    <img src="../images/index_nav_product_img01.png">
+                                                </div>
+                                                <div class="p-info">
+                                                    <div class="p-name">铁观音绿茶109g 金砖  精致包装铁观音绿茶109g 金砖  精致包装</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span>3133847</span>
+                                        </td>
+                                        <td>
+                                            <span class="f-price">¥5799.00</span>
+                                        </td>
+                                        <td><span class="cl9">x1</span></td>
+                                        <td>
+                                            <a>申请售后</a>
+                                        </td>
+                                        <td class="grap"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="grap"></td>
+                                        <td>
+                                            <div class="p-item clearfix">
+                                                <div class="p-img">
+                                                    <img src="../images/index_nav_product_img01.png">
+                                                </div>
+                                                <div class="p-info">
+                                                    <div class="p-name">铁观音绿茶109g 金砖  精致包装</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span>3133847</span>
+                                        </td>
+                                        <td>
+                                            <span class="f-price">¥5799.00</span>
+                                        </td>
+                                        <td><span class="cl9">x1</span></td>
+                                        <td>
+                                            <a>申请售后</a>
+                                        </td>
+                                        <td class="grap"></td>
+                                    </tr>
+                                 </tbody>
+                            </table>
+                        </div>
+                        <div class="goods-total clearfix">
+                            <ul>
+                                <li class="clearfix">
+                                    <span class="label">商品总额：</span>
+                                    <span class="txt">¥5799.00</span>
+                                </li>
+                                <li class="clearfix">
+                                    <span class="label">优　　惠：</span>
+                                    <span class="txt">-¥0.00</span>
+                                </li>
+                                <li class="clearfix">
+                                    <span class="label">运　　费：</span>
+                                    <span class="txt">¥0.00</span>
+                                </li>
+                                <li class="clearfix">
+                                    <span class="label red">应付总额：</span>
+                                    <span class="txt count">¥5799.00</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END主内容 -->
+    <!--footer-->
+    <div class="footer-banner">
+        <img src="../images/footer_banner.png">
+    </div>
+    <div class="footer-list-wrap">
+        <div class="footer-list clearfix">
+            <dl class="pull-left">
+                <dt>购物指南</dt>
+                <dd><a href="#">付款方式</a></dd>
+                <dd><a href="#">发票说明</a></dd>
+                <dd><a href="#">支付问题解答</a></dd>
+                <dd><a href="#">优惠券说明</a></dd>
+                <dd><a href="#">1919会员体系介绍</a></dd>
+            </dl>
+            <dl class="pull-left">
+                <dt>帮助中心</dt>
+                <dd><a href="#">新手指南</a></dd>
+                <dd><a href="#">登录注册</a></dd>
+                <dd><a href="#">选购商品</a></dd>
+                <dd><a href="#">购物车</a></dd>
+                <dd><a href="#">下单支付</a></dd>
+            </dl>
+            <dl class="pull-left">
+                <dt>售后服务</dt>
+                <dd><a href="#">品质保障</a></dd>
+                <dd><a href="#">退换货流程</a></dd>
+                <dd><a href="#">咨询投诉</a></dd>
+                <dd><a href="#">快喝购酒服务</a></dd>
+                <dd><a href="#">售后说明</a></dd>
+            </dl>
+            <dl class="pull-left">
+                <dt>配送说明</dt>
+                <dd><a href="#">配送时间</a></dd>
+                <dd><a href="#">配送费用</a></dd>
+                <dd><a href="#">货到付款</a></dd>
+                <dd><a href="#">门店查询</a></dd>
+                <dd><a href="#">配送范围</a></dd>
+            </dl>
+            <dl class="pull-left">
+                <dt>关于我们</dt>
+                <dd><a href="#">品牌介绍</a></dd>
+                <dd><a href="#">联系我们</a></dd>
+            </dl>
+            <div class="footer-code pull-right">
+                <div class="footer-code-wrap">
+                    <img src="../images/cell_market_code.png">
+                </div>
+                <p>扫一扫，关注我们</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-link-wrap">
+        <div class="footer-link clearfix">
+            <span class="pull-left">友情链接：</span>
+            <a href="#">汕头团购</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">中国茶网</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">普洱</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">海南特产有哪些</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">普洱茶批发</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">普洱茶</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">快易拍购网</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">茶叶加盟</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">茶文化</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">金骏圈</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">广西特产网</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">云南花木网</a>
+            <a href="#" class="more">更多 》</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="footer-bottom-link">
+            <a href="#">优茶联</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">优茶联商城</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">优茶联定制</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">优茶联商城</a>
+            <i class="link-vertical-line"></i>
+            <a href="#">优茶联</a>
+        </div>
+        <p>经营许可证：粤B2-20060628  粤ICP备09088851号-9  互联网文化经营许可证：粤网文[2014]0811-311号    站长统计工具</p>
+        <p>声明:本站资源部分来自互联网，版权归原作者所有。如有侵犯您的权益，请联系我们，本站将在第一时间删除。站内网友所发表所有评论不代表本站立场。</p>
+        <p>Copyright © 1996-2013 SINA Corporation, All Rights Reserved</p>
+        <p>xxx版权所有</p>
+        <div class="footer-bottom-net clearfix">
+            <div class="footer-bottom-net-group pull-left clearfix">
+                <i class="pull-left footer-icon-info"></i>
+                <span class="pull-left">
+                    经营性网站备案信息
+                </span>
+            </div>
+            <div class="footer-bottom-net-group pull-left clearfix">
+                <i class="pull-left footer-icon-recommend"></i>
+                <span class="pull-left">
+                    可信网站信用评价
+                </span>
+            </div>
+            <div class="footer-bottom-net-group pull-left clearfix">
+                <i class="pull-left footer-icon-police"></i>
+                <span class="pull-left">
+                    网络警察提醒您
+                </span>
+            </div>
+            <div class="footer-bottom-net-group pull-left clearfix">
+                <i class="pull-left footer-icon-net"></i>
+                <span class="pull-left">
+                    诚信网站
+                </span>
+            </div>
+            <div class="footer-bottom-net-group pull-left clearfix">
+                <i class="pull-left footer-icon-center"></i>
+                <span class="pull-left">
+                    中国互联网举报中心
+                </span>
+            </div>
+            <div class="footer-bottom-net-group pull-left clearfix">
+                <i class="pull-left footer-icon-app"></i>
+                <span class="pull-left">
+                    网站举报App下载
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--footer ending-->
+    <!--[if lt IE 9]>
+    <script src="../js/Response.js"></script>
+    <![endif]-->
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/header.js"></script>
+    <script src="../js/footer.js"></script>
+    <script src="../js/asidebar.js"></script>
+</body>
+</html>

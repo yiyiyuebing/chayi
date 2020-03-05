@@ -1,0 +1,76 @@
+package pub.makers.shop.store.service;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.alibaba.dubbo.common.json.JSONArray;
+import com.alibaba.dubbo.config.annotation.Service;
+import com.google.common.collect.Maps;
+
+import pub.makers.shop.base.util.FreeMarkerHelper;
+import pub.makers.shop.store.entity.GeoShopInfo;
+
+@Service(version="1.0.0")
+public class GeoShopBizServiceImpl implements GeoShopBizService{
+
+	@Autowired
+	private MongoTemplate mongoTemplate;
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+	@Override
+	public GeoShopInfo addShop(GeoShopInfo shopInfo) {
+		
+		mongoTemplate.insert(shopInfo, "geo_shop_info");
+		return shopInfo;
+	}
+
+	@Override
+	public GeoShopInfo editShop(GeoShopInfo shopInfo) {
+		
+		mongoTemplate.save(shopInfo, "geo_shop_info");
+		return shopInfo;
+	}
+
+	@Override
+	public List<GeoShopInfo> findNearBy(Double lat, Double lng, Integer distance) {
+		
+		Map<String, Object> dataModel = Maps.newHashMap();
+		dataModel.put("lat", lat);
+		dataModel.put("lng", lng);
+		dataModel.put("distance", distance);
+		
+		String shopInfo = FreeMarkerHelper.getValueFromTpl("sql/subbranch/queryOthersAroundShop.sql", dataModel);
+		
+		List<GeoShopInfo> shopInfoList = jdbcTemplate.query(shopInfo, new BeanPropertyRowMapper<GeoShopInfo>(GeoShopInfo.class));
+		
+		return shopInfoList;
+	}
+//	@Override
+//	public List<GeoShopInfo> findNearBy(Double lng, Double lat, int distance) {
+//		// TODO Auto-generated method stub
+//		NearQuery query = NearQuery.near(lat, lng);
+//		query.distanceMultiplier(6378137);
+//		query.maxDistance(distance/6378137.0);
+//		query.num(100);
+//		query.spherical(true);
+//		GeoResults<GeoShopInfo> result = mongoTemplate.geoNear(query, GeoShopInfo.class, "geo_shop_info");
+//		
+//		List<GeoShopInfo> resultList = Lists.newArrayList();
+//		for (GeoResult<GeoShopInfo> info : result){
+//			GeoShopInfo shopInfo = info.getContent();
+//			shopInfo.setDistance(info.getDistance().getValue());
+//			resultList.add(shopInfo);
+//		}
+//		
+//		return resultList;
+//	}
+	
+	
+	
+}

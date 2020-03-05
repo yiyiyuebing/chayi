@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>明细</title>
+</head>
+<body class="address-edit trading-record">
+<div id="trading_record">
+    <ul class="lists">
+        <template v-for="list in detail.resultList">
+
+        <li v-on:click="gotoDetail(list)" class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell record">
+                <p>提现到{{list.bankName}}</p>
+                <h5>{{list.createTime}}</h5>
+            </div>
+            <p class="dis-cell amount">
+                -{{list.price}}
+            </p>
+        </li>
+        </template>
+    </ul>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    Util.common.addloadingAnimate();
+
+    $(function () {
+        tradingList.loadData();
+        //                微信分享
+        Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+    })
+    var tradingList=new Vue({
+        el: "#trading_record",
+        data: {
+            detail:{}
+        },
+        computed: {},
+        methods: {
+            loadData:function () {
+                var url ="mobile/user/findWithDrawCashList.do?storeId="+sessionStorage.getItem('shopId');
+                var param = {};
+                Util.common.executeAjaxCallback(url, param, function (data) {
+                    Util.common.removeloadingAnimate('trading_record');
+
+                    console.log(data);
+                    if(data.code==1){
+                        tradingList.$set('detail',data.data);
+                    }
+                });
+            },
+            gotoDetail:function (data) {
+                console.log(data);
+                window.location.href="cash_state.html?recordId="+JSON.stringify(data);
+            }
+        }
+    });
+</script>
+
+</html>

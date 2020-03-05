@@ -1,0 +1,20 @@
+package pub.makers.shop.bill.service;
+
+import pub.makers.shop.bill.entity.IndentBill;
+import pub.makers.shop.bill.vo.BillVo;
+
+import java.util.List;
+import java.util.Map;
+
+public interface BillBizService {
+
+	/**
+	 * 记录账务
+	 * @param indent
+	 */
+	void recordBill(BillVo billVo);
+
+	IndentBill getBill(String indentId);
+
+	Map<String, IndentBill> getBill(List<String> indentIdList);
+}

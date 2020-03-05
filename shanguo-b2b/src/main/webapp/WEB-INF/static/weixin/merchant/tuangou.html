@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link href="//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>团购专区</title>
+</head>
+<body id="today" class="bg-main today">
+<div id="action">
+	<div class="slider">
+        <div id="slider-content">
+
+        </div>
+    </div>
+    <template v-if="intro!=undefined && intro!=''">
+        <img :src="intro" alt="">
+    </template>
+	<div style="display: none" class="part3">
+        <div class="clearfix condition border-b1">
+            <span v-on:click="moren()" class="fl w33 ta-c border-l1"><i id="moren" class="color-main" >默认</i></span>
+            <span v-on:click="saleNum()" class=" fl w33 ta-c border-l1"><i id="sale" class="default">销量&nbsp;</i></span>
+            <span v-on:click="priceNum()" class=" fl w33 ta-c"><i id="price" class="default">价格</i></span>
+        </div>
+		<ul class="clearfix">
+			<template v-for="list in goodsList">
+			<li class="fl" v-on:click="goodsDetail(list.id)">
+                <div class="relative">
+                    <!--<a style="display: block" >-->
+                            <div style="position: relative;">
+                                <div><img v-bind:src="list.showPicture" alt=""><span></span><div>
+                                <div class="tg-act-time" id="bg{{list.id}}" style="display: none;">
+                                    <span class="timer color-white" id="timer-out{{list.id}}">
+                                        <i class="day"></i> 天
+                                        <i class="hour"></i> 时
+                                    </span>
+                                </div>
+                            </div>
+                    <!--</a>-->
+                    <i v-if="list.stock == 0 || list.saleNum >list.stock" class="sellover" v-on:click="goodsDetail(list.id)"></i>
+                    <h4>{{list.goodName}}</h4>
+                    <h5 v-if="isSubAccount == 'F'">供货价：¥{{list.supplyPrice}}</i></h5>
+                    <p class="color-main">¥{{list.salePrice}} <i class=" fr" >&nbsp;</i></p>
+                    <div class="tg-num tg-tu"><i class="bg-red2 p001" style="border-top-left-radius: 3px;
+                        border-bottom-left-radius: 3px;">团</i><i class="p001" style="border-top-right-radius: 3px;
+                        border-bottom-right-radius: 3px;"> {{list.minTuanNum}}件起售</i></div>
+                </div>
+            </li>
+			</template>
+		</ul>
+	</div>
+	<div class="cart" style="display: none"></div>
+    <div class="csad_gray" v-on:click="jumpToMess()"></div>
+    <p class="ta-c copyright" style="display: none">已经到底了...</p>
+    
+    <div id="emptyIcon" style="display: none;">
+        <div class="empty-icon"><img src="img/icons/no.png" alt=""></div>
+        <p class="fs-14 ta-c">暂无此类商品，<br/>客官逛逛其他商品吧~</p>
+    </div>
+
+</div>
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="//cdn.bootcss.com/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/jquery.tmpl.min.js"></script>
+    <script src="js/main.js"></script>
+    <script type="text/x-jquery-tmpl" id="index_advertise_t">
+        <ul class="swiper-wrapper">
+        {{each(i,advertise) datas}}
+           <li class="swiper-slide">
+            <a href="{{if advertise.lineStatus==1}}goods_detail.html?id=${advertise.lineUrl}{{/if}}" target="_top" type="${advertise.lineStatus}" typeId="${advertise.id}"><img src="${advertise.picUrl}" ></a>
+           </li>
+         {{/each}}
+        </ul>
+        <div class="swiper-pagination"></div>
+    </script>
+    <script>
+            Util.common.addloadingAnimate();
+            $(function () {
+
+                todayData.loadlist();
+                todayData.lunbo();
+               $(window).scroll(function() {
+                	
+                    if ($(window).scrollTop() > 0) {
+                        $(".cart").fadeIn(800);
+                    } else {
+                        $(".cart").fadeOut(800);
+                    }
+                   if ($(window).scrollTop() > 216) {
+                        $(".condition").addClass("fiexdTop");
+                    } else {
+                        $(".condition").removeClass("fiexdTop");
+                    } 
+                    if ($(document).scrollTop() >= $(document).height() - $(window).height() && $(document).scrollTop() !=0) {
+                        todayData.loadlist(todayData.rankstr);
+                    }
+                   
+
+                });
+               
+                $(".cart").click(function() {
+                    $('html,body').animate({
+                                scrollTop: 0
+                            },
+                            500);
+                    return false;
+                });    
+                
+//                微信分享
+                // Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+            });
+
+            var counter=1;
+
+            var todayData=new Vue({
+                el:'#today',
+                data:{
+                    userId:sessionStorage.getItem("userid"),
+                    storeId:sessionStorage.getItem("shopId"),
+                    sortType:Util.common.getParameter("sortType"),
+                    goodsList:[],
+                    rankstr:'',
+//                    筛选列表的值
+                    useType:[],
+                    brandType:[],
+                    chooseStatus:0,
+                    chooseData:{
+                        startPrice:'',
+                        endPrice:'',
+                        brandId:'',
+                        use:'',
+                        oneType:'',
+                        twoType:'',
+                        threeType:''
+                    },
+//                  分类页面所选的分类值
+                    initialData:{},
+//                    购物车数量
+                    cartCount:'',
+//                    主题馆介绍
+                    intro:'',
+                    theme:'',
+                    classify: '',
+//                  是否子帐号
+                    isSubAccount: localStorage.getItem('isSubAccount')
+                },
+                computed:{
+
+                },
+                methods:{
+//  				  跳转到详情页
+					goodsDetail: function(id) {
+                        Util.scrollMar.setPos("tuangou"+todayData.classify,$(window).scrollTop(),10);
+						window.location.href="goods_detail.html?id="+id;
+					},
+                    //加载轮播图 
+                    lunbo: function() {
+                        var _url ="weixin/common/getImg.do?category=4";
+                        Util.common.executeAjaxCallback(_url,{},function (data) {
+                            var datas ={"datas":data};
+                            Util.common.loadTemplate("#slider-content", "#index_advertise_t", datas);
+                            Util.common.initAdvertiseSlide();
+
+                        });
+                        var _Imgurl ="weixin/common/getImg.do?category=14";
+                        Util.common.executeAjaxCallback(_Imgurl,{},function (data) {
+                            if (data && data.length > 0) {
+                                todayData.$set('intro',data[0].picUrl);
+                            }
+                        });
+                    },
+//                    加载商品列表
+                    loadlist:function (rankNum) {
+                        if(rankNum==''|| rankNum==undefined){
+//                            默认排序
+                            rankNum='{"saleNumSort":"","priceSort":""}';
+                        }
+//                            首页各活动图标跳转
+                            var ti=Util.common.getParameter("themes");  
+                            var category=Util.common.getParameter("category");
+                            var url ="weixin/good/getSeachGoodListSer.do?goodName=&pageSize=50&shopId="+sessionStorage.getItem("shopId");
+                            param={'category':category,'conditionStr':rankNum,"pageNum":counter};
+                            param. startPrice=todayData.chooseData.startPrice;
+                            param. endPrice=todayData.chooseData.endPrice;
+                            param. brandId=todayData.chooseData.brandId;
+                            param. use=todayData.chooseData.use;
+                            param. oneType=todayData.chooseData.oneType;
+                            param. twoType=todayData.chooseData.twoType;
+                            param. threeType=todayData.chooseData.threeType;
+                           
+                        if(Util.common.getParameter('title')!=undefined && Util.common.getParameter('title')!=null){
+                            $(document).attr('title',Util.common.getParameter('title'));
+                        }
+//                        滑动加载商品列表
+                        $(".copyright").html("努力加载中..."); 
+                        Util.common.executeAjaxCallback(url,param,function (data) {
+                            counter=counter+1;
+                            console.log(data);
+                            if (data==null || data.length==0){
+                                $(".copyright").html("已经到底了...");
+                                if( todayData.goodsList.length==0){
+                                    $("#emptyIcon").css('display','block');
+                                    $(".copyright").css('display','none');
+                                }
+                            }else {
+                               for (x in data){
+                                    if (data[x].startDate && data[x].endDate ) {
+                                        var isPush = timeOver(data[x].endDate); 
+                                        if (isPush) {
+                                            todayData.goodsList.push(data[x]);
+                                        }
+                                    }
+                                }
+                                $("#emptyIcon").css('display','none');
+                                $(".part3").css('display','block');
+                                $(".copyright").css('display','');
+                            }
+                            if (todayData.goodsList.length < 3) {
+                                 $(".copyright").css('display','none');
+                            }
+                            console.log(todayData.goodsList)
+                            todayData.$nextTick(function(){
+                                for (y in todayData.goodsList) {
+                                    var start=new Date(todayData.goodsList[y].startDate.replace(/\-/g,"/")).getTime();
+                                    var end= new Date(todayData.goodsList[y].endDate.replace(/\-/g,"/")).getTime();
+                                    todayData.goodsList[y].start=start;
+                                    todayData.goodsList[y].end=end;
+                                    var current=new Date().getTime();
+                                    if (start>current) {
+                                        if (todayData.goodsList[y].saleNum>=todayData.goodsList[y].stock){
+
+                                        } else{
+                                            $("#bg"+todayData.goodsList[y].id).css("display","");
+                                            $("#bg"+todayData.goodsList[y].id).addClass("tg-ks");
+                                            timeCounter(todayData.goodsList[y].id,todayData.goodsList[y].startDate,todayData.goodsList[y].endDate);
+                                        }
+                                    }else if(start<current &&current<end) {
+                                        if (todayData.goodsList[y].saleNum>=todayData.goodsList[y].stock){
+                                            // $("#bg"+todayData.goodsList[y].id).addClass("tg-js");
+                                        } else {
+                                            $("#bg"+todayData.goodsList[y].id).css("display","");
+                                            $("#bg"+todayData.goodsList[y].id).addClass("tg-js");
+                                            timeCounter(todayData.goodsList[y].id,todayData.goodsList[y].startDate,todayData.goodsList[y].endDate);
+                                        }
+                                    } else {
+                                        // $("#bg"+todayData.goodsList[y].id).addClass("tg-js");
+                                    }
+                                };
+                                //修改样式
+                                if (todayData.isSubAccount == "1"){
+                                    $(".tg-act-time").css({"position": "absolute",
+                                                            "z-indent": "2",
+                                                            "left": "0",
+                                                            "bottom": "5rem",
+                                                            "width": "100%",
+                                                            "height": "3rem"})
+                }   
+                                //还原滚动位置
+                                if (counter === 2){
+                                    Util.scrollMar.init("tuangou"+todayData.classify, function(scrollTemp){
+                                        $(window).scrollTop(scrollTemp.pos);
+                                    }); 
+                                }
+                            });
+                            window.setTimeout(function() {
+                                Util.common.removeloadingAnimate('action');
+                            },1000);
+                        });
+                    },
+                    removeStyle: function(){
+                        $("#price").removeClass('up');
+                        $("#price").removeClass('down');
+                        $("#price").removeClass('color-main');
+                        $("#price").addClass('default');
+                        $("#sale").removeClass('up');
+                        $("#sale").removeClass('down');
+                        $("#sale").removeClass('color-main');
+                        $("#sale").addClass('default');
+                    },
+                    moren: function() {
+                        $(window).scrollTop(0);
+                        $("#moren").addClass('color-main');
+                        todayData.removeStyle();
+//                        清空筛选规则
+                        todayData.$set('chooseData.twoType','');
+                        todayData.$set('goodsList',[]);
+                        counter=1;
+                        todayData.loadlist();
+                    },
+                    saleNum:function () {
+                        $(window).scrollTop(0);
+                        $("#moren").removeClass("color-main");
+                        if($("#sale").hasClass('default')){
+                            $("#sale").removeClass('default');
+                            $("#sale").addClass('up');
+                            $("#sale").addClass('color-main');
+                            this.rank(0,0);
+
+                            $("#price").removeClass('up');
+                            $("#price").removeClass('down');
+                            $("#price").removeClass('color-main');
+                            $("#price").addClass('default');
+                        }else {
+                            if($("#sale").hasClass('up')){
+                                $("#sale").removeClass('up');
+                                $("#sale").addClass('down');
+                                this.rank(0,1);
+                            }else {
+                                $("#sale").removeClass('down');
+                                $("#sale").addClass('up');
+                                this.rank(0,0);
+                            }
+                        }
+                    },
+                    priceNum:function () {
+                        $(window).scrollTop(0);
+                        $("#moren").removeClass('color-main');
+                        if($("#price").hasClass('default')){
+                            $("#price").removeClass('default');
+                            $("#price").addClass('up');
+                            $("#price").addClass('color-main');
+                            this.rank(1,0);
+
+                            $("#sale").removeClass('up');
+                            $("#sale").removeClass('down');
+                            $("#sale").removeClass('color-main');
+                            $("#sale").addClass('default');
+                        }else {
+                            if($("#price").hasClass('up')){
+                                $("#price").removeClass('up');
+                                $("#price").addClass('down');
+                                this.rank(1,1);
+                            }else {
+                                $("#price").removeClass('down');
+                                $("#price").addClass('up');
+                                this.rank(1,0);
+                            }
+                        }
+                    },
+                    rank:function (type,num) {
+                        if(type==0){
+//                            按销量
+                            counter=1;
+                            var condition='{"saleNumSort":"'+num+'","priceSort":""}';
+                            todayData.$set("rankstr",condition);
+                            var emp=[];
+                            todayData.$set("goodsList",emp);
+                            todayData.loadlist(condition);
+
+                        }else {
+//                          按价格
+                            counter=1;
+                            var emp=[];
+                            todayData.$set("goodsList",emp);
+                            var condition='{"saleNumSort":"","priceSort":"'+num+'"}';
+                            todayData.$set("rankstr",condition);
+                            todayData.loadlist(condition);
+                        }
+                    },
+                    //客服页
+                    jumpToMess: function() {
+                        if(window.WebAppJS){
+                                WebAppJS.gotoMess();
+                        } 
+                    },
+                }
+            });
+
+            var timeOver = function(end) {
+                var endtime = end.replace(/\-/g,"/");
+                var endTime = new Date(endtime).getTime();
+                var nowTime = new Date().getTime();
+                if (nowTime < endTime) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            var timeCounter = function(id,start,end){
+            setInterval(function () {
+            // console.log(id);
+            var $timer  = $("#timer-out"+id);
+            var startTime=start;
+            var ednTime=end;
+            startTime=startTime.replace(/\-/g,"/");
+            ednTime=ednTime.replace(/\-/g,"/");
+            // console.log(startTime+"   "+ednTime);
+            var curTimer=new Date().getTime();
+            var startTimer=new Date(startTime).getTime();
+            var endTimer=new Date(ednTime).getTime();;
+            var t=0;
+            if(startTimer>curTimer ){
+                $timer.find('.title-show').html("距开始:");
+                $timer.find('.day').css('background-color','#72A986');
+                $timer.find('.hour').css('background-color','#72A986');
+                t=startTimer-curTimer;
+                var d=Math.floor(t/1000/60/60/24);
+                var h=Math.floor(t/1000/60/60%24);
+                var m=Math.floor(t/1000/60%60);
+                var s=Math.floor(t/1000%60);
+                if(d<10&&d>=0){
+                    $timer.find('.day').html('0'+d);
+                    
+                }else {
+                    $timer.find('.day').html(d);
+                }
+                if(h<10&&h >=0){
+                    $timer.find('.hour').html('0'+h);
+                }else{
+                    $timer.find('.hour').html(h);
+                }
+                if(m<10&&m >=0){
+                    $timer.find('.min').html('0'+m);
+                }else{
+                    $timer.find('.min').html(m);
+                }
+                if(s<10 && s>=0){
+                    $timer.find('.sec').html('0'+s);
+                }else{
+                    $timer.find('.sec').html(s);
+                }
+
+            }else if(startTimer<curTimer && curTimer<endTimer){
+                $timer.find('.title-show').html("距结束:");
+                t=endTimer-curTimer;
+                $timer.find('.day').css('background-color','#B66E84');
+                $timer.find('.hour').css('background-color','#B66E84');
+                var d=Math.floor(t/1000/60/60/24);
+                var h=Math.floor(t/1000/60/60%24);
+                var m=Math.floor(t/1000/60%60);
+                var s=Math.floor(t/1000%60);
+                if(d<10&&d>=0){
+                    $timer.find('.day').html('0'+d);
+                }else {
+                    $timer.find('.day').html(d);
+                }
+                if(h<10&&h >=0){
+                    $timer.find('.hour').html('0'+h);
+                }else{
+                    $timer.find('.hour').html(h);
+                }
+                if(m<10&&m >=0){
+                    $timer.find('.min').html('0'+m);
+                }else{
+                    $timer.find('.min').html(m);
+                }
+                if(s<10 && s>=0){
+                    $timer.find('.sec').html('0'+s);
+                }else{
+                    $timer.find('.sec').html(s);
+                }
+            }else{
+                $timer.find('.title-show').html("已抢完");
+                $timer.find('.timer').hide();
+            }
+            $timer.show();
+
+
+            },1000);
+
+        };   
+        </script>
+</body>
+</html>

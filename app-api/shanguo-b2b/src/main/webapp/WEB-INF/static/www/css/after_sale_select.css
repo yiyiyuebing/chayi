@@ -1,0 +1,141 @@
+.bread-nav{
+    width: 950px;
+    margin: 0 auto;
+    font-size: 12px;
+    line-height: 36px;
+    color: #1c1c1c;
+}
+.bread-nav span{
+    font-size: 12px;
+}
+.bread-nav a{
+    color: #2a6dbb;
+    font-size: 12px;
+}
+.bread-nav i{
+    font-style: normal;
+    font-size: 12px;
+}
+
+.content{
+    width: 948px;
+    border: 1px solid #e6e6e6;
+    margin: 0 auto;
+}
+.content .content-left{
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 680px;
+}
+.content .content-left h4{
+    color: #333;
+    font-size: 14px;
+    line-height: 48px;
+    text-align: left;
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 60px;
+}
+.content .content-left .left-btn{
+    width: 630px;
+    margin: 0 auto;
+}
+.content .content-left .left-btn li{
+    width: 210px;
+}
+.content .content-left .left-btn li a{
+    display: block;
+    width: 154px;
+    height: 74px;
+    border: 1px solid #ffe4bd;
+    line-height: 74px;
+    text-align: center;
+    margin: 0 auto;
+    background: #fff5e5;
+    font-size: 18px;
+    color: #cc9b4b;
+    border-radius: 5px;
+}
+
+.content .content-right{
+    width: 205px;
+    border-left: 1px solid #e6e6e6;
+    min-height: 328px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+.content .content-right h4{
+    font-size: 14px;
+    color: #333;
+    line-height: 48px;
+    text-align: left;
+    border-bottom: 1px solid #e6e6e6;
+}
+.content .content-right .product-list li{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e6e6e6;
+}
+.content .content-right .product-list li .right-product{
+    display: block;
+}
+.content .content-right .product-list li .right-product .img-box{
+    border: 1px solid #e6e6e6;
+    padding: 2px;
+}
+.content .content-right .product-list li .right-product .img-box img{
+    width: 48px;
+    height: 48px;
+}
+.content .content-right .product-list li .right-product .txt-box{
+    width: 144px;
+    font-size: 12px;
+    margin-left: 7px;
+    overflow: hidden;
+}
+.content .content-right .product-list li .right-product .txt-box .txt-title{
+    font-size: 12px;
+    color: #2a6dbb;
+    line-height: 20px;
+    height: 20px;
+    overflow: hidden;
+}
+.content .content-right .product-list li .right-product .txt-box .txt-sku {
+    font-size: 12px;
+    color: #333;
+    line-height: 36px;
+    height: 36px;
+    overflow: hidden;
+}
+.content .content-right .order-content{
+    padding-top: 10px;
+}
+.content .content-right .order-content .order-number label{
+    color: #666;
+    font-size: 12px;
+    line-height: 24px;
+}
+.content .content-right .order-content .order-number span{
+    color: #2a6dbb;
+    font-size: 12px;
+    line-height: 24px;
+}
+.content .content-right .order-content .order-price label{
+    color: #666;
+    font-size: 12px;
+    line-height: 24px;
+}
+.content .content-right .order-content .order-price label i{
+    font-style: normal;
+    margin-right: 22px;
+}
+.content .content-right .order-content .order-price span{
+    color: #f05353;
+    font-size: 12px;
+    line-height: 24px;
+}
+.content .content-right .order-content .order-price span mark{
+    color: #1c1c1c;
+    font-size: 12px;
+    line-height: 24px;
+    background: transparent;
+}

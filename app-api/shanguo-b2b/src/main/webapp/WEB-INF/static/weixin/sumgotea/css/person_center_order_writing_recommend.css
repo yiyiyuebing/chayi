@@ -1,0 +1,204 @@
+body {
+  background: #f3f2f5;
+}
+.product {
+  background: #fff;
+  padding-left: 0.6rem;
+  margin-top: 0.6rem;
+  padding-top: 0.4rem;
+  border-bottom: 1px solid #f3f2f5;
+  padding-bottom: 0.6rem;
+}
+.product .product-img {
+  width: 3.64rem;
+  height: 3.32rem;
+  margin-right: 0.8rem;
+}
+.product .product-img img {
+  width: 100%;
+  height: 100%;
+}
+.product .product-txt {
+  width: 9.6rem;
+}
+.product .product-txt .name {
+  width: 6.68rem;
+  font-size: 0.52rem;
+  font-weight: 600;
+  line-height: 0.72rem;
+  height: 1.44rem;
+  overflow: hidden;
+  margin-bottom: 0.8rem;
+  color: #1c1c1c;
+}
+.product .product-txt .recommend label {
+  font-size: 0.56rem;
+  color: #1c1c1c;
+  font-weight: 600;
+  line-height: 0.88rem;
+}
+.product .product-txt .recommend .star-group {
+  width: 4.6rem;
+  margin-right: 0.2rem;
+}
+.product .product-txt .recommend .star-group li {
+  width: 0.72rem;
+  height: 0.88rem;
+  background: url(../images/g_icon_star_grey.png) no-repeat center;
+  background-size: 0.72rem 0.72rem;
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+}
+.product .product-txt .recommend .star-group .active {
+  background: url(../images/g_icon_star_yellow.png) no-repeat center;
+  background-size: 0.72rem 0.72rem;
+}
+.product .product-txt .recommend .star-number {
+  font-size: 0.56rem;
+  color: #666;
+  font-weight: 600;
+  line-height: 0.88rem;
+  margin-right: 0.6rem;
+}
+.write {
+  background: #fff;
+  padding-left: 0.8rem;
+  padding-right: 0.48rem;
+}
+.write h5 {
+  font-size: 0.56rem;
+  line-height: 1.32rem;
+  text-align: left;
+  color: #1c1c1c;
+  margin: 0;
+}
+.write .write-textarea {
+  margin-bottom: 0.2rem;
+}
+.write .write-textarea textarea {
+  width: 100%;
+  font-size: 0.56rem;
+  line-height: 1rem;
+  text-align: left;
+  resize: none;
+  outline: none;
+  color: #666;
+  border: none;
+  overflow-y: visible;
+  word-break: break-all;
+  padding: 0;
+}
+.write .write-img img {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #dbdbdb;
+  margin-right: 0.2rem;
+  float: left;
+  display: inline-block;
+  margin-bottom: 0.2rem;
+}
+.write .write-img #iconCamera {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #dbdbdb;
+  background: url(../images/g_icon_camera.png) no-repeat center;
+  background-size: 1.08rem 0.92rem;
+  border-radius: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+.anonymity {
+  padding-right: 0.48rem;
+}
+.anonymity .anonymity-box {
+  display: inline-block;
+  font-size: 0.56rem;
+  color: #666;
+  line-height: 1.68rem;
+}
+.anonymity .anonymity-box input {
+  display: inline-block;
+}
+.anonymity .anonymity-box i {
+  display: inline-block;
+  width: 0.68rem;
+  height: 0.68rem;
+  border-radius: 50%;
+  border: 1px solid #dbdbdb;
+  vertical-align: sub;
+  margin-right: 0.26rem;
+}
+.anonymity .anonymity-box .active {
+  border: none;
+  background: url(../images/g_icon_checkbox_checked.png) no-repeat center;
+  background-size: 0.68rem 0.68rem;
+}
+.submit {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.submit a {
+  width: 100%;
+  border: none;
+  font-size: 0.6rem;
+  color: #fff;
+  text-align: center;
+  line-height: 1.76rem;
+  background: #cc9b4b;
+  outline: none;
+  display: block;
+}
+.popup {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  display: none;
+}
+.popup .popup-box {
+  width: 100%;
+  height: 5.28rem;
+  background: #fff;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding-top: 2.4rem;
+  padding-bottom: 0.92rem;
+}
+.popup .popup-box .popup-group {
+  width: 50%;
+}
+.popup .popup-box .popup-group label {
+  margin-left: 1.2rem;
+  margin-right: 1.2rem;
+  width: 2.8rem;
+}
+.popup .popup-box .popup-group label input {
+  display: none;
+}
+.popup .popup-box .popup-group label .icon-camera {
+  width: 2.8rem;
+  height: 2.8rem;
+  background: url(../images/g_icon_camera_blue.png) no-repeat center;
+  background-size: 2.8rem 2.8rem;
+  display: inline-block;
+}
+.popup .popup-box .popup-group label .icon-album {
+  width: 2.8rem;
+  height: 2.8rem;
+  background: url(../images/g_icon_photo_album.png) no-repeat center;
+  background-size: 2.8rem 2.8rem;
+  display: inline-block;
+}
+.popup .popup-box .popup-group label span {
+  display: block;
+  font-size: 0.68rem;
+  line-height: 2.48rem;
+  text-align: center;
+  color: #000;
+  font-weight: bold;
+}

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: pub.makers:distributedLock:0.0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/pub/makers/distributedLock/0.0.1-SNAPSHOT/distributedLock-0.0.1-20170418.125247-8.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/pub/makers/distributedLock/0.0.1-SNAPSHOT/distributedLock-0.0.1-20170418.125247-8-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/pub/makers/distributedLock/0.0.1-SNAPSHOT/distributedLock-0.0.1-20170418.125247-8-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yaoming.module.security.dao.SecurityRoleExtendMapper" >
+
+	<select id="selectAll" resultMap="com.yaoming.module.security.dao.base.SecurityRoleMapper.BaseResultMap">
+		select * from _security_role order by id asc;
+	</select>
+	
+	<select id="selectByResourceId" resultMap="com.yaoming.module.security.dao.base.SecurityRoleMapper.BaseResultMap">
+		select b.* from _security_role_function a left join _security_role b on a.role_id=b.id
+		where a.function_id=(select function_id from _security_function_resource_pattern where id=#{resourceId})
+	</select>
+	
+	<select id="selectByUserId" resultMap="com.yaoming.module.security.dao.base.SecurityRoleMapper.BaseResultMap">
+		select b.* from _security_role_user a left join _security_role b on a.role_id=b.id where a.user_id=#{userId}
+	</select>
+	
+	<insert id="replace" parameterType="com.yaoming.module.security.dao.base.po.SecurityRole" >
+	  replace into _security_role (id, `name`, note
+	    )
+	  values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}
+	    )
+	</insert>
+</mapper>

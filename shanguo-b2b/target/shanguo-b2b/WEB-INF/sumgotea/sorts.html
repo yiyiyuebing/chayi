@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sorts.css">
+    <title>分类</title>
+</head>
+<body id="sorts" class="bg-white sorts">
+<div id="sortsCon" class="op0">
+   <div class="dis-tabel w100">
+	   	<div class="left">
+	       <div class="sort-left" style="width: 100%">
+	            <ul>
+	                <template v-for="one in classifyList">
+	                    <li class="one" :class="[,{'selectOne': one.id === oneClassify.id }]" @click="clickOne(one)">{{one.name}}</li>
+	                </template>
+	            </ul>
+	       </div> 
+	    </div>
+	    <div class="content" id="wrapper" style="-webkit-overflow-scrolling: touch;height: 90vh;">
+	       <div class="dis-cell sroller content-right" style="display: block;min-height: 100%;">
+	           <div id="type1" class="sort2" style="width: 100%;padding-right: 0;">
+                   <template v-if="oneClassify">
+                       <template v-for="two in oneClassify.children">
+                        <div class="sort1">
+                                <div class="classify-header">
+                                    <h6 style="color: #333;">{{two.name}}</h6>
+                                    <a class="classify-link-btn" v-on:click="linkProductList('classifyIds',two.id)">全部 ></a>
+                                </div>
+                                <ul class="classify-body clearfix">
+                                    <template v-if="two.children.length > 0" v-for="three in two.children">
+                                        <li v-on:click="linkProductList('classifyIds',three.id)" class="fl">
+                                            <div id="brand{{three.id}}" class="brand-con"><img class="op8" :src="three.imgUrl || './img/icons/gongg.png'" alt=""></div>
+                                            <div class="product-name">{{three.name}}</div>
+                                        </li>
+                                    </template>
+                                </ul>
+                        </div>
+                       </template>
+                       <template v-if="oneClassify.brandList && oneClassify.brandList.length > 0">
+                           <div class="sort1">
+                               <div class="classify-header">
+                                   <h6>品牌</h6>
+                               </div>
+                               <ul class="classify-body clearfix">
+                                   <template v-for="brand in oneClassify.brandList">
+                                       <li v-on:click="linkProductList('brandIds',brand.id)" class="fl">
+                                           <div class="brand-con"><img class="op8" :src="brand.logo || './img/icons/gongg.png'" alt=""></div>
+                                           <div class="product-name">{{brand.name}}</div>
+                                       </li>
+                                   </template>
+                               </ul>
+                           </div>
+                       </template>
+                   </template>
+                </div>
+           </div>
+   </div>
+   </div>
+  <!-- <div class="br4"></div>-->
+    <div class="footer-nav clearfix">
+        <a href="index.html" class="index fl">
+            <i></i>
+            <span>首页</span>
+        </a>
+        <a href="javascript:;" class="category active fl">
+            <i></i>
+            <span>分类</span>
+        </a>
+        <a href="javascript:;" v-on:click="personCenterLink('cart.html')"  class="shopping-cart fl">
+            <i>
+                <sup v-if="cartCount">{{cartCount}}</sup>
+            </i>
+            <span>购物车</span>
+        </a>
+        <a href="javascript:;"  v-on:click="personCenterLink('person_center_index.html')" class="person-center fl">
+            <i></i>
+            <span>个人中心</span>
+        </a>
+    </div>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/iscroll.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    Util.common.addloadingAnimate();
+
+    $(function () {
+        /*初始化位置*/
+        window.localStorage.setItem("todayScroll",0);
+        window.localStorage.setItem("todayStatus","true");
+        window.localStorage.setItem("todayPrice",null);
+        window.localStorage.setItem("todaySaleNum",null);
+
+        stortsData.loadlist();
+        var isLogin = localStorage.getItem('token')
+        if (isLogin) {
+            stortsData.getCartCount();
+        }
+        //                微信分享
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+    });
+    /*Util.scrollMar.setPos("sorts", 0, 1); */
+    var stortsData=new Vue({
+        el: '#sorts',
+        data: {
+            oneActive:'',
+            oneName:'',
+            sortType: [],
+            useType:[],
+            brandType:[],
+            secondTit:[],
+            thirdTit:[],
+            param:{
+                startPrice:'',
+                endPrice:'',
+                brandId:'',
+                use:'',
+                oneType:'',
+                twoType:'',
+                threeType:''
+            },
+            cartCount:'',
+            //分类列表
+            classifyList: [],
+            //一级分类
+            oneClassify: {},
+            //
+
+        },
+        computed: {
+
+        },
+        methods: {
+            /*是否登录  跳转*/
+            personCenterLink:function(url){
+                var login = localStorage.getItem('token');
+                if(!login || login == null || login == ''){
+                    window.location.href = 'login.html?url=' + url;
+                }else{
+                    window.location.href = url;
+                }
+            },
+//            加载一级菜单列表
+            loadlist:function() {
+                let url = 'weixin/purchaseGoods/getClassifyList'
+                Util.common.b2bPostCallback(url, {}, function(data) {
+                    if (data.success && data.data) {
+                        let dataInfo = data.data
+                        if (dataInfo.classifyList && dataInfo.classifyList.length>0) {
+                            stortsData.$set('classifyList', dataInfo.classifyList)
+                            stortsData.$set('oneClassify', dataInfo.classifyList[0])
+                            Util.common.removeloadingAnimate('sortsCon')
+                        }
+                    } else {
+                        new Toast({context:$('body'),message: data.msg}).show();
+                    }
+                })
+            },
+            /*跳转到列表页*/
+            linkProductList:function(paramsKey,paramsValue){
+                window.location.href = "today.html?" + paramsKey + "=" + paramsValue;
+            },
+            getCartCount: function () {
+//            获取购物车内商品数
+
+                var url ="weixin/cart/getCartCount";
+                Util.common.b2bPostCallback(url, {}, function (data) {
+                    if(data.success && data.data && data.data.num) {
+                        var count = data.data.num;
+                        if (count*1 > 100) {
+                            count = '99+';
+                        }
+                        stortsData.$set('cartCount',count);
+                    } else {
+                    }
+                });
+            },
+            gotoIndex:function () {
+                window.location.href="index.html?storeId="+sessionStorage.getItem('shopId')+"&userId="+sessionStorage.getItem('userid');
+            },
+            clickOne:function (one) {
+                console.log(one)
+                stortsData.$set('oneClassify', one)
+                $("#wrapper").scrollTop(0);
+            },
+            clickTwo:function (id,type) {
+                if(type==0){
+                    stortsData.$set('param.twoType',id);
+                    $(".two").removeClass('btn-active');
+                    $("#two"+id).addClass('btn-active');
+                    stortsData.submitCondit();
+                }else {
+                    if ($("#two" + id).hasClass('btn-active')) {
+                        $("#two" + id).removeClass('btn-active');
+                        $(".three-con").hide();
+                        stortsData.$set('param.twoType', '');
+                    } else {
+                        $(".two").removeClass('btn-active');
+                        $("#two" + id).addClass('btn-active');
+                        $(".three-con").hide();
+                        $("#se" + id).show();
+                        stortsData.$set('param.twoType', id);
+                    }
+                }
+
+
+
+            },
+            clickThree:function (id,id2) {
+                stortsData.$set('param.threeType',id);
+                $(".three"+id2).css('background','#f2f2f2');
+                $(".three"+id2).css('color','#666');
+                $("#three"+id).css('background','#adadad');
+                $("#three"+id).css('color','#fff');
+                stortsData.submitCondit();
+            },
+            clickUse:function (id) {
+                stortsData.$set('param.use',id);
+                $(".use").removeClass('btn-active');
+                $("#use"+id).addClass('btn-active');
+                stortsData.submitCondit();
+            },
+            clickBrand:function (id) {
+                stortsData.$set('param.brandId',id);
+                $(".brand-con").removeClass('btn-active');
+                $("#brand"+id).addClass('btn-active');
+                stortsData.submitCondit();
+            },
+            submitCondit:function () {
+                console.log(this.param);
+//                sortType=1分类页面跳转列表
+                document.location.href = "today.html?sortType=1&sortInfo=" + JSON.stringify(this.param)+'&title='+stortsData.oneName+'&classify='+this.param.oneType;
+
+            }
+        }
+    });
+
+</script>
+</html>

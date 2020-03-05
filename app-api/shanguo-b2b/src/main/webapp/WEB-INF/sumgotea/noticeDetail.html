@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>公告详情</title>
+    <style>
+        .article-body {
+            line-height: 28px;
+            padding: 5px 15px;
+            height: auto;
+        }
+        .dateCreated {
+            padding: 15px;
+        }
+    </style>
+</head>
+<body id="noticeDetail" class="bg-white">
+    <div class="noticeTitle ta-c">{{notice.title}}</div>
+	<div class="article-body" v-html="notice.content" ></div>
+    <div class="ta-r dateCreated">{{notice.time}}</div>
+</body>
+
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+
+    $(function () {
+        noticeData.loadData();
+
+        //                微信分享
+        //Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+
+    })
+    var start = 0;
+    var noticeData=new Vue({
+        el:'#noticeDetail',
+        data:{
+            userId:sessionStorage.getItem("userid"),
+            notice: '',
+        },
+        computed:{
+
+        },
+        methods:{
+            
+            loadData:function () {
+//                	加载公告轮播
+                var url = "weixin/markting/getById";
+                var param={"toutiaoId":Util.common.getParameter('toutiaoId')};
+                Util.common.b2bPostCallback(url , param , function(data){
+                    console.log(data)
+                    if (data.success) {
+                        data.data.toutiao.time = timerFun(data.data.toutiao.dateCreated);
+                        noticeData.$set("notice",data.data.toutiao);
+                    }
+                });
+                
+            },
+
+        }
+    });
+    var timerFun = function(time) {
+        var Createtime = time;
+        var current=new Date().getTime();
+        var newCurrent = new Date(current);
+        if (Createtime>current) {
+            var newCurrent = new Date(current);
+            var m = newCurrent.getMonth()+1;
+            var d = newCurrent.getDate();
+            var h = newCurrent.getHours();
+            var mm = newCurrent.getMinutes();
+            return add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm);
+        } else {
+            var d = Math.floor((current-Createtime)/1000/60/60/24);
+            if (d>365) {
+                var newCurrent = new Date(Createtime);
+                var y = newCurrent.getFullYear();
+                var m = newCurrent.getMonth()+1;
+                var d = newCurrent.getDate();
+                return y+'-'+add0(m)+'-'+add0(d);
+            } else {
+                var newCurrent = new Date(Createtime);
+                var m = newCurrent.getMonth()+1;
+                var d = newCurrent.getDate();
+                var h = newCurrent.getHours();
+                var mm = newCurrent.getMinutes();
+                return add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm);
+            }
+        }
+    }
+    var add0 =function(m){return m<10?'0'+m:m }
+
+
+</script>
+</html>

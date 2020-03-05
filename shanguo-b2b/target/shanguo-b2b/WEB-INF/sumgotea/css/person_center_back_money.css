@@ -1,0 +1,308 @@
+body {
+  background: #f3f2f5;
+}
+.product-wrap {
+  background: #fff;
+  padding-left: 0.48rem;
+  padding-bottom: 0.28rem;
+  margin-bottom: 0.4rem;
+}
+.product-wrap h5 {
+  font-size: 0.52rem;
+  color: #1a1a1a;
+  text-align: left;
+  line-height: 1.32rem;
+  margin: 0;
+  margin-bottom: 0.64rem;
+  padding: 0;
+}
+.product-wrap .product .product-img {
+  width: 2.76rem;
+  height: 2.44rem;
+  margin-top: 0.26rem;
+}
+.product-wrap .product .product-img img {
+  width: 100%;
+  height: 100%;
+}
+.product-wrap .product .product-txt {
+  width: 9.28rem;
+  margin-left: 0.4rem;
+  font-size: 0.48rem;
+  color: #1c1c1c;
+  text-align: left;
+  line-height: 0.88rem;
+}
+.operation .operation-group {
+  background: #fff;
+  margin-bottom: 0.4rem;
+}
+.operation .operation-group a {
+  display: block;
+  padding-left: 0.48rem;
+  padding-right: 0.48rem;
+  position: relative;
+}
+.operation .operation-group a label {
+  font-size: 0.52rem;
+  line-height: 1.6rem;
+  color: #1a1a1a;
+}
+.operation .operation-group a label span {
+  color: #f05353;
+}
+.operation .operation-group a input {
+  width: 10.68rem;
+  font-size: 0.52rem;
+  line-height: 1.6rem;
+  color: #666;
+  background: #fff;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+.operation .operation-group a .icon-right {
+  display: block;
+  width: 0.24rem;
+  height: 0.4rem;
+  background: url(../images/g_icon_right_gray.png) no-repeat center;
+  background-size: contain;
+  position: absolute;
+  right: 0.48rem;
+  top: 0.6rem;
+}
+.operation .operation-group a textarea {
+  border: none;
+  margin: 0;
+  width: 10.92rem;
+  font-size: 0.52rem;
+  resize: none;
+  color: #666;
+  line-height: 0.88rem;
+  outline: none;
+  margin-top: 0.32rem;
+  overflow: visible;
+  padding: 0;
+  word-break: break-all;
+  margin-left: 0.2rem;
+}
+.operation .operation-group .tips{
+  font-size: 0.4rem;
+  background: #f3f2f5;
+  color: #999;
+  line-height: 1rem;
+  margin: 0;
+  padding: 0;
+  margin-left: 0.48rem;
+}
+.certificate {
+  background: #fff;
+  padding-left: 0.48rem;
+  padding-right: 0.48rem;
+  padding-bottom: 0.6rem;
+}
+.certificate h4 {
+  margin: 0;
+  font-size: 0.52rem;
+  line-height: 1.56rem;
+  color: #1c1c1c;
+  text-align: left;
+  font-weight: 600;
+}
+.certificate .certificate-img img {
+  float: left;
+  margin-bottom: 0.2rem;
+  width: 2.92rem;
+  height: 2.92rem;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+}
+.certificate .certificate-img .camera {
+  width: 2.88rem;
+  height: 2.88rem;
+  border: 1px dashed #dbdbdb;
+}
+.certificate .certificate-img .camera .camera-icon i {
+  display: block;
+  height: 0.76rem;
+  background: url(../images/g_icon_camera.png) no-repeat center;
+  background-size: 0.92rem 0.72rem;
+  margin-top: 0.28rem;
+  margin-bottom: 0.2rem;
+}
+.certificate .certificate-img .camera .camera-icon span {
+  font-size: 0.4rem;
+  display: block;
+  color: #999;
+  text-align: center;
+  letter-spacing: -1px;
+  margin: 0;
+  padding: 0;
+  line-height: 0.56rem;
+}
+.submit {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.submit a {
+  display: block;
+  font-size: 0.6rem;
+  background: #cc9b4b;
+  text-align: center;
+  color: #fff;
+  line-height: 1.76rem;
+  width: 100%;
+}
+.popup-input {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: none;
+}
+.popup-input .input-wrap {
+  position: absolute;
+  bottom: 0.3rem;
+  width: 14rem;
+  left: 0.4rem;
+}
+.popup-input .input-wrap .input-body {
+  background: #fff;
+  border-radius: 0.2rem;
+  margin-bottom: 0.4rem;
+}
+.popup-input .input-wrap .input-body li {
+  color: #1a1a1a;
+  text-align: center;
+  font-size: 0.56rem;
+  line-height: 1.76rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+.popup-input .input-wrap .input-body li a{
+  color: #1a1a1a;
+  text-align: center;
+  font-size: 0.56rem;
+  line-height: 1.76rem;
+  display:block;
+}
+.popup-input .input-wrap .input-body li:last-of-type {
+  border-bottom: none;
+}
+.popup-input .input-wrap .input-footer {
+  width: 100%;
+}
+.popup-input .input-wrap .input-footer a {
+  display: block;
+  width: 100%;
+  background: #fff;
+  color: #1a1a1a;
+  text-align: center;
+  font-size: 0.56rem;
+  line-height: 1.76rem;
+  border-radius: 0.2rem;
+}
+.popup-input-another {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.popup-input-another .popup-wrap {
+  width: 100%;
+  background: #fff;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+.popup-input-another .popup-wrap h5 {
+  margin: 0;
+  padding: 0;
+  font-size: 0.64rem;
+  line-height: 2.24rem;
+  color: #1a1a1a;
+  text-align: center;
+  font-weight: 500;
+}
+.popup-input-another .popup-wrap .input-body {
+  margin-left: 0.48rem;
+  margin-bottom: 0.52rem;
+}
+.popup-input-another .popup-wrap .input-body li {
+  border-bottom: 1px solid #dbdbdb;
+  font-size: 0.64rem;
+  line-height: 2rem;
+  color: #1a1a1a;
+}
+.popup-input-another .popup-wrap .input-body li i {
+  width: 0.68rem;
+  height: 0.68rem;
+  border-radius: 50%;
+  border: 1px solid #dbdbdb;
+  margin-right: 0.48rem;
+  margin-top: 0.66rem;
+  box-sizing: border-box;
+}
+.popup-input-another .popup-wrap .input-body .active i {
+  background: url(../images/g_icon_checkbox_checked.png) no-repeat center;
+  background-size: 0.68rem 0.68rem;
+  border: none;
+}
+.popup-input-another .popup-wrap .input-footer {
+  width: 100%;
+}
+.popup-input-another .popup-wrap .input-footer a {
+  display: block;
+  width: 100%;
+  background: #cc9b4b;
+  color: #fff;
+  font-size: 0.6rem;
+  line-height: 1.78rem;
+  text-align: center;
+}
+
+.popup-submit{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  bottom:0;
+  display: none;
+}
+.popup-submit .popup-wrap{
+  width: 4.88rem;
+  height: 4.84rem;
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  margin-left: -2.44rem;
+  margin-bottom: -2.42rem;
+  background: rgba(0,0,0,0.6);
+  border-radius: 0.2rem;
+}
+.popup-submit .popup-wrap i{
+  display: block;
+  width: 100%;
+  height: 1.08rem;
+  background: url(../images/g_icon_link_tips.png) no-repeat center;
+  background-size: 1.06rem 1.06rem;
+  margin-top: 1rem;
+  margin-bottom: 0.6rem;
+}
+.popup-submit .popup-wrap p{
+  font-size: 0.48rem;
+  line-height: 0.65rem;
+  color: #fff;
+  text-align: center;
+  margin: 0;
+}
+#backMoney input{
+  color: #f05353;
+}

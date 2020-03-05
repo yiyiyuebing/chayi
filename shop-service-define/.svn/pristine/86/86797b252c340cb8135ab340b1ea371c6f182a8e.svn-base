@@ -1,0 +1,18 @@
+package pub.makers.shop.order.enums;
+
+/**
+ * Created by kok on 2017/5/18.
+ */
+public enum IndentCancelType {
+    user("用户取消"), timeout("超时取消");
+
+    private String desc;
+
+    private IndentCancelType(String desc) {
+        this.desc = desc;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+}

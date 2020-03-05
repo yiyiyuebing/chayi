@@ -1,0 +1,45 @@
+/**
+ *@Copyright:Copyright (c) 2008 - 2100
+ *@Company:SJS
+ */
+package pub.makers.shop.item.vo;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ *@Title: ImageVo
+ *@Description:
+ *@Author:Administrator
+ *@Since:2016年3月25日
+ *@Version:1.1.0
+ */
+public class EvaluationImageVo {
+private Logger logger = LoggerFactory.getLogger(EvaluationImageVo.class);
+	
+    private Long id;
+
+
+    private String url;
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public String getUrl() {
+		return url;
+	}
+
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+}

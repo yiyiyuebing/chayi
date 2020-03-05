@@ -1,0 +1,73 @@
+package pub.makers.shop.order.enums;
+
+import org.apache.commons.lang.StringUtils;
+
+/**
+ * Created by dy on 2017/5/11.
+ */
+public enum IndentBuyType {
+    送人("s", "s"), 自购("z", "z");
+
+    private String name;
+    private String dbData;
+
+
+    private IndentBuyType(String name, String dbData) {
+        this.name = name;
+        this.dbData = dbData;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDbData() {
+        return dbData;
+    }
+
+    public void setDbData(String dbData) {
+        this.dbData = dbData;
+    }
+
+    @Override
+    public String toString() {
+        return this.dbData;
+    }
+
+    public static String getDbDataByName(String name) {
+        for (IndentBuyType c : IndentBuyType.values()) {
+            if (c.getName().equals(name)) {
+                return c.dbData;
+            }
+        }
+        return "";
+    }
+
+    public static String getTextByDbData(String buyType) {
+        String result = "";
+        if(StringUtils.isNotBlank(buyType)){
+            for (IndentBuyType c : IndentBuyType.values()) {
+                if (c.getDbData().equals(buyType)) {
+                    return c.name();
+                }
+            }
+        }
+        return result;
+    }
+
+    public static IndentBuyType getStatusByDbData(String buyType) {
+        if(StringUtils.isNotBlank(buyType)){
+            for (IndentBuyType c : IndentBuyType.values()) {
+                if (c.getDbData().equals(buyType)) {
+                    return c;
+                }
+            }
+        }
+        return null;
+    }
+}

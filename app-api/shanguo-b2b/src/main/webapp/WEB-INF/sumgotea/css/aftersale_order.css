@@ -1,0 +1,33 @@
+.mycart .part3-1 h4{
+    overflow: hidden;
+    margin-bottom: 0.7rem;
+}
+.saleafter-status {
+    width: 50px;
+}
+.mycart {
+    margin-top: 0 !important;
+}
+.flow-status{
+    padding: 0.5rem 0.5rem 0;
+    font-size: 0.875rem;
+    color: #000000;
+    background: #fff;
+}
+.flow-item {
+    margin: 0 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #d7d7d7;
+}
+.flow-icon {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.2rem;
+    vertical-align: bottom;
+    background: url(../img/icons/flow-icon.png) center center no-repeat;
+    background-size: 1.2rem;
+}
+.see-flow-btn {
+    color: #f05353 !important;
+    border: 1px solid #f05353 !important;
+}

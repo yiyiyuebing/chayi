@@ -1,0 +1,20 @@
+package pub.makers.shop.store.service;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import pub.makers.shop.store.entity.SalesReturnReason;
+
+/**
+ * Created by dy on 2017/6/24.
+ */
+@Service(version = "1.0.0")
+public class SalesReturnReasonBizServiceImpl implements SalesReturnReasonBizService {
+
+    @Autowired
+    private SalesReturnReasonService salesReturnReasonService;
+
+    @Override
+    public SalesReturnReason getById(String id) {
+        return salesReturnReasonService.getById(id);
+    }
+}

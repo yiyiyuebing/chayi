@@ -1,0 +1,354 @@
+.trading-record-header{
+    border: 1px solid #f0f0f0;
+}
+.password-header{
+    width: 1198px;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+.password-header .nav-logo{
+    width: 201px;
+    height: 62px;
+    display: inline-block;
+}
+.password-header .nav-logo img{
+    width: 201px;
+    height: 62px;
+}
+.password-header .trading-record-nav{
+    margin-left: 60px;
+}
+.password-header .trading-record-nav .record-index{
+    font-size: 16px;
+    color: #1a1a1a;
+    line-height: 30px;
+    margin-right: 30px;
+}
+.password-header .trading-record-nav{
+    padding-top: 30px;
+    padding-bottom: 24px;
+}
+.password-header .trading-record-nav .record-message{
+    font-size: 16px;
+    color: #1a1a1a;
+    line-height: 30px;
+    position: relative;
+}
+.password-header .trading-record-nav .record-message a{
+    font-size: 16px;
+    color: #1a1a1a;
+    line-height: 30px;
+}
+.password-header .trading-record-nav .record-message .dot{
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f05353;
+    position: absolute;
+    top:5px;
+    right: -1px;
+}
+.trading-record-header .password-header .nav-input {
+    padding-top: 30px;
+    margin-left: 80px;
+}
+.trading-record-header .password-header .nav-input input{
+    outline: none;
+    width: 242px;
+    height: 30px;
+    font-size: 14px;
+    text-align: left;
+    padding-left: 8px;
+    border: 1px solid #dbdbdb;
+    margin: 0;
+}
+.trading-record-header .password-header .nav-input .nav-search{
+    border: 1px solid #dbdbdb;
+    border-left: none;
+    font-size: 16px;
+    color: #666;
+    background: #f5f5f5;
+    width: 70px;
+    text-align: center;
+    line-height: 32px;
+    cursor: pointer;
+}
+.trading-record-search{
+    width: 990px;
+    margin: 0 auto;
+    padding: 10px 35px 50px 35px;
+    background: #f4f5fa;
+}
+.trading-record-search h4{
+    font-size: 18px;
+    text-align: left;
+    line-height: 42px;
+    color: #666;
+    font-weight: normal;
+}
+.trading-record-search .trading-date{
+    border-bottom: 1px dashed #dbdbdb;
+    border-top: 1px solid #dbdbdb;
+    padding: 15px 0;
+}
+.trading-record-search .trading-date label{
+    color: #1a1a1a;
+    font-size: 12px;
+    font-weight: bold;
+    width: 50px;
+    padding-left: 3px;
+    text-align: left;
+    line-height: 30px;
+}
+.trading-record-search .trading-date input{
+    width: 130px;
+    height: 30px;
+    font-size: 12px;
+    outline: none;
+    border: 1px solid #dbdbdb;
+    padding-left: 10px;
+}
+.trading-record-search .trading-date i{
+    width: 24px;
+    text-align: center;
+    color: #dbdbdb;
+    line-height: 30px;
+}
+.trading-record-search .trading-date a{
+    color: #2a6dbb;
+    line-height: 30px;
+    font-size: 12px;
+    margin-left: 14px;
+}
+.trading-record-search .trading-category{
+    padding-top: 10px;
+}
+.trading-record-search .trading-category span{
+    color: #1a1a1a;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 3px;
+    text-align: left;
+    line-height: 30px;
+}
+.trading-category .radio-group{
+    margin-top: 3px;
+    padding-left: 20px;
+    cursor: pointer;
+}
+.trading-category .radio-group i{
+    height: 18px;
+    display: inline-block;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #1a1a1a;
+    line-height: 20px;
+    padding-left: 9px;
+    padding-right: 9px;
+    font-style: normal;
+}
+.trading-category .radio-group input{
+    display: none;
+}
+.trading-category .radio-group-active i{
+    background: #cc9b4b!important;
+    color: #fff!important;
+}
+.trading-list{
+    width: 1060px;
+    margin: 0 auto;
+    padding-top: 25px;
+}
+.trading-list table{
+    width: 100%;
+    text-align: left;
+}
+.trading-list table thead tr th{
+    font-size: 12px;
+    line-height: 40px;
+    color: #1a1a1a;
+    font-weight: normal;
+    border-bottom: 1px solid #dbdbdb;
+}
+.trading-list table thead tr .th01{
+    width: 114px;
+    text-align: center;
+}
+.trading-list table thead tr .th02{
+    width: 132px;
+    text-align: center;
+}
+.trading-list table thead tr .th03{
+    width: 370px;
+}
+.trading-list table thead tr .th04{
+    width: 173px;
+}
+.trading-list table thead tr .th05{
+    width: 164px;
+}
+.trading-list table thead tr .th06{
+    width: 120px;
+    text-align: center;
+}
+.trading-list table tbody tr td{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.trading-list table tbody tr td{
+    font-size: 14px;
+    color: #1a1a1a;
+}
+.trading-list table tbody tr td span{
+    display: block;
+    font-size: 12px;
+    color: #666;
+    line-height: 24px;
+}
+.trading-list table tbody tr td{
+    border-bottom: 1px solid #dbdbdb;
+}
+.trading-list table tbody tr td .product-title{
+    width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.trading-list table tbody tr td .product-count{
+    width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.trading-list table tbody tr td img{
+    width: 54px;
+    height: 26px;
+    margin: 0 auto;
+}
+.trading-list table tbody tr .time{
+    text-align: center;
+}
+.trading-list table tbody tr .time .today{
+    color: #1a1a1a;
+}
+.trading-list table tbody tr td a{
+    width: 72px;
+    height: 30px;
+    color: #fff;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    background: #2a6dbb;
+    line-height: 30px;
+    border-radius: 3px;
+}
+
+.trading-paging{
+    width: 1060px;
+    margin: 0 auto;
+    padding-top: 40px;
+    padding-bottom: 80px;
+}
+.trading-paging .product-list-paging a{
+    font-size: 14px;
+    line-height: 36px;
+    color: #333;
+    padding-left: 14px;
+    padding-right: 14px;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    margin-right: 8px;
+}
+.trading-paging .product-list-paging .page-number.disable{
+    border:none;
+    color: #cc9b4b;
+    cursor: not-allowed;
+    background: #fff;
+}
+.trading-paging .product-list-paging .page-number{
+    background: #f5f5f5;
+}
+.trading-paging .product-list-paging .prev i{
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background-image: url(../images/icon_left_gray.png);
+    background-repeat: no-repeat;
+    background-size: 8px 14px;
+    background-position: center;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+.trading-paging.product-list-paging .prev.disable{
+    color: #dbdbdb;
+    cursor: not-allowed;
+}
+.trading-paging .product-list-paging .prev.disable i{
+    background-image:url(../images/icon_left_gray_disable.png) ;
+}
+.trading-paging .product-list-paging .next i{
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background-image: url(../images/icon_right_gray.png);
+    background-repeat: no-repeat;
+    background-size: 8px 14px;
+    background-position: center;
+    vertical-align: sub;
+    margin-left:6px;
+}
+.trading-paging .product-list-paging .next.disable{
+    color: #dbdbdb;
+    cursor: not-allowed;
+}
+.trading-paging .product-list-paging .next.disable i{
+    background-image:url(../images/icon_right_gray_disable.png) ;
+}
+.trading-paging .product-list-paging .dot{
+    line-height: 28px;
+    margin-right: 14px;
+    margin-left: 8px;
+}
+.trading-paging .product-list-paging .page-count{
+    font-size: 14px;
+    color: #333;
+    line-height: 36px;
+    margin-left: 60px;
+    margin-right: 10px;
+}
+.trading-paging .product-list-paging form .page-jump{
+    font-size: 14px;
+    color: #333;
+    line-height: 36px;
+    margin-left: 6px;
+    margin-right: 10px;
+}
+.trading-paging .product-list-paging form .page-jump .page-input{
+    border:1px solid #dbdbdb;
+    border-radius: 2px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 22px;
+    color: #333;
+    width: 34px;
+    height: 32px;
+    outline: none;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.trading-paging .product-list-paging form .page-submit{
+    border:1px solid #dbdbdb;
+    border-radius: 2px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 22px;
+    color: #333;
+    padding-left: 6px;
+    padding-right: 6px;
+    height: 38px;
+    outline: none;
+    background: #f5f5f5;
+    cursor: pointer;
+}

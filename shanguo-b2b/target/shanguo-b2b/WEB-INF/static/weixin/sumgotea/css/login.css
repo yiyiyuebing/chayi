@@ -1,0 +1,82 @@
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+.wrap{
+    width: 94%;
+    margin: 0 auto;
+}
+.wrap .logo{
+    padding: 3rem 0;
+}
+.wrap .logo a{
+    display: block;
+    height: 3rem;
+    width: 100%;
+}
+.wrap .logo a img{
+    display: block;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+}
+.input-group{
+    margin-top: 1rem;
+    position: relative;
+}
+.input-group input{
+    display: block;
+    width: 100%;
+    outline: none;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    background: #fff;
+    font-size: 1rem;
+    line-height: 1.2rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    box-sizing: border-box;
+    padding-left: 2rem;
+}
+.input-group .tel-icon{
+    background: url("../img/icons/login_person.png") no-repeat center,#fff;
+    background-size: 1.5rem 1.5rem;
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    left: 0.3rem;
+    top: 0.3rem;
+}
+.input-group .pwd-icon{
+    background: url("../img/icons/login_ps.png") no-repeat center,#fff;
+    background-size: 1.5rem 1.5rem;
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    left: 0.3rem;
+    top: 0.3rem;
+}
+.operation{
+    margin-top: 0.5rem;
+    margin-bottom: 3rem;
+}
+.operation a{
+    display: inline-block;
+    padding: 0.4rem;
+    font-size: 0.8125rem;
+    line-height: 1rem;
+    color: #333;
+}
+.submit-btn{
+    width: 90%;
+    margin: 0 auto;
+}
+.submit-btn a{
+    display: block;
+    text-align: center;
+    background: #cc9b4b;
+    color: #fff;
+    font-size: 0.9rem;
+    line-height: 2rem;
+    border-radius: 4px;
+}
+

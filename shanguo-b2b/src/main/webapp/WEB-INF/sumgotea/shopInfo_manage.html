@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="lib/webuploader/webuploader.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/city_picker.css">
+    <link rel="stylesheet" href="css/shopInfo_manage.css">
+    <title>店铺信息</title>
+</head>
+<body id="shopInfo_edit" class="bg-main address-edit">
+<nav>
+    <a class="back-btn" v-on:click="changeCondition(7)"></a>
+    <h4>账户信息管理</h4>
+    <span class="update-btn" v-if="!postParams.changeStatus" v-on:click="doSubmit()">保存</span>
+</nav>
+<div v-show="!postParams.changeStatus">
+    <div id="shop_info">
+        <div class="top-img clearfix">
+            <div class="dis-cell info-name fl">头像:</div>
+            <div class="shop-box fr">
+                <div class="upload-box">
+                    <div class="upload-img" id="view-shop">
+
+                    </div>
+                    <div class="btn-wrap" id="add-shop">
+
+                    </div>
+                </div>
+            </div>
+            <i class="icon-right"></i>
+        </div>
+        <ul class="lists" style="margin-bottom: 0.625rem;padding: 0">
+            <li class="dis-tabel border-b1 bg-white w100" v-on:click="changeCondition(1)">
+                <div class="dis-cell info-name">店铺名称:</div>
+                <p class="dis-cell">
+                    <input type="text" name="shopName"  v-model="postParams.shopName" readonly>
+                </p>
+                <i class="icon-right"></i>
+            </li>
+            <li class="dis-tabel border-b1 bg-white w100" v-on:click="changeCondition(2)">
+                <div class="dis-cell info-name">手机号：</div>
+                <p class="dis-cell">
+                    <input type="text" name="mobile" v-model="postParams.mobile" readonly>
+                </p>
+                <i class="icon-right"></i>
+            </li>
+            <li class="dis-tabel border-b1 bg-white w100" v-on:click="changeCondition(3)">
+                <div class="dis-cell info-name">茶掌柜:</div>
+                <p class="dis-cell">
+                    <input type="text" name="bossName" v-model="postParams.bossName" readonly>
+                </p>
+                <i class="icon-right"></i>
+            </li>
+            <li class="dis-tabel border-b1 bg-white w100" v-on:click="changeCondition(4)" >
+                <div class="dis-cell info-name">门店电话:</div>
+                <p class="dis-cell">
+                    <input type="text" name="shopTel"  v-model="postParams.shopTel"  readonly>
+                </p>
+                <i class="icon-right"></i>
+            </li>
+            <li class="dis-tabel border-b1 bg-white w100" v-on:click="changeCondition(5)">
+                <div class="dis-cell info-name">门店地址:</div>
+                <p class="dis-cell">
+                    <input type="text" name="address" value="{{postParams.provinceName}}{{postParams.cityName}}{{postParams.areaName}}" readonly>
+                </p>
+                <i class="icon-right"></i>
+            </li>
+            <li class="dis-tabel bg-white w100" v-on:click="changeCondition(6)">
+                <div class="dis-cell info-name">店铺介绍</div>
+                <p class="dis-cell">
+                    <input type="text" name="introduce"  v-model="postParams.introduce" readonly>
+                </p>
+                <i class="icon-right"></i>
+            </li>
+        </ul>
+        <div class="info-part2">
+            <div class="clearfix border-b1">
+                <i class="fl color-grey">个人身份证照：</i>
+            </div>
+            <ul class="clearfix shop-img">
+                <!--<template v-for="list in detail.picList">-->
+                <li class="fl w33">
+                    <div class="upload-box">
+                        <div class="upload-img" id="view-idcard-1">
+
+                        </div>
+                        <div class="btn-wrap" id="add-idcard-1">
+                            <img src="/static/js/lib/webuploader/image/add.png"/>
+                        </div>
+                    </div>
+                </li>
+                <li class="fl w33">
+                    <div class="upload-box">
+                        <div class="upload-img" id="view-idcard-2">
+
+                        </div>
+                        <div class="btn-wrap" id="add-idcard-2">
+                            <img src="/static/js/lib/webuploader/image/add.png"/>
+                        </div>
+                    </div>
+                </li>
+                <li class="fl tips">
+                    清晰正反面图片
+                </li>
+                <!--</template>-->
+            </ul>
+        </div>
+        <div class="info-part2">
+            <div class="clearfix border-b1">
+                <i class="fl color-grey">营业执照（选填）：</i>
+            </div>
+            <ul class="clearfix shop-img">
+                <!--<template v-for="list in detail.picList">-->
+                <li class="fl w33">
+                    <div class="upload-box">
+                        <div class="upload-img" id="view-business-licence">
+
+                        </div>
+                        <div class="btn-wrap" id="add-business-licence">
+                            <img src="/static/js/lib/webuploader/image/add.png"/>
+                        </div>
+                    </div>
+                </li>
+                <li class="fl tips tips02">
+                    清晰正反面图片<br>
+                    必须包含完整的营业登记信息
+                </li>
+                <!--</template>-->
+            </ul>
+        </div>
+        <div class="info-part2">
+            <div class="clearfix border-b1">
+                <i class="fl color-grey">税务登记（选填）：</i>
+            </div>
+            <ul class="clearfix shop-img">
+                <!--<template v-for="list in detail.picList">-->
+                <li class="fl w33">
+                    <div class="upload-box">
+                        <div class="upload-img" id="view-tax-licence">
+
+                        </div>
+                        <div class="btn-wrap" id="add-tax-licence">
+                            <img src="/static/js/lib/webuploader/image/add.png"/>
+                        </div>
+                    </div>
+                </li>
+                <li class="fl tips tips02">
+                    清晰正反面图片<br>
+                    必须包含完整的营业登记信息
+                </li>
+                <!--</template>-->
+            </ul>
+        </div>
+    </div>
+</div>
+<!--<template v-show="postParams.changeStatus">-->
+    <div class="change">
+        <!--修改掌柜姓名模板-->
+        <template v-if="postParams.changeBossName && postParams.changeStatus">
+            <div class="bossName-wrap">
+                <div class="input-wrap">
+                    <input type="text" name="bossName" placeholder="请输入茶掌柜的姓名" v-model="postParams.bossName" data-val="bossName">
+                    <i class="input-clear" @click="clearInput($event)"></i>
+                </div>
+                <div class="btn">
+                    <a v-on:click="changeCondition(7)" href="javascript:;">保存</a>
+                </div>
+            </div>
+        </template>
+
+        <!--修改手机号模板-->
+        <template v-if="postParams.changeMobile && postParams.changeStatus">
+            <div class="mobile-wrap">
+                <div class="input-wrap">
+                    <input type="text" name="mobile" placeholder="请输入手机号码" v-model="postParams.mobile" data-val="mobile">
+                    <i class="input-clear" @click="clearInput($event)"></i>
+                </div>
+                <div class="btn">
+                    <a v-on:click="changeCondition(7)" href="javascript:;">保存</a>
+                </div>
+            </div>
+        </template>
+
+        <!--修改店铺电话模板-->
+        <template v-if="postParams.changeShopTel && postParams.changeStatus">
+            <div class="shopTel-wrap">
+                <div class="input-wrap">
+                    <input type="text" name="shopTel" placeholder="请输入店铺电话"  v-model="postParams.shopTel" data-val="shopTel">
+                    <i class="input-clear" @click="clearInput($event)"></i>
+                </div>
+                <div class="btn">
+                    <a v-on:click="changeCondition(7)" href="javascript:;">保存</a>
+                </div>
+            </div>
+        </template>
+
+        <!--修改店铺名称模板-->
+        <template v-if="postParams.changeShopName && postParams.changeStatus">
+            <div class="shopName-wrap">
+                <div class="input-wrap">
+                    <input type="text" name="shopName" placeholder="请输入店铺名称" maxlength="10"  v-model="postParams.shopName" data-val="shopName">
+                    <i class="input-clear" @click="clearInput($event)"></i>
+                </div>
+                <p class="shopCount">{{postParams.shopName.length}}/10</p>
+                <div class="btn">
+                    <a v-on:click="changeCondition(7)" href="javascript:;">保存</a>
+                </div>
+            </div>
+        </template>
+
+        <!--修改店铺简介-->
+        <template v-if="postParams.changeIntroduce && postParams.changeStatus">
+            <div class="introduce-wrap">
+                <div class="input-wrap">
+                    <textarea @input="limitCount($event)" name="introduce" rows="4" placeholder="请输入店铺简介" v-model="postParams.introduce">{{postParams.introduce}}</textarea>
+                    <span class="count-wrap"><i class="count">{{postParams.introduce.length}}</i>/<i class="countMax">120</i></span>
+                </div>
+                <div class="btn">
+                    <a v-on:click="changeCondition(7)" href="javascript:;">保存</a>
+                </div>
+            </div>
+        </template>
+
+        <!--修改店铺地址-->
+
+        <div class="address-wrap" v-show="postParams.changeAddress && postParams.changeStatus">
+            <label>选择地区</label>
+            <div class="input-wrap">
+                <p class="dis-cell ">
+                <ul id="demo_treelist"></ul>
+                <a href="javascript:void(0)" v-on:click="chooseAdd()" target="_top" data-role="none" class="btn-right-a" id="pca_value">{{postParams.provinceName}}{{postParams.cityName}}{{postParams.areaName}}</a>
+                </p>
+                <div class="right-arrow right"></div>
+            </div>
+            <label>详细地址</label>
+            <div class="input-wrap">
+                <input type="text" name="address" v-model="postParams.address" placeholder="请输入店铺详细地址"  data-val="address">
+                <i class="input-clear" @click="clearInput($event)"></i>
+            </div>
+            <div class="btn">
+                <a href="javascript:;" v-on:click="changeCondition(7)">保存</a>
+            </div>
+        </div>
+
+
+    </div>
+<!--</template>-->
+    <!--居住地址三级联动选项-->
+    <template v-if="showChose">
+        <section class="showChose" >
+        <section class="address">
+            <section class="title">
+            <h4>所在地区 <span @click="closeAdd()">×</span></h4>
+            </section>
+            <section class="title title-top">
+            <div class="area" @click="provinceSelected()" :class="[showProvince ? 'active' : '']">{{Province?Province:info[0].name}}</div>
+            <div class="area" @click="citySelected()" :class="[showCity ? 'active' : '']">{{City?City:'请选择'}}</div>
+            <div class="area" @click="districtSelected()" :class="[showDistrict ? 'active' : '' ]" v-show="City">{{District?District:'请选择'}}</div>
+            </section>
+            <ul>
+            <li class="addList" v-for="v in info" @click="getProvinceId(v.id, v.name, $index)" v-show="showProvince" :class="[v.name == Province  ? 'active' : '']" >{{v.name}}</li>
+            <li class="addList" v-for="v in showCityList" @click="getCityId(v.id, v.name, $index)" v-show="showCity" :class="[v.name ==  City ? 'active' : '']">{{v.name}}</li>
+            <li class="addList" v-for="v in showDistrictList" @click="getDistrictId(v.id, v.name, $index)" v-show="showDistrict" :class="[v.name == District ? 'active' : '']">{{v.name}}</li>
+            </ul>
+        </section>
+        </section>
+    </template>
+
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script src="js/common.js"></script>
+<script>
+    Util.common.addloadingAnimate();
+</script>
+<script src="lib/webuploader/webuploader.min.js"></script>
+<script src="lib/webuploader/webuploaderUtil.js"></script>
+<script src="js/citydata.js"></script>
+<style type="text/css">
+
+    .dwfl{flex:1;}
+    #demo_treelist_dummy{
+        position: absolute;
+        left: 0;
+        opacity: 0;
+    }
+    #pca_value{color: #1c1c1c;}
+</style>
+<script>
+    $(function () {
+        shopInfo.isLogin();
+        shopInfo.getShopInfo();
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+    });
+    var shopInfo=new Vue({
+        el: "#shopInfo_edit",
+        data: {
+            detail:{},
+            user:[],
+            webUploaderFlag:true,
+            postParams:{
+                changeStatus:false,
+                id:'',   //店铺ID
+                shopImg: '',    //店铺图
+                shopName:"",            //店铺名称
+                changeShopName:false,
+                mobile:'',          //店铺手机号
+                changeMobile:false,
+                bossName:'',            //掌柜名称
+                changeBossName:false,
+                shopTel:'',        //店铺电话
+                changeShopTel:false,
+                address:'',         //地址
+                provinceName:'',
+                provinceCode:'',
+                cityName:'',
+                cityCode:'',
+                areaName:'',
+                areaCode:'',
+                changeAddress:false,
+                introduce:'',
+                changeIntroduce:false,
+                idCardIndexImg: '',
+                idCardBackImg:'',
+                businessLicenceImg:'',
+                taxLicenceImg:''
+            },
+            //地址选择器所用到字段
+            showChose: false,
+            showProvince: true,
+            showCity: false,
+            showDistrict: false,
+            showCityList: false,
+            showDistrictList: false,
+            province: 110000,
+            city: 110100,
+            district: 110101,
+            GetProvinceId: 2,
+            District: false,
+            Province: false,
+            City: false,
+            // v-for循环判断是否为当前
+            selected: false,
+            info: citydata || {},
+        },
+        computed: {
+
+        },
+        watch:{
+
+        },
+        methods: {
+            /*判断是够登录*/
+            isLogin:function(){
+                if(!$.isLogin()){
+                    window.location.href = 'login.html';
+                }
+            },
+            /*获取店铺信息*/
+            getShopInfo:function(){
+                var url = "/weixin/user/userInfo";
+                var params = null;
+                Util.common.b2bPostCallback(url,params,function(result){
+                    if(result.success){
+                        var user = result.data;
+                        shopInfo.$set("user",result.data);
+                        console.log(shopInfo.user);
+                        shopInfo.postParams.id = user.id;
+                        shopInfo.postParams.shopImg = user.headImgUrl;
+                        shopInfo.postParams.shopName = user.name;
+                        shopInfo.postParams.mobile = user.mobile;
+                        shopInfo.postParams.bossName = user.userName;
+                        shopInfo.postParams.shopTel = user.phone;
+                        shopInfo.postParams.address = user.address;
+                        shopInfo.postParams.provinceName = user.provinceName;
+                        shopInfo.postParams.provinceCode = user.province;
+                        shopInfo.postParams.cityName = user.cityName;
+                        shopInfo.postParams.cityCode = user.city;
+                        shopInfo.postParams.areaName = user.countryName;
+                        shopInfo.postParams.areaCode = user.country;
+                        shopInfo.postParams.introduce = user.description;
+                        shopInfo.postParams.idCardIndexImg = user.storeRole.idCardIndex;
+                        shopInfo.postParams.idCardBackImg = user.storeRole.idCardBack;
+                        shopInfo.postParams.businessLicenceImg =  user.storeRole.businessLicence ;
+                        shopInfo.postParams.taxLicenceImg = user.storeRole.taxPhoto;
+                        Vue.nextTick(function(){
+                            shopInfo.initCity();
+                            if(shopInfo.webUploaderFlag){
+                                /*初始化图片*/
+                                shopInfo.webUploader("#view-shop","#add-shop",shopInfo.postParams.shopImg);
+                                shopInfo.webUploader("#view-idcard-1","#add-idcard-1",shopInfo.postParams.idCardIndexImg);
+                                shopInfo.webUploader("#view-idcard-2","#add-idcard-2",shopInfo.postParams.idCardBackImg);
+                                shopInfo.webUploader("#view-business-licence","#add-business-licence",shopInfo.postParams.businessLicenceImg);
+                                shopInfo.webUploader("#view-tax-licence","#add-tax-licence",shopInfo.postParams.taxLicenceImg);
+                                shopInfo.webUploaderFlag = false;
+                            }
+                        });
+                        Util.common.removeloadingAnimate();
+                    }else{
+                        new Toast({context:$('body'),message: result.msg }).show();
+                    }
+                });
+            },
+            /*限制字数*/
+            limitCount:function(event){
+                var html =   $(event.target).val();
+                var max = parseInt( $(".countMax").html() );
+                console.log(html);
+                console.log(max);
+                var length = html.length;
+                $(".count").html(length);
+                if(length > max ){
+                    new Toast({context:$('body'),message: "已经达到最大字数限制了！！" }).show();
+                    $(event.target).val( html.substr(0,max) );
+                    $(".count").html(max);
+                }
+            },
+            /*webUploader*/
+            webUploader:function(viewBox,btn,imgUrl){
+                if(imgUrl == null || imgUrl == ''){
+                    $.createWebUploader({
+                        viewListId: viewBox,
+                        pickBtn: btn,
+                        fileNumLimit: 1,
+                    });
+                }else{
+                    $.createWebUploader({
+                        viewListId: viewBox,
+                        pickBtn: btn,
+                        fileNumLimit: 1,
+                        imageList:[
+                            {
+                                id: 1,
+                                url: imgUrl,
+                                name: ''
+                            }
+                        ]
+                    });
+                }
+                /*/!*店面图片*!/
+                $.createWebUploader({
+                    viewListId: "#view-shop",
+                    pickBtn: "#add-shop",
+                    fileNumLimit: 1,
+                });
+                /!*身份证正面*!/
+                $.createWebUploader({
+                    viewListId: "#view-idcard-1",
+                    pickBtn: "#add-idcard-1",
+                    fileNumLimit: 1,
+                });
+                /!*身份证反面*!/
+                $.createWebUploader({
+                    viewListId: "#view-idcard-2",
+                    pickBtn: "#add-idcard-2",
+                    fileNumLimit: 1,
+                });
+
+                /!*营业执照*!/
+                $.createWebUploader({
+                    viewListId: "#view-business-licence",
+                    pickBtn: "#add-business-licence",
+                    fileNumLimit: 1,
+                });
+                /!*税务登记*!/
+                $.createWebUploader({
+                    viewListId: "#view-tax-licence",
+                    pickBtn: "#add-tax-licence",
+                    fileNumLimit: 1,
+                });*/
+            },
+            /*清楚input的值*/
+            clearInput:function(event){
+                $(event.target).siblings('input').val('');
+                var category = $(event.target).siblings('input').attr("data-val");
+                shopInfo.postParams[category] = '';
+
+            },
+            /*提交表单*/
+            doSubmit:function(){
+                shopInfo.postParams.shopImg = "";
+                shopInfo.postParams.idCardIndexImg = '';
+                shopInfo.postParams.idCardBackImg = '';
+                shopInfo.postParams.businessLicenceImg = '';
+                shopInfo.postParams.taxLicenceImg = '';
+
+                /*店铺图*/
+                var shopImg= $.getUploadImageList("#view-shop");
+                if(shopImg && shopImg.length > 0){
+                    shopInfo.postParams.shopImg = shopImg[0].url;
+                }else{
+                    shopInfo.postParams.shopImg = '';
+                }
+                console.log(shopInfo.postParams.shopImg);
+                /*身份证*/
+                var idCardIndex= $.getUploadImageList("#view-idcard-1");
+                if(idCardIndex && idCardIndex.length > 0){
+                    shopInfo.postParams.idCardIndexImg = idCardIndex[0].url;
+                }else{
+                    shopInfo.postParams.idCardIndexImg = '';
+                }
+                /*for (var i in idCardIndex){
+                    console.log(idCardIndex[i]['url']);
+                    shopInfo.postParams.idCardIndexImg = idCardIndex[i]['url'];
+                }*/
+                var idCardBack= $.getUploadImageList("#view-idcard-2");
+                if(idCardBack && idCardBack.length > 0){
+                    shopInfo.postParams.idCardBackImg = idCardBack[0].url;
+                }else{
+                    shopInfo.postParams.idCardBackImg = '';
+                }
+                /*for (var i in idCardBack){
+                    console.log(idCardBack[i]['url']);
+                    shopInfo.postParams.idCardBackImg = idCardBack[i]['url'];
+                }*/
+
+                /*营业执照*/
+                var BusinessLicence= $.getUploadImageList("#view-business-licence");
+                if(BusinessLicence && BusinessLicence.length > 0){
+                    shopInfo.postParams.businessLicenceImg = BusinessLicence[0].url;
+                }else{
+                    shopInfo.postParams.businessLicenceImg = '';
+                }
+                /*for (var i in BusinessLicence){
+                    console.log(BusinessLicence[i]['url']);
+                    shopInfo.postParams.businessLicenceImg = BusinessLicence[i]['url'];
+                }*/
+                /*税务登记证*/
+                var TaxLicence= $.getUploadImageList("#view-tax-licence");
+                if(TaxLicence && TaxLicence.length > 0){
+                    shopInfo.postParams.taxLicenceImg = TaxLicence[0].url;
+                }else{
+                    shopInfo.postParams.taxLicenceImg = '';
+                }
+                /*for (var i in TaxLicence){
+                    console.log(TaxLicence[i]['url']);
+                    shopInfo.postParams.taxLicenceImg = TaxLicence[i]['url'];
+                }*/
+
+                if(shopInfo.postParams.shopImg == '' || shopInfo.postParams.shopImg == null){
+                    new Toast({context:$('body'),message:"头像不能为空！" }).show();
+                    return;
+                }
+
+                if(shopInfo.postParams.shopName == '' || shopInfo.postParams.shopName == null){
+                    new Toast({context:$('body'),message: "门店名称不能为空！" }).show();
+                    return;
+                }
+                console.log(shopInfo.postParams.shopName);
+                if(shopInfo.postParams.mobile == '' || shopInfo.postParams.mobile == null){
+                    new Toast({context:$('body'),message: "手机号码不能为空！" }).show();
+                    return;
+                }
+                console.log(shopInfo.postParams.mobile);
+                if(shopInfo.postParams.bossName == '' || shopInfo.postParams.bossName == null){
+                    new Toast({context:$('body'),message: "掌柜名称不能为空！" }).show();
+                    return;
+                }
+                console.log(shopInfo.postParams.bossName);
+                if(shopInfo.postParams.shopTel == '' || shopInfo.postParams.shopTel == null){
+                    new Toast({context:$('body'),message: "店铺电话不能为空！" }).show();
+                    return;
+                }
+
+                if( !$.validatePhone( shopInfo.postParams.shopTel )  && !$.validateTel( shopInfo.postParams.shopTel) ){
+                    new Toast({context:$('body'),message: "店铺电话不合法！" }).show();
+                    return;
+                }
+                console.log(shopInfo.postParams.shopTel);
+
+                if(shopInfo.postParams.address == '' || shopInfo.postParams.address == null){
+                    new Toast({context:$('body'),message: "请填写详细地址！" }).show();
+                    return;
+                }
+
+                if(shopInfo.postParams.idCardIndexImg == '' || shopInfo.postParams.idCardIndexImg == null){
+                    new Toast({context:$('body'),message:"请上传身份证正面图片！" }).show();
+                    return;
+                }
+
+                if(shopInfo.postParams.idCardBackImg == '' || shopInfo.postParams.idCardBackImg == null){
+                    new Toast({context:$('body'),message:"请上传身份证反面图片！" }).show();
+                    return;
+                }
+
+                var data = {};
+                data.id = shopInfo.postParams.id;
+                data.name = shopInfo.postParams.shopName;
+                data.address = shopInfo.postParams.address;
+                data.userName = shopInfo.postParams.bossName;
+                data.provinceName = shopInfo.postParams.provinceName;
+                data.phone = shopInfo.postParams.shopTel;
+                data.cityName = shopInfo.postParams.cityName;
+                data.countryName = shopInfo.postParams.areaName;
+                data.description = shopInfo.postParams.introduce;
+                data.headImgUrl = shopInfo.postParams.shopImg;
+                data.idCardIndex = shopInfo.postParams.idCardIndexImg;
+                data.idCardBack = shopInfo.postParams.idCardBackImg;
+                data.businessLicence = shopInfo.postParams.businessLicenceImg;
+                data.taxPhoto = shopInfo.postParams.taxLicenceImg;
+                data.province = shopInfo.postParams.provinceCode;
+                data.city = shopInfo.postParams.cityCode;
+                data.country = shopInfo.postParams.areaCode;
+                var param = {};
+                param.modelJsonStr = JSON.stringify(data);
+                var url = "/weixin/user/updateShop";
+                Util.common.b2bPostCallback(url,param,function(result){
+                    if(result.success){
+                        new Toast({context:$('body'),message: "修改成功" }).show();
+                        shopInfo.getShopInfo();
+                    }else{
+                        new Toast({context:$('body'),message: result.msg }).show();
+                    }
+                });
+
+                shopInfo.changeCondition('defualt');
+
+            },
+            /*切换修改*/
+            changeCondition:function(number){
+                $(document).scrollTop("0");
+                switch (number){ //1.改变店铺名称 2.改变手机号码 3.改变掌柜名字 4.店铺电话 5.地址 6.简介  defualt:不变
+                    case 1:
+                        shopInfo.postParams.changeStatus = true;
+                        shopInfo.postParams.changeShopName = true;
+                        shopInfo.postParams.changeMobile = false;
+                        shopInfo.postParams.changeBossName = false;
+                        shopInfo.postParams.changeShopTel = false;
+                        shopInfo.postParams.changeAddress = false;
+                        shopInfo.postParams.changeIntroduce = false;
+                        break;
+                    case 2:
+                        shopInfo.postParams.changeStatus = true;
+                        shopInfo.postParams.changeShopName = false;
+                        shopInfo.postParams.changeMobile = true;
+                        shopInfo.postParams.changeBossName = false;
+                        shopInfo.postParams.changeShopTel = false;
+                        shopInfo.postParams.changeAddress = false;
+                        shopInfo.postParams.changeIntroduce = false;
+                        break;
+                    case 3:
+                        shopInfo.postParams.changeStatus = true;
+                        shopInfo.postParams.changeShopName = false;
+                        shopInfo.postParams.changeMobile = false;
+                        shopInfo.postParams.changeBossName = true;
+                        shopInfo.postParams.changeShopTel = false;
+                        shopInfo.postParams.changeAddress = false;
+                        shopInfo.postParams.changeIntroduce = false;
+                        break;
+                    case 4:
+                        shopInfo.postParams.changeStatus = true;
+                        shopInfo.postParams.changeShopName = false;
+                        shopInfo.postParams.changeMobile = false;
+                        shopInfo.postParams.changeBossName = false;
+                        shopInfo.postParams.changeShopTel = true;
+                        shopInfo.postParams.changeAddress = false;
+                        shopInfo.postParams.changeIntroduce = false;
+                        break;
+                    case 5:
+                        shopInfo.postParams.changeStatus = true;
+                        shopInfo.postParams.changeShopName = false;
+                        shopInfo.postParams.changeMobile = false;
+                        shopInfo.postParams.changeBossName = false;
+                        shopInfo.postParams.changeShopTel = false;
+                        shopInfo.postParams.changeAddress = true;
+                        shopInfo.postParams.changeIntroduce = false;
+                        break;
+                    case 6:
+                        shopInfo.postParams.changeStatus = true;
+                        shopInfo.postParams.changeShopName = false;
+                        shopInfo.postParams.changeMobile = false;
+                        shopInfo.postParams.changeBossName = false;
+                        shopInfo.postParams.changeShopTel = false;
+                        shopInfo.postParams.changeAddress = false;
+                        shopInfo.postParams.changeIntroduce = true;
+                        break;
+                    case 7: 
+                        if (!shopInfo.postParams.changeStatus) {
+                            window.history.go(-1);
+                        } else {
+                            shopInfo.postParams.changeStatus = false;
+                            shopInfo.postParams.changeShopName = false;
+                            shopInfo.postParams.changeMobile = false;
+                            shopInfo.postParams.changeBossName = false;
+                            shopInfo.postParams.changeShopTel = false;
+                            shopInfo.postParams.changeAddress = false;
+                            shopInfo.postParams.changeIntroduce = false;
+                            shopInfo.showChose = false;
+                        }
+                        break;
+                    default :
+                        shopInfo.postParams.changeStatus = false;
+                        shopInfo.postParams.changeShopName = false;
+                        shopInfo.postParams.changeMobile = false;
+                        shopInfo.postParams.changeBossName = false;
+                        shopInfo.postParams.changeShopTel = false;
+                        shopInfo.postParams.changeAddress = false;
+                        shopInfo.postParams.changeIntroduce = false;
+                        break;
+                }
+            },
+            initCity: function(){
+                shopInfo.Province = shopInfo.postParams.provinceName;
+                shopInfo.City = shopInfo.postParams.cityName;
+                shopInfo.District = shopInfo.postParams.areaName;
+                shopInfo.province = shopInfo.postParams.provinceCode;
+                shopInfo.city = shopInfo.postParams.cityCode;
+                shopInfo.district = shopInfo.postParams.areaCode;
+                shopInfo.showCityList = shopInfo._filter(shopInfo.info,'city',shopInfo.postParams.provinceCode);
+                shopInfo.showDistrictList = shopInfo._filter(shopInfo.showCityList,'district', shopInfo.postParams.cityCode);
+                shopInfo.showProvince = false;
+                shopInfo.showDistrict = true;
+                if (shopInfo.showDistrictList && shopInfo.showDistrictList.length === 0) {
+                    shopInfo.citySelected();
+                }
+            },
+            // 地址选择器相关  
+            chooseAdd: function() {
+                this.showChose = true;
+            },
+            closeAdd: function() {
+                this.showChose = false;
+            },
+            _filter: function(add,name,code) {
+                var result = [];
+                for(var i=0;i<add.length;i++) {
+                    if(code == add[i].id){
+                    result = add[i][name];
+                    }
+                }
+                return result;
+            },
+            getProvinceId: function(code,input,index) {
+                this.province = code;
+                this.Province = input;
+                this.showProvince=false;
+                this.showCity=true;
+                this.showDistrict = false;
+                this.showCityList = this._filter(this.info,'city',this.province);
+                // 点击选择当前
+                this.info.map(function(a) {
+                    a.selected = false 
+                });
+                this.info[index].selected = true;
+            },
+            provinceSelected: function() {
+                // 清除市级和区级列表
+                this.showCityList = false;
+                this.showDistrictList = false;
+                // 清除市级和区级选项
+                this.City = false;
+                this.District = false;
+                // 选项页面的切换
+                this.showProvince = true;
+                this.showCity = false;
+                this.showDistrict = false;
+            },
+            getCityId: function(code, input, index) {
+                if (this.City != input) {
+                    this.District = false;
+                }
+                this.city = code;
+                this.City = input;
+                this.showProvince=false;
+                this.showCity=false;
+                this.showDistrict = true;
+                this.showDistrictList = this._filter(this.showCityList,'district',this.city);
+                // 选择当前添加active
+                this.showCityList.map(function(a) {
+                    a.selected = false 
+                });
+                this.showCityList[index].selected = true;
+                if (this.showDistrictList && this.showDistrictList.length === 0) {
+                    //选中地址后，为提交地址信息赋值
+                    shopInfo.postParams.provinceName = this.Province;
+                    shopInfo.postParams.cityName = this.City;
+                    shopInfo.postParams.areaName = '';
+                    shopInfo.postParams.provinceCode = this.province;
+                    shopInfo.postParams.cityCode = this.city;
+                    shopInfo.postParams.areaCode = '';
+                    this.showChose = false;
+                    this.citySelected();
+                }
+            },
+            citySelected: function() {
+                this.showProvince=false;
+                this.showCity=true;
+                this.showDistrict = false;
+            },
+            getDistrictId: function(code, input, index) {
+                this.district = code;
+                this.District = input;
+
+                //选中地址后，为提交地址信息赋值
+                shopInfo.postParams.provinceName = this.Province;
+                shopInfo.postParams.cityName = this.City;
+                shopInfo.postParams.areaName = this.District;
+                shopInfo.postParams.provinceCode = this.province;
+                shopInfo.postParams.cityCode = this.city;
+                shopInfo.postParams.areaCode = this.district;
+                
+                // 选择当前添加active
+                this.showDistrictList.map(function(a) {
+                    a.selected = false 
+                });
+                this.showDistrictList[index].selected = true;
+                // 选取市区选项之后关闭弹层
+                this.showChose = false;
+            },
+            districtSelected: function() {
+                this.showProvince=false;
+                this.showCity=false;
+                this.showDistrict = true;
+            },
+        }
+    });
+</script>
+</html>

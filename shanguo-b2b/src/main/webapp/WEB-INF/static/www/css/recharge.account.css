@@ -1,0 +1,41 @@
+.user-wrap {padding: 40px 0;}
+.user-wrap .user-info {position: relative; min-height: 100px;  padding: 10px 0; padding-left: 120px; box-sizing: border-box;}
+.user-wrap .user-info .user-face {position: absolute; top: 10px; left: 40px; width: 80px; height: 80px;}
+.user-wrap .user-info .user-face img {width: 100%; height: 100%; border-radius: 50%;}
+.user-wrap .user-info .user-name {width: 250px; margin-left: 30px; padding: 10px;}
+.user-wrap .big-text {color: #1a1a1a; font-size: 18px; line-height: 25px;}
+.user-wrap .small-text {margin-top: 15px; font-size: 16px; }
+.user-wrap .account-info {padding: 20px; padding-left: 40px; border-left: 1px solid #dbdbdb;}
+.user-wrap .account-info .account-price {display: inline-block; margin-top: 15px; padding-right: 20px; color: #cc9b4b; font-size: 20px;}
+.user-wrap .account-info .option-btn {display: inline-block; margin-left: 15px; padding: 3px 10px; background-color: #f5f5f5; border: 1px solid #dbdbdb; }
+.user-wrap .account-info .right-btn {margin-left: 50px;}
+.account-list {padding-bottom: 100px;}
+.account-list * {font-size: 12px;}
+.account-list .title {padding: 10px 20px; color: #666; font-size: 16px; background-color: #f5f5f5;}
+.account-list .filter-title {padding: 15px 0;}
+.account-list .filter-title .filter {padding-left: 10px; padding-right: 10px; color: #2a6dbb; border-left: 1px solid #2a6dbb;}
+.account-list .filter-title .filter:first-child {margin-left: 30px; padding-left: 0; border-left: none;}
+.account-list .data-table {width: 100%; border: 1px solid #dbdbdb;}
+.account-list .data-table tr {border-top: 1px solid #dbdbdb;}
+.account-list .data-table tr:first-child {border-top: none;}
+.account-list .data-table td {padding: 10px; color: #666;}
+.account-list  .bg-gray {background-color: #f5f5f5;}
+.dialog-wrap {position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.1); z-index: 100;}
+.dialog-wrap .cont {position: absolute; top: 50%; left: 50%; width: 700px; height: 400px; margin-top: -200px; margin-left: -400px; background-color: #fff; border: 3px solid #b8b8b8; border-radius: 5px;}
+.dialog-wrap .cont.c-cont {height: 320px; margin-top: -160px;}
+.dialog-wrap .cont .title {position: relative; padding: 5px 10px; background-color: #f5f5f5; border-bottom: 1px solid #dbdbdb;}
+.dialog-wrap .cont .del-btn {position: absolute; top: 0; right: 0; width: 50px; height: 30px; background: url("../images/icon_close.png") no-repeat center;}
+.dialog-wrap .data-table {width: 600px; margin-top: 50px; margin-left: 30px;}
+.dialog-wrap .data-table.c-table {width: 510px;}
+.dialog-wrap .data-table.c-table .check-box {display: inline-block; height: 40px; line-height: 40px;}
+.dialog-wrap .data-table.c-table .weixin {display: inline-block; width: 40px; height: 40px; background: url("../images/weixin.png") no-repeat center;}
+.dialog-wrap .data-table.c-table .zhifubao {display: inline-block; width: 130px; height: 40px; background: url("../images/zhifubao.png") no-repeat center;}
+.dialog-wrap .data-table tbody td {padding: 10px;}
+.dialog-wrap .data-table tbody td.title-bar {color: #999; text-align: right;}
+.dialog-wrap .data-table tbody .enter-ipt {width: 90%; padding: 0 10px; border: 1px solid #dbdbdb; outline: none; line-height: 35px;}
+.dialog-wrap .data-table tbody .enter-ipt.phone-ipt {background-color: #f0f0f0;}
+.dialog-wrap .data-table tbody .get-code {display: block; padding: 0 10px; color: #666; text-align: center; background-color: #f5f5f5; border: 1px solid #dbdbdb; line-height: 35px;}
+.dialog-wrap .data-table tbody .code-img {float: left; width: 100px; height: 25px;}
+.dialog-wrap .data-table tbody .change-btn {float: left; margin-left: 10px; color: #2a6dbb; line-height: 25px; cursor: pointer;}
+.dialog-wrap .data-table tbody .commit-btn {display: block; width: 100px; font-size: 12px; color: #fff; text-align: center; background-color: #cc9b4b; line-height: 30px; border-radius: 4px;}
+

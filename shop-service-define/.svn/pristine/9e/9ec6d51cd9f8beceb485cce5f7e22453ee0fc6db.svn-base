@@ -1,0 +1,91 @@
+package pub.makers.shop.item.service;
+
+import pub.makers.shop.base.vo.Paging;
+import pub.makers.shop.base.vo.ResultList;
+import pub.makers.shop.item.entity.TradeGiftRule;
+import pub.makers.shop.item.entity.TradeGood;
+import pub.makers.shop.item.entity.TradeGoodExtra;
+import pub.makers.shop.item.entity.TradeGoodSku;
+import pub.makers.shop.item.vo.GoodCheckResult;
+import pub.makers.shop.item.vo.GoodDetailsVo;
+import pub.makers.shop.order.vo.IndentListVo;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 商品业务服务
+ * @author apple
+ *
+ */
+public interface TradeGoodBizService {
+
+	
+	ResultList<Map<String, Object>> listByParams(TradeGood params, Paging paging);
+	
+	/**
+	 * 根据商品ID查询商品扩展信息
+	 * @param goodId
+	 * @return
+	 */
+	TradeGoodExtra getByGoodId(String goodId);
+	
+	/**
+	 * 根据商品ID查询商品信息
+	 * @param goodId
+	 * @return
+	 */
+	TradeGood getGoodById(String goodId);
+
+	/**
+	 * 根据商品id查询商品详细信息
+	 * @param goodId
+	 * @return
+	 */
+	GoodDetailsVo getGoodVoById(String goodId);
+	
+	
+	/**
+	 * 检查商品是否可以购买
+	 * @param detail
+	 * @return
+	 */
+	GoodCheckResult checkGood(IndentListVo detail);
+	
+	
+	/**
+	 * 锁定SKU库存
+	 * @param skuId
+	 * @param num
+	 * @return
+	 */
+	TradeGoodSku lockStore(String skuId, int num);
+	
+	/**
+	 * 应用赠品规则
+	 * @param indentList
+	 * @return
+	 */
+	List<IndentListVo> applyGiftRule(List<IndentListVo> indentList);
+	
+	/**
+	 * 保存商品的关联赠品
+	 * @param tradeGiftRule
+	 * @return
+	 */
+	TradeGiftRule save(TradeGiftRule tradeGiftRule);
+	
+	/**
+	 * 根据商品ID删除赠品
+	 * @param tradeGoodId
+	 * @return
+	 */
+	void deleteById(String tradeGoodId);
+	
+	/**
+	 * 根据商品id查询该商品是否已有关联赠品
+	 * @param tradeGoodId
+	 * @return
+	 */
+	List<TradeGiftRule> queryGiftByGoodId(String tradeGoodId);
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>更多主题馆</title>
+</head>
+<body id="theme">
+    <ul class="theme">
+        <template v-for="list in themelist">
+            <li v-on:click="themes(list.id,list.name,list.introPhoto)">
+                <div>
+                    <img :src="list.showPhoto" alt="">
+                </div>
+                <!--<p>{{list.name}}</p>-->
+            </li>
+        </template>
+    </ul>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="js/jquery.tmpl.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $(function () {
+        indexData.getTheme();
+    });
+
+    var indexData=new Vue({
+        el:'#theme',
+        data:{
+            goodsList:[],
+            banner1:[],
+            activity:[],
+            themelist:[]
+        },
+        methods:{
+            getTheme:function () {
+                var url ="weixin/good/goodColumn/getAllGoodTheme.do";
+                Util.common.executeAjaxCallback(url,{},function (res) {
+                    console.log(res);
+                    indexData.$set("themelist",res.data);
+                });
+            },
+            themes:function (theme,name,img) {
+                window.location.href="goods_list.html?showSearchMenu=true&sortType=93&themes="+theme+"&title="+name+'&intro='+img;
+            }
+
+        }
+    });
+
+</script>
+</html>

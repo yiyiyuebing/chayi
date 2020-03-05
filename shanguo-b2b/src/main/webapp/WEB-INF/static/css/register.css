@@ -1,0 +1,361 @@
+.password-header{
+    width: 1198px;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+.password-header a{
+    width: 201px;
+    height: 62px;
+    display: inline-block;
+}
+.password-header a img{
+    width: 201px;
+    height: 62px;
+}
+.info-nav-wrap{
+    width: 1198px;
+    border-bottom: 2px solid #f0f0f0;
+    position: relative;
+    height: 48px;
+    margin:0 auto;
+}
+.info-nav-wrap .info-nav{
+    width: 800px;
+    position: absolute;
+    left: 50%;
+    bottom: -2px;
+    margin-left: -400px;
+}
+.info-nav-wrap .info-nav li{
+    width: 25%;
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    line-height: 48px;
+}
+.info-nav-wrap .info-nav .active{
+    border-bottom: 2px solid #cc9b4b;
+}
+.info-nav-wrap .info-nav li i{
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #cc9b4b;
+    color: #fff;
+    line-height: 24px;
+    font-style: normal;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 2px;
+}
+.body{
+    width: 400px;
+    margin: 0 auto;
+    padding-top: 42px;
+}
+.body .tips{
+    font-size: 12px;
+    line-height: 32px;
+    color: red;
+    text-align: left;
+    min-height: 32px;
+}
+.body .input-tel label{
+    width: 126px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    line-height: 52px;
+    border: 1px solid #dbdbdb;
+    border-right: none;
+    letter-spacing: 14px;
+}
+.body .input-tel input{
+    width: 272px;
+    text-align: left;
+    font-size: 14px;
+    color: #666;
+    line-height: 32px;
+    border: 1px solid #dbdbdb;
+    border-left: none;
+    outline: none;
+    margin: 0;
+    padding: 10px 0px;
+}
+.body .input-code label{
+    width: 126px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    line-height: 52px;
+    border: 1px solid #dbdbdb;
+    border-right: none;
+}
+.body .input-code input{
+    width: 162px;
+    text-align: left;
+    font-size: 14px;
+    color: #666;
+    line-height: 32px;
+    border: 1px solid #dbdbdb;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    margin: 0;
+    padding: 10px 0px;
+}
+.body .input-code .code{
+    width: 104px;
+    border: 1px solid #dbdbdb;
+    border-left: none;
+    padding: 3px;
+}
+.body .disable {color: #999!important; background: #e7e7e6!important;}
+.body .input-code .code a{
+    display: block;
+    width: 100%;
+    font-size: 14px;
+    color: #333;
+    line-height: 46px;
+    text-align: center;
+    cursor: pointer;
+    background: #f5f5f5;
+}
+.body .next{
+    padding-top: 10px;
+    padding-bottom: 83px;
+}
+.body .next a{
+    width: 220px;
+    display: block;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    background: #cc9b4b;
+    border-radius: 3px;
+    margin-left: 4px;
+}
+.footer-bottom{
+    background: #fff!important;
+}
+.footer-bottom-link{
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.body .input-password label{
+    width: 126px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    line-height: 52px;
+    border: 1px solid #dbdbdb;
+    border-right: none;
+    letter-spacing: 4px;
+}
+.body .input-password input{
+    width: 272px;
+    text-align: left;
+    font-size: 14px;
+    color: #666;
+    line-height: 32px;
+    border: 1px solid #dbdbdb;
+    border-left: none;
+    outline: none;
+    margin: 0;
+    padding: 10px 0px;
+}
+.body .input-invite-tel{
+    margin-bottom: 0px;
+}
+.body .input-invite-tel label{
+    width: 126px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    line-height: 52px;
+    border: 1px solid #dbdbdb;
+    border-right: none;
+    letter-spacing: 14px;
+}
+.body .input-invite-tel input{
+    width: 272px;
+    text-align: left;
+    font-size: 14px;
+    color: #666;
+    line-height: 32px;
+    border: 1px solid #dbdbdb;
+    border-left: none;
+    outline: none;
+    margin: 0;
+    padding: 10px 0px;
+}
+.body .input-img-code{
+    position: relative;
+}
+.body .input-img-code label {
+    width: 126px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    line-height: 52px;
+    border: 1px solid #dbdbdb;
+    border-right: none;
+    letter-spacing: 14px;
+}
+.body .input-img-code input {
+    width: 148px;
+    text-align: left;
+    font-size: 14px;
+    color: #666;
+    line-height: 32px;
+    border: 1px solid #dbdbdb;
+    border-left: none;
+    outline: none;
+    margin: 0;
+    padding: 10px 0px;
+}
+.body .input-img-code .code-img{
+    margin-left: 10px;
+    margin-top: 9px;
+}
+.body .input-img-code .code-img img{
+    width: 112px;
+    height: 38px;
+}
+.body .input-img-code .code-img-change{
+    cursor: pointer;
+    position: absolute;
+    right: -55px;
+    top: 0;
+    font-size: 14px;
+    line-height: 60px;
+    display: inline-block;
+    color: #2a6dbb;
+}
+.body .input-policy label{
+    display: block;
+    width: 100%;
+}
+.body .input-policy label input{
+    display: none;
+}
+.body .input-policy{
+    margin-bottom: 22px;
+    margin-top: 10px;
+}
+.body .input-policy label{
+    cursor: pointer;
+}
+.body .input-policy label .policy-mask i{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 2px;
+    margin-right: 5px;
+    margin-top: 2px;
+}
+.body .input-policy label .policy-mask span{
+    font-size: 12px;
+    color: #666;
+    line-height: 18px;
+}
+.body .input-policy label .policy-mask span a{
+    font-size: 12px;
+    color: #cc9b4b;
+    line-height: 18px;
+}
+.body .input-policy .policy-active .policy-mask i{
+    background: url(../images/icon_select.png) no-repeat center;
+    background-size: contain;
+    border-color: #cc9b4b;
+}
+
+/*弹窗样式*/
+#serverPop{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top:0;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=10);
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=10);
+    background: #000;
+    background: rgba(0,0,0,.1);
+}
+#serverPop .serverPop-box{
+    width: 772px;
+    height: 508px;
+    position: absolute;
+    left: 50%;
+    top:50%;
+    margin-left: -386px;
+    margin-top: -254px;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=20);
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=20);
+    background: #000;
+    background: rgba(0,0,0,.2);
+    border-radius: 3px;
+    padding: 4px;
+}
+#serverPop .serverPop-box .serverPop-wrap{
+    background: #fff;
+    height: 508px;
+}
+#serverPop .serverPop-box .serverPop-wrap .serverPop-header{
+    position: relative;
+    margin-bottom: 3px;
+}
+
+#serverPop .serverPop-box .serverPop-wrap .serverPop-header h5{
+    background: #f5f5f5;
+    font-size: 14px;
+    line-height: 32px;
+    border-bottom: 1px solid #dbdbdb;
+    padding-left: 17px;
+}
+#serverPop .serverPop-box .serverPop-wrap .serverPop-header #serverPopClose {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    right: 0;
+    top:0;
+    background: url("../images/icon_close.png") no-repeat center;
+    background-size: 14px 14px;
+    cursor: pointer;
+}
+#serverPop .serverPop-box .serverPop-wrap .serverPop-body{
+    background: #fff;
+    height: 392px;
+    overflow: auto;
+    padding-left: 20px;
+    padding-right: 24px;
+}
+#serverPop .serverPop-box .serverPop-wrap .serverPop-body h4{
+    font-size: 14px;
+    color: #333;
+    line-height: 30px;
+    text-align: center;
+}
+#serverPop .serverPop-box .serverPop-wrap .serverPop-footer {
+    text-align: center;
+    margin-top: 22px;
+}
+#serverPop .serverPop-box .serverPop-wrap .serverPop-footer .serverPop-sure{
+    display: inline-block;
+    width: 320px;
+    height: 42px;
+    font-size: 16px;
+    color: #fff;
+    line-height: 42px;
+    cursor: pointer;
+    background: #cc9b4b;
+    border-radius: 3px;
+    text-align: center;
+}

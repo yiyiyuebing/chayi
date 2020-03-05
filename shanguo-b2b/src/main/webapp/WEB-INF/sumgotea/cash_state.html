@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>详情</title>
+</head>
+<body id="trading_record" class="bg-main address-edit cash-state">
+    <div class="lists bg-white">
+        <div class="bank dis-tabel border-b1  w100">
+            <div class="dis-cell record">
+                提现到{{detail.bankName}}
+            </div>
+            <p class="dis-cell ta-r">
+               {{privacyCard}}
+            </p>
+        </div>
+        <div class="amount ta-c">
+            <div>-100.00</div>
+            <p v-if="detail.status==0" class="color-main">提现失败</p>
+            <p v-if="detail.status==1" class="color-blue">提现成功</p>
+            <p v-if="detail.status==-1" class="color-red">提现失败</p>
+        </div>
+        <div class="dis-tabel w100 schedule">
+            <div  v-if="detail.status==0" class="dis-cell state1">处理进度</div>
+            <div  v-if="detail.status==1" class="dis-cell state2">处理进度</div>
+            <div  v-if="detail.status==3" class="dis-cell state3">处理进度</div>
+            <div class="dis-cell pl">
+                <p class="clearfix "><i class="color-blue">余额转出</i> <i class="fr">{{detail.createTime}}</i></p>
+                <p class="p2">3个工作日内到账</p>
+                <p class="clearfix">
+                    <i  v-if="detail.status==0" class="">转入到{{detail.bankName}}</i>
+                    <i  v-if="detail.status==1" class="color-blue">转入到{{detail.bankName}}</i>
+                    <i  v-if="detail.status==-1" class="color-red">转入到{{detail.bankName}}</i>
+                    <i class="fr"></i>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $(function () {
+        tradingList.loadData();
+        tradingList.loadCard();
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+    })
+    var tradingList=new Vue({
+        el: "#trading_record",
+        data: {
+            detail:{},
+            card:{},
+            privacyCard:''
+        },
+        computed: {},
+        methods: {
+            loadData:function () {
+               var data=Util.common.getParameter("recordId");
+                tradingList.$set('detail',JSON.parse(data));
+
+            },
+            loadCard:function () {
+                var url ="mobile/user/getUserBankCard.do?shopId="+sessionStorage.getItem('shopId');
+                var param = {};
+                Util.common.executeAjaxCallback(url, param, function (res) {
+                    if(res.code==1){
+                        if(res.data!=null){
+                            tradingList.$set('card',res.data);
+                            var str1=res.data.bankCard.substr(0,4);
+                            var str2=res.data.bankCard.substr(8,4);
+                            var str=str1+"********"+str2;
+                            tradingList.$set("privacyCard",str);
+                        }
+                    }
+                });
+            }
+        }
+    });
+</script>
+</html>

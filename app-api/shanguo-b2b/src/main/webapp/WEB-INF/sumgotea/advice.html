@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <!--清除浏览器缓存-->
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <!--设备 IE  最高版本-->
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <!--定义 语言类型-->
+    <meta http-equiv="CONTENT-TYPE" content="text/html" charset="utf-8">
+    <!--设置视口宽度与设备宽度， 禁止用户缩放-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--X5内核 全屏显示-->
+    <meta name="x5-fullscreen" content="true">
+    <!--uc内核  全屏显示-->
+    <meta name="full-screen" content="yes">
+    <!--描述-->
+    <meta name="description" content="山国饮艺">
+    <!--关键字-->
+    <meta name="keywords" content="山国饮艺">
+    <title>意见反馈</title>
+    <!--公共部分-->
+    <!--HTML标签样式重置-->
+    <link href="css/normalize.css" rel="stylesheet">
+    <!--移动端css重置-->
+    <link href="css/reset.css" rel="stylesheet">
+    <!--rem适配  设计图750*1334-->
+    <script src="js/viewport_rem.js"></script>
+    <!--公共部分   ending-->
+    <!--单独样式-->
+    <link href="css/advice.css" rel="stylesheet">
+</head>
+<body id="advice">
+    <section>
+        <div class="input-group">
+            <textarea name="advice" v-model="adviceContent" placeholder="请输入您的意见反馈..." rows="5"></textarea>
+        </div>
+        <div class="input-group">
+            <input type="tel" maxlength="11" v-on:input="checkPhone()" name="mobile" v-model="mobile" value="" placeholder="请输入您的手机号码">
+        </div>
+        <p class="tips">我们将在5-6个工作日内给予您答复，感谢您的支持！</p>
+    </section>
+    <footer>
+        <a href="javascript:;" v-on:click="doSubmit()" class="form-submit">提交</a>
+    </footer>
+</body>
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        $(function(){
+            document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+            // 通过下面这个API隐藏右上角按钮 
+                WeixinJSBridge.call('hideOptionMenu'); 
+            });
+        });
+        var advice = new Vue({
+            el:'#advice',
+            data:{
+                adviceContent:'',
+                mobile:''
+            },
+            methods:{
+                /*手机号码合法性*/
+                checkPhone:function(){
+                    if(!$.validatePhone(advice.mobile) && advice.mobile.length == 11){
+                        new Toast({context:$('body'),message:"手机号码不合法！"}).show();
+                    }
+                },
+                /*提交表单*/
+                doSubmit:function(){
+                    if(advice.adviceContent == '' || advice.adviceContent ==null){
+                        new Toast({context:$('body'),message:"提交意见不能为空！"}).show();
+                        return;
+                    }
+                    if(advice.mobile == '' || advice.mobile == null){
+                        new Toast({context:$('body'),message:"手机号码不能为空！"}).show();
+                        return;
+                    }
+                    if(!$.validatePhone(advice.mobile)){
+                        new Toast({context:$('body'),message:"手机号码不合法！"}).show();
+                        return;
+                    }
+                    var url = '/weixin/opinion/advice';
+                    var params = {};
+                    params.description = advice.adviceContent;
+                    params.clientPhone = advice.mobile;
+                    var paramR = {};
+                    paramR.modelJson = JSON.stringify(params);
+                    Util.common.b2bPostCallback(url,paramR,function(result){
+                        if(result.success){
+                            new Toast({context:$('body'),message: "提交成功！" }).show();
+                            setTimeout(function(){
+                                window.location.href = "person_center_setting.html";
+                            },2000);
+                        }else{
+                            new Toast({context:$('body'),message:result.msg}).show();
+                        }
+                    });
+
+                }
+            }
+
+        });
+    </script>
+</html>

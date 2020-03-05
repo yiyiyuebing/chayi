@@ -1,0 +1,13 @@
+package pub.makers.shop.user.service;
+
+import pub.makers.shop.base.vo.Paging;
+import pub.makers.shop.base.vo.ResultList;
+import pub.makers.shop.user.vo.UserListTradeParam;
+import pub.makers.shop.user.vo.UserListTradeVo;
+
+/**
+ * Created by daiwenfa on 2017/7/19.
+ */
+public interface UserListAdminService {
+    ResultList<UserListTradeVo> getUserListTradePageList(UserListTradeParam param, Paging pg);
+}

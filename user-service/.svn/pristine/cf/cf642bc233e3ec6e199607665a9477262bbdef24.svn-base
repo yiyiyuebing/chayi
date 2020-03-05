@@ -1,0 +1,20 @@
+package pub.makers.shop.user.service;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import pub.makers.shop.user.entity.WeixinUserInfo;
+
+/**
+ * Created by dy on 2017/5/5.
+ */
+@Service(version = "1.0.0")
+public class WeixinUserInfoBizServiceImpl implements WeixinUserInfoBizService {
+
+    @Autowired
+    private WeixinUserInfoService weixinUserInfoService;
+
+    @Override
+    public WeixinUserInfo getWxUserById(Long userId) {
+        return weixinUserInfoService.getById(userId);
+    }
+}

@@ -1,0 +1,72 @@
+package pub.makers.shop.tradeGoods.vo;
+
+import java.io.Serializable;
+
+/**
+ * Created by daiwenfa on 2017/6/7.
+ */
+public class TradeGoodRelevanceVo implements Serializable {
+    private String id;
+    private String name;
+    private String smallImage;
+    private String isRelevance;
+    private String pcAlbumId;
+    private String retailPrice;
+    private String goodsId;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSmallImage() {
+        return smallImage;
+    }
+
+    public void setSmallImage(String smallImage) {
+        this.smallImage = smallImage;
+    }
+
+    public String getIsRelevance() {
+        return isRelevance;
+    }
+
+    public void setIsRelevance(String isRelevance) {
+        this.isRelevance = isRelevance;
+    }
+
+    public String getPcAlbumId() {
+        return pcAlbumId;
+    }
+
+    public void setPcAlbumId(String pcAlbumId) {
+        this.pcAlbumId = pcAlbumId;
+    }
+
+    public String getRetailPrice() {
+        return retailPrice;
+    }
+
+    public void setRetailPrice(String retailPrice) {
+        this.retailPrice = retailPrice;
+    }
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+    }
+}

@@ -1,0 +1,7 @@
+package pub.makers.shop.promotion.service;
+
+/**
+ * Created by dy on 2017/8/17.
+ */
+public interface ManzengAdminService {
+}

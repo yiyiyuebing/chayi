@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .type1{
+            width: 292%;
+            z-index: 999;
+            position: absolute;
+            left: 3%;
+            background: #f2f2f2;
+            border-radius: 3px;
+            top: 110%; 
+            }
+        .type2{
+            width: 292%;
+            z-index: 999;
+            position: absolute;
+            left: -97%;
+            background: #f2f2f2;
+            border-radius: 3px;
+            top: 110%;
+            }
+        .type3{
+            width: 292%;
+            z-index: 999;
+            position: absolute;
+            left: -197%;
+            background: #f2f2f2;
+            border-radius: 3px;
+            top: 110%;
+            }
+        .second{
+            padding: 0.4rem 0;
+            border: 1px solid #fff;
+            font-size: 0.8125rem;
+            background: #f2f2f2;
+            border-radius: 3px;
+            margin-right:0.3rem;
+            margin-bottom: 0.2rem;
+        }
+        
+    </style>
+    <title>分类</title>
+</head>
+<body id="sorts" class="bg-main sorts">
+<div id="sortsCon" class="op0">
+    <div class="top dis-tabel">
+        <div class="dis-row">
+            <div class="search dis-cell">
+                <input class="search-icon"  type="text" placeholder="搜索商品名称/关键字" v-on:click="goodSearchFocus()">
+            </div>
+            <div onclick="jumpTo('cart')" class="store-icon dis-cell cartIcon"><i v-if="cartCount != 0">{{cartCount}}</i></div>
+        </div>
+    </div>
+   <div class="dis-tabel w100">
+	   	<div class="left">
+	       <div class="dis-cell sort-left">
+	            <ul>
+	                <template v-for="one in sortType">
+	                    <template v-if="one.id==oneActive">
+	                        <li class="one bg-white color-main"  id="one{{one.id}}" v-on:click="clickOne(one.id,one.name)">{{one.name}}</li>
+	                    </template>
+	                    <template v-else>
+	                        <li class="one" id="one{{one.id}}" v-on:click="clickOne(one.id,one.name)">{{one.name}}</li>
+	                    </template>
+	                </template>
+	            </ul>
+	       </div> 
+	    </div>
+	    <div class="content" id="wrapper" style="-webkit-overflow-scrolling: touch;">
+	       <div class="dis-cell sort-right sroller" >
+	           <div id="type1" style="display: none" class="sort2">
+	               <h2><span></span>品类<span></span></h2>
+	               <!--<ul class="clearfix ">
+	                  <template v-for="second in secondTit">
+	                      <li style="position: relative;"  class="fl w33">
+	                          <span v-if="second.children.length!=0" id="two{{second.id}}" v-on:click="clickTwo(second.id,1)" class="two">{{second.name}}</span>
+	                          <span v-else id="two{{second.id}}" v-on:click="clickTwo(second.id,0)" class="two">{{second.name}}</span>
+	                          <div v-if="second.children && second.children.length!=0" style="display: none" id="second{{second.id}}" class="three-con">
+	                              <div v-if="($index+1)%3==0" class="type3 dis-tabel clearfix">
+	                                  <div v-on:click="clickTwo(second.id,0)" id="three{{second.id}}" class="three{{second.id}} dis-cell fl w33 second">全部</div>
+	                                  <template v-for="item in second.children">
+	                                      <div v-on:click="clickThree(item.id,second.id)" id="three{{item.id}}" class="three{{second.id}} dis-cell fl w33 second">{{item.name}}</div>
+	                                  </template>
+	                              </div>
+	                              <div v-if="($index+1)%3==1" class="type1 clearfix">
+	                                  <div v-on:click="clickTwo(second.id,0)" id="three{{second.id}}" class="three{{second.id}} dis-cell fl w33 second">全部</div>
+	                                  <template v-for="item in second.children">
+	                                      <div v-on:click="clickThree(item.id,second.id)" id="three{{item.id}}" class="three{{second.id}} dis-cell fl w33 second">{{item.name}}</div>
+	                                  </template>
+	                              </div>
+	                              <div v-if="($index+1)%3==2" class="type2 clearfix">
+	                                  <div v-on:click="clickTwo(second.id,0)" id="three{{second.id}}" class="three{{second.id}} dis-cell fl w33 second">全部</div>
+	                                  <template v-for="item in second.children">
+	                                      <div v-on:click="clickThree(item.id,second.id)" id="three{{item.id}}" class="three{{second.id}} dis-cell fl w33 second">{{item.name}}</div>
+	                                  </template>
+	                              </div>
+	                          </div>
+	                      </li>
+                          
+	                  </template>
+	               </ul>-->
+                   <div class='sortsType'>
+                        <template v-for="second in secondTit">
+                            <div class="w100">
+                                <div class="seStyle w100 dis-tabel">
+                                <template v-for="se in second">
+                                    <span v-if="se.children.length!=0" id="two{{se.id}}" v-on:click="clickTwo(se.id,1)" class="fl two seName" style="display: inline-block;width: 30%;">{{se.name}}</span>
+                                    <span v-else id="two{{se.id}}" v-on:click="clickTwo(se.id,0)" class="fl two seName" style="display: inline-block;width: 30%;">{{se.name}}</span>
+                                </template>
+                                </div>
+                                <template v-for="se in second">
+                                    <div v-if="se.children && se.children.length!=0" style="display: none" id="se{{se.id}}" class="three-con dis-tabel w100 seStyle" >
+                                        <div v-on:click="clickTwo(se.id,0)" id="three{{se.id}}" class="three{{se.id}} dis-cell fl  second" style="width: 30%">全部</div>
+                                        <template v-for="ch in se.children">
+                                            <div v-on:click="clickThree(ch.id,se.id)" id="three{{ch.id}}" class="three{{se.id}} fl dis-cell  second" style="width: 30%">{{ch.name}}</div>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                   </div>
+
+	            <div id="type2" class="sort1">
+	                <h2><span></span>品牌<span></span></h2>
+	                <ul class="clearfix ">
+	                    <template v-for="two in brandType">
+	                        <li v-on:click="clickBrand(two.id)" class="fl w33"><div id="brand{{two.id}}" class="brand-con"><img style="width: 75%;" :src="two.logo" alt=""><div class="fs-10">{{two.name}}</div></div></li>
+	                    </template>
+	                </ul>
+	            </div>
+	           <div v-if="oneName=='茶叶'" class="sort2">
+	               <h2><span></span>用途<span></span></h2>
+	               <ul class="clearfix ">
+	                   <template v-for="tree in useType">
+	                       <li v-on:click="clickUse(tree.id)" class="fl  w33"><span class="use" id="use{{tree.id}}">{{tree.labelName}}</span></li>
+	                   </template>
+	               </ul>
+	           </div>
+	           <div class="sort2">
+	               <h2><span></span>价格区间<span></span></h2>
+	               <div class="choose-price clearfix">
+	                   <div class="fl choose-input ">
+	                       <input type="text" v-model="param.startPrice" placeholder="最低价">
+	                       <em>&nbsp;&nbsp;&nbsp;</em>
+	                       <input type="text" v-model="param.endPrice" placeholder="最高价">
+	                   </div>
+	                   <p v-on:click="submitCondit()" class="fl btn-active">确定</p>
+	               </div>
+	           </div>
+               <!--<div class="partbottom"></div>-->
+	       </div>
+   </div>
+   </div>
+   <div class="br4"></div>
+
+   <ul class="footer clearfix">
+       <li v-on:click="gotoIndex()" class="fl w25">
+           <div><img src="img/icons/footer1.png" alt=""></div>
+           <p >首页</p>
+       </li>
+       <li class="fl w25">
+           <div><img src="img/icons/footer2a.png" alt=""></div>
+           <p class="color-main">分类</p>
+       </li>
+       <li onclick="jumpTo('cart')" class="fl w25">
+           <div class="footer-cart"><img src="img/icons/footer3.png" alt=""> <i v-if="cartCount != 0">{{cartCount}}</i></div>
+           <p>购物车</p>
+       </li>
+       <li onclick="jumpTo('person')" class="fl w25">
+           <div><img src="img/icons/footer4.png" alt=""></div>
+           <p>个人中心</p>
+       </li>
+   </ul>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/iscroll.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    Util.common.addloadingAnimate();
+
+    $(function () {
+        stortsData.loadlist();
+        stortsData.getCartCount();
+        //                微信分享
+        Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+    });
+    Util.scrollMar.setPos("sorts", 0, 1); 
+    var stortsData=new Vue({
+        el: '#sorts',
+        data: {
+            oneActive:'',
+            oneName:'',
+            sortType: [],
+            useType:[],
+            brandType:[],
+            secondTit:[],
+            thirdTit:[],
+            param:{
+                startPrice:'',
+                endPrice:'',
+                brandId:'',
+                use:'',
+                oneType:'',
+                twoType:'',
+                threeType:''
+            },
+            cartCount:''
+
+        },
+        computed: {
+
+        },
+        methods: {
+//            加载一级菜单列表
+            loadlist:function () {
+                var onetypeid=Util.common.getParameter('oneType');
+                var onetypename=Util.common.getParameter('title');
+                stortsData.$set('oneActive',onetypeid);
+                stortsData.$set('oneName',onetypename);
+                var url = "weixin/good/sortTypeIndex";
+                Util.common.b2cPostCallback(url, {}, function (res) {
+                    if(res.success){
+                        stortsData.$set('sortType', res.data.sortType);
+                        stortsData.$set('useType', res.data.use);
+                        stortsData.$set('brandType', res.data.barnd);
+                        stortsData.$set('param.oneType',res.data.sortType[0].id);
+                        setTimeout(function () {
+                            if(onetypeid==null || onetypeid=="null" || stortsData.oneActive==""){
+                                stortsData.clickOne(res.data.sortType[0].id,res.data.sortType[0].name);
+                            }else {
+                                stortsData.clickOne(stortsData.oneActive,stortsData.oneName);
+                            }
+                        },20);
+
+                        var sortCash=res.data;
+                        sessionStorage.setItem('sortCash',JSON.stringify(sortCash));
+                    }
+                });
+            },
+            getCartCount: function () {
+//            获取购物车内商品数
+
+                var url ="weixin/cart/countCartList";
+                var param = {"userId": sessionStorage.getItem("userid"), "shopId": sessionStorage.getItem("shopId")};
+                var param1 = {};
+                param1.json = JSON.stringify(param);
+                Util.common.b2cPostCallback(url, param1, function (data) {
+                    if(data.success && data.data && data.data.count) {
+                        var count = data.data.count;
+                        if (count*1 > 100) {
+                            count = '99+';
+                        }
+                        stortsData.$set('cartCount',count);
+                    } else {
+                        stortsData.$set('cartCount',0);
+                    }
+                });
+            },
+            gotoIndex:function () {
+                window.location.href="index.html?storeId="+sessionStorage.getItem('shopId')+"&userId="+sessionStorage.getItem('userid');
+            },
+            clickOne:function (id,name) {
+                stortsData.$set('oneName',name);
+                console.log(name);
+                var url = "weixin/good/sortTypeByParentId?parentId="+id;
+                $(".one").removeClass('color-main');
+                $(".one").removeClass('bg-white');
+                $("#one"+id).addClass('bg-white');
+                $('#one'+id).addClass('color-main');
+                console.log(id);
+                stortsData.$set('param.oneType',id);
+                Util.common.b2cPostCallback(url, {}, function (res) {
+                    console.log(res.data)
+                    if(res.success){
+                        // if(res.data.length!=0){
+                        //     stortsData.$set('secondTit', res.data);
+                        //     $("#type1").css("display","block");
+                        // }else {
+                        //     $("#type1").css("display","none");
+                        // }
+                    //处理逻辑
+                        $("#type1").css("display","block");
+                        var arrs = [];
+                        var datas = res.data;
+                        var m = parseInt(datas.length/3);
+                        for (var i= 0;i<m;i++) {
+                           var arr = datas.slice(i*3,(i+1)*3);
+                            arrs.push(arr);
+                        }
+                        if (datas.length>m*3) {
+                            arrs.push(datas.slice(m*3));
+                        }
+                        stortsData.$set('secondTit',arrs);
+                        var datass = {"datass": arrs}
+                        
+                    }
+                $("#wrapper").scrollTop(0);
+                });
+
+                var url_ = "weixin/good/sortTypeIndexBrand?classify="+id;
+                Util.common.b2cPostCallback(url_, {}, function (res) {
+                    if(res.success){
+                        if(res.data.length!=0){
+                            stortsData.$set('brandType', res.data);
+                            $("#type2").css("display","block");
+                        }else {
+                            $("#type2").css("display","none");
+                        }
+                    }
+
+                });
+
+                Util.common.removeloadingAnimate('sortsCon');
+            },
+            clickTwo:function (id,type) {
+                if(type==0){
+                    stortsData.$set('param.twoType',id);
+                    $(".two").removeClass('btn-active');
+                    $("#two"+id).addClass('btn-active');
+                    stortsData.submitCondit();
+                }else {
+                    if ($("#two" + id).hasClass('btn-active')) {
+                        $("#two" + id).removeClass('btn-active');
+                        $(".three-con").hide();
+                        stortsData.$set('param.twoType', '');
+                    } else {
+                        $(".two").removeClass('btn-active');
+                        $("#two" + id).addClass('btn-active');
+                        $(".three-con").hide();
+                        $("#se" + id).show();
+                        stortsData.$set('param.twoType', id);
+                    }
+                }
+
+
+
+            },
+            clickThree:function (id,id2) {
+                stortsData.$set('param.threeType',id);
+                $(".three"+id2).css('background','#f2f2f2');
+                $(".three"+id2).css('color','#666');
+                $("#three"+id).css('background','#adadad');
+                $("#three"+id).css('color','#fff');
+                stortsData.submitCondit();
+            },
+            clickUse:function (id) {
+                stortsData.$set('param.use',id);
+                $(".use").removeClass('btn-active');
+                $("#use"+id).addClass('btn-active');
+                stortsData.submitCondit();
+            },
+            clickBrand:function (id) {
+                stortsData.$set('param.brandId',id);
+                // $(".brand-con").removeClass('btn-active');
+                // $("#brand"+id).addClass('btn-active');
+                stortsData.submitCondit();
+            },
+            submitCondit:function () {
+                console.log(this.param);
+//                sortType=1分类页面跳转列表
+
+                document.location.href = "today.html?sortType=1&sortInfo=" + JSON.stringify(this.param)+'&title='+stortsData.oneName+'&classify='+this.param.oneType;
+//                var url = "weixin/good/getSeachGoodListSer.do";
+//                Util.common.executeAjaxCallback(url, this.param, function (res) {
+//                        console.log(res);
+//                });
+            },
+            goodSearchFocus:function () {
+                window.location.href="search.html?shopId="+sessionStorage.getItem("shopId")+"&userId="+sessionStorage.getItem("userid");
+            }
+        }
+    });
+
+    var cashdata=sessionStorage.getItem('sortCash');
+    if(cashdata=='' || cashdata==undefined || cashdata=="undefined" || cashdata==null){
+
+    }else {
+//        cashdata=JSON.parse(cashdata);
+//        console.log(cashdata);
+//        console.log(stortsData.oneActive);
+//        stortsData.$set('sortType', cashdata.sortType);
+//        stortsData.$set('useType', cashdata.use);
+//        stortsData.$set('brandType', cashdata.barnd);
+//        stortsData.$set('param.oneType',stortsData.oneActive);
+//        setTimeout(function () {
+//            if(stortsData.oneActive==null || stortsData.oneActive=="null" || stortsData.oneActive==""){
+//                stortsData.clickOne(cashdata.sortType[0].id,cashdata.sortType[0].name);
+//            }else {
+//                stortsData.clickOne(stortsData.oneActive,stortsData.oneName);
+//            }
+//            Util.common.removeloadingAnimate('sortsCon');
+    //    },20);
+
+    }
+
+    
+
+</script>
+</html>

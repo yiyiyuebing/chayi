@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../app-api/app-api.iml" filepath="$PROJECT_DIR$/../app-api/app-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-service.iml" filepath="$PROJECT_DIR$/base-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-service-base/base-service-base.iml" filepath="$PROJECT_DIR$/base-service-base/base-service-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-service-biz/base-service-biz.iml" filepath="$PROJECT_DIR$/base-service-biz/base-service-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../shanguo-b2b/shanguo-b2b.iml" filepath="$PROJECT_DIR$/../shanguo-b2b/shanguo-b2b.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../shanguo-b2c/shanguo-b2c.iml" filepath="$PROJECT_DIR$/../shanguo-b2c/shanguo-b2c.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../user-service/user-service.iml" filepath="$PROJECT_DIR$/../user-service/user-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../user-service/user-service-base/user-service-base.iml" filepath="$PROJECT_DIR$/../user-service/user-service-base/user-service-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../user-service/user-service-biz/user-service-biz.iml" filepath="$PROJECT_DIR$/../user-service/user-service-biz/user-service-biz.iml" />
+    </modules>
+  </component>
+</project>

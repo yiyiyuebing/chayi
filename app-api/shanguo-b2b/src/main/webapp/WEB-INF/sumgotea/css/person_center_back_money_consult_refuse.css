@@ -1,0 +1,252 @@
+.customer {
+  padding-top: 0.6rem;
+  padding-bottom: 1.28rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.customer .group-time {
+  text-align: center;
+  margin-bottom: 0.48rem;
+}
+.customer .group-time span {
+  display: inline-block;
+  color: #999;
+  font-size: 0.4rem;
+  line-height: 0.52rem;
+  background: #f3f2f5;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+  border-radius: 0.12rem;
+}
+.customer .group-txt {
+  background: #f3f2f5;
+  border-radius: 0.2rem;
+  padding-left: 0.54rem;
+  padding-right: 0.54rem;
+  padding-bottom: 0.52rem;
+   position: relative; 
+}
+.customer .group-txt .icon-triangle {
+  width: 0.34rem;
+  height: 0.44rem;
+  display: inline-block;
+  background: url(../img/g_icon_triangle_f0.png) no-repeat center;
+  background-size: contain;
+  position: absolute;
+  right: -0.32rem;
+  top: 0.4rem;
+}
+.customer .group-txt h5 {
+  padding: 0;
+  margin: 0;
+  line-height: 1.88rem;
+  font-weight: normal;
+  font-size: 0.8125rem;
+  text-align: left;
+  border-bottom: 1px solid #dbdbdb;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+.customer .group-txt p {
+  font-size: 0.8125rem;
+  line-height: 0.92rem;
+  text-align: left;
+  color: #666;
+}
+.customer .group-time {
+  position: relative;
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+.customer .group-time .time {
+  color: #999;
+  font-size: 0.75rem;
+  line-height: 0.52rem;
+  background: #f3f2f5;
+  padding: 0.2rem 0.3rem;
+  border-radius: 0.12rem;
+}
+.customer-server {
+  padding-top: 0.6rem;
+  padding-bottom: 1.28rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.customer-server .group-time {
+  position: relative;
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+.customer-server .group-time .time {
+  color: #999;
+  font-size: 0.75rem;
+  line-height: 0.52rem;
+  background: #f3f2f5;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+  border-radius: 0.12rem;
+}
+.customer-server .group-time .plate {
+  font-size: 0.75rem;
+  color: #ccc;
+  line-height: 0.52rem;
+  position: absolute;
+  left: 0.26rem;
+  top: 0.52rem;
+
+}
+.customer-server .group-time .plate i {
+  display: inline-block;
+  width: 0.24rem;
+  height: 0.24rem;
+  border-radius: 50%;
+  background: #ccc;
+  margin-right: 0.12rem;
+  vertical-align: middle;
+}
+.customer-server .server-txt {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  background: #51a3cb;
+  border-radius: 0.2rem;
+  padding-left: 0.54rem;
+  padding-right: 0.54rem;
+  box-sizing: border-box;
+  padding-bottom: 0.4rem;
+}
+.customer-server .server-txt .icon-triangle {
+  display: inline-block;
+  width: 0.34rem;
+  height: 0.44rem;
+  background: url(../img/g_icon_triangle_blue.png) no-repeat center;
+  background-size: contain;
+  position: absolute;
+  left: -0.34rem;
+  top: 0.4rem;
+}
+#orange .server-txt{
+  background: #f08245;
+}
+#orange .server-txt .icon-triangle {
+  background: url(../img/g_icon_triangle_orange.png) no-repeat center;
+  background-size: contain;
+}
+.customer-server .server-txt h5 {
+  padding: 0;
+  margin: 0;
+  line-height: 1.88rem;
+  font-weight: normal;
+  font-size: 0.8125rem;
+  text-align: left;
+  border-bottom: 1px solid #dbdbdb;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.customer-server .server-txt .txt p {
+  font-size: 0.8125rem;
+  text-align: left;
+  color: #fff;
+  margin: 0;
+}
+.customer-server .server-txt .txt .markTxt {
+  font-size: 0.8125rem;
+  text-align: left;
+  color: #fff;
+  margin: 0;
+}
+.customer-server .server-txt .txt p mark {
+  background: transparent;
+  color: #333;
+  font-weight: bold;
+  margin-left: 0.12rem;
+  margin-right: 0.12rem;
+}
+.customer-server .server-txt .txt p .icon-clock {
+  display: inline-block;
+  width: 0.52rem;
+  height: 0.52rem;
+  background: url(../img/g_icon_clock_white.png) no-repeat center;
+  background-size: contain;
+  margin-left: 0.12rem;
+  vertical-align: baseline;
+}
+.submit {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 2rem;
+  line-height: 2rem;
+  border-top: 1px solid #dbdbdb;
+  width: 100%;
+  background: #fff;
+}
+.submit .submit-wrap a {
+  color: #1c1c1c;
+  display: inline-block;
+  padding-right: 0.2rem;
+  padding-left: 0.2rem;
+  border: 1px solid #dbdbdb;
+  line-height: 1.2rem;
+  border-radius: 0.2rem;
+  font-size: 0.8125rem;
+  margin-right: 0.48rem;
+}
+.submit-bottom {
+  width: 100%;
+  height: 2rem;
+  background: #fff;
+}
+.popup{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top:0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+}
+.popup .popup-wrap{
+  background: #fff;
+  width: 11.28rem;
+  height: 5.68rem;
+  position: absolute;
+  left: 50%;
+  top:50%;
+  margin-left: -5.64rem;
+  margin-top: -2.84rem;
+  border-radius: 0.4rem;
+  padding-top: 0.24rem;
+}
+.popup .popup-wrap h4{
+  text-align: center;
+  font-size: 0.8125rem;
+  line-height: 1.3rem;
+  color: #1c1c1c;
+  margin: 0;
+}
+.popup .popup-wrap p{
+  text-align: center;
+  font-size: 0.8125rem;
+  line-height: 1.04rem;
+  color: #666;
+  margin: 0;
+}
+.popup .popup-wrap .button-group{
+  margin-top: 0.48rem;
+  border-top: 1px solid #dbdbdb;
+}
+.popup .popup-wrap .button-group a{
+  width: 50%;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 0.8125rem;
+  line-height: 1.76rem;
+}
+.popup .popup-wrap .button-group a.cancel{
+  color: #666;
+  border-right: 1px solid #dbdbdb;
+}
+.popup .popup-wrap .button-group a.confirm{
+  color: #cc9b4a;
+}

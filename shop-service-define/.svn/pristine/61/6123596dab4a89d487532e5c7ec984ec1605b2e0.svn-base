@@ -1,0 +1,80 @@
+package pub.makers.shop.base.vo;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+
+/**
+ * Created by dy on 2017/5/15.
+ */
+public class MsgTemplateVo implements Serializable{
+
+    private String id; //短信模板id
+
+    private String orderType; //订单类型(两种: trade：商城，purchase: 采购)
+
+    private String type;
+
+    private String title; //短信模板名称
+
+    private String content; //短信内容
+
+    private String isValid; //禁用状态（0：禁用，1:启用）
+
+    private Timestamp createTime; //创建时间
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getIsValid() {
+        return isValid;
+    }
+
+    public void setIsValid(String isValid) {
+        this.isValid = isValid;
+    }
+
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
+}

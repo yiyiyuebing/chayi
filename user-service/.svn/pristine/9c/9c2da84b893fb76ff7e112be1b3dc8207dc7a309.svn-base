@@ -1,0 +1,35 @@
+package pub.makers.shop.store.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.alibaba.dubbo.config.annotation.Service;
+
+import pub.makers.base.exception.ValidateUtils;
+import pub.makers.daotemplate.vo.Conds;
+import pub.makers.shop.base.enums.SmsType;
+import pub.makers.shop.base.service.SmsService;
+import pub.makers.shop.store.entity.BankCard;
+import pub.makers.shop.store.entity.Subbranch;
+
+@Service(version="1.0.0")
+public class BankCardBizServiceImpl implements BankCardBizService{
+
+	@Autowired
+	private SmsService smsService;
+	@Autowired
+	private SubbranchService subbranchService;
+	@Autowired
+	private BankCardService bankcardService;
+	
+	public void unbind(String phone, String vcode) {
+		
+		boolean isValidate = smsService.checkCode(SmsType.bankcard.name(), phone, vcode);
+		
+		ValidateUtils.isTrue(isValidate, "验证码不正确");
+		BankCard bankCard = bankcardService.get(Conds.get().eq("mobile", phone));
+		ValidateUtils.notNull(bankCard, "银行卡不存在");
+		bankcardService.delete(Conds.get().eq("bank_card_id", bankCard.getBankCardId()));
+
+	}
+	
+}

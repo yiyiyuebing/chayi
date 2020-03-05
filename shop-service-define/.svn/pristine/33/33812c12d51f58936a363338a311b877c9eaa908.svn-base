@@ -1,0 +1,145 @@
+package pub.makers.shop.order.service;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import pub.makers.shop.base.vo.Paging;
+import pub.makers.shop.base.vo.ResultList;
+import pub.makers.shop.order.vo.*;
+
+public interface IndentMgrBizService {
+
+	/**
+	 * 查询店铺订单列表
+	 * @param shopId
+	 * @return
+	 */
+	List<IndentExtendVo> listShopOrder(String shopId, String buyerId, String status, Paging pi);
+
+	/**
+	 * 今日下单数
+	 * @return
+	 */
+	Long countTodayOrderNum();
+
+	/**
+	 * 待付款数量
+	 * @return
+	 */
+	Long countUnpayOrderNum();
+
+	/**
+	 * 代发货数量
+	 * @return
+	 */
+	Long countUnpostOrderNum();
+
+	/**
+	 * 商品总金额
+	 * @return
+	 */
+	BigDecimal indentTotalAmount();
+
+	/**
+	 * 实收总金额
+	 * @return
+	 */
+	BigDecimal indentPaymentAmount();
+
+	/**
+	 * 获取时间范围内的成交金额数
+	 * @param todayDateStart
+	 * @param todayDateEnd
+	 * @return
+	 */
+	BigDecimal indentPaymentAmountByDateRange(Date todayDateStart, Date todayDateEnd);
+
+	/**
+	 * 待处理数量
+	 * @return
+	 */
+	Long countUnDealOrderNum();
+
+	/**
+	 * 订单列表数据查询
+	 * @param indentParams
+	 * @param pg
+	 * @return
+	 */
+	ResultList<IndentVo> indentList(IndentParams indentParams, Paging pg);
+
+	/**
+	 * 表格导出
+	 * @param params
+	 */
+	List<IndentExport> exportExcel(IndentParams params);
+
+	/**
+	 * 根据条件获取excel数据
+	 * @param params
+	 * @return
+	 */
+	List<IndentExport> exportExcelIndentList(IndentParams params);
+
+	/**
+	 * 获取订单详情
+	 * @param id
+	 * @return
+	 */
+	IndentVo getDetailInfo(Long id);
+
+
+	/**
+	 * 批量免运费
+	 * @param indentParams
+	 * @return
+	 */
+//	Map<String, Object> indentBatchFreeCarriage(IndentParams indentParams);
+
+	/**
+	 * 批量修改运费
+	 * @param indentParams
+	 * @return
+	 */
+	Map<String,Object> updateIndentCarriage(IndentParams indentParams);
+
+	/**
+	 * 修改收货相关信息
+	 * @param indentParams
+	 * @return
+	 */
+	Map<String,Object> modifyIndentReceiverInfo(IndentParams indentParams);
+
+	/**
+	 * 获取售后订单详情
+	 *
+	 * @param orderNo
+	 * @param indentListId
+	 * @param goodSkuId
+	 * @param flowStatus
+	 * @return
+	 */
+	Map<String, Object> afterSaleIndentDetail(String orderNo, String indentListId, String goodSkuId, String flowStatus, String afterSaleService);
+
+	/**
+	 * 根据登录员工ID查找对应角色信息
+	 * @param staffId
+	 * @return
+	 */
+	Map<String,Object> getRoleInfoByStaffId(String staffId);
+
+	/**
+	 * 新增协商回复
+	 * @param orderFlowInfo
+	 */
+	void addOrderFlowReply(Map<String, Object> orderFlowInfo);
+
+	/**
+	 * 获取发票订单列表
+	 * @param indentParams
+	 * @return
+	 */
+	List<IndentInvoiceVo> getIndentInvoiceList(IndentParams indentParams);
+}

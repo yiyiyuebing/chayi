@@ -1,0 +1,22 @@
+package pub.makers.shop.order.enums;
+
+public enum IndentListStatus {
+
+	waitpay("待付款"), ship("待发货"), receive("待收货"), canceled("已取消"), return1("退款申请"), return2("退货退款申请"), return3("换货申请"), evaluate("待评价"),
+	returned1("已退款"), returned2("已退货"), returned3("已换货"), done("已完成"), received("到货确认");
+	
+	private String displayName;
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+	
+	private IndentListStatus(String displayName){
+		this.displayName = displayName;
+	}
+	
+}

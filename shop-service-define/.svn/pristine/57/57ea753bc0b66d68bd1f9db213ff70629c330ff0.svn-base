@@ -1,0 +1,22 @@
+package pub.makers.shop.base.service;
+
+/**
+ * Created by devpc on 2017/7/24.
+ */
+
+import pub.makers.shop.base.entity.SysDict;
+import pub.makers.shop.base.vo.SysDictVo;
+
+import java.util.List;
+
+/**
+ * 查询  标签  内容  的  接口
+ */
+public interface SysDictVoLabelAdminService {
+    //得到标签的方法
+    List<SysDictVo> getSysDictLabel(String label);
+    //增加标签
+    boolean addSysDictLabel(SysDict sysDict);
+
+
+}

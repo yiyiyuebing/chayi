@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yaoming.module.security.dao.SecurityRoleUserExtendMapper" >
+	<select id="selectByUserId" resultMap="com.yaoming.module.security.dao.base.SecurityRoleUserMapper.BaseResultMap">
+		select * from _security_role_user where user_id=#{userid}
+	</select>
+	
+	<insert id="saveRelation" parameterType="com.yaoming.module.security.dao.base.po.SecurityRoleUser" >
+	  replace into _security_role_user (role_id, user_id)
+	  values (#{roleId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT})
+	</insert>
+	
+	<delete id="deleteAllRelations">
+		delete from _security_role_user where user_id=#{userId}
+	</delete>
+	
+	<delete id="deleteAllRoleRelations">
+		delete from _security_role_user where role_id=#{roleId}
+	</delete>
+	
+	<delete id="deleteRelation">
+		delete from _security_role_user where role_id=#{roleId} and user_id=#{userId}
+	</delete>
+	
+</mapper>

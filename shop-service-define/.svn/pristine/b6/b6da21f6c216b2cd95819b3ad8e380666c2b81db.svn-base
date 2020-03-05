@@ -1,0 +1,17 @@
+package pub.makers.shop.store.service;
+
+import pub.makers.shop.store.entity.SalesReturnReason;
+
+/**
+ * Created by dy on 2017/6/24.
+ */
+public interface SalesReturnReasonBizService {
+
+    /**
+     * 获取信息
+     * @param id
+     * @return
+     */
+    SalesReturnReason getById(String id);
+
+}

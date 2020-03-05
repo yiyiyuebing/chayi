@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <link rel="stylesheet" href="css/myorder_afterSale.css">
+    <style>
+        .spinner-bg{background:transparent;}
+
+    </style>
+    <title>我的订单</title>
+</head>
+<body id="orders"  class="bg-main order-con">
+    <ul class="mycart" id="myCart">
+        <template v-for="list in orderList">
+            <li>
+              <div class="order-num">订单号：{{list.orderNo}}<span class="fr color-main">{{list.statusName}}</span></div>
+                <template v-for="item in list.itemList">
+                    <div class="order-item dis-tabel w100" v-on:click="orderDetail(item.orderId)">
+                        <div class="dis-cell part2"><img :src="item.purGoodsImgUrl" alt=""></div>
+                        <div class="dis-cell part3">
+                            <div class="dis-tabel part3-1">
+                                <div class="dis-cell">
+                                    <h4>{{item.purGoodsName}}</h4>
+                                    <span class="color-grey fs-14">{{item.purGoodsType}}&nbsp;</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dis-cell">
+                            <div class="dis-tabel part3-1">
+                                <div class="dis-cell">
+                                    <template v-if="list.orderType == 'presell'">
+                                        <h4 class="ta-r">¥{{list.presellExtra.presellAmount}}</h4>
+                                    </template>
+                                    <template v-else>
+                                        <h4 class="ta-r">¥{{item.supplyPrice}}</h4>
+                                    </template>
+                                    <h4 class="list-num ta-r">x{{item.buyNum}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+              </div>
+                <div class="part4 clearfix ">
+                    <p class="border-b1">共计{{list.number}}个商品，合计：¥{{list.finalAmount}}(含运费)</p>
+                    <!--通用状态-->
+                    <template v-if="list.statusName == '待发货'">
+                        <div class="clearfix">
+                            <span class="btn-active fr">提醒发货</span><span class="fr">申请退款</span>
+                        </div>
+                    </template>
+                    <template v-if="list.statusName == '待收货' ">
+                        <div class="clearfix">
+                            <span class="btn-active fr">确认收货</span><span class="fr">查看物流</span>
+                        </div>
+                    </template>
+                    <template v-if="list.statusName == '待评价' || list.statusName == '已收货' ">
+                        <div class="clearfix">
+                            <span class="btn-active fr">立即评价</span><span class="fr">查看物流</span><span class="fr">删除订单</span>
+                        </div>
+                    </template>
+                    <template v-if=" list.statusName == '已取消' || list.statusName == '已完成' ">
+                        <div class="clearfix">
+                            <span class="fr">删除订单</span>
+                        </div>
+                    </template>
+                    <!--待付款阶段-->
+                    <template v-if="list.statusName == '待付款' || list.statusName == '待支付尾款'">
+                        <!--普通订单-->
+                        <template v-if="list.orderType == 'normal'|| ( list.orderType == 'presell' && list.presellExtra.presellType == 'one' )">
+                            <div class="clearfix">
+                                <span class="btn-active fr">去付款</span><span class="fr">取消订单</span>
+                            </div>
+                        </template>
+                        <!--预售订单-->
+                        <template v-if=" list.orderType == 'presell' && list.presellExtra.presellType == 'second' ">
+                            <template v-if="list.activityCondition == '订金支付时间未开始'">
+                                <div class="clearfix">
+                                    <span class="fr">支付订金</span><span class="fr">取消订单</span>
+                                </div>
+                            </template>
+                            <template v-if="list.activityCondition == '活动进行中，未支付订金'">
+                                <div class="clearfix">
+                                    <span class="btn-active fr">支付订金</span><span class="fr">取消订单</span>
+                                </div>
+                            </template>
+                            <template v-if="list.activityCondition == '活动结束，订金未支付'">
+                                <div class="clearfix">
+                                    <span class="fr">订单关闭</span>
+                                </div>
+                            </template>
+                            <template v-if="list.activityCondition == '尾款支付时间未开始'">
+                                <div class="clearfix">
+                                    <span class="fr">支付尾款</span><span class="fr">取消订单</span>
+                                </div>
+                            </template>
+                            <template v-if="list.activityCondition == '尾款支付中'">
+                                <div class="clearfix">
+                                    <span class="btn-active fr">支付尾款</span><span class="fr">取消订单</span>
+                                </div>
+                            </template>
+                            <template v-if="list.activityCondition == '活动结束，尾款未支付'">
+                                <div class="clearfix">
+                                    <span class="fr">订单关闭</span>
+                                </div>
+                            </template>
+                        </template>
+                    </template>
+                </div>
+            </li>
+        </template>
+
+        <div class="emptyIcon" id="emptyIcon" v-if="orderList.length==0">
+            <div class="empty-icon"><img src="img/icons/no.png" alt=""></div>
+            <p class="fs-14 ta-c">暂无相关订单，<br/>快去商城逛逛吧~</p>
+        </div>
+    </ul>
+    
+    <div class="goTop" style="display: none" v-on:click="goTop()"></div>
+    <p style="display: none" class="ta-c copyright">已经到底了...</p>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script src="https://qiyukf.com/script/1a8fad464c1c676e72fd62c3d82937c0.js" charset="UTF-8"></script>
+<script>
+    $(function () {
+        orderData.getOrderList();
+        orderData.activeSwitch();
+        /*orderData.getToken();*/
+        /*Util.common.addloadingAnimate();*/
+        $(window).scroll(function() {
+                	
+            if ($(window).scrollTop() > 0) {
+                $(".goTop").fadeIn(800);
+            } else {
+                $(".goTop").fadeOut(800);
+            }
+            if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                orderData.pageNo++;
+                orderData.getOrderList();
+            }
+        });
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+    })
+    var userId = sessionStorage.getItem("userid");
+    var counter = 1;
+    var orderData=new Vue({
+        el:"#orders",
+        data:{
+            //''("全部",''), pay("待付款",1),ship("待发货",2),receive("待收货",5),evaluate("待评价",12)
+            status: Util.common.getParameter('status'),
+            pageNo:1,
+            pageSize:'50',
+            orderList:[],
+            downloadFlag:true
+        },
+        computed:{
+
+        },
+        methods:{
+            /*获取订单列表*/
+            getOrderList:function(){
+                var url = "/weixin/order/getOrderList";
+                var params = {};
+                params.status = orderData.status;
+                params.pageNo = orderData.pageNo;
+                params.pageSize = orderData.pageSize;
+                console.log(params.status);
+                var paramsStr = {};
+                paramsStr.modelJson = JSON.stringify(params);
+                if(orderData.downloadFlag){
+                    Util.common.addloadingAnimate();
+                    $.post(url,paramsStr,function(result){
+                        Util.common.removeloadingAnimate();
+                        if(result.success){
+                            console.log(result.data);
+                            var dataList = result.data;
+                            if(dataList && dataList.length > 0){
+                                orderData.$set('orderList',dataList);
+                                var nowTime = new Date().getTime();  //获取当前时间
+                                console.log(nowTime);
+                                $.each(dataList,function(i,item){
+                                    if(item.paymentList && item.paymentList.length > 1){   //如果是预售商品  且分期付款
+                                        var subStartTime = item.paymentList[0].payStart; //订金开始时间
+                                        var subEndTime = item.paymentList[0].payEnd;   //订金结束时间
+                                        var subPayCondition = item.paymentList[0].payStatus; //订金支付状态
+                                        var finalStartTime = item.paymentList[1].payStart; //尾款开始时间
+                                        var finalEndTime = item.paymentList[1].payEnd;   //尾款结束时间
+                                        var finalPayCondition= item.paymentList[1].payStatus;   //尾款支付状态
+                                        /*订金状态*/
+                                        if(nowTime < subStartTime){
+                                            item.subCondition  = '订金支付未开始';
+                                            item.activityCondition = '订金支付时间未开始';
+                                            return;
+                                        }else if( nowTime >= subStartTime && nowTime <= subEndTime && subPayCondition == 'F'){
+                                            item.subCondition  = '需支付订金';
+                                            item.activityCondition = '活动进行中，未支付订金';
+                                            return;
+                                        }else if(  nowTime >= subStartTime && subPayCondition == 'T' ){
+                                            item.subCondition  = '已支付订金';
+                                            item.activityCondition = '活动进行中，已支付订金';
+                                        }else if( nowTime > subEndTime && subPayCondition == 'F'){
+                                            item.activityCondition = '活动结束，订金未支付';
+                                            return;
+                                        }
+                                        /*尾款状态*/
+                                        if(item.subCondition == '已支付订金'){  //订金已支付  才能进入尾款支付阶段
+                                            if(nowTime < finalStartTime ){
+                                                item.finalCondition  = '尾款支付未开始';
+                                                item.activityCondition = '尾款支付时间未开始';
+                                            }else if( nowTime >= finalStartTime && nowTime <= finalEndTime && finalPayCondition == 'F'){
+                                                item.finalCondition  = '需支付尾款';
+                                                item.activityCondition = '尾款支付中';
+                                            }else if(  nowTime >= finalStartTime && finalPayCondition == 'T' ){
+                                                item.finalCondition  = '已支付尾款';
+                                                item.activityCondition = '进入待发货阶段';
+                                            }else if( nowTime > finalEndTime && finalPayCondition == 'F'){
+                                                item.activityCondition = '活动结束，尾款未支付';
+                                            }
+                                        }
+                                    }
+                                });
+
+                            }else if(orderData.pageNo > 1){
+                                new Toast({context:$('body'),message: "到底了！" }).show();
+                                orderData.downloadFlag = false;
+                            }
+                        }else{
+                            new Toast({context:$('body'),message: result.msg}).show();
+                        }
+                    });
+                }
+            },
+            /*顶部导航状态切换*/
+            switchOrderStatus:function(state){
+                orderData.status = state;
+                orderData.pageNo = 1;
+                $(window).scrollTop(0);
+                orderData.downloadFlag = true;
+                orderData.orderList = [];
+                orderData.getOrderList();
+            },
+            /*选中状态切换*/
+            activeSwitch:function(){
+                $("#nav").on('click','div',function(){
+                    $(this).addClass("color-main").addClass('border-b2').siblings('div').removeClass('color-main').removeClass('border-b2');
+                });
+            },
+            orderDetail:function (id) {
+                window.location.href='order_detail.html?orderId='+id;
+            },
+            cancelOrder:function(id) {
+//                取消订单
+                my_confirm({
+                    title:'提示',
+                    tips:"确定取消该订单吗？",
+                    btnOk:'确定',
+                    btnNo:'取消',
+                    funcOk:function () {
+                        var url ="trade/corder/cancelOrder";
+                        var param = {"orderId": id, "userId": userId};
+                        Util.common.b2bPostCallback(url, param, function (data) {
+                            if (data.success) {
+                                new Toast({context:$('body'),message:"取消成功"}).show();
+                                orderData.relaodList();
+                            } else {
+                                new Toast({context:$('body'),message: data.msg }).show();
+                            }
+                        });
+                    },
+                    funcNo:function () {
+                    }
+                });
+
+
+            },
+            deleteOrder: function(ids, orderType){
+//                删除订单
+                my_confirm({
+                    title:'提示',
+                    tips:"确定删除订单吗？",
+                    btnOk:'确定',
+                    btnNo:'取消',
+                    funcOk:function () {
+                        var url ="trade/corder/deleteOrder";
+                        var param = {"orderId": ids, "userId":sessionStorage.getItem('userid'), "orderType":orderType};
+                        Util.common.b2bPostCallback(url, param, function (data) {
+                            if(data.success){
+                                new Toast({context:$('body'),message: "删除成功！" }).show();
+                                orderData.relaodList();
+                            } else {
+                                new Toast({context:$('body'),message: data.msg }).show();
+                            }
+                        });
+                    },
+                    funcNo:function () {
+                    }
+                });
+            },
+            shipNotice: function(ids, orderType){
+//                提醒发货
+                var url ="trade/corder/shipNotice";
+                var param = {"orderId": ids, "userId":sessionStorage.getItem('userid'), "orderType": orderType};
+                Util.common.b2bPostCallback(url, param, function (data) {
+                    if(data.success){
+                        new Toast({context:$('body'),message: "提醒成功！" }).show();
+                    } else {
+                        new Toast({context:$('body'),message: data.msg }).show();
+                    }
+                });
+            },
+            sureOrder:function(id,orderType) {
+//                确认收货
+                my_confirm({
+                    title:'提示',
+                    tips:"确定已收到商品？<br/>订单完成后不能申请售后",
+                    btnOk:'确定',
+                    btnNo:'取消',
+                    funcOk:function () {
+                        var url ="trade/corder/confirmReceipt";
+                        var param = {};
+                        param.orderId = id;
+                        param.userId = sessionStorage.getItem('userid'); 
+                        param.orderType = orderType;
+                        Util.common.b2bPostCallback(url, param, function (data) {
+                            if(data.success){
+                                new Toast({context:$('body'),message: "收货成功" }).show();
+                                orderData.relaodList();
+                            } else {
+                                new Toast({context:$('body'),message: data.msg }).show();
+                            }
+                        });
+                    },
+                    funcNo:function () {
+                    }
+                });
+            },
+            orderPay:function (waitpayAmount,id) {
+//                去付款
+                window.location.href="order_pay.html?waitpayAmount="+waitpayAmount+"&orderId="+id;
+            },
+            returnMoney:function (list) {
+//               整个订单申请退款
+                var goodInfo = {};
+                goodInfo.goods = list.indentList;
+                goodInfo.orderId = list.id;
+                goodInfo.orderType = list.orderType;
+                window.location.href='after_sale.html?goodInfo='+JSON.stringify(goodInfo)+'&refund=T';
+            },
+            returnGoods:function () {
+//                申请退货
+                window.location.href="goods_return.html?title=申请退货&id="+id;
+            },
+            toEvaluate:function (id) {
+//                立即评价
+                window.location.href="evaluation.html?orderId="+id;
+            },
+            seeLogistic:function (l_id,name) {
+//                查看物流状态
+                window.location.href='logistics.html?oddNum='+l_id+"&expressCompany="+name;
+            },
+            lookReturnAddr:function () {
+//                查看退货地址
+                window.location.href='person_address_empty.html';
+            },
+            buyAgain:function(list) {
+                //再次购买  将商品添加至购物车
+                var addCartList = list.indentList;
+                for (var i=0;i<addCartList.length;i++) {
+                    if (addCartList[i].giftFlag && addCartList[i].giftFlag == 'T') {
+                        continue;
+                    }
+                    var cart_url = "weixin/cart/addToCart";
+                    var cart_param = {
+                        "userId": sessionStorage.getItem('userid'),
+                        "goodsId": addCartList[i].goodSkuId,
+                        "shopId": sessionStorage.getItem("shopId"),
+                        "goodsCount": addCartList[i].number,
+                    };
+                    var param1 = {};
+                    param1.json = JSON.stringify(cart_param);
+                    Util.common.b2bPostCallback(cart_url, param1, function (data) {
+                        if (data.success) {
+                            new Toast({context:$('body'),message: '已添加至购物车！' }).show();
+                        }else {
+                            new Toast({context:$('body'),message: '添加至购物车失败，请重试！' }).show();
+                        }
+                    });
+                }
+            },
+            getToken: function(){
+                var url ="/weixin/qiniu/getToken.do";
+                var param = {};
+                Util.common.executeAjaxCallback(url, param, function(result){
+                    sessionStorage.setItem('qiniu_token', result.uptoken);
+                });
+            },
+            relaodList: function() {
+                counter = 1;
+                orderData.$set('orderlist',[]);
+                orderData.loadlist(orderData.status);
+            },
+            goTop: function() {
+                $('html,body').animate({
+                    scrollTop: 0
+                },500);
+            }
+
+        }
+    });
+
+
+</script>
+</html>

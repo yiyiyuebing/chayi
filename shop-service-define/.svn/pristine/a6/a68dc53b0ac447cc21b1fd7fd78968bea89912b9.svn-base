@@ -1,0 +1,6 @@
+package pub.makers.shop.cart.service;
+
+public interface CartBizService {
+
+	void addToCart();
+}

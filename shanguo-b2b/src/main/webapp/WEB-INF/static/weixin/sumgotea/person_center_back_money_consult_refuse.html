@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--清除浏览器缓存-->
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <!--设备 IE  最高版本-->
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <!--定义 语言类型-->
+    <meta http-equiv="CONTENT-TYPE" content="text/html" charset="utf-8">
+    <!--设置视口宽度与设备宽度， 禁止用户缩放-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--X5内核 全屏显示-->
+    <meta name="x5-fullscreen" content="true">
+    <!--uc内核  全屏显示-->
+    <meta name="full-screen" content="yes">
+    <!--描述-->
+    <meta name="description" content="山国饮艺">
+    <!--关键字-->
+    <meta name="keywords" content="山国饮艺">
+    <title>个人中心-订单详情-待收货-仅退款-协商换货-拒绝</title>
+    <!--公共部分-->
+    <!--HTML标签样式重置-->
+    <link href="css/normalize.css" rel="stylesheet">
+    <!--移动端css重置-->
+    <link href="css/reset.css" rel="stylesheet">
+    <!--rem适配  设计图750*1334-->
+    <script src="js/viewport_rem.js"></script>
+    <!--公共部分   ending-->
+    <!--单独样式-->
+    <link href="css/person_center_back_money_consult_refuse.css" rel="stylesheet">
+</head>
+<body>
+    <section class="customer">
+        <div class="group-time">
+            <span class="time">06-08 13:09</span>
+        </div>
+        <div class="group-txt">
+            <i class="icon-triangle"></i>
+            <h5>买家发起了申请</h5>
+            <p>发起了换货，货物状态：已发货，原因：包装被损坏，退款金额23.00元</p>
+        </div>
+    </section>
+
+    <section class="customer-server">
+        <div class="group-time">
+            <span class="plate"><i></i>优茶联平台</span>
+            <span class="time">06-08 13:09</span>
+        </div>
+        <div class="server-txt">
+            <i class="icon-triangle"></i>
+            <h5>优茶联拒绝换货</h5>
+            <div class="txt">
+                <p>优茶联拒绝本次退款服务申请，原因：商品是买家自行损坏，与本平台无关！</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="submit center-block">
+        <div class="submit-wrap pull-right">
+            <a href="javascript:;" id="applyBtn">再次申请</a>
+        </div>
+    </section>
+
+    <!--确认撤销弹窗-->
+    <section class="popup" id="popup">
+        <div class="popup-wrap">
+            <h4>提示</h4>
+            <p>您仅剩最后一次申请机会，请谨慎使用！</p>
+            <div class="button-group clearfix">
+                <a href="#" class="confirm">知道了</a>
+            </div>
+        </div>
+    </section>
+</body>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/person_center_back_money_consult_refuse.js"></script>
+</html>

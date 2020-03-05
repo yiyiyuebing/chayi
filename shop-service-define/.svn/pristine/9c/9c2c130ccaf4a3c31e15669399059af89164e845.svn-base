@@ -1,0 +1,206 @@
+package pub.makers.shop.item.entity;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
+public class TradeGoodSku implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	/**  */
+	private Long id;		
+	
+	/**  */
+	private Long goodId;		
+	
+	/**  */
+	private Long cargoSkuId;		
+	
+	/**  */
+	private String cargoSkuName;		
+	
+	/**  */
+	private Long nums;		
+	
+	/**  */
+	private BigDecimal marketPrice;		
+	
+	/**  */
+	private BigDecimal retailPrice;		
+	
+	/**  */
+	private Date startTime;		
+	
+	/**  */
+	private Date endTime;		
+	
+	/**  */
+	private Integer limitNum;		
+	
+	/**  */
+	private BigDecimal salePrice;		
+	
+	/**  */
+	private Integer saleNum;		
+	
+	/** 最小团购数量 */
+	private Integer minTuanNum;		
+	
+	/** 最终价格 */
+	private BigDecimal totalPrice;
+	
+	private TradeGood good;
+
+	/** 已上架未售 */
+	private Integer onSalesNo;
+
+	/** 已售未付款 */
+	private Integer onPayNo;
+
+	/** 已售未发货 */
+	private Integer onSendNo;
+
+	public void setId(Long id){
+		this.id = id;
+	}
+	
+	public Long getId(){
+		return id;
+	}
+	
+	public void setGoodId(Long goodId){
+		this.goodId = goodId;
+	}
+	
+	public Long getGoodId(){
+		return goodId;
+	}
+	
+	public void setCargoSkuId(Long cargoSkuId){
+		this.cargoSkuId = cargoSkuId;
+	}
+	
+	public Long getCargoSkuId(){
+		return cargoSkuId;
+	}
+	
+	public void setCargoSkuName(String cargoSkuName){
+		this.cargoSkuName = cargoSkuName;
+	}
+	
+	public String getCargoSkuName(){
+		return cargoSkuName;
+	}
+	
+	public void setNums(Long nums){
+		this.nums = nums;
+	}
+	
+	public Long getNums(){
+		return nums == null ? 0 : nums;
+	}
+	
+	public void setMarketPrice(BigDecimal marketPrice){
+		this.marketPrice = marketPrice;
+	}
+	
+	public BigDecimal getMarketPrice(){
+		return marketPrice;
+	}
+	
+	public void setRetailPrice(BigDecimal retailPrice){
+		this.retailPrice = retailPrice;
+	}
+	
+	public BigDecimal getRetailPrice(){
+		return retailPrice;
+	}
+	
+	public void setStartTime(Date startTime){
+		this.startTime = startTime;
+	}
+	
+	public Date getStartTime(){
+		return startTime;
+	}
+	
+	public void setEndTime(Date endTime){
+		this.endTime = endTime;
+	}
+	
+	public Date getEndTime(){
+		return endTime;
+	}
+	
+	public void setLimitNum(Integer limitNum){
+		this.limitNum = limitNum;
+	}
+	
+	public Integer getLimitNum(){
+		return limitNum;
+	}
+	
+	public void setSalePrice(BigDecimal salePrice){
+		this.salePrice = salePrice;
+	}
+	
+	public BigDecimal getSalePrice(){
+		return salePrice;
+	}
+	
+	public void setSaleNum(Integer saleNum){
+		this.saleNum = saleNum;
+	}
+	
+	public Integer getSaleNum(){
+		return saleNum;
+	}
+	
+	public void setMinTuanNum(Integer minTuanNum){
+		this.minTuanNum = minTuanNum;
+	}
+	
+	public Integer getMinTuanNum(){
+		return minTuanNum;
+	}
+
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public TradeGood getGood() {
+		return good;
+	}
+
+	public void setGood(TradeGood good) {
+		this.good = good;
+	}
+
+	public Integer getOnSalesNo() {
+		return onSalesNo;
+	}
+
+	public void setOnSalesNo(Integer onSalesNo) {
+		this.onSalesNo = onSalesNo;
+	}
+
+	public Integer getOnPayNo() {
+		return onPayNo;
+	}
+
+	public void setOnPayNo(Integer onPayNo) {
+		this.onPayNo = onPayNo;
+	}
+
+	public Integer getOnSendNo() {
+		return onSendNo;
+	}
+
+	public void setOnSendNo(Integer onSendNo) {
+		this.onSendNo = onSendNo;
+	}
+}

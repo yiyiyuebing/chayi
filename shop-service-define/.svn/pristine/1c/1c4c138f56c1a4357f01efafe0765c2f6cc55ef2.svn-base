@@ -1,0 +1,63 @@
+package pub.makers.shop.purchaseOrder.pojo;
+
+import java.io.Serializable;
+
+/**
+ * Created by kok on 2017/6/17.
+ */
+public class PurchaseOrderQuery implements Serializable {
+    private String userId;
+    private String status;
+    private String name;
+    private String orderType;
+    private Integer pageNo = 1;
+    private Integer pageSize = 10;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
+    }
+
+    public Integer getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(Integer pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+}

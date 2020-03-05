@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--清除浏览器缓存-->
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <!--设备 IE  最高版本-->
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <!--定义 语言类型-->
+    <meta http-equiv="CONTENT-TYPE" content="text/html" charset="utf-8">
+    <!--设置视口宽度与设备宽度， 禁止用户缩放-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--X5内核 全屏显示-->
+    <meta name="x5-fullscreen" content="true">
+    <!--uc内核  全屏显示-->
+    <meta name="full-screen" content="yes">
+    <!--描述-->
+    <meta name="description" content="山国饮艺">
+    <!--关键字-->
+    <meta name="keywords" content="山国饮艺">
+    <title>个人中心-订单详情-仅退款</title>
+    <!--公共部分-->
+    <!--HTML标签样式重置-->
+    <link href="../css/normalize.css" rel="stylesheet">
+    <!--移动端css重置-->
+    <link href="css/reset.css" rel="stylesheet">
+    <!--rem适配  设计图750*1334-->
+    <script src="js/viewport_rem.js"></script>
+    <!--公共部分   ending-->
+    <!--单独样式-->
+    <link href="css/person_center_back_money.css" rel="stylesheet">
+</head>
+<body>
+    <section class="product-wrap">
+        <h5>售后商品</h5>
+        <div class="product clearfix">
+            <div class="product-img pull-left">
+                <img src="../images/g_product_list_img_default.png">
+            </div>
+            <div class="product-txt pull-left">
+                铁观音500g 精品 五福金砖铁观音500g 精品 五福金砖
+            </div>
+        </div>
+    </section>
+
+    <section class="operation">
+        <div class="operation-group">
+            <a href="javascript:;" id="serverCategory">
+                <label><span>*</span>申请服务：</label>
+                <input type="text" value="仅退款" name="category" disabled>
+                <i class="icon-right"></i>
+            </a>
+        </div>
+        <div class="operation-group">
+            <a href="#" id="serverReason">
+                <label><span>*</span>换货原因：</label>
+                <input type="text" value="请选择" name="category" disabled>
+                <i class="icon-right"></i>
+            </a>
+        </div>
+        <div class="operation-group" id="backMoney">
+            <a href="#">
+                <label><span>*</span>退款金额：</label>
+                <input type="text" value="¥23.00" name="category">
+            </a>
+            <p class="tips">最多¥23.00，含发货邮费¥0.00</p>
+        </div>
+        <div class="operation-group">
+            <a href="#" id="serverExplain" class="clearfix">
+                <label class="pull-left">换货说明：</label>
+                <textarea id="textareaBox" rows="1" class="pull-left" name="explain" placeholder="选填"></textarea>
+            </a>
+        </div>
+    </section>
+
+    <section class="certificate">
+        <h4>上传凭证</h4>
+        <div class="certificate-img clearfix">
+            <img src="../images/g_product_list_img_default.png">
+            <label class="camera pull-left">
+                <div class="camera-icon">
+                    <i></i>
+                    <span>上传凭证</span>
+                    <span>(最多3张)</span>
+                </div>
+                <input type="file" style="display: none">
+            </label>
+        </div>
+    </section>
+    <section class="submit">
+        <a href="#" id="submit-btn">提交</a>
+    </section>
+
+    <!--input  选择弹窗-->
+    <!--申请服务-->
+    <section class="popup-input" id="categoryPopup">
+        <div class="input-wrap">
+            <ul class="input-body" id="categoryChoose">
+                <li><a href="#">换货</a></li>
+                <li><a href="#">退款退货</a></li>
+                <li><a href="#">仅退款</a></li>
+            </ul>
+            <div class="input-footer">
+                <a href="javascript:;" id="cancel">取消</a>
+            </div>
+        </div>
+    </section>
+
+    <!--换货原因-->
+    <section class="popup-input-another" id="reasonPopup">
+        <div class="popup-wrap">
+            <h5>退款原因</h5>
+            <ul class="input-body" id="reasonChoose">
+                <li class="active clearfix">
+                    <span class="pull-left">茶叶不新鲜/不喜欢</span>
+                    <i class="pull-right"></i>
+                </li>
+                <li class="clearfix">
+                    <span class="pull-left">质量问题</span>
+                    <i class="pull-right"></i>
+                </li>
+                <li class="clearfix">
+                    <span class="pull-left">包装问题</span>
+                    <i class="pull-right"></i>
+                </li>
+                <li class="clearfix">
+                    <span class="pull-left">日期与商品描述不符</span>
+                    <i class="pull-right"></i>
+                </li>
+                <li class="clearfix">
+                    <span class="pull-left">做工有瑕疵</span>
+                    <i class="pull-right"></i>
+                </li>
+                <li class="clearfix">
+                    <span class="pull-left">不喜欢/不加力</span>
+                    <i class="pull-right"></i>
+                </li>
+            </ul>
+            <div class="input-footer">
+                <a href="javascript:;" id="close">关闭</a>
+            </div>
+        </div>
+    </section>
+
+    <!--提交成功  请耐心等待  弹窗-->
+    <section class="popup-submit" id="popupSubmit">
+        <div class="popup-wrap">
+            <i></i>
+            <p>提交成功，</p>
+            <p>请耐心等待...</p>
+        </div>
+    </section>
+
+</body>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/person_center_back_money.js"></script>
+</html>

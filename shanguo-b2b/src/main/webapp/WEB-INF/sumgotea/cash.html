@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>提现</title>
+</head>
+<body  class="bg-main cash address-edit cash-state">
+<div id="getMoney" class="op0">
+<div id="withdraw">
+    <h2>{{card.bankName}} <i>{{privacyCard}}</i></h2>
+    <div class="amount bg-white">
+        <h4>提现金额</h4>
+        <div class="dis-tabel border-b1 w100">
+            <div class="dis-cell amount-1">¥</div>
+            <div class="dis-cell amount-2"><input type="text" v-model="price" value="0"></div>
+        </div>
+        <p>当前可提现金额{{detail.settled}}，每日限额5000.00元</p>
+    </div>
+    <div v-on:click="toGetMoney()" class="big-btn btn-active">提交</div>
+    <p class="tip">三个工作日内到账</p>
+</div>
+
+<div style="display: none" id="cashStatus" class="lists bg-white ">
+    <div class="bank dis-tabel border-b1  w100">
+        <div class="dis-cell record">
+            提现到{{card.bankName}}
+        </div>
+        <p class="dis-cell ta-r">
+            {{privacyCard}}
+        </p>
+    </div>
+    <div class="amount ta-c">
+        <div>-{{price}}</div>
+        <p class="color-main">处理中</p>
+    </div>
+    <div class="dis-tabel w100 schedule">
+        <div class="dis-cell state1">处理进度</div>
+        <div class="dis-cell pl">
+            <p class="clearfix "><i class="color-blue">余额转出</i> <i class="fr">06-08 11:35</i></p>
+            <p class="p2">3个工作日内到账</p>
+            <p class="clearfix"><i class="">转入到农业银行</i> </p>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    Util.common.addloadingAnimate();
+    $(function () {
+        wallet.loadData();
+        wallet.loadCard();
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });        
+    })
+    var wallet=new Vue({
+        el: "#getMoney",
+        data: {
+            detail:{},
+            card:{},
+            privacyCard:'',
+            price:''
+        },
+        computed: {
+
+        },
+        methods: {
+            loadData:function () {
+                var url ="mobile/user/getUserWalletHome.do?shopId="+sessionStorage.getItem('userid');
+                var param = {};
+                Util.common.executeAjaxCallback(url, param, function (res) {
+                    console.log(res);
+                    if(res.code==1){
+                        if(res.data!=null){
+                            wallet.$set('detail',res.data);
+                            Util.common.removeloadingAnimate('getMoney');
+                        }
+                    }
+                });
+            },
+            loadCard:function () {
+                var url ="mobile/user/getUserBankCard.do?shopId="+sessionStorage.getItem('userid');
+                var param = {};
+                Util.common.executeAjaxCallback(url, param, function (res) {
+                    console.log(res);
+                    if(res.code==1){
+                        if(res.data!=null){
+                            wallet.$set('card',res.data);
+                            var str2=res.data.bankCard.substr(12,4);
+                            var str="************"+str2;
+                            wallet.$set("privacyCard",str);
+                        }
+                    }
+                });
+            },
+            toGetMoney:function () {
+                if(wallet.price==0 || wallet.detail.settled<=0){
+                    new Toast({context:$('body'),message:"提现金额不得大余可提现金额"}).show();
+                }else {
+                    if(wallet.price > wallet.detail.settled) {
+                        new Toast({context:$('body'),message:"提现金额不得大余可提现金额"}).show();
+                    }else {
+                        var url = Util.common.baseUrl + "mobile/user/withDrawCash1.do";
+                        var param = {
+                            'storeId': sessionStorage.getItem('userid'),
+                            'bankCardId': wallet.card.bankCard,
+                            'price': wallet.price,
+                        };
+                        $.ajax({
+                            type: "POST",
+                            async: false,
+                            url: url,
+                            dataType: "json",
+                            contentType: "application/json",
+                            data: param,
+                            success: function (res) {
+                                if (res.code == 1) {
+                                    $("#withdraw").css("display", "none");
+                                    $("#cashStatus").css("display", "block");
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    });
+</script>
+</html>

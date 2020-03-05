@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--清除浏览器缓存-->
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <!--设备 IE  最高版本-->
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <!--定义 语言类型-->
+    <meta http-equiv="CONTENT-TYPE" content="text/html" charset="utf-8">
+    <!--设置视口宽度与设备宽度， 禁止用户缩放-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--X5内核 全屏显示-->
+    <meta name="x5-fullscreen" content="true">
+    <!--uc内核  全屏显示-->
+    <meta name="full-screen" content="yes">
+    <!--描述-->
+    <meta name="description" content="山国饮艺">
+    <!--关键字-->
+    <meta name="keywords" content="山国饮艺">
+    <title>个人中心-订单详情-查看物流</title>
+    <!--公共部分-->
+    <!--HTML标签样式重置-->
+    <link href="css/normalize.css" rel="stylesheet">
+    <!--移动端css重置-->
+    <link href="css/reset.css" rel="stylesheet">
+    <!--rem适配  设计图750*1334-->
+    <script src="js/viewport_rem.js"></script>
+    <!--公共部分   ending-->
+    <!--单独样式-->
+    <link href="css/person_center_order_writing_recommend.css" rel="stylesheet">
+</head>
+<body>
+    <section class="product clearfix">
+        <div class="product-img pull-left">
+            <img src="../images/g_product_list_img_default.png">
+        </div>
+        <div class="product-txt pull-left">
+            <div class="name" id="productName">武夷铁观音，高端茶叶500g,高端精品</div>
+            <div class="recommend clearfix">
+                <label class="pull-left">评分：</label>
+                <ul class="star-group pull-left">
+                    <li class="active pull-left"></li>
+                    <li class="active pull-left"></li>
+                    <li class="active pull-left"></li>
+                    <li class="active pull-left"></li>
+                    <li class="active pull-left"></li>
+                </ul>
+                <div class="star-number pull-left">5分</div>
+                <input type="hidden" value="5" name="recommendStar" id="recommendStar">
+            </div>
+        </div>
+    </section>
+    <section class="write">
+        <h5>评价内容</h5>
+        <div class="write-textarea">
+            <textarea id="textareaBox" rows="1" maxlength="500" name="recommendTxt" placeholder="请在此写下您对宝贝的评价吧~长度在1-500字之间"></textarea>
+        </div>
+        <div class="write-img clearfix">
+            <img src="../images/g_product_list_img_default.png">
+            <img src="../images/g_product_list_img_default.png">
+            <img src="../images/g_product_list_img_default.png">
+            <img src="../images/g_product_list_img_default.png">
+            <img src="../images/g_product_list_img_default.png">
+            <img src="../images/g_product_list_img_default.png">
+            <img src="../images/g_product_list_img_default.png">
+            <a href="javascript:;" id="iconCamera" class="pull-left"></a>
+        </div>
+    </section>
+    <section class="anonymity clearfix">
+        <label class="anonymity-box pull-right">
+            <input type="checkbox" name="isAnonymity" value="1" checked>
+            <i class="active"></i>匿名评价
+        </label>
+    </section>
+    <section class="submit">
+        <!--<input type="submit" value="提交评价">-->
+        <a href="javascript:;">提交评论</a>
+    </section>
+
+    <!--弹窗-->
+    <section class="popup" id="popup">
+        <div class="popup-box clearfix">
+            <div class="popup-group pull-left clearfix">
+                <label class="pull-right">
+                    <input type="file" name="file"  capture="camera">
+                    <i class="icon-camera"></i>
+                    <span>拍照</span>
+                </label>
+            </div>
+            <div class="popup-group pull-left clearfix">
+                <label class="pull-left">
+                    <input type="file" name="file" accept="image/*" >
+                    <i class="icon-album"></i>
+                    <span>相册</span>
+                </label>
+            </div>
+        </div>
+    </section>
+</body>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/person_center_order_writing_recommend.js"></script>
+</html>

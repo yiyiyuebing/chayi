@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yaoming.module.security.dao.SecurityFunctionResourcePatternExtendMapper" >
+
+	<select id="selectAllFunctionResources" resultMap="com.yaoming.module.security.dao.base.SecurityFunctionResourcePatternMapper.BaseResultMap">
+		select * from _security_function_resource_pattern where function_id>0 order by id asc;
+	</select>
+
+	<select id="selectByFunctionId" resultMap="com.yaoming.module.security.dao.base.SecurityFunctionResourcePatternMapper.BaseResultMap">
+		select * from _security_function_resource_pattern where function_id>#{functionId} order by id asc;
+	</select>
+
+	<insert id="replace" parameterType="com.yaoming.module.security.dao.base.po.SecurityFunctionResourcePattern" >
+	  replace into _security_function_resource_pattern (id, function_id, pattern, note)
+	  values (#{id,jdbcType=BIGINT}, #{functionId,jdbcType=BIGINT}, #{pattern,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR})
+	</insert>
+  
+	<update id="updateByOldId" parameterType="com.yaoming.module.security.dao.base.po.SecurityFunctionResourcePattern" >
+	  update _security_function_resource_pattern
+	  set function_id = #{functionId,jdbcType=BIGINT},
+	    pattern = #{pattern,jdbcType=VARCHAR},
+	    note = #{note,jdbcType=VARCHAR},
+	    id = #{id,jdbcType=BIGINT}
+	  where id = #{oldId,jdbcType=BIGINT}
+	</update>
+</mapper>

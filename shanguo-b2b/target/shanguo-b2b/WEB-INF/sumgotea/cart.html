@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/may-like.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <style>
+        #cartList .param-num em input{
+            text-align: center;
+            border: none;
+            background: transparent;
+            width: 100%;
+        }
+    </style>
+    <title>我的购物车</title>
+</head>
+<body id="cartList"  class="bg-main cart-con">
+    <div class="bg-white mycart-top border-b1">优茶联
+        <template v-if="cartlist.length>0">
+            <template v-if="editBtn == false">
+                <span class="edit-top" v-on:click="allEdit()">编辑</span> 
+            </template>
+            <template v-else>
+                <span class="edit-top color-main" v-on:click="overEdit()">完成</span> 
+            </template>
+        </template>
+    </div>
+    <ul class="mycart" v-if="cartlist.length>0">
+        <template v-for="list in cartlist" >
+            <li v-if="list.good" class="dis-tabel sl-li" id="{{list.id}}">
+                <div class="sl-content">
+                    <div class="dis-cell part1"><input class="check" name="shopCart" type="checkbox" id="check{{list.id}}" v-on:click="countPrice(list.id)"><label class="left0" for="check{{list.id}}"></label></div>
+                    <div class="dis-cell part2"><a v-on:click="goodsDetail(list)" ><img :src="list.good.image.url" alt=""></a></div>
+                    <div class="dis-cell part3">
+                        <div class="dis-tabel part3-1">
+                            <div class="dis-cell">
+                                <div class="goodsname" v-on:click="goodsDetail(list)">
+                                    <h4>{{list.good.name}}</h4>
+                                    <span v-if="list.good.skuName" class="fs-10 color-grey">{{list.good.skuName}} </span>
+                                </div>
+                            </div>
+                            <!--<div id="e{{list.id}}" class="dis-cell part3-01"><em v-on:click="editGoods(list.id,list.goodsId)">编辑</em></div>
+                            <div id="f{{list.id}}" style="display: none" class="dis-cell part3-01"><em v-on:click="finishEdit(list.id,list.goodsId)">完成</em></div>-->
+                        </div>
+                        <div class="dis-tabel part3-1 cart-edit">
+                            <div class="dis-cell">
+                                <p class="color-main fs-14">¥<span id="p{{list.id}}">{{list.good.price}}/{{list.good.skuName | filterSku}}</span></p>
+                            </div>
+                            <div class="param-num dis-cell">
+                                <i id="add{{list.id}}" v-on:click="add(list.id, list.goodsId, list)" class="iconfont" :class="{'is-gray': list.canAdd == 'F'}" style="border-radius: 0 3px 3px 0;">&#xe61f;</i>
+                                <em>
+                                    <input id="i{{list.id}}" type="number" pattern="[0-9]*" value="{{list.goodsCount}}" class="color-black" disabled>
+                                    <input id="h{{list.id}}" type="hidden" value="{{list.good.onSalesNo}}">
+                                </em>
+                                <i id="minus{{list.id}}" v-on:click="minus(list.id, list.goodsId, list)" class="iconfont" :class="{'is-gray': list.canSub == 'F'}" style="border-radius: 3px 0 0 3px;">&#xe60b;</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sl-opts">
+                    <span class="bg-red2" v-on:click="delCart(list.id,list.goodsId)">删除</span>
+                </div>
+            </li>
+        </template>
+    </ul>
+    <div id="emptyIcon" class="bg-white" style="display: none;">
+        <div class="empty-icon"><img src="img/icons/none-cart.png" alt=""></div>
+        <p class="fs-14 ta-c margin-bo-3">亲，购物车空空如也，快去逛逛！</p>
+        <div class="home-view margin-bo-3"><a class="home-btn" href="sorts.html">看茶去</a></div>
+        <div class="may-like bg-main" v-if="maylikeInfo">
+            <h4><i class="like"></i>{{maylikeInfo.modelName}}<i class="color-line"></i></h4>
+            <ul class="like-wrap clearfix">
+                <template v-for="item in maylikeInfo.goodList">
+                    <li>
+                        <a href="goods_detail.html?id={{item.id}}">
+                            <img :src="item.image.url">
+                            <p><i v-if="item.label" class="sale">{{item.label}}</i>{{item.name}}</p>
+                            <template v-if="item.promotionalInfo && item.promotionalInfo.bestActivity && item.promotionalInfo.bestActivity.activityName != '赠品'">
+                                <p>
+                                    <template v-if="item.promotionalInfo.bestActivity && list.promotionalInfo.bestActivity.tag2">
+                                        <i class="group-shopping">{{item.promotionalInfo.bestActivity.tag2}}</i>
+                                    </template>
+                                </p>
+                                <div v-if="isLoginFlag" class="sku"><label>供货价：</label><sub>￥</sub>{{item.promotionalInfo.bestActivity.presellAmount}}/{{item.skuName | filterSku}}</div>
+                            </template>
+                            <template v-else>
+                                <p></p>
+                                <div v-if="isLoginFlag" class="sku"><label>供货价：</label><sub>￥</sub>{{item.price}}/{{item.skuName | filterSku}}</div>
+                            </template>
+                            <div v-if="!isLoginFlag" class="consult"><sub>￥</sub>询价</div>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </div>
+    <div class="goTop" style="display: none"></div>
+    <div class="br4"></div>
+    <div class="br4"></div>
+    <div class="footer" style="height: auto">
+        <div class="w100 dis-tabel part1" v-if="cartlist.length>0">
+            <div class="dis-cell ta-c w20"><input type="checkbox" id="allGoods" v-on:click="checkall()"><label for="allGoods"></label>全选</div>
+            <div class="dis-cell ta-l totalPirce" style="padding: 0px 0px 0px 0.2rem;"><i class="dis-b fs-14">合计：</i>¥ <i id="allcount" class="color-main fs-14">0.00</i></div>
+            <!--<div class="dis-cell ta-c btn-active w20 bg-grey" id="delAllGoods" v-on:click="delAllCart()">删除</div>-->
+            <template v-if="editBtn == false">
+                <div class="dis-cell ta-c btn-active w25" v-on:click="submit()">去结算</div>
+            </template>
+            <template v-else>
+                <div class="dis-cell ta-c btn-active w25 bg-grey" id="delAllGoods" v-on:click="delAllCart()">删除</div>
+            </template>
+        </div>
+        <div class="footer-nav clearfix">
+            <a href="index.html" class="index fl">
+                <i></i>
+                <span>首页</span>
+            </a>
+            <a href="sorts.html" class="category fl">
+                <i></i>
+                <span>分类</span>
+            </a>
+            <a href="javascript:;" class="shopping-cart active fl">
+                <i>
+                    <!--<sup class="dot">5</sup>-->
+                </i>
+                <span>购物车</span>
+            </a>
+            <a href="person_center_index.html" class="person-center fl">
+                <i></i>
+                <span>个人中心</span>
+            </a>
+        </div>
+    </div>
+    
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/slideleft.min.js" charset="utf-8"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $(function () {
+        $("#allGoods").attr("checked",false);
+        cart.loadList();
+        cart.isLogin();
+        cart.mylikeData();
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 0) {
+                $(".goTop").fadeIn(800);
+            } else {
+                $(".goTop").fadeOut(800);
+            }
+        });
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+    });
+    $(".goTop").click(function() {
+        $('html,body').animate({
+                    scrollTop: 0
+                },
+                500);
+        return false;
+    });
+    var cart=new Vue({
+            el:"#cartList",
+            data:{
+                cartlist:[],
+                //编辑按钮
+                editBtn: false,
+                maylikeInfo:[],
+                isLoginFlag:false,
+            },
+            computed:{
+
+            },
+            filters:{
+                /*sku filter函数*/
+                filterSku:function(value){
+                    var index = value.indexOf("单位");
+                    var startIndex = index + 3;
+                    return value.substr(startIndex,1);
+                },
+            },
+            methods:{
+                /*获取猜你喜欢数据*/
+                mylikeData: function () {
+                    var url = '/weixin/index/indexTpl';
+                    var param = null;
+                    Util.common.b2bPostCallback(url,param,function(result){
+                        if(result.success){
+                            cart.$set('maylikeInfo',result.data);
+                        }else{
+                            new Toast({context:$('body'),message:result.msg}).show();
+                        }
+                    })
+                },
+                /*判断是否登录*/
+                isLogin:function(){
+                    var login = localStorage.getItem('token');
+                    if(login && login != null ){  //token不为空  表示登录
+                        cart.isLoginFlag = true;
+                    }else{
+                        cart.isLoginFlag = false;
+                        window.location.href = 'login.html';
+                    }
+                },
+//  				  跳转到详情页
+                goodsDetail: function(list) {
+                    window.location.href="goods_detail.html?id="+list.good.id;
+                },
+                loadList: function () {
+
+                    var url ="weixin/cart/getCartList";
+                    Util.common.b2bPostCallback(url, {}, function (data) {
+                        console.log(data)
+                        if (data.success && data.data && data.data.cartList) {
+                            var dataList = data.data.cartList;
+
+                            cart.$set("cartlist",dataList);
+                            if (cart.cartlist.length == 0) {
+                                $("#emptyIcon").css('display','block');
+                            }
+                            cart.$nextTick(function(){
+                                initSlide();
+                                for (var i =0; i<dataList.length; i++) {
+                                    //散茶价格展示
+                                    if (dataList[i].good.isSancha == 'T') {
+                                        cart.santeaPrice(dataList[i].goodsCount, dataList[i]);
+                                    }
+                                }
+                            })
+                        } else {
+                            new Toast({context:$('body'),message: data.msg}).show();
+                        }
+                    });
+                },
+                editGoods:function (id,goodsId) {
+                    
+                },
+//                编辑商品数量
+                finishEdit:function (id,goodsId) {
+                    var count=$("#i"+id).val();
+                    var kucun=$("#h"+id).val();
+                    $("#count"+id).html("x"+count);
+                    var url ="weixin/cart/updateCartNum";
+                    var param = {"id": id, "goodsId":goodsId, "goodsCount": count};
+                    var param1 = {};
+                    param1.modelJsonStr = JSON.stringify(param);
+                    Util.common.b2bPostCallback(url, param1, function (data) {
+                        if (data.success) {
+                            // new Toast({context:$('body'),message: '修改成功！'}).show();
+                        } else {
+                            new Toast({context:$('body'),message:data.msg}).show();
+                            window.setTimeout(function(){
+                                window.location.reload();
+                            },2000)
+                        }
+                    });
+                },
+                add:function (id, goodsId, list) {
+                    if ($("#add"+id).hasClass("is-gray")) {
+                        return;
+                    }
+                    var num=$("#i"+id).val();
+                    var kucun=$("#h"+id).val();
+                    if(num*1>0){
+                        cart.changeGoodNum(num, "add", id, goodsId, list);
+                    }
+                },
+//            数量减
+                minus:function (id, goodsId, list) {
+                    if ($("#minus"+id).hasClass("is-gray")) {
+                        return;
+                    }
+                    var num = $("#i" + id).val();
+                    if (num * 1 > 0) {
+                        cart.changeGoodNum(num, "sub", id, goodsId, list);                        
+                    }
+                },
+                changeGoodNum:function(num, operation, id, goodsId, list) {
+                    var url = "weixin/cart/changeGoodNum";
+                    param = {};
+                    param.skuId = goodsId;
+                    param.nowNum = num;
+                    param.operation = operation;
+                    var param1 = {};
+                    param1.modelJson = JSON.stringify(param);
+                    Util.common.b2bPostCallback(url, param1, function(data){
+                        if (data.success && data.data) {
+                            $("#i"+id).val(data.data.num);
+                            // cart.finishEdit(id, goodsId);
+                            cart.countPrice();
+                            if (list.good && list.good.isSancha == 'T') {
+                                cart.santeaPrice(data.data.num, list);
+                            }
+                            //加号是否置灰
+                            if (data.data.canAdd == 'T') {
+                                $("#add"+id).hasClass("is-gray") ? $("#add"+id).removeClass("is-gray") : '';
+                            } else {
+                                $("#add"+id).hasClass("is-gray") ? '' : $("#add"+id).addClass("is-gray");
+                            }
+                            //减号是否置灰
+                            if (data.data.canSub == 'T') {
+                                $("#minus"+id).hasClass("is-gray") ? $("#minus"+id).removeClass("is-gray") : '';
+                            } else {
+                                $("#minus"+id).hasClass("is-gray") ? '' : $("#minus"+id).addClass("is-gray");
+                            }
+                        } else {
+                            new Toast({context:$('body'),message: data.msg}).show();
+                        }
+                    })
+                },
+//                    全选
+                checkall:function() {
+                        if ($("#allGoods").attr("checked")=="checked"){
+                            $(".check").attr("checked","checked");
+                            $("#delAllGoods").css("background","#F05353");
+                            cart.countPrice();
+                            
+                        }else {
+                            $(".check").attr("checked",false);
+                            $("#allcount").html("0.00");
+                            $("#delAllGoods").css("background","#adadad");
+                        }
+                },
+//                计算价格
+                countPrice:function (id) {
+                    cart.showAmount();
+                    var num=0;
+                    for (x in this.cartlist){
+                        if($("#check"+this.cartlist[x].id).attr("checked")=="checked"){
+                            num+=1;
+                        }else {
+
+                        }
+                    }
+                    if(num<this.cartlist.length){
+                        $("#allGoods").attr("checked",false);
+                    }else {
+                        $("#allGoods").attr("checked","checked");
+                    }
+                    if (num !== 0) {
+                        $("#delAllGoods").css("background","#F05353");
+                    } else {
+                        $("#delAllGoods").css("background","#adadad");
+                        $("#allGoods").attr("checked",false);
+                    }
+                    console.log(num);
+                },
+//                删除购物车商品
+                delCart: function (id,goodsId) {
+                    var url ="weixin/cart/delFromCart";
+                    var param1 = {};
+                    param1.idList = id;
+                    console.log(param1)
+                    Util.common.b2bPostCallback(url, param1, function (data) {
+                        if (data.success) {
+                            new Toast({context:$('body'),message:"删除成功！"}).show();
+                            $("#"+id).css("display","none");
+                        } else {
+                            new Toast({context:$('body'),message: data.msg}).show();
+                        }
+                        window.setTimeout(function(){
+                            window.location.reload();
+                        },2000);
+                    });
+
+
+                },
+                //删除全部商品接口
+                delAllCart: function () {
+                    var goodsIds = [];
+                    for (var x=0;x<this.cartlist.length;x++){
+                        if($("#check"+this.cartlist[x].id).attr("checked")=="checked"){
+                            goodsIds.push(this.cartlist[x].id)
+                        }
+                    }
+                    var delGoodsIds = goodsIds.join();
+                    if (!delGoodsIds) {
+                        return;
+                    }
+                    var url = "weixin/cart/delFromCart";
+                    var param1 = {};
+                    param1.idList = delGoodsIds;
+                    Util.common.b2bPostCallback(url, param1, function (data) {
+                        if (data.success) {
+                            window.location.reload();
+                            new Toast({context:$('body'),message: '删除成功！'}).show();
+                        } else {
+                            new Toast({context:$('body'),message: data.msg }).show();
+                        }
+                    });
+                },
+                
+                gotoIndex:function () {
+                    window.location.href="index.html";
+                },
+                submit:function () {
+
+                    var all=$("#allcount").html();
+                    var shopCartInfo={};
+                    var shopCarts = [];
+                    var count = 0;
+                    var amount = 0;
+                    for (var x=0;x<this.cartlist.length;x++){
+                        if($("#check"+this.cartlist[x].id).attr("checked")=="checked"){
+                           var a= $("#i"+this.cartlist[x].id).val();
+                            a=a*1;
+                            count=count+a;
+                            amount=amount+this.cartlist[x].good.price*1;
+                            var list={};
+                            list.id=this.cartlist[x].id;
+                            list.goodsId=this.cartlist[x].goodsId;
+                            list.good=this.cartlist[x].good;
+                            list.marketPrice=this.cartlist[x].marketPrice;
+                            list.goodsCount=$("#i"+this.cartlist[x].id).val();
+                            shopCarts.push(list)
+                        }
+                    }
+                    if (count == 0) {
+                        new Toast({context:$('body'),message:"请选择商品"}).show();
+                        return;
+                    }
+                    
+                    shopCartInfo.all=all;
+                    shopCartInfo.count=count;
+                    shopCartInfo.amount=amount;
+                    shopCartInfo.shopCarts=shopCarts;
+                    sessionStorage.setItem('orderSubInfo',JSON.stringify(shopCartInfo));
+                    document.location.href = "order_sub.html?buyType=0";
+                },
+                // 编辑全部
+                allEdit: function() {
+                    cart.editBtn = true;
+                    cart.$nextTick(function() {
+                        cart.countPrice();
+                    })
+
+                },
+                overEdit: function() {
+                    cart.editBtn = false;
+                },
+                santeaPrice: function(num,list) {
+                    var price = $("#p"+list.id).html();
+                    var arr = list.good.supplyPriceList;
+                    for (var i=0; i<arr.length; i++) {
+                        if (arr[i].sectionEnd && arr[i].sectionStart !=null && num*1 <= arr[i].sectionEnd && num*1 >= arr[i].sectionStart) {
+                            price = arr[i].supplyPrice;
+                            break;
+                        } else {
+                            if (!arr[i].sectionEnd) {
+                                if (num*1 > arr[i].sectionStart) {
+                                    price = arr[i].supplyPrice;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    $("#p"+list.id).html(price);
+                },
+                showAmount:function() {
+                    //重新请求服务端计算总价
+                    var modelJson = {};
+                    modelJson.orderType = 'normal'
+                    var indentList =[];
+                    for (var i=0; i<this.cartlist.length; i++){
+                        if($("#check"+this.cartlist[i].id).attr("checked")=="checked"){
+                            var indent = {};
+                            indent.purGoodsSkuId = this.cartlist[i].goodsId;
+                            indent.number = $("#i"+this.cartlist[i].id).val();
+                            indentList.push(indent);
+                        }
+                    }
+                    if (indentList.length<1) {
+                        $("#allcount").html('0.00');
+                        return;
+                    }
+                    modelJson.orderListVos = indentList;
+                    var param = {"orderJson":JSON.stringify(modelJson)};
+                    var url = 'weixin/order/preview';
+                    Util.common.b2bPostCallback(url, param, function (data) {
+                        if (data.success && data.data) {
+                            $("#allcount").html((data.data.totalPrice).toFixed(2));
+                        }
+                    });
+                },
+            }
+    });
+    
+</script>
+
+</html>

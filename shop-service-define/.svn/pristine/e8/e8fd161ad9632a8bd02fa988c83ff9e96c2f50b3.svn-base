@@ -1,0 +1,129 @@
+package pub.makers.shop.base.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class SysDict implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	/** 主键 */
+	private String dictId;		
+	
+	/** 链接地址 */
+	private String parentId;		
+	
+	/** 头条类别(b端还是c端) */
+	private String dictType;		
+	
+	/** 店铺ID */
+	private String code;		
+	
+	/**  */
+	private String value;		
+	
+	/**  */
+	private Integer orderNum;		
+	
+	/**  */
+	private String memo;		
+	
+	/** 是否有效 */
+	private String isValid;		
+	
+	/** 创建时间 */
+	private Date dateCreated;		
+	
+	/** 更新时间 */
+	private Date lastUpdated;
+	/**是否删除     t为删除f为没删除**/
+	private String delFlag;
+
+	public String getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(String delFlag) {
+		this.delFlag = delFlag;
+	}
+
+	public void setDictId(String dictId){
+		this.dictId = dictId;
+	}
+	
+	public String getDictId(){
+		return dictId;
+	}
+	
+	public void setParentId(String parentId){
+		this.parentId = parentId;
+	}
+	
+	public String getParentId(){
+		return parentId;
+	}
+	
+	public void setDictType(String dictType){
+		this.dictType = dictType;
+	}
+	
+	public String getDictType(){
+		return dictType;
+	}
+	
+	public void setCode(String code){
+		this.code = code;
+	}
+	
+	public String getCode(){
+		return code;
+	}
+	
+	public void setValue(String value){
+		this.value = value;
+	}
+	
+	public String getValue(){
+		return value;
+	}
+	
+	public void setOrderNum(Integer orderNum){
+		this.orderNum = orderNum;
+	}
+	
+	public Integer getOrderNum(){
+		return orderNum;
+	}
+	
+	public void setMemo(String memo){
+		this.memo = memo;
+	}
+	
+	public String getMemo(){
+		return memo;
+	}
+	
+	public void setIsValid(String isValid){
+		this.isValid = isValid;
+	}
+	
+	public String getIsValid(){
+		return isValid;
+	}
+	
+	public void setDateCreated(Date dateCreated){
+		this.dateCreated = dateCreated;
+	}
+	
+	public Date getDateCreated(){
+		return dateCreated;
+	}
+	
+	public void setLastUpdated(Date lastUpdated){
+		this.lastUpdated = lastUpdated;
+	}
+	
+	public Date getLastUpdated(){
+		return lastUpdated;
+	}
+	
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>设置中心</title>
+</head>
+<body class="bg-main person-setting">
+    <ul class="lists">
+        <li onclick="jumpTo('person_setting_advice')" class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell lists-icon"><img src="img/icons/set1.png" alt=""></div>
+            <p class="dis-cell">意见反馈</p>
+            <div class="right-arrow" ><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+        <li onclick="jumpTo('about_us')" class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell lists-icon"><img src="img/icons/set2.png" alt=""></div>
+            <p class="dis-cell">关于我们</p>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+        <li onclick="jumpTo('agreement')" class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell lists-icon"><img src="img/icons/set3.png" alt=""></div>
+            <p class="dis-cell">服务协议</p>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+        <!--<li class="dis-tabel bg-white w100">-->
+            <!--<div class="dis-cell lists-icon"><img src="img/icons/set4.png" alt=""></div>-->
+            <!--<p class="dis-cell">清除缓存 <i class="fr">1.2MB</i></p>-->
+            <!--<div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>-->
+        <!--</li>-->
+    </ul>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $(function () {
+       document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+    });
+</script>
+</html>

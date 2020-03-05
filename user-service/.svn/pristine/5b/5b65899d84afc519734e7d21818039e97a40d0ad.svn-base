@@ -1,0 +1,14 @@
+package pub.makers.shop.user.service.impl;
+
+import org.springframework.stereotype.Service;
+import pub.makers.daotemplate.service.impl.BaseCRUDServiceImpl;
+import pub.makers.shop.user.dao.WeixinUserInfoDao;
+import pub.makers.shop.user.entity.WeixinUserInfo;
+import pub.makers.shop.user.service.WeixinUserInfoService;
+
+/**
+ * Created by dy on 2017/5/5.
+ */
+@Service
+public class WeixinUserInfoServiceImpl extends BaseCRUDServiceImpl<WeixinUserInfo, String, WeixinUserInfoDao> implements WeixinUserInfoService {
+}

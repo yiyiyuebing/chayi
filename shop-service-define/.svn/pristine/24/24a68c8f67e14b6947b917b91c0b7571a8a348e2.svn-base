@@ -1,0 +1,6 @@
+package pub.makers.shop.store.service;
+
+public interface BankCardBizService {
+
+	void unbind(String phone, String vcode);
+}

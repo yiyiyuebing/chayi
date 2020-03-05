@@ -1,0 +1,93 @@
+package pub.makers.shop.tradeGoods.vo;
+
+import pub.makers.shop.tradeGoods.entity.GoodsColumn;
+
+import java.io.Serializable;
+
+/**
+ * Created by kok on 2017/6/28.
+ */
+public class GoodsColumnVo implements Serializable {
+    private String id;
+
+    private String shopId;
+
+    private String columnName;
+
+    private String ruleSourceId;
+
+    private Integer orderBy;
+
+    private String showyn;
+
+    private String showpicture;
+
+    public GoodsColumnVo() {
+    }
+
+    public GoodsColumnVo(GoodsColumn column) {
+        this.id = column.getId() == null ? null : column.getId().toString();
+        this.shopId = column.getShopId() == null ? null : column.getShopId().toString();
+        this.columnName = column.getColumnName();
+        this.ruleSourceId = column.getRuleSourceId() == null ? null : column.getRuleSourceId().toString();
+        this.orderBy = column.getOrderBy();
+        this.showyn = column.getShowyn();
+        this.showpicture = column.getShowpicture();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
+    }
+
+    public String getColumnName() {
+        return columnName;
+    }
+
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
+    }
+
+    public String getRuleSourceId() {
+        return ruleSourceId;
+    }
+
+    public void setRuleSourceId(String ruleSourceId) {
+        this.ruleSourceId = ruleSourceId;
+    }
+
+    public Integer getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(Integer orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    public String getShowyn() {
+        return showyn;
+    }
+
+    public void setShowyn(String showyn) {
+        this.showyn = showyn;
+    }
+
+    public String getShowpicture() {
+        return showpicture;
+    }
+
+    public void setShowpicture(String showpicture) {
+        this.showpicture = showpicture;
+    }
+}

@@ -1,0 +1,79 @@
+.express-choose-datalist {
+    position: absolute;
+    left: 0;
+    top: 26px;
+    width: 460px;
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    padding: 20px 10px 10px 10px;
+    z-index: 999999;
+}
+.express-choose-datalist ul li {
+    list-style: none;
+}
+.express-choose-datalist .close{
+    cursor: pointer;
+    position: absolute;
+    right: 13px;
+    top:13px;
+}
+.express-choose-datalist .location-title{
+    border-bottom: 1px solid #cc9b4b;
+    height: 24px;
+}
+.express-choose-datalist .location-title span{
+    font-size: 12px;
+    color: #1a1a1a;
+    /*width: 54px;*/
+    border:1px solid #dbdbdb;
+    border-radius: 3px 3px 0px 0px;
+    text-align: center;
+    cursor: pointer;
+    line-height: 24px;
+    margin-right: 4px;
+    border-bottom: none;
+    padding: 0 7px;
+}
+.express-choose-datalist .location-title .active{
+    border-color: #cc9b4b!important;
+    background: #fff;
+}
+.express-choose-datalist .location-title i{
+    width: 6px;
+    height: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    background: url(./image/icon_down.png) no-repeat center;
+    background-size: contain;
+    margin-left: 4px;
+}
+.express-choose-datalist .location-content{
+    width: 100%;
+    margin: 0 auto;
+}
+.express-choose-datalist .location-content ul li{
+    margin-top: 10px;
+    float: left !important;
+    padding: 4px;
+}
+.express-choose-datalist .location-content ul li span{
+    display: block;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: #1a1a1a;
+    margin: 0 auto;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.express-choose-datalist .location-content ul li span:hover{
+    background: #cc9b4b;
+    color: #fff;
+}
+.express-choose-datalist .close span{
+    width: 14px;
+    height: 13px;
+    background: url(./image/icon_close.png) no-repeat center;
+    background-size: contain;
+}

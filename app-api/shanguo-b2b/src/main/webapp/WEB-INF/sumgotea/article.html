@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>优茶联</title>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.hovertreeContent {
+	margin: 5px auto;
+	height: auto;
+	overflow: hidden;
+	position: relative;
+	background: #fff;
+}
+
+.hewenqiToggle {
+	height: 20px;
+	position: relative;
+	bottom: 0px;
+	width: 100%;
+}
+
+.triangle-down-hovertree {
+	width: 0;
+	height: 0;
+	position: absolute;
+	margin: 0px auto;
+	cursor: pointer;
+}
+
+.triangle-up-hovertree {
+	width: 0;
+	height: 0;
+	position: absolute;
+	margin: 0px auto;
+}
+
+.blank10 {
+	margin-top: 10px;
+}
+
+a {
+	text-decoration: none;;
+}
+
+body {
+	background: #f5f5f5;
+	margin: 0px;
+}
+
+h1, h2, h3, h4, h5 {
+	padding: 5px;
+	margin: 0px;
+	font-weight: normal;
+}
+
+ul {
+	margin: 0px;
+}
+
+.color-gray {
+	color: #787878;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+img {
+	max-width: 100%;
+}
+
+#title {
+	padding: 30px 15px 5px;
+	text-align: center;
+}
+
+#sub-title {
+	padding: 0px 30px;
+}
+
+#sub-title:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.article-body {
+	line-height: 28px;
+	padding: 0px 15px;
+	height: auto;
+	background: #fff;
+	margin-top: -15px;
+}
+
+video {
+	margin: 10px auto;
+	width: 100%;
+	height: 240px;
+}
+
+.store_box {
+	padding: 10px 15px;
+	border-bottom: 1px solid #e6e6e6;
+	background-color: #FFFFFF;
+}
+
+.clearfix:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.store_box .store-icon {
+	margin-right: 8px;
+}
+
+.store_box .store-icon img {
+	width: 46px;
+	height: 46px;
+	border: 1px solid #e6e6e6;
+	border-radius: 50%;
+}
+
+.store-contact {
+	background-color: #FFFFFF;
+	padding: 5px 15px;
+	position: relative;
+	margin-bottom: 5px;
+}
+
+.btn-phone {
+	position: absolute;
+	top: 5px;
+	right: 20px;
+	width: 30px;
+	height: 30px;
+}
+
+.btn {
+	border-radius: 5px;
+	display: inline-block;
+}
+
+.btn-primary {
+	padding: 8px 20px;
+	border: 1px solid #cc9b4b;
+	color: #cc9b4b;
+}
+
+.btn-gostore {
+	margin-top: 8px;;
+}
+
+.row {
+	line-height: 30px;
+}
+
+.video-body {
+	margin-top: 10px;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.info-box {
+	background: #FFFFFF;
+	padding: 5px 15px;
+}
+
+.mt8 {
+	margin-top: 8px;
+}
+
+.tab {
+	display: table;
+	height: 30px;
+	padding: 10px 0px 0px;
+	width: 100%;
+	background: #FFFFFF;
+	margin-bottom: 2px;
+}
+
+.tab li {
+	display: table-cell;
+	width: 1%;
+}
+
+.tab li {
+	line-height: 30px;
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+}
+
+.tab li:after {
+	content: '';
+	display: inline;
+	border-right: 1px solid #e0e0e0;
+}
+
+.tab li:last-child:after {
+	border-right: 0px;
+}
+
+.tab li a {
+	display: inline-block;
+	width: 80%;
+	color: #797979;
+}
+
+.tab li.active a {
+	border-bottom: 2px solid #cc9b4b;
+	color: #cc9b4b;
+}
+
+.rcmd-list {
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+.rcmd-list .rcmd-item {
+	float: left;
+	margin: 1%;
+	width: 48%;
+	height: 220px;
+	background: #FFFFFF;
+}
+
+.goods-img {
+	display: block;
+	height: 160px;
+	text-align: center;
+}
+
+.goods-img img {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.goods-title {
+	line-height: 30px;
+	white-space: nowrap;
+	overflow: hidden;
+	padding: 0px 8px;
+	text-overflow: ellipsis;;
+}
+
+.goods-price {
+	padding: 0px 8px;
+	line-height: 30px;
+	color: #cc9b4b;
+}
+
+.comment-box {
+	position: fixed;
+	width: 100%;
+	padding: 10px;
+	border-top: 1px solid #dddddd;
+	bottom: 0px;
+	z-index: 100;
+	background: #f5f5f5;
+	min-height: 40px;
+	max-height: 100px;
+}
+
+.comment-box div {
+	width: 20%;
+}
+
+.comment-box input {
+	border: 1px solid #dddddd;
+	line-height: 40px;
+	height: 38px;
+	border-radius: 5px;
+	width: 50%;
+	padding: 0px 5px;
+	outline: none;
+}
+.comment-box .divinput {
+    min-height: 20px;
+    max-height: 100px;
+    overflow-y: auto;
+    line-height: 20px;
+    width: 50%;
+    padding: 7px;
+    box-sizing: border-box;
+    border: 1px solid #999;
+    border-radius: 3px;
+    display: inline-block;
+    font-size: 0.931rem;
+    margin-top:5px;
+    background: #fff;
+}
+.comment-box button {
+	width: 17%;
+	background: #cc9b4b;
+	border-radius: 5px;
+	border: none;
+	height: 34px;
+	color: #ffffff;
+	font-size: 0.8125rem;
+	margin-right: 20px;
+}
+
+.btn-favorite, .btn-like {
+	display: inline-block;
+	height: 50px;
+	line-height: 25px;
+	text-align: center;
+	font-size: 12px;
+}
+
+.btn-favorite i, .btn-like i {
+	display: block;
+	width: 25px;
+	height: 25px;
+	margin: 0px auto;
+}
+
+.icon-favorite {
+	background: url("img/web/icon-favorite.png");
+	background-size: 100% 100%;
+}
+
+.icon-like {
+	background: url("img/web/icon-like.png");
+	background-size: 100% 100%;
+}
+
+.active .icon-favorite {
+	background-image: url(img/web/icon-favorite-on.png);
+}
+
+.active .icon-like {
+	background-image: url(img/web/icon-like-on.png);
+}
+
+.article-title {
+	line-height: 30px;
+	padding: 10px 15px;
+	text-align: left;
+	font-size: 18px;
+	color: #000;
+	font-weight: 600;
+}
+
+.read-more {
+	background-image: url(img/web/arrow-right.png);
+	background-size: auto 14px;
+	padding-right: 30px;
+	text-align: center;
+	background-repeat: no-repeat;
+	background-position: right center;
+	display: inline-block;
+	line-height: 40px;
+	color: #aaaaaa;
+}
+
+.more-box {
+	text-align: center;
+	border-top: 1px solid #e0e0e0;
+}
+
+.comment-item, .visitor-item {
+	position: relative;
+	padding: 20px 15px 5px 70px;
+	border-bottom: 1px solid #f5f5f5;
+}
+
+.avatar {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	left: 15px;
+	top: 10px;
+}
+
+.avatar img {
+	width: 100%;
+	height: 100%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+}
+
+.comment-item .date {
+	position: absolute;
+	right: 15px;
+	top: 5px;
+	font-size: 12px;
+}
+
+.comment-item p {
+	margin: 0px;
+	padding: 0px;
+	line-height: 23px;
+	font-size: 0.8rem;
+}
+
+.comment-list, .visitor-list {
+	background: #FFFFFF;
+}
+
+.visitor-item .date {
+	position: absolute;
+	right: 15px;
+	top: 5px;
+	font-size: 12px;
+}
+
+.empty-box {
+	margin: 20px auto;
+	height: 60px;
+	background: url("img/web/empty.png") no-repeat;
+	background-position: center;
+	background-size: auto 100%;
+}
+
+.visitor-main {
+	height: 40px;
+}
+
+.o-price {
+	text-decoration: line-through;
+	color: #aaaaaa;
+	font-size: 12px;
+}
+
+#valuetxt {
+	background: #fff;
+	padding: 10px;
+}
+
+.article-author {
+	font-size: 12px;
+	padding: 0px 15px;
+	margin-bottom: 40px;
+	color: #ccc;
+}
+
+.shouqi {
+	background-image: url(img/web/shouqi.png);
+	background-size: auto 10px;
+	padding-right: 30px;
+	text-align: center;
+	background-repeat: no-repeat;
+	background-position: right center;
+	display: inline-block;
+	line-height: 20px;
+	color: #000;
+}
+
+.zhankai {
+	background-image: url(img/web/zhankai.png);
+	background-size: auto 10px;
+	padding-right: 30px;
+	text-align: center;
+	background-repeat: no-repeat;
+	background-position: right center;
+	display: inline-block;
+	line-height: 20px;
+	color: #000;
+}
+
+.label {
+	margin-left: 15px;
+	font-size: 14px;
+	line-height: 28px;
+}
+</style>
+</head>
+<div id="container" style="display: none;">
+	<!-- <div class="store_box clearfix">
+		<div class="store-icon fl">
+			<img :src="store.headImgUrl" />
+		</div>
+		<div class="fl">
+			<h4>{{store.name}}</h4>
+
+		</div>
+		<div class="fr">
+			<a href="{{storeUrl}}" class="btn btn-primary btn-gostore">进入店铺</a>
+		</div>
+	</div>
+	<div class="store-contact">
+		<div class="row">
+			<label>门店电话：</label><span>{{store.phone}}</span> <a
+				href="tel:{{store.phone}}" class="btn-phone"><img
+				src="img/web/icon-phone.png" /></a>
+		</div>
+		<div class="row">
+			<label>门店店址：</label><span>{{store.provinceName}}{{store.cityName}}{{store.countryName}}{{store.address}}</span>
+		</div>
+
+	</div> -->
+	<!-- <div v-if="!article.videoUrl" class="article-body" v-html="article.content"> -->
+	<!-- <div id="box" v-if="!article.videoUrl" class="article-body" v-html="article.content" ></div>
+    <div v-if="!article.videoUrl" class="more-box"><a id="shouqi" href="###" class="read-more">收起</a></div> 
+     -->
+
+	<div class="hovertreeContent">
+		<div class="article-title">{{article.title}}</div>
+		<div class="color-gray article-author">
+			来源: {{article.author}} <span style="width: 5px;">&nbsp;</span>{{article.time}}
+		</div>
+		<div v-if="!article.videoUrl" class="article-body" v-html="article.content"></div>
+		<div v-if="article.videoUrl" class="video-body">
+			<video :src="article.videoUrl" :poster="article.covePicUrl" controls="controls"></video>
+		</div>
+		<div style="margin-top: 20px;">
+			<div class="label" v-if="article.zeren">
+				<span class="color-gray">责任编辑：</span>
+			</div>
+			<div class="label">
+				<span class="color-gray"><span v-if="article.label != null" >关键词：{{article.label}} </span>
+				<br><span v-if="article.studyTypeName != null">#{{article.studyTypeName}}#</span></span>
+			</div>
+		</div>
+		<!-- <div v-if="!article.videoUrl" id="valuetxt" class="hewenqiToggle more-box blank10">
+			<span id="valuetxtIcon" class="shouqi">收起</span>
+		</div> -->
+	</div>
+
+
+	
+	<!--<div class="info-box clearfix">
+        <div class="fl">
+            <div><span class="color-gray">#{{article.studyTypeName}} {{article.label}}</span></div>
+        </div>
+        <div class="fr">
+            <a v-bind:class="{'btn-favorite':true,active:article.isLike}" v-on:click="toggleFavorite()">
+                <i class="icon-favorite"></i>
+                喜欢
+            </a>
+            <a v-bind:class="{'btn-like':true,active:article.isZan}" v-on:click="toggleLike()">
+                <i class="icon-like"></i>
+                赞
+            </a>
+        </div>
+        <div class="clearfix"></div>
+    </div>-->
+	<!-- <ul class="tab mt8">
+		<li class="active"><a href="javascript:;"
+			v-on:click="toggle('rcmd',$event)"> 推荐 {{commandNum}} </a></li>
+		<li><a href="javascript:;" v-on:click="toggle('comment',$event)">
+				互动 {{replyNum}} </a></li>
+		<li><a href="javascript:;" v-on:click="toggle('visitor',$event)">
+				访客 {{visitorNum}} </a></li>
+	</ul>
+	<ul id="rcmd-list" class="rcmd-list panel clearfix">
+		<li class="rcmd-item" v-if="rcmdList && rcmdList.length > 0"
+			v-for="rcmd in rcmdList"><a href="javascript:;"
+			v-on:click="ifWechat(rcmd.url,userId,rcmd.good_id)" class="goods-img"><img
+				:src="rcmd.pic_url" /></a>
+			<div class="goods-title">{{rcmd.name}}</div>
+			<div class="goods-price">
+				￥{{rcmd.sale_price}} <span class="o-price">￥{{rcmd.market_price}}</span>
+			</div></li>
+		<li v-if="!rcmdList || rcmdList.length == 0" class="empty-box"></li>
+	</ul>
+	<div id="comment-list" class="comment-list panel"
+		style="display: none;">
+		<div v-if="comments && comments.length > 0"
+			v-for="comment in comments" class="comment-item">
+			<div class="avatar">
+				<img :src="comment.headImgUrl||'img\\icons\\defaultimg.png'" />
+			</div>
+			<div class="cmmt-main">
+				<div>{{comment.name||' '}}</div>
+				<p>{{comment.content}}</p>
+			</div>
+			<div class="color-gray date">{{comment.createTime}}</div>
+		</div>
+		<div v-if="!comments || comments.length == 0" class="empty-box"></div>
+	</div>
+	<div id="visitor-list" class="visitor-list panel"
+		style="display: none;">
+		<div v-if="visitors && visitors.length > 0"
+			v-for="visitor in visitors" class="visitor-item">
+			<div class="avatar">
+				<img :src="visitor.headImgUrl||'img\\icons\\defaultimg.png'" />
+			</div>
+			<div class="visitor-main">
+				<div>{{visitor.name||' '}}</div>
+			</div>
+			<div class="color-gray date">{{visitor.createTime}}</div>
+		</div>
+		<div v-if="!visitors || visitors.length == 0" class="empty-box"></div>
+	</div>
+	<div class="clearfix" style="height: 60px;"></div>
+	<div class="comment-box">
+	  <div style="width:100%;position:relative;">
+		<div class="fl" style="position:absolute;bottom:-10px;">
+			<a v-bind:class="{'btn-favorite':true,active:article.isLike}"
+				v-on:click="toggleFavorite()"> <i class="icon-favorite"></i> 喜欢
+			</a> <a v-bind:class="{'btn-like':true,active:article.isZan}"
+				v-on:click="toggleLike()"> <i class="icon-like"></i> 赞
+			</a>
+		</div>
+		<input type="text" id="comment-content" v-model="reply.content"
+			placeholder="写留言..." />
+		<div contenteditable="true" placeholder="写留言..." id="comment-content"  v-on:click="MaxScrll()" class="divinput"
+            style="margin-left:20%">写留言...</div>
+		<button type="button" class="fr" v-on:click="postComment()" style="position:absolute;bottom:3px;right:3%;">发送</button>
+      </div>
+	</div> -->
+</div>
+
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/main.js"></script>
+<script src="js/main.a.js"></script>
+<script src="js/vue.js"></script>
+<script>
+
+
+    var id = Util.common.getParameter("id");
+    sessionStorage.setItem('articleId',id);
+    var storeId = Util.common.getParameter("storeId");
+    var userId = Util.common.getParameter("userId");
+    var toastInstance = new Toast({context:$('body')});
+    sessionStorage.setItem('shopId',storeId);
+    var articleCtl = new Vue({
+        el: "#container",
+        data: {
+            userId:userId,
+            article: "",
+            store:"",
+            commandNum:"",
+            replyNum:"",
+            visitorNum:"",
+            rcmdList:"",
+            comments:"",
+            visitors:"",
+            reply:{
+                content:""
+            },
+            storeUrl:Util.common.baseUrl + "weixinfront/static/index.html?storeId=" + storeId + "&type=weixinIndex&userId=" + userId,
+            showMoreUrl: Util.common.baseUrl +  "weixinfront/static/article-detail.html?id="+ id +"&storeId=" + storeId + "&type=weixinIndex&userId=" + userId
+        },
+        methods: {
+            onload: function () {
+                this.loadArticle();
+                // this.loadStore();
+                // this.loadRcmd();
+                // this.commentList();
+                // this.loadVisitor();
+            },
+            loadArticle:function(){
+                var _this = this;
+
+                // $.ajax({
+                //     url:Util.common.baseUrl + "event/onlineStudy/mobile/findOneById.do?id=" + id +"&userId=" + userId+"&userType=1",
+                //     success:function(response){
+                //         console.log(response)
+                //         if (response.code == 1) {
+                //                 $("#container").show();
+                //             if (response.data.detail.createTime) {
+                //                 response.data.detail.time = timerFun(response.data.detail.createTime);
+                //             }
+                //             _this.article = response.data.detail;
+                //             _this.commandNum = response.data.commandNum;
+                //             _this.replyNum = response.data.replyNum;
+                //             _this.visitorNum = response.data.visitorNum;
+                //             Util.weixinMenu.share(articleCtl.article.covePicUrl,articleCtl.article.title,'article');
+                //         }
+                //     }
+                // });
+				var url = 'weixin/markting/detail'
+				var param = {};
+				param.articleId = id;
+				Util.common.b2bPostCallback(url, param, function(data){
+					if (data.success && data.data) {
+						$("#container").show();
+						if (data.data.createTime) {
+							data.data.time = timerFun(data.data.createTime);
+						}
+						articleCtl.$set('article', data.data)
+					}
+				})
+            },
+            loadStore:function(){
+                var _this = this;
+                $.ajax({
+                    url: Util.common.baseUrl + 'mobile/store/subbranch/loadInfo.do?shopId=' + storeId,
+                    success: function (response) {
+                        _this.store = response;
+                    }
+                });
+            },
+            postComment:function(){
+
+                this.reply.content = $('#comment-content').text();
+                if(this.postLocked){
+                    return false;
+                }
+
+
+                if(this.reply.content == "" || this.reply.content == "写留言..."){
+                    toastInstance.setMessage("评论内容不能为空").show();
+                    return false;
+                }
+                this.reply.userId = userId;
+                this.reply.studyId = id;
+                this.postLocked = true;
+                var _this = this;
+                $.ajax({
+                    url: Util.common.baseUrl + "event/onlineStudy/mobile/addReply.do",
+                    headers: {'Content-Type': 'application/json'},
+                    type:"POST",
+                    data:JSON.stringify(this.reply),
+                    success:function(){
+                        toastInstance.setMessage("评论成功").show();
+						_this.replyNum +=1;
+                        _this.commentList();
+                        $('#comment-content').text("写留言...");
+                    },
+                    complete:function(){
+                        _this.postLocked = false;
+                    }
+                });
+
+
+            },
+            loadRcmd:function(){
+                var _this = this;
+                $.ajax({
+                    url:Util.common.baseUrl + "event/onlineStudy/mobile/findRecommendGoodsById.do?id="+ id +"&page=1",
+                    success:function(response){
+                        _this.rcmdList = response.data.resultList;
+
+                    }
+                });
+            },
+            commentList:function(){
+                var _this = this;
+                $.ajax({
+                    url:Util.common.baseUrl + "event/onlineStudy/mobile/findReplyList.do?id="+ id +"&userType=1&page=1",
+                    success:function(response){
+                        _this.comments = response.data.resultList;
+
+                    }
+                });
+
+            },
+            loadVisitor:function(){
+                var _this = this;
+                $.ajax({
+                    url:Util.common.baseUrl + "event/onlineStudy/mobile/findVisitorList.do?userType=1&id="+ id +"&page=1",
+                    success:function(response){
+                        _this.visitors = response.data.resultList;
+
+                    }
+                });
+            },
+            toggle:function(panelName, e){
+                var li = $(e.target).closest("li");
+                li.addClass("active");
+                li.siblings().removeClass("active");
+                $(".panel").hide();
+                $("#" + panelName + "-list").show();
+            },
+            toggleLike:function(){
+                var _this = this;
+                if(this.postLocked){
+                    return false;
+                }
+                var data = {"userId":userId,"studyId":id,"isZan":0};
+                if(!this.article.isZan){
+                    data.isZan = 1;
+                }
+                this.postLocked = true;
+                $.ajax({
+                    url: Util.common.baseUrl + "event/onlineStudy/mobile/artStatus.do",
+                    headers: {'Content-Type': 'application/json'},
+                    type:"POST",
+                    data:JSON.stringify(data),
+                    success:function(response){
+                        if(response.code == 0){
+                            var message = _this.article.isZan ? "取消成功":"点赞成功";
+                            toastInstance.setMessage(message).show();
+                            _this.article.isZan = !_this.article.isZan;
+                        }
+                    },
+                    complete:function(){
+                        _this.postLocked = false;
+                    }
+                })
+            },
+            toggleFavorite:function(){
+                var _this = this;
+                if(this.postLocked){
+                    return false;
+                }
+                var data = {"userId":userId,"studyId":id,"isLike":0};
+                if(!this.article.isLike){
+                    data.isLike = 1;
+                }
+                this.postLocked = true;
+                $.ajax({
+                    url: Util.common.baseUrl + "event/onlineStudy/mobile/artStatus.do",
+                    headers: {'Content-Type': 'application/json'},
+                    type:"POST",
+                    data:JSON.stringify(data),
+                    success:function(response){
+                        if(response.code == 0){
+                            var message = _this.article.isLike ? "取消成功":"喜欢成功";
+                            toastInstance.setMessage(message).show();
+                            _this.article.isLike = !_this.article.isLike;
+                        }
+                    },
+                    complete:function(){
+                        _this.postLocked = false;
+                    }
+                })
+            },
+            ifWechat:function(url,u_id,g_id){
+                var ua = window.navigator.userAgent.toLowerCase();
+                var goUrl = url.substring(url.indexOf("=")+1,url.length);
+                var toUrl = "";
+                if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+                    toUrl = Util.common.baseUrl+"/weixin/weixinClient/index.do?fromshanguo=weixinfront/static/goods_detail.html?share=0&storeId="+storeId+"&type=weixinIndex&id="+goUrl;
+                }else{
+                    toUrl = url+"&userId="+u_id;
+                }
+                location.href = toUrl;
+            },
+			MaxScrll: function() {
+                if ($('#comment-content').text() == '写留言...') {
+                    $('#comment-content').text('');
+                }
+				setTimeout(function(){
+                    document.body.scrollTop = document.body.scrollHeight;
+                },10)
+                setTimeout(function(){
+                    document.body.scrollTop = document.body.scrollHeight;
+                },100)
+            }
+
+        }
+    });
+    articleCtl.onload();
+
+	
+	$(".hewenqiToggle").on("click", function () {
+	if ($(".hewenqiToggle").css('position') == "absolute") {
+		// $('#valuetxt').html('收起');
+        $('#valuetxtIcon').html('收起');
+        $('#valuetxtIcon').removeClass('zhankai');
+        $('#valuetxtIcon').addClass('shouqi');
+		$(".hovertreeContent").height("auto");
+		$(".hewenqiToggle").css({ "position": "relative" });
+	}
+	else
+	{
+		// $('#valuetxt').html('阅读全文');
+		$(".hovertreeContent").height("240");
+        $('#valuetxtIcon').html('阅读全文');
+        $('#valuetxtIcon').removeClass('shouqi');
+        $('#valuetxtIcon').addClass('zhankai');
+		$(".hewenqiToggle").css({ "position": "absolute" });
+	}
+	})
+    var timerFun = function(time) {
+        var Createtime = time;
+        var current=new Date().getTime();
+        var newCurrent = new Date(current);
+        if (Createtime>current) {
+            var newCurrent = new Date(current);
+            var m = newCurrent.getMonth()+1;
+            var d = newCurrent.getDate();
+            var h = newCurrent.getHours();
+            var mm = newCurrent.getMinutes();
+            return add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm);
+        } else {
+            var d = Math.floor((current-Createtime)/1000/60/60/24);
+            if (d>365) {
+                var newCurrent = new Date(Createtime);
+                var y = newCurrent.getFullYear();
+                var m = newCurrent.getMonth()+1;
+                var d = newCurrent.getDate();
+                return y+'-'+add0(m)+'-'+add0(d);
+            } else {
+                var newCurrent = new Date(Createtime);
+                var m = newCurrent.getMonth()+1;
+                var d = newCurrent.getDate();
+                var h = newCurrent.getHours();
+                var mm = newCurrent.getMinutes();
+                return add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm);
+            }
+        }
+    }
+    var add0 =function(m){return m<10?'0'+m:m }
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="svn" />
+    <mapping directory="D:/git/cangku" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../base-service" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../shanguo-b2b" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../shanguo-b2c" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../shanguoyinyi" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../shop-service-admin" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../shop-service-define" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../yaoming-common" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../yaoming-mall-common" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../yaoming-parent" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../yaoming-security" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/../yaoming-ueditor" vcs="svn" />
+  </component>
+</project>

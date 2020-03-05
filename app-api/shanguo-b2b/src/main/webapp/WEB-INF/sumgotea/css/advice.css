@@ -1,0 +1,58 @@
+body{
+    background: #f3f2f5;
+}
+.input-group{
+    background: #fff;
+    margin-bottom: 0.32rem;
+    padding: 0.32rem 0;
+}
+.input-group textarea{
+    border: none;
+    resize: none;
+    font-size: 0.6rem;
+    color: #333;
+    width: 100%;
+    outline: none;
+    padding: 0 0.8rem;
+    margin: 0;
+    box-sizing: border-box;
+}
+.input-group input{
+    border: none;
+    resize: none;
+    font-size: 0.6rem;
+    color: #333;
+    width: 100%;
+    outline: none;
+    padding: 0 0.8rem;
+    margin: 0;
+    box-sizing: border-box;
+    line-height: 1.4rem;
+}
+.tips{
+    font-size: 0.48rem;
+    color: #666;
+    padding-left: 0.8rem;
+}
+footer{
+    margin-top: 2.2rem;
+    text-align: center;
+}
+footer .form-submit{
+    width: 13.4rem;
+    height: 1.68rem;
+    font-size: 0.6rem;
+    line-height: 1.68rem;
+    color: #fff;
+    text-align: center;
+    background: #cc9b4b;
+    border-radius: 6px;
+    display: inline-block;
+}
+#toastMessage{
+    padding: 0rem 0.4rem!important;
+}
+#toastMessage span{
+    font-size: 0.56rem!important;
+    line-height: 1.2rem;
+}

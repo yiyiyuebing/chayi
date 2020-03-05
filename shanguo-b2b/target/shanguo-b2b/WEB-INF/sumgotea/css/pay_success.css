@@ -1,0 +1,53 @@
+#payStatus{
+    padding-top: 1rem;
+}
+#payStatus .payInfo{
+    width: 94%;
+    background: #fff;
+    border-radius: 6px;
+    margin: 0 auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 3rem;
+}
+#payStatus .payInfo .pay-imgBox{
+    text-align: center;
+}
+
+#payStatus .payInfo .pay-imgBox .paySuccessIcon{
+    display: inline-block;
+    width: 3.6rem;
+    height: 3.6rem;
+    background: url("../img/gg_icon_register_check.png") no-repeat center;
+    background-size: contain;
+}
+#payStatus .payInfo p{
+    font-size: 0.8125rem;
+    line-height: 1rem;
+    text-align: center;
+    color: #666;
+}
+#payStatus .payInfo .fontBlod{
+    font-size: 0.9rem;
+    line-height: 2rem;
+    color: #333;
+}
+#payStatus .pay-tips{
+    font-size: 0.8125rem;
+    width: 94%;
+    margin: 0 auto;
+    color: #666;
+    line-height: 1.4rem;
+}
+#payStatus .goShopping{
+    width: 94%;
+    margin: 0 auto;
+    display: block;
+    border-radius: 5px;
+    color: #fff;
+    background: #cc9b4b;
+    text-align: center;
+    line-height: 2.6rem;
+    font-size: 0.88rem;
+}
+

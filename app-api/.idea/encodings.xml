@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../base-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../base-service/base-service-base" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../base-service/base-service-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../shanguo-b2b" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../shanguo-b2c" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../shanguoyinyi" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../shop-service-admin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../shop-service-define" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../user-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../user-service/user-service-base" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../user-service/user-service-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../yaoming-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../yaoming-mall-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../yaoming-parent" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../yaoming-security" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../yaoming-ueditor" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

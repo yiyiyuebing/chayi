@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .top .search{position: relative}
+        .clear { display: none; position: absolute;left: 92%;top: 50%; width: 1rem; height:1rem;margin-top: -0.5rem;margin-left: -0.5rem; background: url("img/icons/clear.png") no-repeat; outline: none;background-size:1rem; }
+        .input::-ms-clear { display: none; }
+        .input:valid + .clear { display: inline; }
+    </style>
+    <title>搜索</title>
+</head>
+<body  class=" empty ">
+    <div class="top dis-tabel">
+        <div class="dis-row">
+            <div class="search dis-cell">
+                <form action="" onsubmit="return false;">
+                    <input class="search-icon input" required  type="text" placeholder="搜索商品名称/关键字" onfocus="goodSearchFocus()" id="search" onkeypress="if(event.keyCode==13) {searchGoods('');}" ><a href="javascript:$('#search').val('');" class="clear"></a>
+                </form>
+            </div>
+            <div onclick="javascript:history.back();" class="store-icon dis-cell color-white">取消</div>
+        </div>
+
+    </div>
+    <div id="searchHistory" class="searchG">
+        <ul id="goodSearchListview" class="lists">
+            <li>历史搜索</li>
+        </ul>
+        <div id="clearHository" class="big-btn">清空历史搜索</div>
+    </div>
+    <div style="display: none;" id="emptyTip">
+        <div class="empty-icon"><img src="img/icons/no.png" alt=""></div>
+        <p class="fs-14 ta-c">暂无此类商品，<br/>客官逛逛其他商品吧~</p>
+    </div>
+
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $(function() {
+        //                微信分享
+        Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+
+        setTimeout(function () {
+            $('#search').focus();
+        }, 300);
+    });
+
+    function searchGoods(str) {
+        
+        if(str==''){
+            goodSearchSaveStroage();
+            str=$("#search").val();
+        }
+        
+        var url ="weixin/good/getSeachGoodListSer.do?brandId=&classifyId=&pageNum=1&pageSize=6&shopId="+sessionStorage.getItem("shopId")+"&sortType="+0;
+        Util.common.executeAjaxCallback(url,{"goodName":str},function (data) {
+            if(data==null || data.length==0){
+                $("#emptyTip").show();
+                $("#searchHistory").hide();
+            }else {
+                str=encodeURI(str);
+                window.location.href="today.html?sortType=2&goodName="+str;
+            }
+        });
+    }
+    function goodSearchFocus() {
+        var storage = window.sessionStorage;
+        $("#goodSearchListview li:gt(0)").remove();
+        console.log('--------------------------');
+        for(var j = storage.length-1; j >= 0; j--) {
+            var key = storage.key(j);
+            var value = storage.getItem(key);
+            if(key.indexOf('search_') != -1) {
+                console.log(key+ ':' +value);
+                var keystr = "'"+key+"'";
+                var list = '<li onclick="searchGoods('+"'"+value+"'"+')">'+value+'</li>';
+                $("#goodSearchListview").append(list);
+            }
+        }
+    }
+
+    function goodSearchSaveStroage() {
+        var searchVal = $('#search').val();
+        if(searchVal != null && searchVal != '') {
+            var storage = window.sessionStorage;
+            console.log(storage);
+            for(var j = storage.length-1; j >= 0; j--) {
+                var key = storage.key(j);
+                var value = storage.getItem(key);
+                if(key.indexOf('search_') != -1) {
+                    console.log(searchVal);
+                    console.log(value);
+                    if (searchVal == value) {
+                        sessionStorage.removeItem(key);
+                    }
+                }
+            }
+            storage.setItem("search_" + (new Date().getTime()),searchVal);
+
+        }
+    }
+
+    $('#clearHository').bind('click', function (event) {
+        window.sessionStorage.clear();
+        $('.lists').remove();
+        $('#clearHository').hide();
+        sessionStorage.setItem("shopId",Util.common.getParameter("shopId"));
+        sessionStorage.setItem("userid",Util.common.getParameter("userId"));
+        sessionStorage.setItem('shopName',Util.common.getParameter("shopName"));
+    });
+</script>
+</html>

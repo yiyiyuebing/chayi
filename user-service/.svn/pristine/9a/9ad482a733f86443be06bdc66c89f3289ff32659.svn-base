@@ -1,0 +1,25 @@
+select id as id,name as name,head_img_url as headImgUrl,address as address,lat as lat,lng as lng ,sqrt(    
+    (    
+     ((${lng}-lng)*PI()*6371*cos(((${lat}+lat)/2)*PI()/180)/180)    
+     *    
+     ((${lng}-lng)*PI()*6371*cos (((${lat}+lat)/2)*PI()/180)/180)    
+    )    
+    +    
+    (    
+     ((${lat}-lat)*PI()*6371/180)    
+     *    
+     ((${lat}-lat)*PI()*6371/180)    
+    )    
+) as JL from (store_subbranch) where sqrt(    
+    (    
+     ((${lng}-lng)*PI()*6371*cos(((${lat}+lat)/2)*PI()/180)/180)    
+     *    
+     ((${lng}-lng)*PI()*6371*cos (((${lat}+lat)/2)*PI()/180)/180)    
+    )    
+    +    
+    (    
+     ((${lat}-lat)*PI()*6371/180)    
+     *    
+     ((${lat}-lat)*PI()*6371/180)    
+    )    
+)<${distance?c} order by JL asc limit 30;

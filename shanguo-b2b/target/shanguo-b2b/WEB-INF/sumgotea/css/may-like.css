@@ -1,0 +1,100 @@
+.may-like{
+    padding-top: 4rem;
+}
+.may-like h4{
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 2.4rem;
+    background: #f2f2f2;
+    color: #000;
+}
+.may-like h4 .like{
+    width: 1.2rem;
+    height: 1.2rem;
+    background: url(../img/index_icon_may_like.png) no-repeat center;
+    background-size: contain;
+    display: inline-block;
+    vertical-align: sub;
+    margin-right:0.4rem ;
+}
+.may-like h4 .color-line{
+    width: 0.8rem;
+    height: 0.8rem;
+    background: url(../img/index_icon_title_bg.png) no-repeat center;
+    background-size: contain;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left:0.4rem ;
+}
+.may-like .like-wrap li{
+    width: 49%;
+    background: #fff;
+    box-sizing: border-box;
+    padding: 0.6rem;
+    margin-bottom: 0.3rem;
+}
+.may-like .like-wrap li:nth-of-type(odd){
+    float: left;
+}
+.may-like .like-wrap li:nth-of-type(even){
+    float: right;
+}
+.may-like .like-wrap li a{
+    display: block;
+}
+.may-like .like-wrap li a img{
+    width: 100%;
+}
+.may-like .like-wrap li a p{
+    font-size: 0.8125rem;
+    color: #333;
+    line-height: 1.2rem;
+    height: 1.2rem;
+    overflow: hidden;
+}
+.may-like .like-wrap li a p .sale{
+    font-size: 0.67rem;
+    line-height: 1rem;
+    background: #cc9b4b;
+    border-radius: 2px;
+    padding: 0 0.1rem;
+    color: #fff;
+    display: inline-block;
+    margin-right: 0.2rem;
+}
+.may-like .like-wrap li a p .group-shopping{
+    font-size: 0.67rem;
+    line-height: 1rem;
+    background: #f05353;
+    border-radius: 2px;
+    padding: 0 0.1rem;
+    color: #fff;
+    display: inline-block;
+    margin-right: 0.2rem;
+}
+.may-like .like-wrap li a .sku{
+    font-size: 0.9125rem;
+    color: #f05353;
+    line-height: 2rem;
+    letter-spacing: -1px;
+}
+.may-like .like-wrap li a .sku label{
+    font-size: 0.67rem;
+    color: #666;
+    line-height: 2rem;
+}
+.may-like .like-wrap li a .sku sub{
+    font-size: 0.67rem;
+    vertical-align: baseline;
+    color: #f05353;
+}
+.may-like .like-wrap li a .consult{
+    font-size: 0.9125rem;
+    color: #cc9b4b;
+    line-height: 2rem;
+    letter-spacing: -1px;
+}
+.may-like .like-wrap li a .consult sub{
+    font-size: 0.67rem;
+    vertical-align: baseline;
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html class="h100" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>我的银行卡</title>
+</head>
+<body id="mycard" style="height: auto;">
+    <div style="display: none;" class="mycard">
+        <div><img :src="cardBg" alt=""></div>
+        <p style="font-size: 1.625rem"><sub style="vertical-align: middle">**** **** **** </sub>{{detail}}</p>
+    </div>
+    <div v-on:click="linkToAddCard()" class="add-new btn-active ta-c"><i class="iconfont">&#xe61f;</i>添加银行卡</div>
+</body>
+
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $(function () {
+        Util.common.addloadingAnimate();
+        wallet.loadData();
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+    })
+    var wallet=new Vue({
+        el: "#mycard",
+        data: {
+            detail:{},
+            cardBg:'',
+            cardInfo:[]
+        },
+        computed: {
+            card:function () {
+
+            }
+        },
+        methods: {
+            linkToAddCard:function(){
+              window.location.href = 'card_bind.html?type=personCenter';
+            },
+            loadData:function () {
+                var url ="/weixin/bankCard/detail";
+                var param = {};
+                Util.common.b2bPostCallback(url, param, function (res) {
+                    if(res.success){
+                        Util.common.removeloadingAnimate();
+                        if(res.data == null || res.data == ''){
+                            $(".mycard").css('display','none');
+                            $(".btn-active").css('display','block');
+                        }else{
+                            wallet.$set('cardInfo',res.data);
+                            var bankCardNumber = res.data.bankCard;
+                            var str = bankCardNumber.substr(bankCardNumber.length - 4);
+                            wallet.$set('detail',str);
+                            if(res.data.bankName.indexOf('招商') !=-1){
+                                wallet.$set('cardBg','img/icons/card7.png');
+                            }
+                            else if(res.data.bankName.indexOf('邮政') !=-1){
+                                wallet.$set('cardBg','img/icons/card5.png');
+                            }
+                            else if(res.data.bankName.indexOf('建设') !=-1){
+                                wallet.$set('cardBg','img/icons/card2.png');
+                            }
+                            else if(res.data.bankName.indexOf('交通') !=-1){
+                                wallet.$set('cardBg','img/icons/card3.png');
+                            }
+                            else if(res.data.bankName.indexOf('平安') !=-1){
+                                wallet.$set('cardBg','img/icons/card7.png');
+                            }
+                            else if(res.data.bankName.indexOf('农业') !=-1){
+                                wallet.$set('cardBg','img/icons/card4.png');
+                            }
+                            else if(res.data.bankName.indexOf('工商') !=-1){
+                                wallet.$set('cardBg','img/icons/card1.png');
+                            }
+                            else {
+                                wallet.$set('cardBg','img/icons/card6.png');
+                            }
+
+                            $(".mycard").css('display','block');
+                            $(".btn-active").css('display','none');
+                        }
+                    }else{
+                        new Toast({context:$('body'),message: result.msg }).show();
+                    }
+                    /*if(res.code==1){
+                        if(res.data!=null){
+                            var str2=res.data.bankCard.substr(12,4);
+                            var str="************"+str2;
+                            wallet.$set('detail',str);
+
+                            if(res.data.bankName.indexOf('招商') !=-1){
+                                wallet.$set('cardBg','img/icons/card7.png');
+                            }
+                            else if(res.data.bankName.indexOf('邮政') !=-1){
+                                wallet.$set('cardBg','img/icons/card5.png');
+                            }
+                            else if(res.data.bankName.indexOf('建设') !=-1){
+                                wallet.$set('cardBg','img/icons/card2.png');
+                            }
+                            else if(res.data.bankName.indexOf('交通') !=-1){
+                                wallet.$set('cardBg','img/icons/card3.png');
+                            }
+                            else if(res.data.bankName.indexOf('平安') !=-1){
+                                wallet.$set('cardBg','img/icons/card7.png');
+                            }
+                            else if(res.data.bankName.indexOf('农业') !=-1){
+                                wallet.$set('cardBg','img/icons/card4.png');
+                            }
+                            else if(res.data.bankName.indexOf('工商') !=-1){
+                                wallet.$set('cardBg','img/icons/card1.png');
+                            }
+                            else {
+                                wallet.$set('cardBg','img/icons/card6.png');
+                            }
+
+                            $(".mycard").css('display','block');
+                            $(".btn-active").css('display','none');
+
+                        }else {
+                            $(".mycard").css('display','none');
+                            $(".btn-active").css('display','block');
+                        }
+                    }*/
+                });
+            }
+        }
+    });
+</script>
+</html>

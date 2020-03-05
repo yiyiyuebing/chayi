@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <link rel="stylesheet" href="css/myorder.css">
+    <style>
+        .spinner-bg{background:transparent;}
+
+    </style>
+    <title>我的订单</title>
+</head>
+<body id="orders"  class="bg-main order-con">
+    <div class="order-class dis-tabel">
+        <div v-on:click="loadlist('')" id="tit" class="tit fl dis-cell w20 color-main border-b2">全部</div>
+        <div v-on:click="loadlist('pay')" id="titpay" class="tit fl dis-cell w20">待付款</div>
+        <div v-on:click="loadlist('ship')" id="titship" class="tit fl dis-cell w20">待发货</div>
+        <div v-on:click="loadlist('receive')" id="titreceive" class="tit fl dis-cell w20">已发货</div>
+        <div v-on:click="loadlist('evaluate')" id="titevaluate" class="tit fl dis-cell w20">待评价</div>
+    </div>
+    <ul class="mycart op0" id="myCart">
+        <template v-for="list in orderlist">
+            <li>
+                <div class="order-num">订单号：{{list.orderCode}}<span class="fr color-main">{{list.orderStatusStr}}</span></div>
+                <template v-if="list.orderListVos.length==1">
+                    <div v-on:click="orderDetail(list.id)" class="order-item dis-tabel w100">
+                        <div class="dis-cell part2"><img :src="list.orderListVos[0].purGoodsImgUrl" alt=""></div>
+                        <div class="dis-cell part3">
+                            <div class="dis-tabel part3-1">
+                                <div class="dis-cell">
+                                    <h4 class="unit-height">{{list.orderListVos[0].purGoodsName}}</h4>
+                                    <template v-for="norm in list.orderListVos[0].skuList">
+                                        <span class="color-grey fs-14">{{norm}}&nbsp;</span>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dis-cell">
+                            <div class="dis-tabel part3-1">
+                                <div class="dis-cell">
+                                    <template v-if="list.orderType == 'presell'">
+                                        <h4 class="ta-r unit-height">¥{{(list.presellExtra.presellAmount*1 / list.orderListVos[0].number*1).toFixed(2)}}</h4>
+                                    </template>
+                                    <template v-else>
+                                        <h4 class="ta-r unit-height">¥{{list.orderListVos[0].supplyPrice}}</h4>
+                                    </template>
+                                    <h4 class="list-num ta-r">x{{list.number}}</h4>
+                                    <h4 v-if="list.status == 2 && list.flowType == 1" class="color-red ta-r" style="margin-bottom: 0;width: 45px;">退款中</h4>
+                                    <h4 v-if="list.status == 3 && list.flowType == 1" class="color-red ta-r" style="margin-bottom: 0;width: 45px;">退款中</h4>
+                                    <h4 v-if="list.status == 5 && list.flowType == 1" class="color-red ta-r" style="margin-bottom: 0;width: 45px;">售后中</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <template v-else>
+                    <div v-on:click="orderDetail(list.id)" class="order-item dis-tabel w100">
+                        <template v-for="item in list.orderListVos">
+                            <div v-if="$index<2" style="padding-right: 0.5rem" class="dis-cell part2"><img :src="item.purGoodsImgUrl" alt=""></div>
+                        </template>
+                        <div class="dis-cell va-m ta-r fs-14">{{list.number}}个商品
+                            <h4 v-if="list.status == 2 && list.flowType == 1" class="color-red ta-r" style="margin-bottom: 0;">退款中</h4>
+                            <h4 v-if="list.status == 3 && list.flowType == 1" class="color-red ta-r" style="margin-bottom: 0;">退款中</h4>
+                            <h4 v-if="list.status == 5 && list.flowType == 1" class="color-red ta-r" style="margin-bottom: 0;">售后中</h4>
+                        </div>
+                    </div>
+                </template>
+                </div>
+                <div class="part4 clearfix ">
+                    <p class="border-b1">共计{{list.number}}个商品，合计：¥{{list.waitpayAmount}}(含运费{{list.buyerCarriage}})</p>
+                    <div v-if="list.newType==1" class="clearfix"><span v-on:click="orderPay(list.waitpayAmount,list.id)" class="btn-active fr">{{list.newStatus}}</span><span v-on:click="cancelOrder(list.id, list.orderType, list)" class="fr">{{list.addStatus}}</span></div>
+                    <div v-if="list.newType==2 && list.flowType != 1 && list.hideBtn != 1 && list.dealStatusName != '交易关闭'" class="clearfix"><span v-if="false" v-on:click="shipNotice(list.id, list.orderType)" class="btn-active fr">{{list.newStatus}}</span><span v-on:click="returnMoney(list)" class="fr">{{list.addStatus}}</span></div>
+                    <div v-if="list.newType==3" class="clearfix"><span v-on:click="sureOrder(list.id,list.orderType,list)" class="btn-active fr">{{list.newStatus}}</span><span v-on:click="seeLogistic(list.expressNumber,list.expressCompany)" class="fr">{{list.addStatus}}</span></div>
+                    <div v-if="list.newType==4" class="clearfix"><span v-on:click="toEvaluate(list.id)" class="btn-active fr">{{list.newStatus}}</span><span v-on:click="seeLogistic(list.expressNumber,list.expressCompany)" class="fr">{{list.addStatus}}</span><span v-on:click="deleteOrder(list.id, list.orderType)" class="fr">{{list.seeStatus}}</span></div>
+                    <div v-if="list.newType==6" class="clearfix"><span v-on:click="lookReturnAddr()" class="fr">{{list.newStatus}}</span><span  v-on:click="seeLogistic(list.expressNumber,list.expressCompany)" class="fr">{{list.seeStatus}}</span></div>
+                    <div v-if="list.newType==7" class="clearfix"><span v-if="list.orderType == 'normal'"  v-on:click="buyAgain(list)" class="btn-active fr">{{list.newStatus}}</span><span v-on:click="deleteOrder(list.id, list.orderType)" class="fr">{{list.addStatus}}</span></div>
+                    <div v-if="list.newType==8" class="clearfix"><span v-if="list.orderType == 'normal'"  v-on:click="buyAgain(list)" class="btn-active fr">{{list.newStatus}}</span><span v-on:click="seeLogistic(list.expressNumber,list.expressCompany)" class="fr">{{list.addStatus}}</span><span v-on:click="deleteOrder(list.id, list.orderType)" class="fr">{{list.seeStatus}}</span></div>
+                    <!--预售订单-->
+                        <!--支付订金-->
+                            <!--订金支付时间内-->
+                    <div v-if="list.newType==20" class="clearfix"><span v-on:click="orderPay(list.presellExtra.presellFirst,list.id)" class="btn-active fr">{{list.newStatus}}</span><span v-on:click="cancelOrder(list.id, list.orderType)" class="fr">{{list.addStatus}}</span></div>
+                            <!--超过订金支付时间-->
+                    <div v-if="list.newType==21" class="clearfix"><span v-on:click="cancelOrder(list.id, list.orderType)" class="fr">{{list.addStatus}}</span></div>
+                        <!--支付尾款-->
+                            <!--尾款时间未到-->
+                    <div v-if="list.newType==22" class="clearfix"><span class="fr" style="color: #adadad;">{{list.newStatus}}</span><span v-on:click="cancelOrder(list.id, list.orderType)" class="fr">{{list.addStatus}}</span></div>
+                            <!--尾款时间内-->
+                    <div v-if="list.newType==23" class="clearfix"><span v-on:click="orderPay(list.presellExtra.presellEnd,list.id)" class="btn-active fr">{{list.newStatus}}</span><span v-on:click="cancelOrder(list.id, list.orderType)" class="fr">{{list.addStatus}}</span></div>
+                            <!--尾款时间超时-->
+                    <div v-if="list.newType==24" class="clearfix"><span class="fr">{{list.newStatus}}</span><span v-on:click="cancelOrder(list.id, list.orderType)" class="fr">{{list.addStatus}}</span></div>
+
+                </div>
+            </li>
+        </template>
+        <div class="emptyIcon" id="emptyIcon" v-if="orderlist.length==0">
+            <div class="empty-icon"><img src="img/icons/no.png" alt=""></div>
+            <p class="fs-14 ta-c">暂无相关订单，<br/>快去商城逛逛吧~</p>
+        </div>
+    </ul>
+    
+    <div class="goTop" style="display: none" v-on:click="goTop()"></div>
+    <p style="display: none" class="ta-c copyright">已经到底了...</p>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $(function () {
+        var firstStatus = Util.common.getParameter('status') || '';
+        orderData.getToken();
+        orderData.loadlist(firstStatus);
+        Util.common.addloadingAnimate();
+        $(window).scroll(function() {
+                	
+            if ($(window).scrollTop() > 0) {
+                $(".goTop").fadeIn(800);
+            } else {
+                $(".goTop").fadeOut(800);
+            }
+            if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                orderData.loadlist(orderData.status);
+            }
+        });
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+    })
+    var userId = sessionStorage.getItem("userid");
+    var counter = 1;
+    var orderData=new Vue({
+        el:"#orders",
+        data:{
+            orderlist:[],
+            //''("全部",''), pay("待付款",1),ship("待发货",2),receive("待收货",5),evaluate("待评价",12)
+            status: '',
+            // 加载更多状态
+            loadMore: true
+        },
+        computed:{
+
+        },
+        methods:{
+            loadlist:function (status) {
+                $(".tit").removeClass('color-main');
+                $(".tit").removeClass('border-b2');
+                $("#tit"+status).addClass('color-main');
+                $("#tit"+status).addClass('border-b2');
+                if (orderData.status != status) {
+                    counter = 1;
+                    orderData.loadMore = true;
+                    orderData.$set('status',status);
+                    orderData.$set('orderlist',[]);
+                    $(window).scrollTop(0);
+                }
+                if (!orderData.loadMore) {
+                    return;
+                }
+//                初始化订单列表
+                var url ="weixin/order/getOrderList";
+                var param = {};
+                param.pageNo = counter;
+                param.pageSize = 50;
+                param.status = status;
+                var param1 = {};
+                param1.modelJson = JSON.stringify(param);
+                Util.common.b2bPostCallback(url, param1, function (data) {
+                    counter += 1;
+                    Util.common.removeloadingAnimate('myCart');
+                    console.log(data)
+                    if (data.success && data.data) {
+                        var orderList = data.data;
+                        //是否加载更多
+                        if (orderList.length === 0) {
+                            orderData.loadMore = false;
+                            return;
+                        }
+                        for(y in orderList){
+                            for ( x in orderList[y].orderListVos){
+                                var arr=[];
+                                if (orderList[y].orderListVos[x].purGoodsType) {
+                                    var norm=orderList[y].orderListVos[x].purGoodsType.split(",");
+                                    orderList[y].orderListVos[x].skuList=norm;
+                                }
+                                //是否有售后信息
+                                if (orderList[y].orderListVos[x].flowList) {
+                                    var flowStatusStr = orderList[y].orderListVos[x].flowList[0].flowStatusStr;
+                                    if(flowStatusStr != "已拒绝退货退款" && flowStatusStr != "已拒绝换货" && flowStatusStr != "已拒绝退款" && flowStatusStr != '已撤销退款' && flowStatusStr != '已撤销换货' && flowStatusStr != '已撤销退货' && flowStatusStr != '退款成功' && flowStatusStr != '退货退款成功'&& flowStatusStr != '换货成功'){
+                                        orderList[y].flowType = 1;
+                                    }
+                                }
+                                if (orderList[y].orderListVos[x].shipCancelAfter == 'T' || orderList[y].orderListVos[x].shipReturnTime>=2) {
+                                    orderList[y].hideBtn = 1;
+                                }
+                            }
+                        }
+
+                        /*获取当前时间*/
+                        var nowTime = new Date().getTime();
+                        console.log("当前时间：" + nowTime);
+
+                        for(var i=0;i<orderList.length;i++) {
+                            /*判断订单状态是预售订单还是普通订单*/
+
+                            if(orderList[i].statusName == '待付款') {
+                                if(orderList[i].orderType == "normal" || (orderList[i].orderType == "presell" && orderList[i].presellExtra.presellType != "second")){
+                                    orderList[i].newStatus = "去付款";
+                                    orderList[i].addStatus = "取消订单";
+                                    orderList[i].newType = "1";
+                                }else if(orderList[i].orderType == "presell" && orderList[i].presellExtra.presellType == "second"){
+                                    if(nowTime < orderList[i].paymentList[0].payEnd){
+                                        /*订金支付时间以内*/
+                                        orderList[i].newStatus = "支付订金";
+                                        orderList[i].addStatus = "取消订单";
+                                        orderList[i].newType = "20";
+                                    }else if(nowTime >= orderList[i].paymentList[0].payEnd){
+                                        /*超过订金支付时间*/
+                                        orderList[i].newStatus = "交易关闭";
+                                        orderList[i].addStatus = "删除订单";
+                                        orderList[i].newType = "21";
+                                    }
+
+                                }
+                            }else if(orderList[i].statusName == '待支付尾款'){
+                                if(nowTime < orderList[i].paymentList[1].payStart){
+                                    /*尾款支付时间还没到不能支付尾款*/
+                                    orderList[i].newStatus = "支付尾款";
+                                    orderList[i].addStatus = "取消订单";
+                                    orderList[i].newType = "22";
+                                }else if(nowTime >= orderList[i].paymentList[1].payStart && nowTime <= orderList[i].paymentList[1].payEnd){
+                                    /*尾款支付时间之内可以支付尾款*/
+                                    orderList[i].newStatus = "支付尾款";
+                                    orderList[i].addStatus = "取消订单";
+                                    orderList[i].newType = "23";
+                                }else if(nowTime > orderList[i].paymentList[1].payEnd){
+                                    /*已经超过尾款支付时间，订单关闭*/
+                                    orderList[i].newStatus = "交易关闭";
+                                    orderList[i].addStatus = "删除订单";
+                                    orderList[i].newType = "24";
+                                }
+
+                            } else if(orderList[i].statusName == '待发货') {
+                                // orderList[i].newStatus = "提醒发货";
+                                orderList[i].addStatus = "申请退款";
+                                orderList[i].newType = "2";
+                            } else if(orderList[i].statusName == '待收货') {
+                                orderList[i].newStatus = "确认收货";
+                                orderList[i].addStatus = "查看物流";
+                                orderList[i].newType = "3";
+                            } else if(orderList[i].statusName == '待评价') {
+                                orderList[i].newStatus = "立即评价";
+                                orderList[i].addStatus = "查看物流";
+                                orderList[i].seeStatus = "删除订单";
+                                orderList[i].newType = "4";
+                            }else if(orderList[i].statusName == '退货申请'||orderList[i].statusName == '退款申请') {
+                                orderList[i].statusName = "待发货";
+                                orderList[i].newType = "5";
+                            } else if(orderList[i].statusName == '退货中') {
+                                orderList[i].newStatus = "查看退货地址";
+                                orderList[i].seeStatus = "查看物流";
+                                orderList[i].newType = "6";
+                            } else if(orderList[i].statusName == '已取消' || orderList[i].statusName == '已完成') {
+                                orderList[i].newStatus = "再次购买";
+                                orderList[i].addStatus = "删除订单";
+                                orderList[i].newType = "7";
+                            } else if ( orderList[i].statusName == '已退款' || orderList[i].statusName == '已退货'){
+                                orderList[i].newStatus = "再次购买";
+                                orderList[i].addStatus = "查看物流";
+                                orderList[i].seeStatus = "删除订单";
+                                orderList[i].newType = "8";
+                            }
+                            if (orderList[i].status == 2 && orderList[i].dealStatus == 0) {
+                                orderList[i].newStatus = "再次购买";
+                                orderList[i].addStatus = "删除订单";
+                                orderList[i].newType = "7";
+                            }
+                            if (orderList[i].status == 5 && orderList[i].dealStatus == 0) {
+                                orderList[i].newStatus = "再次购买";
+                                orderList[i].addStatus = "查看物流";
+                                orderList[i].seeStatus = "删除订单";
+                                orderList[i].newType = "8";
+                            }
+                            //订单状态
+                            if (orderList[i].dealStatusName) {
+                                orderList[i].orderStatusStr = orderList[i].dealStatusName;
+                            } else if (orderList[i].statusName =='待付款' || orderList[i].statusName =='待发货' ||orderList[i].statusName =='待收货' ||orderList[i].statusName =='待评价'){
+                                orderList[i].orderStatusStr = orderList[i].statusName;
+                            }
+                            orderData.orderlist.push(orderList[i]);
+                        }
+                    }
+                    
+                });
+            },
+            orderDetail:function (id) {
+                window.location.href='order_detail.html?orderId='+id;
+            },
+            cancelOrder:function(id, orderType, list) {
+                var title = '';
+                if (orderType == 'presell' && list.presellExtra && list.presellExtra.presellType == 'second') {
+                    title = '取消预售订单，定金将不给予退回<br>是否确定取消订单';
+                } else {
+                    title = '确定取消该订单吗？';
+                }
+//                取消订单
+                my_confirm({
+                    title:'提示',
+                    tips: title,
+                    btnOk:'确定',
+                    btnNo:'取消',
+                    funcOk:function () {
+                        var url ="weixin/order/cancel";
+                        var param = {"orderId": id};
+                        Util.common.b2bPostCallback(url, param, function (data) {
+                            if (data.success) {
+                                new Toast({context:$('body'),message:"取消成功"}).show();
+                                orderData.relaodList();
+                            } else {
+                                new Toast({context:$('body'),message: data.msg }).show();
+                            }
+                        });
+                    },
+                    funcNo:function () {
+                    }
+                });
+
+
+            },
+            deleteOrder: function(ids, orderType){
+//                删除订单
+                my_confirm({
+                    title:'提示',
+                    tips:"确定删除订单吗？",
+                    btnOk:'确定',
+                    btnNo:'取消',
+                    funcOk:function () {
+                        var url ="weixin/order/deleteOrder";
+                        var param = {"orderId": ids, "orderType":orderType};
+                        var param1 = {};
+                        param1.orderJsonStr = JSON.stringify(param);
+                        Util.common.b2bPostCallback(url, param1, function (data) {
+                            if(data.success){
+                                new Toast({context:$('body'),message: "删除成功！" }).show();
+                                orderData.relaodList();
+                            } else {
+                                new Toast({context:$('body'),message: data.msg }).show();
+                            }
+                        });
+                    },
+                    funcNo:function () {
+                    }
+                });
+            },
+            shipNotice: function(ids, orderType){
+//                提醒发货
+                var url ="weixin/order/shipNotice";
+                var param = {"orderId": ids, "orderType": orderType};
+                Util.common.b2bPostCallback(url, param, function (data) {
+                    if(data.success){
+                        new Toast({context:$('body'),message: "提醒成功！" }).show();
+                    } else {
+                        new Toast({context:$('body'),message: data.msg }).show();
+                    }
+                });
+            },
+            sureOrder:function(id,orderType, list) {
+                if (list.flowType) {
+                    my_confirm({
+                        title:'提示',
+                        tips:"该订单有商品处于售后中，还不能确认收货",
+                        btnNo:'取消',
+                        btnOk:"确定",
+                        funcOk:function () {
+                        },
+                        funcNo:function () {
+                        }
+                    });
+                    return;
+                }
+//                确认收货
+                my_confirm({
+                    title:'提示',
+                    tips:"确定已收到商品？<br/>订单完成后不能申请售后",
+                    btnOk:'确定',
+                    btnNo:'取消',
+                    funcOk:function () {
+                        var url ="weixin/order/confReceipt";
+                        var param = {};
+                        param.orderId = id;
+                        param.orderType = orderType;
+                        Util.common.b2bPostCallback(url, param, function (data) {
+                            if(data.success){
+                                new Toast({context:$('body'),message: "收货成功" }).show();
+                                orderData.relaodList();
+                            } else {
+                                new Toast({context:$('body'),message: data.msg }).show();
+                            }
+                        });
+                    },
+                    funcNo:function () {
+                    }
+                });
+            },
+            orderPay:function (waitpayAmount,id) {
+//                去付款
+                window.location.href="order_pay.html?waitpayAmount="+waitpayAmount+"&orderId="+id;
+            },
+            returnMoney:function (list) {
+//                整个订单申请退款
+                if (list.orderType == 'presell' && list.presellExtra && list.presellExtra.presellType == 'second') {
+                    my_confirm({
+                        title:'提示',
+                        tips:"申请退款，定金将不予退回<br>是否确认申请退款",
+                        btnNo:'取消',
+                        btnOk:"确定",
+                        funcOk:function () {
+                            var goodInfo = {};
+                            goodInfo.goods = list.orderListVos;
+                            goodInfo.orderId = list.id;
+                            goodInfo.orderType = list.orderType;
+                            goodInfo.goodNum = list.orderListVos.length;
+                            window.location.href='after_sale.html?goodInfo='+JSON.stringify(goodInfo)+'&refund=T'+'&refundAll=T';
+                        },
+                        funcNo:function () {
+                        }
+                    });
+                } else {
+                    var goodInfo = {};
+                    goodInfo.goods = list.orderListVos;
+                    goodInfo.orderId = list.id;
+                    goodInfo.orderType = list.orderType;
+                    goodInfo.goodNum = list.orderListVos.length;
+                    window.location.href='after_sale.html?goodInfo='+JSON.stringify(goodInfo)+'&refund=T'+'&refundAll=T';
+                }
+            },
+            returnGoods:function () {
+//                申请退货
+                window.location.href="goods_return.html?title=申请退货&id="+id;
+            },
+            toEvaluate:function (id) {
+//                立即评价
+                window.location.href="evaluation.html?orderId="+id;
+            },
+            seeLogistic:function (l_id,name) {
+//                查看物流状态
+                window.location.href='logistics.html?oddNum='+l_id+"&expressCompany="+name;
+            },
+            lookReturnAddr:function () {
+//                查看退货地址
+                window.location.href='person_address_empty.html';
+            },
+            buyAgain:function(list) {
+                //再次购买  将商品添加至购物车
+                var addCartList = list.orderListVos;
+                for (var i=0;i<addCartList.length;i++) {
+                    if (addCartList[i].giftFlag && addCartList[i].giftFlag == 'T') {
+                        continue;
+                    }
+                    var cart_url = "weixin/cart/addToCart";
+                    var cart_param = {
+                        "goodsId": addCartList[i].purGoodsSkuId,
+                        "goodsCount": addCartList[i].number,
+                    };
+                    var param1 = {};
+                    param1.queryJson = JSON.stringify(cart_param);
+                    Util.common.b2bPostCallback(cart_url, param1, function (data) {
+                        if (data.success) {
+                            new Toast({context:$('body'),message: '已添加至购物车！' }).show();
+                        }else {
+                            new Toast({context:$('body'),message: '添加至购物车失败，请重试！' }).show();
+                        }
+                    });
+                }
+            },
+            relaodList: function() {
+                counter = 1;
+                orderData.loadMore = true;
+                orderData.$set('orderlist',[]);
+                $(window).scrollTop(0);
+                orderData.loadlist(orderData.status);
+            },
+            goTop: function() {
+                $('html,body').animate({
+                    scrollTop: 0
+                },500);
+            },
+            getToken: function(){
+                var url ="/weixin/qiniu/getToken";
+                var param = {};
+                Util.common.b2bPostCallback(url, param, function(data){
+                    if (data.success && data.data) {
+                        localStorage.setItem('qiniu_token', data.data.token);
+                    }
+                });
+            },
+
+
+        }
+    });
+
+
+</script>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>申请退款</title>
+</head>
+<body id="goodsreturn" class="bg-main address-edit return-goods">
+    <ul class="lists">
+        <li v-on:click="choose()" class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">{{typeName}}：</div>
+            <p class="dis-cell ta-r">
+                {{choosedStr}}
+            </p>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+
+        </li>
+        <li class="dis-tabel bg-white w100">
+            <div class=" info-name ps">备注：</div>
+            <p class="">
+            <textarea name="" id="" rows="10" placeholder="请填写退款说明" v-model="notice"></textarea>
+            </p>
+        </li>
+    </ul>
+    <div v-on:click="save()" class="big-btn btn-active">保存</div>
+
+    <div style="display: none;" id="reason" class="full-bg returnReason">
+        <div class="params-list  clearfix">
+            <ul>
+                <li class="clearfix bg-main"><i v-on:click="cancle()" class="fl">取消</i><i v-on:click="finish()" class="fr">完成</i></li>
+                <template v-for="list in reasonlist">
+                    <li id="reason{{list.id}}" v-on:click="chooseReason(list.id,list.reason)" class="reason ta-c ">
+                        {{list.reason}}
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $(function () {
+        returnData.getReason();
+        //                微信分享
+        Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+    })
+    
+    var returnData=new Vue({
+        el: "#goodsreturn",
+        data: {
+            reasonlist: [],
+            chooseId:'',
+            chooseStr:'',
+            choosedId:'',
+            choosedStr:'',
+            notice:'',
+            typeName:'申请退款'
+        },
+        computed: {},
+        methods: {
+            getReason:function () {
+                returnData.$set('typeName',Util.common.getParameter('title'));
+                if(Util.common.getParameter('title') == "申请退货") {
+                    $(document).attr('title', '申请退货');
+                }
+                var url ='/weixin/common/returnReason/findAll.do';
+                var param = {};
+                Util.common.executeAjaxCallback(url, param, function (data) {
+                    console.log(data);
+                    returnData.$set('reasonlist',data);
+                });
+            },
+            chooseReason:function (id,str) {
+                $(".reason").removeClass('choosedRea');
+                $("#reason"+id).addClass('choosedRea');
+                returnData.$set('chooseId',id);
+                returnData.$set('chooseStr',str);
+
+            },
+            choose:function () {
+                $("#reason").css("display","block");
+                $("body").addClass('hide');
+            },
+            finish:function () {
+                $("#reason").css("display","none");
+                $("body").removeClass('hide');
+                returnData.$set('choosedId',returnData.chooseId);
+                returnData.$set('choosedStr',returnData.chooseStr);
+            },
+            cancle:function () {
+                $("#reason").css("display","none");
+            },
+            save:function () {
+                var url_1 ="/weixin/indent/update/refund.do";
+                var url_2 ="/weixin/indent/update/return.do";
+                var mapStr_2 = {
+                    "contentId": returnData.choosedId,
+                    "content": returnData.notice
+                };
+                var mapStr_1 = {
+                    "content":  returnData.notice
+                };
+                var param_1, param_2;
+                if(Util.common.getParameter('title') == "申请退货") {
+                    param_2 = {"ids": Util.common.getParameter('id'), "action": 'return', "mapStr": JSON.stringify(mapStr_2)};
+                    Util.common.executeAjaxCallback(url_2, param_2, function (data) {
+                        if(data.code === 1){
+                            new Toast({context:$('body'),message:"商家已收到您的请求，请耐心等待~"}).show();
+                            setTimeout(function(){
+                                window.location.href='myorder.html';
+                            }, 2000);
+                        } else {
+                            new Toast({context:$('body'),message:data.msg}).show();
+                        }
+                    });
+                } else {
+                    param_1 = {"ids": Util.common.getParameter('id'), "action": 'refund', "mapStr": JSON.stringify(mapStr_1)};
+                    Util.common.executeAjaxCallback(url_1, param_1, function (data) {
+                        if(data.code === 1){
+                            new Toast({context:$('body'),message:"商家已收到您的请求，请耐心等待~"}).show();
+                            setTimeout(function(){
+                                window.location.href='myorder.html';
+                            }, 2000);
+                        } else {
+                            new Toast({context:$('body'),message:data.msg}).show();
+                        }
+                    });
+                }
+            }
+        }
+    });
+</script>
+</html>

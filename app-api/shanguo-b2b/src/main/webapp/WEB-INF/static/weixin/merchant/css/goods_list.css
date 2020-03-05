@@ -1,0 +1,12 @@
+.goodType {
+    padding: 0 0.2rem;
+}
+.color-main sub{
+    font-size: 0.8125rem;
+    vertical-align: baseline;
+}
+.color-main sup{
+    font-size: 0.8125rem;
+    vertical-align: baseline;
+    margin-left: 2px;
+}

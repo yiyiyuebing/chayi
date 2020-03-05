@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yaoming.module.security.dao.base.SecurityFunctionResourcePatternMapper" >
+  <resultMap id="BaseResultMap" type="com.yaoming.module.security.dao.base.po.SecurityFunctionResourcePattern" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="function_id" property="functionId" jdbcType="BIGINT" />
+    <result column="pattern" property="pattern" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, function_id, pattern, note
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from _security_function_resource_pattern
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from _security_function_resource_pattern
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yaoming.module.security.dao.base.po.SecurityFunctionResourcePattern" >
+    insert into _security_function_resource_pattern (id, function_id, pattern, 
+      note)
+    values (#{id,jdbcType=BIGINT}, #{functionId,jdbcType=BIGINT}, #{pattern,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yaoming.module.security.dao.base.po.SecurityFunctionResourcePattern" >
+    insert into _security_function_resource_pattern
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="functionId != null" >
+        function_id,
+      </if>
+      <if test="pattern != null" >
+        pattern,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="functionId != null" >
+        #{functionId,jdbcType=BIGINT},
+      </if>
+      <if test="pattern != null" >
+        #{pattern,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yaoming.module.security.dao.base.po.SecurityFunctionResourcePattern" >
+    update _security_function_resource_pattern
+    <set >
+      <if test="functionId != null" >
+        function_id = #{functionId,jdbcType=BIGINT},
+      </if>
+      <if test="pattern != null" >
+        pattern = #{pattern,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yaoming.module.security.dao.base.po.SecurityFunctionResourcePattern" >
+    update _security_function_resource_pattern
+    set function_id = #{functionId,jdbcType=BIGINT},
+      pattern = #{pattern,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

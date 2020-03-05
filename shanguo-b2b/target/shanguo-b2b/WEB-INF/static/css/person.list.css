@@ -1,0 +1,41 @@
+.list-wrap {padding-top: 20px; padding-bottom: 100px;}
+.list-wrap.has-border-top {margin-top: -1px; padding-top: 0; border-top: 1px solid #f0f0f0;}
+.list-wrap * {font-size: 12px; word-wrap:break-word; word-break:break-all; box-sizing: border-box;}
+.list-wrap .search-wrap {margin-top: 20px;}
+.list-wrap .search-wrap .search-box {float: left; margin-right: 20px;}
+.list-wrap .search-box .search-ipt {float: left; width: 250px; padding: 0 10px; border: 1px solid #dbdbdb; outline: none; line-height: 25px;}
+.list-wrap .search-box .search-label {float: left; margin-left: -1px; padding: 0 10px; background-color: #f5f5f5; color: #666; text-align: center; border: 1px solid #dbdbdb; line-height: 25px; cursor: pointer;}
+.list-wrap .more-btn {line-height: 27px;}
+.filter-box .more-part .more-table {width: 100%; margin-top: 10px;}
+.filter-box .more-part .more-select, .filter-box .more-part .more-ipt {width: 148px; border: 1px solid #dbdbdb; line-height: 25px;}
+.filter-box .more-part .more-select {height: 29px;}
+.filter-box .more-part .more-table td {padding: 10px 0;}
+.filter-box .orange-btn {display: inline-block; padding: 5px 15px; color: #fff; background-color: #cc9b4b; border-radius: 4px;}
+.list-wrap .title-table {width: 100%; background-color: #f5f5f5; border: 1px solid #dbdbdb;}
+.list-wrap .title-table td {padding: 10px 0;}
+.list-wrap .title-table .status-select {background-color: #f5f5f5; border: none; outline: none;}
+.list-wrap .check-box {position: relative; min-height: 49px; padding: 15px 0;}
+.list-wrap .check-box .batch-btn {margin-left: 30px; padding: 3px 10px; border: 1px solid #dbdbdb;}
+.list-wrap .check-box .batch-btn:hover {background-color: #f5f5f5;}
+.list-wrap .option-wrap {position: absolute; top: 13px; right: 0;}
+.list-wrap .option-wrap .option-btn {float: left; padding: 3px 10px; border: 1px solid #f0f0f0; border-radius: 4px;}
+.list-wrap .option-wrap .option-btn.disable {color: #999; pointer-events: none;}
+.list-wrap .option-wrap .option-btn.next {margin-left: 5px;}
+.list-wrap .list-table {width: 100%; margin-top: 20px; border: 1px solid #dbdbdb;}
+.list-wrap .list-table:first-child {margin-top: 0;}
+.list-wrap .list-table thead {background-color: #f5f5f5;}
+.list-wrap .list-table .del-btn {position: absolute; top: 0; right: 20px; width: 47px; height: 47px; background: url("../images/del-icon.png") no-repeat center;}
+.list-wrap .list-table td {padding: 15px 0;}
+.list-wrap .list-table td {border-left: 1px solid #dbdbdb;}
+.list-wrap .list-table td:first-child, .list-wrap .list-table .border-left-none {border-left: none;}
+.list-wrap .list-table .border-top {border-top: 1px solid #dbdbdb;}
+.list-wrap .list-table .td-top {vertical-align: top;}
+.list-wrap .list-table .p-name, .list-wrap .list-table .p-price {font-size: 14px;}
+.list-wrap .list-table .img-cover {width: 65px; height: 65px;}
+.list-wrap .list-table .img-cover img {width: 100%; height: 100%;}
+.list-wrap .list-table .orange-btn {display: inline-block; margin-top: 10px; padding: 5px 15px; color: #fff; background-color: #cc9b4b; border-radius: 4px;}
+.list-wrap .little-w {width: 10%;}
+.list-wrap .small-w {width: 15%;}
+.list-wrap .middle-w {width: 25%;}
+.list-wrap .long-m-w {width: 32%;}
+.list-wrap .long-w {width: 35%;}

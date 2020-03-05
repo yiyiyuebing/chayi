@@ -1,0 +1,17 @@
+package pub.makers.shop.order.vo;
+
+import java.io.Serializable;
+
+/**
+ * 售后申请
+ * @author apple
+ *
+ */
+public class AfterSaleApply implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+}

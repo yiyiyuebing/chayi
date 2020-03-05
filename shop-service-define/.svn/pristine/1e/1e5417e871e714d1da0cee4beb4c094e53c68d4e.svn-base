@@ -1,0 +1,25 @@
+package pub.makers.shop.afterSale.enums;
+
+/**
+ * Created by dy on 2017/5/15.
+ */
+public enum OrderFlowStatus {
+
+    please_refund("请退款"), refund("同意退款"), refuse_refund("已拒绝退款"), success_refund("退款成功"),
+    please_exchange("请换货"), exchange("同意换货"), refuse_exchange("已拒绝换货"), success_exchange("换货成功"), exc_confirm_receive("确认到货"),
+    please_return("请退货"), return_refund("同意退货"), refuse_return("已拒绝退货退款"), success_return("退货退款成功"), ret_confirm_receive("确认到货");
+
+    private String displayName;
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    private OrderFlowStatus(String displayName){
+        this.displayName = displayName;
+    }
+}

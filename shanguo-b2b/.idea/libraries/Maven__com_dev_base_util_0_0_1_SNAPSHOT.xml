@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.dev:base-util:0.0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/dev/base-util/0.0.1-SNAPSHOT/base-util-0.0.1-20161125.144655-35.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/dev/base-util/0.0.1-SNAPSHOT/base-util-0.0.1-20161125.144655-35-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/dev/base-util/0.0.1-SNAPSHOT/base-util-0.0.1-20161125.144655-35-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

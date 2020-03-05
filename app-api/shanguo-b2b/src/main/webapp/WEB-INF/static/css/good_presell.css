@@ -1,0 +1,606 @@
+
+.product-info .product-zoom-wrap .product-img .product-category{
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    right: 15px;
+    top:10px;
+    z-index: 99999;
+}
+.product-info .product-zoom-wrap .product-img .product-category img{
+    width: 100%;
+    height: 100%;
+}
+
+.product-info .product-center-presell{
+    width:743px;
+    margin-left: 25px;
+}
+.product-info .product-center-presell h4{
+    font-size: 18px;
+    line-height: 30px;
+    color: #1a1a1a;
+    text-align: left;
+}
+.product-info .product-center-presell h4 i{
+    font-style: normal;
+    color: #fff;
+    line-height: 20px;
+    font-size: 12px;
+    text-align: center;
+    display: inline-block;
+    padding-left: 7px;
+    padding-right: 7px;
+    background: #f05353;
+    border-radius: 3px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.product-info .product-center-presell .product-words{
+    font-size: 12px;
+    text-align: left;
+    line-height: 24px;
+    color: #e4393c;
+}
+.product-info .product-center-presell .product-txt{
+    background:#f2f2f5;
+    margin-bottom: 10px;
+}
+.product-info .product-center-presell .product-txt .product-txt-title{
+    background: #e4393c;
+}
+.product-info .product-center-presell .product-txt .product-txt-title .txt-title-left{
+    font-size: 16px;
+    color: #fff229;
+    text-align: left;
+    line-height: 36px;
+    font-weight: bold;
+}
+.product-info .product-center-presell .product-txt .product-txt-title .txt-title-left i{
+    width: 19px;
+    height: 19px;
+    display: inline-block;
+    background: url(../images/group_buying_icon_heart.png) no-repeat center;
+    background-size: contain;
+    vertical-align: sub;
+    margin-right: 6px;
+    margin-left: 6px;
+}
+.product-info .product-center-presell .product-txt .product-txt-title .txt-title-left .presell-clock{
+    background: url(../images/presell_icon_clock.png) no-repeat center;
+    background-size: contain;
+}
+.product-info .product-center-presell .product-txt .product-txt-title .txt-title-center{
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    line-height: 37px;
+    margin-left: 260px;
+}
+.product-info .product-center-presell .product-txt .product-txt-title .txt-title-center .icon-presell{
+    width: 19px;
+    height: 19px;
+    background: url(../images/icon_presell.png) no-repeat center;
+    background-size: contain;
+    display: inline-block;
+    vertical-align: sub;
+    margin-right: 6px;
+}
+.product-info .product-center-presell .product-txt .product-txt-title .txt-title-center mark{
+    color: #ffff00;
+    background: transparent;
+}
+.product-info .product-center-presell .product-txt .product-txt-title .txt-title-right{
+    margin-right: 20px;
+    font-size: 14px;
+    line-height: 36px;
+    color: #ffff00;
+}
+.product-info .product-center-presell .product-txt .product-txt-title .txt-title-right span{
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    line-height: 36px;
+    margin-right: 4px;
+}
+.product-info .product-center-presell .product-txt .product-txt-title .txt-title-right span.activity-end-time{
+    color: #ffff00;
+}
+.product-info .product-center-presell .product-txt .product-txt-title .txt-title-right span .icon-clock{
+    width: 20px;
+    height: 18px;
+    display: inline-block;
+    background: url(../images/icon_clock.png) no-repeat center;
+    background-size: contain;
+    vertical-align: sub;
+    margin-right: 6px;
+}
+.product-info .product-center-presell .product-txt .product-txt-content{
+    background: #f2f2f5;
+    padding-left: 28px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    position: relative;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-orginal-price label{
+    font-size: 12px;
+    color: #666;
+    text-align: right;
+    width: 64px;
+    line-height: 26px;
+    margin-right: 6px;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-orginal-price span{
+    font-size: 12px;
+    line-height: 26px;
+    color: #666;
+    text-align: left;
+    position: relative;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-orginal-price span i{
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: #888;
+    top:12px;
+    left: 0px;
+    position: absolute;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-presell-state {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-presell-state .presell-state-btn{
+    font-size: 14px;
+    color: #2a6dbb;
+    cursor: pointer;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-presell-state .presell-state-btn .icon-down{
+    width: 12px;
+    height: 7px;
+    background: url(../images/icon_down_blue.png) no-repeat right;
+    background-size: contain;
+    vertical-align: middle;
+    display: inline-block;
+    padding-left: 6px;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-presell-state .presell-state-content {
+    width: 200px;
+    border: 1px solid #dbdbdb;
+    z-index: 999999999999999999;
+    border-radius: 3px;
+    background: #fff;
+    position: absolute;
+    right: 0;
+    top: 22px;
+    font-size: 12px;
+    line-height: 24px;
+    padding: 10px;
+    color: #666;
+    display: none;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-txt-group-price{
+    margin-bottom: 6px;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-txt-group-price label{
+    font-size: 12px;
+    color: #666;
+    text-align: right;
+    width: 64px;
+    line-height: 26px;
+    margin-right: 6px;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-txt-group-price span{
+    color: #e4393c;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 26px;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-txt-group-price span mark{
+    height: 20px;
+    line-height: 20px;
+    background:#f05353;
+    position: relative;
+    color: #fff;
+    font-size: 12px;
+    display: inline-block;
+    text-align: center;
+    font-style: normal;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 23px;
+    border-radius: 3px;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-txt-group-price span mark i{
+    width: 7px;
+    height: 20px;
+    position: absolute;
+    left: -6px;
+    top:0;
+    background: url("../images/icon_group_buying_bg_triangle.png") no-repeat center;
+    background-size: contain;
+    display: inline-block;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .subscription label{
+    font-size: 12px;
+    color: #666;
+    text-align: right;
+    width: 64px;
+    line-height: 30px;
+    margin-right: 6px;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .subscription span{
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 30px;
+    color: #f05353;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .subscription span sub{
+    font-size: 14px;
+    vertical-align: baseline;
+    font-weight: bold;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-txt-group-state label{
+    font-size: 12px;
+    color: #666;
+    text-align: right;
+    width: 64px;
+    line-height: 30px;
+    margin-right: 6px;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-txt-group-state span{
+    font-size: 12px;
+    color: #666;
+    text-align: left;
+    line-height: 30px;
+}
+.product-info .product-center-presell .product-txt .product-txt-content .product-txt-group-state span i{
+    padding-left: 4px;
+    padding-right: 4px;
+    font-size: 12px;
+    line-height: 20px;
+    border: 1px solid #f05353;
+    border-radius: 3px;
+    color: #f05353;
+    font-style: normal;
+    margin-right: 10px;
+}
+.product-info .product-center-presell .group{
+    padding-left: 28px;
+}
+.product-info .product-center-presell .group .title{
+    font-size: 12px;
+    line-height: 26px;
+    color: #999;
+    width: 80px;
+}
+.product-info .product-center-presell .group .favorable-content{
+    position: relative;
+    width: 400px;
+}
+.product-info .product-center-presell .group .favorable-content .favorable-content-title{
+    font-size: 12px;
+    line-height: 26px;
+    color: #cc9b4b;
+    cursor: pointer;
+}
+.product-info .product-center-presell .group .favorable-content .favorable-content-title i{
+    display: inline-block;
+    width: 12px;
+    height:6px;
+    background: url(../images/nav_icon_down_yellow.png) no-repeat center;
+    background-size: contain;
+    margin-left: 14px;
+}
+.product-info .product-center-presell .group .favorable-content .favorable-content-title .up{
+    background: url(../images/nav_icon_up_yellow.png) no-repeat center;
+}
+.product-info .product-center-presell .group .favorable-content .favorable-datalist{
+    position: absolute;
+    left: 0;
+    top:26px;
+    background: #fff;
+    border:1px solid #cc9b4b;
+    padding: 6px 20px;
+    z-index: 111;
+}
+.product-info .product-center-presell .group .favorable-content .favorable-datalist li{
+    font-size: 12px;
+    line-height: 26px;
+    color: #666;
+    cursor: pointer;
+
+}
+.product-info .product-center-presell .group .favorable-content .favorable-datalist li:hover{
+    color:#cc9b4b;
+}
+.product-info .product-center-presell .express .express-content .express-start{
+    font-size: 12px;
+    color: #1a1a1a;
+    line-height: 26px;
+}
+.product-info .product-center-presell .express .express-content .express-to{
+    font-size: 12px;
+    color: #666;
+    line-height: 26px;
+    font-style: normal;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+.product-info .product-center-presell .express .express-content .express-wrap{
+    position: relative;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .location-choose{
+    font-size: 12px;
+    color: #666;
+    line-height: 26px;
+    font-style: normal;
+    cursor: pointer;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .location-choose:hover {
+    color: #cc9b4b;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .location-choose i{
+    width: 26px;
+    height: 12px;
+    display: inline-block;
+    background: url(../images/nav_icon_down_gray.png) no-repeat center;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .location-choose:hover i{
+    background: url(../images/nav_icon_down_yellow.png) no-repeat center;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .express-choose-datalist{
+    position: absolute;
+    left: 0;
+    top:26px;
+    width: 460px;
+    background: #fff;
+    border:1px solid #dbdbdb;
+    border-radius: 3px;
+    padding: 20px 10px 10px 10px;
+    z-index: 999999;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .location-choose-active i{
+    background: url(../images/nav_icon_up_gray.png) no-repeat center!important;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .location-choose-active:hover i{
+    background: url(../images/nav_icon_up_yellow.png) no-repeat center!important;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .express-choose-datalist .close{
+    cursor: pointer;
+    position: absolute;
+    right: 13px;
+    top:13px;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .express-choose-datalist .location-title{
+    border-bottom: 1px solid #cc9b4b;
+    height: 24px;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .express-choose-datalist .location-title span{
+    font-size: 12px;
+    color: #1a1a1a;
+    width: 54px;
+    border:1px solid #dbdbdb;
+    border-radius: 3px 3px 0px 0px;
+    text-align: center;
+    cursor: pointer;
+    line-height: 24px;
+    margin-right: 4px;
+    border-bottom: none;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .express-choose-datalist .location-title .active{
+    border-color: #cc9b4b!important;
+    background: #fff;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .express-choose-datalist .location-title i{
+    width: 6px;
+    height: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    background: url(../images/icon_down.png) no-repeat center;
+    background-size: contain;
+    margin-left: 4px;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .express-choose-datalist .location-content{
+    width: 100%;
+    margin: 0 auto;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .express-choose-datalist .location-content ul li{
+    width: 16.666%;
+    margin-top: 10px;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .express-choose-datalist .location-content ul li span{
+    display: block;
+    width: 60px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: #1a1a1a;
+    margin: 0 auto;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .express-choose-datalist .location-content ul li span:hover{
+    background: #cc9b4b;
+    color: #fff;
+}
+.product-info .product-center-presell .express .express-content .express-wrap .express-choose-datalist .close span{
+    width: 14px;
+    height: 13px;
+    background: url(../images/icon_close.png) no-repeat center;
+    background-size: contain;
+}
+
+.product-info .product-center-presell .express .express-content .express-cost{
+    margin-left: 10px;
+    font-size: 12px;
+    line-height: 14px;
+    color: #1a1a1a;
+    border-left: 1px solid #dbdbdb;
+    padding-left: 10px;
+    margin-top: 4px;
+}
+.product-info .product-center-presell .express .express-content .express-cost mark{
+    background: transparent;
+    font-size: 12px;
+    color: #999;
+    margin-left: 10px;
+}
+/*地址*/
+.product-info .product-center-presell .send-time .send-time-content{
+    font-size: 12px;
+    color: #333;
+    text-align: left;
+    line-height: 26px;
+}
+.product-info .product-center-presell .size{
+    border-top:1px dotted #f0f0f0;
+    border-bottom: 1px dotted #f0f0f0;
+    margin-bottom: 20px;
+}
+.product-info .product-center-presell .size .title{
+    line-height: 36px;
+}
+.product-info .product-center-presell .size .size-content{
+    width: 635px;
+}
+.product-info .product-center-presell .size .size-content tr td{
+    font-size: 12px;
+    color: #666;
+    border-bottom: 1px dotted #f0f0f0;
+    height: 48px;
+}
+.product-info .product-center-presell .size .size-content .td-fontw{
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+    width: 200px;
+}
+.product-info .product-center-presell .size .size-content .td-price{
+    width: 110px;
+    text-align: center;
+}
+.product-info .product-center-presell .size .size-content .sale-num{
+    width: 70px;
+    text-align: center;
+}
+.product-info .product-center-presell .size .size-content .limit-sale{
+    width: 120px;
+    text-align: center;
+}
+.product-info .product-center-presell .size .size-content tr:last-of-type td{
+    border-bottom: none;
+}
+.product-info .product-center-presell .size .size-content tr .input-count{
+    width: 120px;
+    text-align: center;
+}
+.product-info .product-center-presell .size .size-content tr .input-count .subtraction{
+    width: 26px;
+    height: 24px;
+    border: 1px solid #dbdbdb;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #333;
+    cursor: pointer;
+    background: #f2f7ff;
+}
+.product-info .product-center-presell .size .size-content tr .input-count .plus{
+    width: 26px;
+    height: 24px;
+    border: 1px solid #dbdbdb;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #333;
+    cursor: pointer;
+    background: #f2f7ff;
+}
+.product-info .product-center-presell .size .size-content tr .input-count input{
+    width: 54px;
+    height: 24px;
+    border:none;
+    border-top: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
+    outline: none;
+    text-align: center;
+    font-size: 12px;
+    padding: 0;
+}
+.product-info .product-center-presell .size .size-content tr .input-count .disabled{
+    color: #999;
+    background: #fff;
+}
+.product-info .product-center-presell .btn-group{
+    margin-bottom: 15px;
+}
+.product-info .product-center-presell .btn-group .buy{
+    width: 160px;
+    height: 40px;
+    line-height: 40px;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    outline: none;
+    background: #e32a32;
+    margin-right: 15px;
+    cursor: pointer;
+    display: inline-block;
+}
+.product-info .product-center-presell .btn-group .btn-disable{
+    width: 160px;
+    height: 40px;
+    line-height: 40px;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    outline: none;
+    background: #dbdbdb;
+    margin-right: 15px;
+    cursor: not-allowed;
+    display: inline-block;
+    pointer-events: none;
+}
+.product-info .product-center-presell .pay-content a{
+    font-size: 12px;
+    line-height: 26px;
+    color: #1a1a1a;
+    margin-right: 8px;
+}
+.product-info .product-center-presell .pay-content a i{
+    margin-right: 4px;
+    vertical-align: text-top;
+}
+.product-info .product-center-presell .pay-content a .change15{
+    width: 18px;
+    height: 14px;
+    display: inline-block;
+    background: url(../images/icon_kefu_small.png) no-repeat center;
+    background-size: contain;
+}
+.product-info .product-center-presell .pay-content a .time24{
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background: url(../images/icon_time48.png) no-repeat center;
+    background-size: contain;
+}
+.product-info .product-center-presell .pay-content a .promise-brand{
+    width: 12px;
+    height: 16px;
+    display: inline-block;
+    background: url(../images/icon_promise_brand.png) no-repeat center;
+    background-size: contain;
+}
+.product-info .product-center-presell .pay .promise-content a{
+    font-size: 12px;
+    line-height: 26px;
+    color: #1a1a1a;
+    margin-right: 12px;
+}

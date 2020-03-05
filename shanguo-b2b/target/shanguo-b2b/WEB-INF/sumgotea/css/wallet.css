@@ -1,0 +1,26 @@
+.more-pop{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.1);
+    position: fixed;
+    left: 0;
+    top:0;
+    z-index: 999;
+}
+.more-pop .more-pop-wrap{
+    position: absolute;
+    bottom: 0px;
+    left: 3%;
+    width: 94%;
+    margin: 0 auto;
+}
+.more-pop .more-pop-wrap a{
+    display: block;
+    background: #fff;
+    border-radius: 9px;
+    font-size: 0.8125rem;
+    color: #035ed6;
+    line-height: 2.7rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}

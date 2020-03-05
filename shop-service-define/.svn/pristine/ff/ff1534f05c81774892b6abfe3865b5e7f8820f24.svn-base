@@ -1,0 +1,21 @@
+package pub.makers.shop.logistics.enums;
+
+public enum OrderType {
+
+	trade("商城订单"), purchase("采购订单");
+	private String name;
+    
+    
+    private OrderType(String name) {
+        this.name = name;
+    }
+    
+    public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+}

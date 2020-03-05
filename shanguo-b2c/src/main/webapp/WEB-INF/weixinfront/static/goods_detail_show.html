@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link href="//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>商品详情</title>
+</head>
+<body id="goodsDetail" class="bg-main goods-detail">
+
+    <div id="timer-out" class="goods-statu1" style="display: none" >
+        <i class="title-show">距开始：</i>
+        <i class="hour timer"></i>
+        <i class="timer">:</i>
+        <i class="min timer"></i>
+        <i class="timer">:</i>
+        <i class="sec timer"></i>
+    </div>
+    <div class="goods-img">
+        <div id="slider-content">
+
+        </div>
+    </div>
+    <div class="dis-tabel w100 goods-tit">
+        <div class="dis-cell w80">
+            <h4>{{detail.name}}</h4>
+        </div>
+
+        <div id="share" class="dis-cell g-tit-icon">
+            <i  class="share"></i>
+            <p>分享</p>
+        </div>
+    </div>
+    <h5 class="goodPrice">
+        <em class="color-red">{{detail.salePrice}}</em>
+        <i>{{detail.supplyPrice}}</i>
+        <!--<span class="activity1">团购特卖</span>-->
+        <!--<span class="activity2">包邮</span>-->
+    </h5>
+
+    <div  class="goods-tit2 clearfix">
+        <i class=" fl ta-c">
+            月销量&nbsp;{{detail.saleAllNum}}
+        </i>
+        <i class=" fl ta-c">
+            库存&nbsp;{{detail.kucun}}
+        </i>
+    </div>
+    <div v-on:click="screen(0)" class="goods-choose">
+        <div class="dis-cell">查看规格</div>
+        <div class="right-arrow"><i class="iconfont">&#xe65e;</i></div>
+    </div>
+    <div v-on:click="jumpto('evaluation')" class="goods-choose">
+        <div class="dis-cell">买家评价</div>
+        <div class="right-arrow"><i class="iconfont">&#xe65e;</i></div>
+    </div>
+    <div class="mar-t1 border-b1 bg-white p10 ta-c fs-14 ">
+        <span class="tit-line" ></span>图文详情
+         <span class="tit-line" ></span>
+    </div>
+    <div class="mar-b2" >
+        <ul>
+            <template v-for="img in imgList">
+                <li><img :src="img.url" alt=""></li>
+            </template>
+        </ul>
+    </div>
+
+
+
+     <!--<div  v-on:click="toUp()" class="up-down dis-tabel w100" >-->
+         <!--<template v-if="state==0">-->
+             <!--<i class="xiajia dis-cell va-m w50 "></i>-->
+             <!--<p class="dis-cell va-m w50 ta-l">下架</p>-->
+         <!--</template>-->
+         <!--<template v-else>-->
+             <!--<i class="shangjia dis-cell va-m w50 "></i>-->
+             <!--<p class="dis-cell va-m w50 ta-l">上架</p>-->
+         <!--</template>-->
+
+     <!--</div>-->
+    
+    <div style="display: none;" id="skuCon" class="full-bg">
+        <div class="params-list clearfix">
+            <div class="fr dis-cell close-icon">
+                <i v-on:click="screen(0)" class="iconfont">&#xe6cc;</i>
+            </div>
+            <ul >
+                <li class="param-tit">
+                    <div class="dis-cell param-img"><img :src="detail.smallImage" alt=""></div>
+                    <div class="dis-cell">
+                        <h4>{{detail.name}}</h4>
+                        <h5>¥{{detail.salePrice}}<i>¥{{detail.marketPrice}}</i> <em>库存：{{detail.kucun}}</em></h5>
+                    </div>
+                </li>
+                <template v-for="item in detail.new_skuList">
+                    <template v-if="item.type !=undefined">
+                        <li >
+                            <p>{{item.type}}</p>
+                            <div class="clearfix">
+                                <template v-for="val in item.value">
+                                    <template v-if="$index ==0">
+                                        <input class="norms" type="radio" checked="checked" name="{{item.type}}" id="{{item.type}}{{val}}" value="{{val}}">
+                                        <label for="{{item.type}}{{val}}" class="fl">{{val}}</label>
+                                    </template>
+                                    <template v-else>
+                                        <input class="norms" type="radio" name="{{item.type}}" id="{{item.type}}{{val}}" value="{{val}}">
+                                        <label for="{{item.type}}{{val}}" class="fl">{{val}}</label>
+                                    </template>
+
+                                </template>
+                            </div>
+                        </li>
+                    </template>
+                </template>
+            </ul>
+        </div>
+    </div>
+
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="//cdn.bootcss.com/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+<script src="js/jquery.tmpl.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script type="text/x-jquery-tmpl" id="index_advertise_t">
+    <ul class="swiper-wrapper">
+    {{each(i,advertise) datas}}
+       <li class="swiper-slide">
+        <a href="{{if advertise.lineStatus==1}}html/customer/details/details.html?id=${advertise.lineUrl}{{/if}}" target="_top" type="${advertise.lineStatus}" typeId="${advertise.id}"><img src="${advertise.url}"></a>
+       </li>
+     {{/each}}
+    </ul>
+    <div class="swiper-pagination"></div>
+</script>
+
+
+
+<script>
+$(function () {
+    goods.loadlist();
+    goods.loadstate();
+//    setInterval(timeCounter, 1000);
+})
+
+	var shopId = Util.common.getParameter("storeId") || sessionStorage.getItem("shopId");
+    var id = Util.common.getParameter("id");
+
+    var goods=new Vue({
+        el:'#goodsDetail',
+        data:{
+            detail:{},
+            imgList:[],
+            state:0
+        },
+        computed:{
+
+        },
+        methods:{
+            loadstate:function () {
+                goods.$set("state",sessionStorage.getItem("sortType"));
+
+            },
+            loadlist:function () {
+                //    获取商品详情
+                var url ="weixin/good/getGoodDetail.do?goodId="+Util.common.getParameter("id");
+                var param = {};
+                sessionStorage.setItem('goodId', Util.common.getParameter("id"));
+                Util.common.executeAjaxCallback(url, param, function (data) {
+
+                    $("#share").on("click", function(){
+                        if(window.WebAppJS){
+                            WebAppJS.share(data.name, "", data.smallImage, Util.common.b2cUrlApi +  "weixinfront/static/goods_detail.html?storeId="+shopId+"&id="+id+"&type=weixinIndex");
+                        }
+                    });
+
+                    var datas ={"datas":data.showImages.images};
+                    Util.common.loadTemplate("#slider-content", "#index_advertise_t", datas);
+                    Util.common.initAdvertiseSlide();
+
+                    sessionStorage.setItem('skuId', data.goodSkuList[0].id);
+                    sessionStorage.setItem('postId', data.postId);
+
+//        获取商品规格列表
+                    var new_skuList = [];
+                    var items_1 = {}, items_2 = {}, items_3 = {};
+                    var item_value_1 = [], item_value_2 = [], item_value_3 = [];
+                    for (var i = 0; i < data.goodSkuList.length; i++) {
+                        var item_1 = data.goodSkuList[i].skuLong.split('!!');
+                        for (var j = 0; j < item_1.length; j += 3) {
+                            var item_2 = item_1[j].split("~");
+                            items_1.type = item_2[0];
+                            item_value_1.push(item_2[2]);
+                        }
+                        for (var j = 1; j < item_1.length; j += 3) {
+                            var item_2 = item_1[j].split("~");
+                            items_2.type = item_2[0];
+                            item_value_2.push(item_2[2]);
+                        }
+                        for (var j = 2; j < item_1.length; j += 3) {
+                            var item_2 = item_1[j].split("~");
+                            items_3.type = item_2[0];
+                            item_value_3.push(item_2[2]);
+                        }
+                    }
+                    var result_1 = [], hash_1 = {};
+                    var result_2 = [], hash_2 = {};
+                    var result_3 = [], hash_3 = {};
+                    for (var n = 0, elem; (elem = item_value_1[n]) != null; n++) {
+                        if (!hash_1[elem]) {
+                            result_1.push(elem);
+                            hash_1[elem] = true;
+                        }
+                    }
+                    for (var n = 0, elem; (elem = item_value_2[n]) != null; n++) {
+                        if (!hash_2[elem]) {
+                            result_2.push(elem);
+                            hash_2[elem] = true;
+                        }
+                    }
+                    for (var n = 0, elem; (elem = item_value_3[n]) != null; n++) {
+                        if (!hash_3[elem]) {
+                            result_3.push(elem);
+                            hash_3[elem] = true;
+                        }
+                    }
+                    items_1.value = result_1;
+                    items_2.value = result_2;
+                    items_3.value = result_3;
+                    new_skuList.push(items_1);
+                    new_skuList.push(items_2);
+                    new_skuList.push(items_3);
+                    console.log(new_skuList);
+                    data.new_skuList = new_skuList;
+
+                    console.log(data);
+                    var detailImg=JSON.stringify(data.detailImages.images);
+                    goods.$set("imgList",JSON.parse(detailImg));
+                    goods.$set("detail",data);
+                    var goodInfoObj={
+                        name:data.name,
+                        imgUrl:data.smallImage,
+                        salePrice:data.salePrice,
+                        cargoNo:data.cargoNo,
+                        id:Util.common.getParameter("id")
+                    }
+                    setInterval(timeCounter, 1000);
+
+                });
+
+            },
+//            规格弹窗
+            screen:function (type) {
+                if (type==0){
+//                    点击选择规格
+                    $("#btnType3").css("display","none");
+                    $("#btnType2").css("display","none");
+                    $("#btnType1").css("display","none");
+                    $("#btnType0").css("display","block");
+                    $("#skuCon").fadeToggle(10);
+                    if($("body").hasClass('hide')){
+                        $("body").removeClass("hide");
+                    }else{
+                        $("body").addClass("hide");
+                    }
+                }else if(type==1){
+//                    点击加入购物车
+                    $("#btnType3").css("display","none");
+                    $("#btnType2").css("display","none");
+                    $("#btnType0").css("display","none");
+                    $("#btnType1").css("display","block");
+                    $("#skuCon").fadeToggle(10);
+                    if($("body").hasClass('hide')){
+                        $("body").removeClass("hide");
+                    }else{
+                        $("body").addClass("hide");
+                    }
+
+                }else if(type==2){
+//                    点击自己要
+                    $("#btnType3").css("display","none");
+                    $("#btnType1").css("display","none");
+                    $("#btnType0").css("display","none");
+                    $("#btnType2").css("display","block");
+                    $("#skuCon").fadeToggle(10);
+                    if($("body").hasClass('hide')){
+                        $("body").removeClass("hide");
+                    }else{
+                        $("body").addClass("hide");
+                    }
+
+                }else {
+//                    点击我要送人
+                    $("#btnType1").css("display","none");
+                    $("#btnType2").css("display","none");
+                    $("#btnType0").css("display","none");
+                    $("#btnType3").css("display","block");
+                    $("#skuCon").fadeToggle(10);
+                    if($("body").hasClass('hide')){
+                        $("body").removeClass("hide");
+                    }else{
+                        $("body").addClass("hide");
+                    }
+
+                }
+
+            },
+            jumpto:function () {
+                window.location.href='evaluation.html?goodId='+Util.common.getParameter("id")+"&shopId="+sessionStorage.getItem("shopId");
+            },
+            toUp:function () {
+
+                if (this.state==0){
+//                    商品下架
+                    var url='mobile/good/setGoodOutShelve.do?goodIds='+Util.common.getParameter("id")+'&shopId='+sessionStorage.getItem("shopId");
+                    Util.common.executeAjaxCallback(url,{},function (data) {
+                        console.log(data.msg);
+                        if(data.code==0) {
+                            param = {
+                                func: function () {
+                                    sessionStorage.setItem("sortType", 1);
+                                    goods.loadstate();
+
+                                }
+                            };
+                            new ToastImg({context: $('body'), message: "<img src='img/icons/down1.png'>"}).show(param);
+                        }
+                    });
+                }else {
+//                    商品上架
+                    var url='mobile/good/setGoodShelve.do?goodIds='+Util.common.getParameter("id")+'&shopId='+sessionStorage.getItem("shopId");
+                    Util.common.executeAjaxCallback(url,{},function (data) {
+                        console.log(data.msg);
+                        if(data.code==0) {
+                            param = {
+                                func: function () {
+                                    sessionStorage.setItem("sortType", 0);
+                                    goods.loadstate();
+                                }
+                            };
+                            new ToastImg({context: $('body'), message: "<img src='img/icons/up1.png'>"}).show(param);
+                        }
+                    });
+                }
+
+            }
+
+        }
+    });
+
+var timeCounter = function(){
+    console.log("111");
+    var $timer  = $("#timer-out");
+    var startTime=goods.detail.startDate;
+    var ednTime=goods.detail.endDate;
+    startTime=startTime.replace(/\-/g,"/");
+    ednTime=ednTime.replace(/\-/g,"/");
+    console.log(startTime+"   "+ednTime);
+    var curTimer=new Date().getTime();
+    var startTimer=new Date(startTime).getTime();;
+    var endTimer=new Date(ednTime).getTime();;
+    var t=0;
+    if(startTimer>curTimer ){
+        $timer.find('.title-show').html("距开始:");
+        t=startTimer-curTimer;
+        var d=Math.floor(t/1000/60/60/24);
+        var h=Math.floor(t/1000/60/60%24);
+        var m=Math.floor(t/1000/60%60);
+        var s=Math.floor(t/1000%60);
+        var hours=h+d*24;
+        if(hours<10&&hours >=0){
+            $timer.find('.hour').html('0'+hours);
+        }else{
+            $timer.find('.hour').html(hours);
+        }
+        if(m<10&&m >=0){
+            $timer.find('.min').html('0'+m);
+        }else{
+            $timer.find('.min').html(m);
+        }
+        if(s<10 && s>=0){
+            $timer.find('.sec').html('0'+s);
+        }else{
+            $timer.find('.sec').html(s);
+        }
+
+    }else if(startTimer<curTimer && curTimer<endTimer){
+        $timer.find('.title-show').html("距结束:");
+        t=endTimer-curTimer;
+        var d=Math.floor(t/1000/60/60/24);
+        var h=Math.floor(t/1000/60/60%24);
+        var m=Math.floor(t/1000/60%60);
+        var s=Math.floor(t/1000%60);
+        var hours=h+d*24;
+        if(hours<10&&hours >=0){
+            $timer.find('.hour').html('0'+hours);
+        }else{
+            $timer.find('.hour').html(hours);
+        }
+        if(m<10&&m >=0){
+            $timer.find('.min').html('0'+m);
+        }else{
+            $timer.find('.min').html(m);
+        }
+        if(s<10 && s>=0){
+            $timer.find('.sec').html('0'+s);
+        }else{
+            $timer.find('.sec').html(s);
+        }
+    }else{
+        $timer.find('.title-show').html("已结束");
+        $timer.find('.timer').hide();
+    }
+    $timer.show();
+};
+
+
+
+</script>
+</html>

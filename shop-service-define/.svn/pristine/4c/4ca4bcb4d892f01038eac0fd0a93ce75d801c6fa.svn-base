@@ -1,0 +1,514 @@
+package pub.makers.shop.purchaseOrder.vo;
+
+import org.apache.commons.lang.StringUtils;
+import pub.makers.shop.afterSale.enums.OrderFlowStatus;
+import pub.makers.shop.order.enums.IndentListStatus;
+import pub.makers.shop.order.vo.IndentListVo;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Random;
+
+/**
+ * Created by jocelynsuebb on 16/12/4.
+ */
+public class PurchaseOrderListVo implements Serializable {
+
+    /**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	private String id;          //主键id
+    private String orderId;     //订单id
+    private String purGoodsSkuId;   //商品sku的id
+    private String cargoSkuId;   //商品sku的id
+    private int number;             //数量
+    private double finalAmount;     //成交价   =供货价*数量
+    private String purGoodsName;    //商品名称
+    private String purGoodsImgUrl;  //商品缩略图URL
+    private double purGoodsAmount;  //商品原价（市场指导价格）
+    private String purGoodsType;        //商品类型
+    private double supplyPrice;         //供货价
+    private String materialSkuId;   //货品skuId
+    private Date createTime;        //创建时间
+    private String purServicePackingId;     //打包服务id
+    private String purPackingBagId;         //打包包装id
+    private String packingImageId;          //打包图片id
+    private String purGoodsId;              //商品id
+    private String isSample;                //是否是样品  0，不是，1，是
+    private double sumAmount;       //商品订单总价   =市场指导价*数量
+    private String purPackingPrice; //代包装服务价格
+    private String purPackingBagValue; //代包装服务克数
+    private String packingImageUrl; //代包装服务图片
+    private String postId;          //邮费规则
+    private String packingStyleCode; //代包编码
+    private String packingStyleName; //代包名称
+    private Integer isEvalution;// 是否评论 0 否  1是
+    private String purGoodsCode;//进货商品编码
+
+    private int startNum;
+    private int leftNums;
+
+    private Integer goodNum;
+    private String cargoNo;
+
+    private String sampleCode; //样式编码
+    private String sampleSku;   //样式规格
+
+
+    private String status; //商品明细状态
+    private String statusName; //商品明细状态
+    /**
+     * 售后状态
+     */
+    private String flowStatus;
+
+    private String flowStatusStr;
+
+    private String flowType;
+
+    private String packNum;//代包个数（500/bagValue*PackingPrice）
+    private String isPur;           //是否散茶
+    private String[] priceChannel;  //价格区间
+
+    private String materialSkuName;
+
+    private Double originalAmount; //原价
+    private Double discountAmount; //优惠金额
+    private Integer returnTime; //申请售后次数
+    private String isValid; //是否有效
+    private String delFlag; //删除状态
+    private Date lastUpdated; //更新时间
+    private String giftFlag; //赠品标识
+    private Double returnAmount; //已退款金额
+
+
+    public String getStatusName() {
+        if (this.status != null) {
+            return IndentListStatus.valueOf(this.status).getDisplayName();
+        }
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getSampleCode() {
+        return sampleCode;
+    }
+
+    public void setSampleCode(String sampleCode) {
+        this.sampleCode = sampleCode;
+    }
+
+    public String getSampleSku() {
+        return sampleSku;
+    }
+
+    public void setSampleSku(String sampleSku) {
+        this.sampleSku = sampleSku;
+    }
+
+    public String getCargoNo() {
+        return cargoNo;
+    }
+
+    public void setCargoNo(String cargoNo) {
+        this.cargoNo = cargoNo;
+    }
+
+    public Integer getGoodNum() {
+        return goodNum;
+    }
+
+    public void setGoodNum(Integer goodNum) {
+        this.goodNum = goodNum;
+    }
+
+    public String getFlowStatus() {
+        return flowStatus;
+    }
+
+    public void setFlowStatus(String flowStatus) {
+        this.flowStatus = flowStatus;
+    }
+
+    public String getFlowStatusStr() {
+        if (this.flowStatus != null) {
+            return OrderFlowStatus.valueOf(this.flowStatus).getDisplayName();
+        }
+        return flowStatusStr;
+    }
+
+    public void setFlowStatusStr(String flowStatusStr) {
+        this.flowStatusStr = flowStatusStr;
+    }
+
+    public String getFlowType() {
+        return flowType;
+    }
+
+    public void setFlowType(String flowType) {
+        this.flowType = flowType;
+    }
+
+    public String getPackNum() {
+        return packNum;
+    }
+
+    public void setPackNum(String packNum) {
+        this.packNum = packNum;
+    }
+
+    public String getPurGoodsCode() {
+        return purGoodsCode;
+    }
+    public void setPurGoodsCode(String purGoodsCode) {
+        this.purGoodsCode = purGoodsCode;
+    }
+
+    public String getIsPur() {
+        return isPur;
+    }
+
+    public void setIsPur(String isPur) {
+        this.isPur = isPur;
+    }
+
+    public String[] getPriceChannel() {
+        return priceChannel;
+    }
+
+    public void setPriceChannel(String[] priceChannel) {
+        this.priceChannel = priceChannel;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public Integer getIsEvalution() {
+        return isEvalution;
+    }
+
+    public void setIsEvalution(Integer isEvalution) {
+        this.isEvalution = isEvalution;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getPurGoodsSkuId() {
+        return purGoodsSkuId;
+    }
+
+    public void setPurGoodsSkuId(String purGoodsSkuId) {
+        this.purGoodsSkuId = purGoodsSkuId;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public double getFinalAmount() {
+        return finalAmount;
+    }
+
+    public void setFinalAmount(double finalAmount) {
+        this.finalAmount = finalAmount;
+    }
+
+    public String getPurGoodsName() {
+        return purGoodsName;
+    }
+
+    public void setPurGoodsName(String purGoodsName) {
+        this.purGoodsName = purGoodsName;
+    }
+
+    public String getPurGoodsImgUrl() {
+        return purGoodsImgUrl;
+    }
+
+    public void setPurGoodsImgUrl(String purGoodsImgUrl) {
+        this.purGoodsImgUrl = purGoodsImgUrl;
+    }
+
+    public double getPurGoodsAmount() {
+        return purGoodsAmount;
+    }
+
+    public void setPurGoodsAmount(double purGoodsAmount) {
+        this.purGoodsAmount = purGoodsAmount;
+    }
+
+    public String getPurGoodsType() {
+        return purGoodsType;
+    }
+
+    public void setPurGoodsType(String purGoodsType) {
+        this.purGoodsType = purGoodsType;
+    }
+
+    public double getSupplyPrice() {
+        return supplyPrice;
+    }
+
+    public void setSupplyPrice(double supplyPrice) {
+        this.supplyPrice = supplyPrice;
+    }
+
+    public String getMaterialSkuId() {
+        return materialSkuId;
+    }
+
+    public void setMaterialSkuId(String materialSkuId) {
+        this.materialSkuId = materialSkuId;
+    }
+
+    public String getPurServicePackingId() {
+        return purServicePackingId;
+    }
+
+    public void setPurServicePackingId(String purServicePackingId) {
+        this.purServicePackingId = purServicePackingId;
+    }
+
+    public String getPurPackingBagId() {
+        return purPackingBagId;
+    }
+
+    public void setPurPackingBagId(String purPackingBagId) {
+        this.purPackingBagId = purPackingBagId;
+    }
+
+    public String getPackingImageId() {
+        return packingImageId;
+    }
+
+    public void setPackingImageId(String packingImageId) {
+        this.packingImageId = packingImageId;
+    }
+
+    public String getPurGoodsId() {
+        return purGoodsId;
+    }
+
+    public void setPurGoodsId(String purGoodsId) {
+        this.purGoodsId = purGoodsId;
+    }
+
+    public String getIsSample() {
+        return isSample;
+    }
+
+    public void setIsSample(String isSample) {
+        this.isSample = isSample;
+    }
+
+    public double getSumAmount() {
+        return sumAmount;
+    }
+
+    public void setSumAmount(double sumAmount) {
+        this.sumAmount = sumAmount;
+    }
+
+
+    public String getPurPackingPrice() {
+        return purPackingPrice;
+    }
+
+    public void setPurPackingPrice(String purPackingPrice) {
+        this.purPackingPrice = purPackingPrice;
+    }
+
+    public String getPurPackingBagValue() {
+        return purPackingBagValue;
+    }
+
+    public void setPurPackingBagValue(String purPackingBagValue) {
+        this.purPackingBagValue = purPackingBagValue;
+    }
+
+    public String getPackingImageUrl() {
+        return packingImageUrl;
+    }
+
+    public void setPackingImageUrl(String packingImageUrl) {
+        this.packingImageUrl = packingImageUrl;
+    }
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
+
+    public int getStartNum() {
+        return startNum;
+    }
+
+    public void setStartNum(int startNum) {
+        this.startNum = startNum;
+    }
+
+    public int getLeftNums() {
+        return leftNums;
+    }
+
+    public void setLeftNums(int leftNums) {
+        this.leftNums = leftNums;
+    }
+
+    public String getPackingStyleName() {
+        return packingStyleName;
+    }
+
+    public void setPackingStyleName(String packingStyleName) {
+        this.packingStyleName = packingStyleName;
+    }
+
+    public String getPackingStyleCode() {
+        return packingStyleCode;
+    }
+
+    public void setPackingStyleCode(String packingStyleCode) {
+        this.packingStyleCode = packingStyleCode;
+    }
+
+    public String getMaterialSkuName() {
+        return materialSkuName;
+    }
+
+    public void setMaterialSkuName(String materialSkuName) {
+        this.materialSkuName = materialSkuName;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCargoSkuId() {
+        return cargoSkuId;
+    }
+
+    public void setCargoSkuId(String cargoSkuId) {
+        this.cargoSkuId = cargoSkuId;
+    }
+
+    public Double getOriginalAmount() {
+        return originalAmount;
+    }
+
+    public void setOriginalAmount(Double originalAmount) {
+        this.originalAmount = originalAmount;
+    }
+
+    public Double getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setDiscountAmount(Double discountAmount) {
+        this.discountAmount = discountAmount;
+    }
+
+    public Integer getReturnTime() {
+        return returnTime;
+    }
+
+    public void setReturnTime(Integer returnTime) {
+        this.returnTime = returnTime;
+    }
+
+    public String getIsValid() {
+        return isValid;
+    }
+
+    public void setIsValid(String isValid) {
+        this.isValid = isValid;
+    }
+
+    public String getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public String getGiftFlag() {
+        return giftFlag;
+    }
+
+    public void setGiftFlag(String giftFlag) {
+        this.giftFlag = giftFlag;
+    }
+
+    public Double getReturnAmount() {
+        return returnAmount;
+    }
+
+    public void setReturnAmount(Double returnAmount) {
+        this.returnAmount = returnAmount;
+    }
+
+    public IndentListVo toIndentListVo(){
+
+    	IndentListVo ilvo = new IndentListVo();
+
+    	String skuId = getMaterialSkuId();
+    	if (StringUtils.isBlank(skuId)){
+    		skuId = new Random().nextInt(100000000) + "";
+    	}
+		ilvo.setCargoSkuId(skuId);
+		ilvo.setTradeGoodSkuId(skuId);
+		ilvo.setNumber(getNumber());
+		ilvo.setIsSample(getIsSample());
+
+		BigDecimal totalAmount = new BigDecimal(getFinalAmount());
+		ilvo.setTradeGoodAmount(totalAmount.toString());
+		ilvo.setTotalAmount(totalAmount);
+		ilvo.setFinalAmount(totalAmount.toString());
+
+		return ilvo;
+
+    }
+}

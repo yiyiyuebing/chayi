@@ -1,0 +1,75 @@
+package pub.makers.shop.order.vo;
+
+import pub.makers.shop.order.entity.Indent;
+
+import java.io.Serializable;
+
+/**
+ * Created by dy on 2017/5/11.
+ */
+public class IndentListExport implements Serializable {
+
+    private String cargoNo; //sku编码
+    private String tradeGoodName;   //商品名称
+    private String finalAmount; //商品总金额
+    private String supplyPrice; //零售价
+    private Integer number; //商品数量
+    private Integer goodNum; //数量
+    private Integer status; //商品状态
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getGoodNum() {
+        return goodNum;
+    }
+
+    public void setGoodNum(Integer goodNum) {
+        this.goodNum = goodNum;
+    }
+
+    public String getCargoNo() {
+        return cargoNo;
+    }
+
+    public void setCargoNo(String cargoNo) {
+        this.cargoNo = cargoNo;
+    }
+
+    public String getTradeGoodName() {
+        return tradeGoodName;
+    }
+
+    public void setTradeGoodName(String tradeGoodName) {
+        this.tradeGoodName = tradeGoodName;
+    }
+
+    public String getFinalAmount() {
+        return finalAmount;
+    }
+
+    public void setFinalAmount(String finalAmount) {
+        this.finalAmount = finalAmount;
+    }
+
+    public String getSupplyPrice() {
+        return supplyPrice;
+    }
+
+    public void setSupplyPrice(String supplyPrice) {
+        this.supplyPrice = supplyPrice;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+}

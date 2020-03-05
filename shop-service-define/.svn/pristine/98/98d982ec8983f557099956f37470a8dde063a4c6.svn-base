@@ -1,0 +1,44 @@
+package pub.makers.shop.store.service;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
+
+import pub.makers.shop.base.vo.ResultData;
+import pub.makers.shop.store.entity.Subbranch;
+
+public interface SubbranchBizService {
+
+	/**
+	 * 查询供货价
+	 * @param shopId
+	 * @param skuId
+	 * @return
+	 */
+	BigDecimal querySuppliersPrice(String shopId, String skuId);
+	
+	
+	/**
+	 * 根据主键查询店铺信息
+	 * @param shopId
+	 * @return
+	 */
+	Subbranch getById(String shopId);
+
+	
+	/**
+	 * 查询店铺经营概况
+	 * @param subbranchId
+	 */
+	ResultData querySummary(String subbranchId);
+	
+	/**
+	 * 获取店铺的所有子账号信息
+	 * 包括当前账号
+	 * @param subbranchId
+	 * @return
+	 */
+	Set<Long> getChildren(Long subbranchId);
+	
+	
+}

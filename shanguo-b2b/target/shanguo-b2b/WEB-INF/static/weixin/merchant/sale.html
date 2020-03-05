@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .spinner-bg{background:transparent;}
+
+    </style>
+    <title>全部商品</title>
+</head>
+<body class="bg-main today">
+<div id="today" class="op0">
+    <div class="part3">
+        <div class="clearfix condition">
+            <span v-on:click="statue(0)" class=" fl w50 ta-c border-l1"><i id="type0" class="border-act color-main dis-ib">出售中</i></span>
+            <span v-on:click="statue(1)" class="fl w50 ta-c"><i id="type1" class="dis-ib">已下架</i></span>
+        </div>
+        <ul id="listCon" class="clearfix">
+            <template v-for="list in goodsList" >
+                <li class="fl">
+                    <div class="relative">
+                        <div style="display: block" v-on:click="toDetail(list.id,state)"><img v-bind:src="list.showPicture" alt=""></div>
+                        <h4>{{list.goodName}}</h4>
+                        <h5 v-if="isSubAccount == 'F'">供货价：¥{{list.supplyPrice}}</i></h5>
+                        <p class="color-main">¥{{list.salePrice}} <i class=" fr" >&nbsp;</i></p>
+                        <i v-if="list.stock == 0" class="sellover" v-on:click="toDetail(list.id,state)"></i>
+                    </div>
+                </li>
+            </template>
+        </ul>
+    </div>
+    <p class="ta-c copyright">努力加载中...</p>
+
+    <div id="emptyIcon" style="display: none;">
+        <div class="empty-icon"><img src="img/icons/no.png" alt=""></div>
+        <p class="fs-14 ta-c">暂无此类商品~</p>
+    </div>
+
+    <div class="br4"></div>
+       <div v-if="isSubAccount == 'F'" v-on:click="jumpto()" class="up-down dis-tabel w100" >
+           <i class="guanli dis-cell va-m w50 "></i>
+           <p class="dis-cell va-m w50 ta-l">批量管理</p>
+       </div>
+       <div class="csad_gray" v-on:click="jumpToMess()"></div>
+        <div style="display: none;" class="cart" >
+        </div>
+</div>
+        <script src="js/jquery-1.8.2.min.js"></script>
+        <script src="//cdn.bootcss.com/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+        <script src="js/vue.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+            Util.common.addloadingAnimate();
+            $(function () {
+                todayData.loadlist(0);
+                $(window).scroll(function() {
+                    if ($(window).scrollTop() > 0) {
+                        $(".cart").fadeIn(800);
+                    } else {
+                        $(".cart").fadeOut(800);
+                    }
+
+                    if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                        todayData.loadlist(todayData.state);
+                    }
+                });
+
+                $(".cart").click(function() {
+                    $('html,body').animate({
+                                scrollTop: 0
+                            },
+                            500);
+                    return false;
+                });
+
+            });
+
+            var counter=1;
+
+
+            var todayData=new Vue({
+                el:'#today',
+                data:{
+                    goodsList:[],
+                    state:0,
+//                  是否子帐号
+                    isSubAccount: localStorage.getItem('isSubAccount')
+                },
+                computed:{
+
+                },
+                methods:{
+                    screen:function () {
+                        $("#screenWin").slideToggle(350);
+                    },
+                    loadlist:function (type) {
+                        $(".copyright").css('display','block');
+                        var url ="mobile/good/getGoodList.do?brandId=&classifyId=&goodName=&pageSize=50&shopId="+localStorage.getItem("shopId")+"&sortType="+type;
+                        var param={"pageNum":counter};
+                        Util.common.executeAjaxCallback(url,param,function (data) {
+                            Util.common.removeloadingAnimate('today');
+
+                            counter=counter+1;
+                            console.log(data);
+                            if (data==null || data.length==0){
+                                console.log(todayData.goodsList.length);
+                                if( todayData.goodsList.length==0){
+                                    $("#emptyIcon").css('display','block');
+                                    $("#listCon").css("display","none");
+                                    $(".copyright").css('display','none');
+                                    $(".copyright").html('已经到底了');
+                                }
+                            }else {
+                                $("#emptyIcon").css('display','none');
+                                $("#listCon").css("display","block");
+                                $(".copyright").css('display','none');
+                                for (x in data){
+                                    todayData.goodsList.push(data[x]);
+                                }
+                            }
+                            todayData.$nextTick( function(){
+                                if (counter === 2){
+                                    Util.scrollMar.init("sale", function(scrollTemp){
+                                        $(window).scrollTop(scrollTemp.pos);
+                                    }); 
+                                }
+                            })
+
+                        });
+                        if(type==0){
+                            $("#type0").addClass("color-main");
+                            $("#type0").addClass("border-act");
+                            $("#type1").removeClass("color-main");
+                            $("#type1").removeClass("border-act");
+                            todayData.$set('state',0);
+
+                        }else{
+                            $("#type1").addClass("color-main");
+                            $("#type1").addClass("border-act");
+                            $("#type0").removeClass("color-main");
+                            $("#type0").removeClass("border-act");
+                            todayData.$set('state',1);
+                        }
+                    },
+                    jumpto:function () {
+                        window.location.href="manage.html?sortType="+todayData.state;
+                    },
+                    toDetail:function (id,state) {
+                        if(parseFloat(id)>100000000000){
+                            window.location.href='goods_detail.html?id='+id;
+                        }else{
+                            window.location.href='goods_pack_detail.html?id='+id+"&storeId="+localStorage.getItem("shopId");
+                        }
+                        localStorage.setItem("sortType",state);
+                        Util.scrollMar.setPos("sale",$(window).scrollTop(),10,true);
+                    },
+                    statue:function (type) {
+                        Util.common.addloadingAnimate();
+                        var emp=[];
+                        counter=1;
+                        todayData.$set('goodsList',emp);
+                        todayData.loadlist(type);
+                    },
+                    //客服页
+                    jumpToMess: function() {
+                        if(window.WebAppJS){
+                                WebAppJS.gotoMess();
+                        } 
+                    },
+                }
+            });
+
+            window.goSearch=function () {
+                window.location.href="search.html?shopId="+localStorage.getItem("shopId");
+            }
+
+            function searchEven() {
+                window.location.href="search.html?searchContent=";
+            }
+
+        </script>
+</body>
+</html>

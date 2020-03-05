@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link href="//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>套餐专区</title>
+</head>
+<body id="today" class="bg-main today">
+    <!--<div class="slider-con ">-->
+        <!--<div class="top dis-tabel">
+            <div class="dis-row">
+                <div class="search dis-cell">
+                    <input class="search-icon" onfocus="goodSearchFocus()"  type="text" placeholder="搜索商品名称/关键字">
+                </div>
+                <div onclick="jumpTo('cart')"  class="store-icon dis-cell cartIcon"><i v-if="cartCount != 0">{{cartCount}}</i></div>
+            </div>
+
+        </div>-->
+        <div class="slider">
+            <div id="slider-content">
+
+            </div>
+        </div>
+    <!--</div>-->
+    <template v-if="intro!=undefined && intro!=''">
+        <img :src="intro" alt="">
+    </template>
+    <div style="display: none" class="part3">
+            <div class="clearfix condition border-b1">
+                <span v-on:click="moren()" class="fl w25 ta-c"><i id="moren" class="color-main" >默认</i></span>
+                <span v-on:click="saleNum()" class="fl w25 ta-c"><i id="sale" class="default">销量&nbsp;</i></span>
+                <span v-on:click="priceNum()" class="fl w25 ta-c"><i id="price" class="default">价格</i></span>
+                <span v-on:click="changeListStyle()" class="fl w25 ta-c"><i id="liststyle" class="style1">&nbsp;</i></span>
+            </div>
+        <ul class="mylist clearfix">
+            <template v-for="list in goodsList" >
+                <li class="fl" v-if="listStyle">
+                	<div class="relative">
+	                    <a style="display: block" v-on:click="goodsDetail(list.id)" ><img v-bind:src="list.showPicture" alt=""></a>
+	                    <h4><span v-if="list.label" class="nameType">{{list.label}}</span>{{list.name}}</h4>
+                        <template v-if="list.promotionalInfoList && list.promotionalInfoList.length>0 && list.promotionalInfoList[0]">
+                            <h5>
+                                <template v-if="list.promotionalInfoList[0].bestActivity && list.promotionalInfoList[0].bestActivity.tag2">
+                                    <span class="goodType bg-red">{{list.promotionalInfoList[0].bestActivity.tag2}}</span>
+                                </template>
+                            </h5>
+                            <template v-if="list.promotionalInfoList[0].bestActivity && list.promotionalInfoList[0].bestActivity.activityName != '赠品'">
+                                <h5 v-if="isSubAccount == 'F'">供货价：¥{{list.supplyPrice}}</h5>
+                                <h5>{{list.promotionalInfoList[0].bestActivity.activityName}}价：<span class="color-main fs-16">¥{{list.promotionalInfoList[0].bestActivity.presellAmount}}</span></h5>
+                            </template>
+                            <template v-else>
+                                <h5 v-if="isSubAccount == 'F'">供货价：¥{{list.supplyPrice}}</h5>
+                                <h5>零售价：<span class="color-main fs-16">¥{{list.promotionalInfoList[0].price}}</span></h5>
+                            </template>
+                        </template>
+                        <template v-else>
+                            <h5>
+                            </h5>
+                            <h5 v-if="isSubAccount == 'F'">供货价：¥{{list.supplyPrice}}</h5>
+                            <h5>零售价：<span class="color-main fs-16">¥{{list.retailPrice}}</span></h5>
+                        </template>
+	                    <h5>销量：{{list.totalSaleNum || 0}}</h5>
+                        <i v-if="list.stock == 0" class="sellover" v-on:click="goodsDetail(list.id)"></i>
+                    </div>
+                </li>  
+                <li class="dis-tabel" v-on:click="goodsDetail(list.id)" v-if="!listStyle">
+                	 <div class="relative"> 
+	                	<div class="dis-cell part2 fl" ><img :src="list.showPicture" alt=""></div>
+		                <div class="dis-cell part3 fl w60">
+		                    <div class="dis-tabel part3-1">
+		                        <div class="dis-cell">
+		                            <div>
+		                                <h4 class="two-height"><span v-if="list.label" class="nameType">{{list.label}}</span>{{list.name}}</h4>
+                                        <template v-if="list.promotionalInfoList && list.promotionalInfoList.length>0 && list.promotionalInfoList[0]">
+                                            <h5>
+                                                <template v-if="list.promotionalInfoList[0].bestActivity && list.promotionalInfoList[0].bestActivity.tag2">
+                                                    <span class="goodType bg-red">{{list.promotionalInfoList[0].bestActivity.tag2}}</span>
+                                                </template>
+                                            </h5>
+                                            <template v-if="list.promotionalInfoList[0].bestActivity && list.promotionalInfoList[0].bestActivity.activityName != '赠品'">
+                                                <h5 v-if="isSubAccount == 'F'">供货价：¥{{list.supplyPrice}}</h5>
+                                                <h5>{{list.promotionalInfoList[0].bestActivity.activityName}}价：<span class="color-main fs-16">¥{{list.promotionalInfoList[0].bestActivity.presellAmount}}</span></h5>
+                                            </template>
+                                            <template v-else>
+                                                <h5 v-if="isSubAccount == 'F'">供货价：¥{{list.supplyPrice}}</h5>
+                                                <h5>零售价：<span class="color-main fs-16">¥{{list.promotionalInfoList[0].price}}</span></h5>
+                                            </template>
+                                        </template>
+                                        <template v-else>
+                                            <h5>
+                                            </h5>
+                                            <h5 v-if="isSubAccount == 'F'">供货价：¥{{list.supplyPrice}}</h5>
+                                            <h5>零售价：<span class="color-main fs-16">¥{{list.retailPrice}}</span></h5>
+                                        </template>
+                                        <h5>销量：{{list.totalSaleNum || 0}}</h5>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+                        <i v-if="list.stock == 0" class="selloverh" v-on:click="goodsDetail(list.id)"></i>
+                    </div> 
+                </li>
+            </template>
+        </ul>
+    </div>
+
+    <div class="goTop" style="display: none"></div>
+
+    <p style="display: none" class="ta-c copyright">已经到底了...</p>
+    <div id="screenWin" style="display: none;" class="choose-list">
+        <ul>
+            <li id="use"  class="choose">
+                <p>用途</p>
+                <div class="clearfix">
+                   <template v-for="list in useType">
+                       <i v-on:click="clickUse(list.id)" id="use{{list.id}}" class="useC fl">{{list.labelName}}</i>
+                   </template>
+                </div>
+            </li>
+            <li  class="choose">
+                <p>品牌</p>
+                <div class="clearfix">
+                    <template v-for="brand in brandType">
+                        <i  v-on:click="clickBrand(brand.id)" id="brand{{brand.id}}" class="brandC fl">{{brand.name}}</i>
+                    </template>
+                </div>
+            </li>
+            <li  class="clearfix choose-price">
+                <p class="fl">价格区间：</p>
+                <div class="fl choose-input">
+                    <input type="text"  v-model="chooseData.startPrice" placeholder="最低价">
+                    <em>&nbsp;&nbsp;&nbsp;</em>
+                    <input type="text" v-model="chooseData.endPrice" placeholder="最高价">
+                </div>
+
+            </li>
+            <li class="br4"></li>
+        </ul>
+        <div class="choose-btn-con clearfix">
+            <i v-on:click="toChoose()" class="fr btn-active">确定</i>
+            <i onclick="javascript:window.location.reload();" class="fr">重置</i>
+        </div>
+    </div>
+
+        <div id="emptyIcon" style="display: none;">
+            <div class="empty-icon"><img src="img/icons/no.png" alt=""></div>
+            <p class="fs-14 ta-c">暂无此类商品，<br/>客官逛逛其他商品吧~</p>
+        </div>
+
+
+        <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="//cdn.bootcss.com/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+        <script src="js/vue.js"></script>
+        <script src="js/jquery.tmpl.min.js"></script>
+        <script src="js/main.js"></script>
+        <script type="text/x-jquery-tmpl" id="index_advertise_t">
+        <ul class="swiper-wrapper">
+        {{each(i,advertise) datas}}
+           <li class="swiper-slide">
+            <a href="{{if advertise.lineStatus==1}}goods_detail.html?id=${advertise.lineUrl}{{/if}}" target="_top" type="${advertise.lineStatus}" typeId="${advertise.id}"><img src="${advertise.picUrl}"></a>
+           </li>
+         {{/each}}
+        </ul>
+        <div class="swiper-pagination"></div>
+    </script>
+        <script>
+
+            $(function () {
+
+                todayData.loadlist();
+                //todayData.loadChooselist();
+
+//                从分类页面跳转进入
+                if(todayData.sortType==1){
+                    todayData.$set('chooseData',JSON.parse(Util.common.getParameter("sortInfo")));
+                    todayData.$set('initialData',JSON.parse(Util.common.getParameter("sortInfo")));
+                }
+
+                $(window).scroll(function() {
+                    if ($(window).scrollTop() > 0) {
+                        $(".goTop").fadeIn(800);
+                    } else {
+                        $(".goTop").fadeOut(800);
+                    }
+                    if ($(window).scrollTop() > 40) {
+                        $(".condition").addClass("fiexdTop");
+                    } else {
+                        $(".condition").removeClass("fiexdTop");
+                    }
+                    if ($(document).scrollTop() >= $(document).height() - $(window).height() && $(document).scrollTop() !=0) {
+                        todayData.loadlist(todayData.rankstr);
+                    }
+                });
+
+                $(".goTop").click(function() {
+                    $('html,body').animate({
+                                scrollTop: 0
+                            },
+                            500);
+                    return false;
+                });
+//                微信分享
+                // Util.weixinMenu.share(localStorage.getItem('shopImg'),localStorage.getItem('shopName'),'index');
+            });
+
+            var counter=1;
+
+            var todayData=new Vue({
+                el:'#today',
+                data:{
+                    userId:localStorage.getItem("userid"),
+                    storeId:localStorage.getItem("shopId"),
+                    sortType:Util.common.getParameter("sortType"),
+                    goodsList:[],
+                    rankstr:'',
+//                    筛选列表的值
+                    useType:[],
+                    brandType:[],
+                    chooseStatus:0,
+                    chooseData:{
+                        startPrice:'',
+                        endPrice:'',
+                        brandId:'',
+                        use:'',
+                        oneType:'',
+                        twoType:'',
+                        threeType:''
+                        
+                    },
+//                  分类页面所选的分类值
+                    initialData:{},
+//                    购物车数量
+                    cartCount:'',
+//                    主题馆介绍
+                    intro:'',
+                    theme:'',
+//                 	列表样式
+					listStyle: true,
+ //                 是否子帐号
+                    isSubAccount: localStorage.getItem('isSubAccount')
+
+                },
+                computed:{
+
+                },
+                methods:{
+//  				  跳转到详情页
+					goodsDetail: function(id) {
+                        Util.scrollMar.setPos("today_pick",$(window).scrollTop(),2,todayData.listStyle);
+						window.location.href="goods_detail.html?id="+id+"&storeId="+todayData.storeId;
+					},
+//					改变列表样式
+					changeListStyle: function() {
+						todayData.listStyle = !todayData.listStyle;
+                        if (todayData.listStyle) {
+                            $("#liststyle").removeClass("style2");
+                            $("#liststyle").addClass("style1");
+                        } else {
+                            $("#liststyle").removeClass("style1");
+                            $("#liststyle").addClass("style2");
+                        }
+					},
+//                    筛选框隐藏显示
+                    screen:function () {
+                        $("#screenWin").slideToggle(5);
+                        if($("body").hasClass('hide')){
+                            $("body").removeClass('hide');
+                            $("html").css('overflow','auto');
+                        }else {
+                            $("body").addClass('hide');
+                            $("html").css('overflow','hidden');
+                        }
+                    },
+//                    加载商品列表
+                    loadlist:function (rankNum) {
+                        if(rankNum==''|| rankNum==undefined){
+//                            默认排序
+                            rankNum={saleNumSort:"",priceSort:""};
+                        }
+                        var sortType=Util.common.getParameter("sortType");
+                        
+                        if(sortType==1){
+//                            分类页面跳转
+                            if(todayData.chooseStatus==0) {
+                                param = JSON.parse(Util.common.getParameter("sortInfo"));
+                                param.conditionStr = rankNum;
+                                param.saleNumSort =rankNum.saleNumSort;
+                                param.priceSort =rankNum.priceSort;
+                                param.pageNum = counter;
+                            }else {
+                                param=todayData.chooseData;
+                                param.conditionStr = rankNum;
+                                param.saleNumSort =rankNum.saleNumSort;
+                                param.priceSort =rankNum.priceSort;
+                                param.pageNum = counter;
+                            }
+                            console.log(param);
+                            var url = "weixin/good/getGoodPackage.do?shopId="+localStorage.getItem("shopId");
+//
+                        }else if(sortType==2){
+//                            搜索页面跳转过来
+                            var gn=Util.common.getParameter("goodName");
+                            var url ="weixin/good/getGoodPackage.do?&pageSize=6&shopId="+localStorage.getItem("shopId");
+                                param={'goodName':gn,'conditionStr':rankNum,"pageNum":counter};
+                                param. startPrice=todayData.chooseData.startPrice;
+                                param. endPrice=todayData.chooseData.endPrice;
+                                param. brandId=todayData.chooseData.brandId;
+                                param. use=todayData.chooseData.use;
+                                param. oneType=todayData.chooseData.oneType;
+                                param. twoType=todayData.chooseData.twoType;
+                                param. threeType=todayData.chooseData.threeType;
+
+                            $(document).attr('title','搜索商品');
+
+
+                        }else if(sortType==91){
+//                            首页各分类图标跳转
+                            var ci=Util.common.getParameter("oneType");
+                            var url ="weixin/good/getGoodPackage.do?goodName=&pageSize=6&shopId="+localStorage.getItem("shopId");
+                            param={'oneType':ci,'conditionStr':rankNum,"pageNum":counter};
+                            param. startPrice=todayData.chooseData.startPrice;
+                            param. endPrice=todayData.chooseData.endPrice;
+                            param. brandId=todayData.chooseData.brandId;
+                            param. use=todayData.chooseData.use;
+//                            param. oneType=todayData.chooseData.oneType;
+                            param. twoType=todayData.chooseData.twoType;
+                            param. threeType=todayData.chooseData.threeType;
+                        }else if(sortType==92){
+//                            首页各活动图标跳转
+                            var category=Util.common.getParameter("category");
+                            var url ="weixin/good/getGoodPackage.do?goodName=&pageSize=6&shopId="+localStorage.getItem("shopId");
+                            param={'category':category,'conditionStr':rankNum,"pageNum":counter};
+                            param. startPrice=todayData.chooseData.startPrice;
+                            param. endPrice=todayData.chooseData.endPrice;
+                            param. brandId=todayData.chooseData.brandId;
+                            param. use=todayData.chooseData.use;
+                            param. oneType=todayData.chooseData.oneType;
+                            param. twoType=todayData.chooseData.twoType;
+                            param. threeType=todayData.chooseData.threeType;
+                        }else if(sortType==93){
+//                            首页各主题图标跳转
+                            todayData.$set('theme',sortType);
+                            var ti=Util.common.getParameter("themes");
+                            var introimg=Util.common.getParameter("intro");
+                            todayData.$set('intro',introimg);
+                            var url ="weixin/good/getGoodPackage.do?goodName=&pageSize=6&shopId="+localStorage.getItem("shopId");
+                            param={'theme':ti,'conditionStr':rankNum,"pageNum":counter};
+                            param. startPrice=todayData.chooseData.startPrice;
+                            param. endPrice=todayData.chooseData.endPrice;
+                            param. brandId=todayData.chooseData.brandId;
+                            param. use=todayData.chooseData.use;
+                            param. oneType=todayData.chooseData.oneType;
+                            param. twoType=todayData.chooseData.twoType;
+                            param. threeType=todayData.chooseData.threeType;
+
+                            var _url ="weixin/common/getImg.do?category="+ti;
+                            Util.common.executeAjaxCallback(_url,{},function (data) {
+                                console.log(data);
+                                var datas ={"datas":data};
+                                Util.common.loadTemplate("#slider-content", "#index_advertise_t", datas);
+                                Util.common.initAdvertiseSlide(datas);
+
+                            });
+
+
+                        }else {
+//                            全部商品
+                            var url ="weixin/good/getSearchGoodListSer?goodName=&pageSize=50&shopId="+localStorage.getItem("shopId")+"&pageNum="+counter;
+                            var param={'conditionStr':rankNum,"pageNum":counter};
+                            param.startPrice=todayData.chooseData.startPrice;
+                            param.endPrice=todayData.chooseData.endPrice;
+                            param.brandId=todayData.chooseData.brandId;
+                            param.use=todayData.chooseData.use;
+                            param.oneType=todayData.chooseData.oneType;
+                            param.twoType=todayData.chooseData.twoType;
+                            param.threeType=todayData.chooseData.threeType;
+                            param.saleNumSort =rankNum.saleNumSort;
+                            param.priceSort =rankNum.priceSort;
+                        }
+                        if(Util.common.getParameter('title')!=undefined && Util.common.getParameter('title')!=null){
+                            $(document).attr('title',Util.common.getParameter('title'));
+                        }
+//                        滑动加载商品列表
+                        $(".copyright").html("努力加载中..."); 
+                        param.pageSize = 50; 
+                        param = JSON.stringify(param);
+                        var param1 = {};
+                        param1.json = param; 
+                        param1.userId = localStorage.getItem("shopId");
+                        Util.common.b2cPostCallback(url,param1,function (data) {
+                            counter=counter+1;
+                            console.log(data);
+                            if (data.success && data.data) {
+                                var dataList = data.data;
+                                if (dataList==null || dataList.length==0){
+                                    $(".copyright").html("已经到底了...");
+                                    if( todayData.goodsList.length==0){
+                                        $("#emptyIcon").css('display','block');
+                                        $(".copyright").css('display','none');
+                                    }
+                                }else {
+                                    for (x in dataList){
+                                        todayData.goodsList.push(dataList[x]);
+                                    }
+                                    $("#emptyIcon").css('display','none');
+                                    $(".part3").css('display','block');
+                                    $(".copyright").css('display','');
+                                    if ((todayData.goodsList.length<3 && todayData.listStyle) || (todayData.goodsList.length<6 && !todayData.listStyle)) {
+                                        $(".copyright").css('display','none');
+                                    }
+                                }
+                                todayData.$nextTick( function(){
+                                    if (counter === 2){
+                                        Util.scrollMar.init("today_pick", function(scrollTemp){
+                                            $(window).scrollTop(scrollTemp.pos);
+                                            todayData.$set('listStyle',scrollTemp.style);
+                                        }); 
+                                    }
+                                })
+                            }
+                            
+                        });
+                    },
+                    loadChooselist:function () {
+//                        加载筛选列表
+                        var sorttype=Util.common.getParameter('sortType');
+                        if(sorttype==1){
+//                            分类进入
+                            if(Util.common.getParameter('title')!='茶叶'){
+                                $("#use").css('display','none');
+                                var url_ = "weixin/good/sortTypeIndexBrand.do?classify="+Util.common.getParameter('classify');
+                                Util.common.executeAjaxCallback(url_, {}, function (res) {
+                                    if(res.code==1){
+                                        todayData.$set('brandType', res.data);
+                                    }
+                                });
+                            }else{
+                                var url_ = "weixin/good/sortTypeIndexBrand.do?classify="+Util.common.getParameter('classify');
+                                Util.common.executeAjaxCallback(url_, {}, function (res) {
+                                    if(res.code==1){
+                                        todayData.$set('brandType', res.data);
+                                    }
+                                });
+                                var url = "weixin/good/sortTypeIndex.do";
+                                Util.common.executeAjaxCallback(url, {}, function (res) {
+                                    if(res.code==1){
+                                        todayData.$set('useType', res.data.use);
+                                    }
+                                });
+                            }
+
+                        }else {
+//                            活动专区进入
+                            var url = "weixin/good/sortTypeByCategory.do?category="+Util.common.getParameter('category');
+                            Util.common.executeAjaxCallback(url, {}, function (res) {
+                                if(res.code==1){
+                                    todayData.$set('useType', res.data.use);
+                                    todayData.$set('brandType', res.data.barnd);
+                                }
+
+                            });
+                        }
+
+
+                    },
+                    clickUse:function (id) {
+//                        选择用途
+                        todayData.$set('chooseData.use',id);
+                        $(".useC").removeClass('btn-active');
+                        $("#use"+id).addClass('btn-active');
+                    },
+                    clickBrand:function (id) {
+//                        选择品牌
+                        todayData.$set('chooseData.brandId',id);
+                        $(".brandC").removeClass('btn-active');
+                        $("#brand"+id).addClass('btn-active');
+                    },
+                    toChoose:function () {
+                        Util.scrollMar.setPos("today_pick",0,2,todayData.listStyle);
+                        $(window).scrollTop(0);
+                        todayData.$set('chooseStatus',1);
+                        todayData.screen();
+                        todayData.$set('goodsList',[]);
+                        counter=1;
+                        todayData.loadlist();
+                    },
+                    removeStyle: function(){
+                        $("#price").removeClass('up');
+                        $("#price").removeClass('down');
+                        $("#price").removeClass('color-main');
+                        $("#price").addClass('default');
+                        $("#sale").removeClass('up');
+                        $("#sale").removeClass('down');
+                        $("#sale").removeClass('color-main');
+                        $("#sale").addClass('default');
+                    },
+                    moren: function() {
+                        Util.scrollMar.setPos("today_pick",0,2,todayData.listStyle);
+                        $(window).scrollTop(0);
+                        $("#moren").addClass('color-main');
+                        todayData.removeStyle();
+//                        清空筛选规则
+                        todayData.$set('goodsList',[]);
+                        counter=1;
+                        todayData.loadlist();
+                    },
+                    saleNum:function () {
+                        Util.scrollMar.setPos("today_pick",0,2,todayData.listStyle);
+                        $(window).scrollTop(0);
+                        $("#moren").removeClass('color-main');
+                        if($("#sale").hasClass('default')){
+                            $("#sale").removeClass('default');
+                            $("#sale").addClass('up');
+                            $("#sale").addClass('color-main');
+                            this.rank(0,0);
+
+                            $("#price").removeClass('up');
+                            $("#price").removeClass('down');
+                            $("#price").removeClass('color-main');
+                            $("#price").addClass('default');
+                        }else {
+                            if($("#sale").hasClass('up')){
+                                $("#sale").removeClass('up');
+                                $("#sale").addClass('down');
+                                this.rank(0,1);
+                            }else {
+                                $("#sale").removeClass('down');
+                                $("#sale").addClass('up');
+                                this.rank(0,0);
+                            }
+                        }
+                    },
+                    priceNum:function () {
+                        
+                        $(window).scrollTop(0);
+                        $("#moren").removeClass('color-main');
+                        if($("#price").hasClass('default')){
+                            $("#price").removeClass('default');
+                            $("#price").addClass('up');
+                            $("#price").addClass('color-main');
+                            this.rank(1,0);
+
+                            $("#sale").removeClass('up');
+                            $("#sale").removeClass('down');
+                            $("#sale").removeClass('color-main');
+                            $("#sale").addClass('default');
+                        }else {
+                            if($("#price").hasClass('up')){
+                                $("#price").removeClass('up');
+                                $("#price").addClass('down');
+                                this.rank(1,1);
+                            }else {
+                                $("#price").removeClass('down');
+                                $("#price").addClass('up');
+                                this.rank(1,0);
+                            }
+                        }
+                    },
+                    rank:function (type,num) {
+                        if(type==0){
+//                            按销量
+                            counter=1;
+                            var condition={saleNumSort: num , priceSort: ""};
+                            todayData.$set("rankstr",condition);
+                            var emp=[];
+                            todayData.$set("goodsList",emp);
+                            todayData.loadlist(condition);
+
+                        }else {
+//                          按价格
+                            counter=1;
+                            var emp=[];
+                            todayData.$set("goodsList",emp);
+                            var condition={saleNumSort: "", priceSort: num};
+                            todayData.$set("rankstr",condition);
+                            todayData.loadlist(condition);
+                        }
+                    },
+                    getCartCount: function () {
+//            获取购物车内商品数
+
+                        var url ="/weixin/cart/getCartCount.do";
+                        var param = {"userId": localStorage.getItem("userid"), "shopId": localStorage.getItem("shopId")};
+
+                        Util.common.executeAjaxCallback(url, param, function (data) {
+                            if(data != '' && data != null && data!=0) {
+                                console.log(data);
+                                if (data*1 > 100) {
+                                    data = '99+';
+                                }
+                                todayData.$set('cartCount',data);
+                            } else {
+                                todayData.$set('cartCount',0);
+                            }
+                        });
+                    },
+                }
+            });
+
+            window.goSearch=function () {
+                window.location.href="search.html?shopId="+localStorage.getItem("shopId");
+            }
+            function goodSearchFocus() {
+                window.location.href="search.html?shopId="+localStorage.getItem("shopId")+"&userId="+localStorage.getItem("userid");
+
+            }
+        </script>
+</body>
+</html>

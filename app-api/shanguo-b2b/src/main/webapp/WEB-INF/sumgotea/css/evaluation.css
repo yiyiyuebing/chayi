@@ -1,0 +1,157 @@
+.pull-left{
+    float: left!important;
+}
+
+#evolution{
+    background: #fff;
+    margin-top: 1rem;
+    padding-bottom: 6rem;
+}
+#evolution .orderInfo{
+    border-bottom: 1px solid #f5f5f5;
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+#evolution .orderInfo .order-img{
+    width: 5rem;
+    height: 5rem;
+    margin-right: 0.5rem;
+}
+#evolution .orderInfo .order-img img{
+    width: 100%;
+    height: 100%;
+}
+#evolution .orderInfo .order-content{
+    width: 12rem;
+}
+#evolution .orderInfo .order-content h4{
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.2rem;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    height: 2.4rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+#evolution .orderInfo .order-content .star-wrap{
+    font-size: 0.6rem;
+    color: #666;
+}
+#evolution .orderInfo .order-content .star-wrap label{
+    width: 2.7rem;
+}
+#evolution .orderInfo .order-content .star-wrap ul{
+    width: 6rem;
+}
+
+#evolution .orderInfo .order-content .star-wrap ul li{
+    width: 20%;
+    background: url(../img/g_icon_star_grey.png)center center no-repeat;
+    background-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+}
+#evolution .orderInfo .order-content .star-wrap ul li.active{
+    background: url(../img/g_icon_star_yellow.png)center center no-repeat;
+    background-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+}
+#evolution .orderInfo .order-content .star-wrap span{
+    margin-left: 1rem;
+}
+
+#evolution .evolution-txt{
+    width: 94%;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+}
+
+#evolution .evolution-txt h4{
+    font-size: 0.9rem;
+    line-height: 2rem;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+}
+#evolution .evolution-txt textarea{
+    width: 100%;
+    resize: none;
+    outline: none;
+    border: none;
+    font-size: 0.87rem;
+    color: #666;
+    line-height: 1rem;
+    border:1px solid rgba(0,0,0,0.02);
+    border-radius: 3px;
+    padding: 3px;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+}
+
+#submitBtn{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background: #cc9b4b;
+    color: #fff;
+    height: 3rem;
+    font-size: 1rem;
+    line-height: 3rem;
+    text-align: center;
+}
+
+.file-item{
+    position: relative;
+}
+
+.file-item i{
+    margin-left: 0px!important;
+    margin-top: 0px!important;
+    right: 0.5rem;
+    top:0.5rem;
+}
+.img-tips{
+    font-size: 0.7rem;
+    margin-left: 1rem;
+    color: #f05353;
+}
+.btn-wrap div{
+    width: 5rem!important;
+    height: 5rem!important;
+}
+.btn-wrap >div{
+    margin-right: 1rem;
+    width: 5rem!important;
+    height: 5rem!important;
+    margin-bottom: 1rem;
+}
+
+.upload-img>div{
+    margin-right: 1rem;
+    width: 5rem!important;
+    height: 5rem!important;
+    margin-bottom: 1rem;
+}
+
+.noName{
+    width: 94%;
+    margin: 0 auto;
+    margin-top: 3rem;
+}
+.noName span{
+    font-size: 0.8125rem;
+    line-height: 2rem;
+    padding-left: 1rem;
+    background: url(../img/g_icon_none_checked.png) no-repeat left center;
+    background-size: 0.9rem 0.9rem;
+}
+.noName span.active{
+    background: url(../img/g_icon_checked.png) no-repeat left center;
+    background-size: 0.9rem 0.9rem;
+}

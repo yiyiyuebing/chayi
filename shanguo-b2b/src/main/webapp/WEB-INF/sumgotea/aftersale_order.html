@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/aftersale_order.css">
+    <style>
+        .spinner-bg{background:transparent;}
+
+    </style>
+    <title>退款/售后</title>
+</head>
+<body id="orders"  class="bg-main order-con">
+    <ul class="mycart op0" id="myCart">
+        <template v-for="list in orderlist">
+            <li>
+                <div class="order-num">订单号：{{list.orderNo}}</div>
+                    <div class="order-item dis-tabel w100">
+                        <div class="dis-cell part2"><img :src="list.purGoodsImgUrl" alt=""></div>
+                        <div class="dis-cell part3">
+                            <div class="dis-tabel part3-1">
+                                <div class="dis-cell">
+                                    <h4 class="unit-height">{{list.purGoodsName}} </h4>
+                                    <template v-for="norm in list.skuList">
+                                        <span class="color-grey fs-14">{{norm}}&nbsp;</span>
+                                    </template>
+                                    <span class="fr fs-14">x{{list.number}}</span>
+                                    <h4 class="color-main ta-r" v-if="list.asTypeStr != '换货'">退款金额：¥ {{list.flowList[0].returnAmount}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flow-status">
+                    <div class="flow-item"><i class="flow-icon"></i>{{list.asTypeStr}} {{list.flowList[0].flowStatusStr}}</div>
+                </div>
+                <div v-if="list.afterSaleStatus == 1" class="part4 clearfix">
+                    <div class="clearfix"><span v-on:click="orderDetail(list)" class="fr see-flow-btn">查看详情</span></div>
+                </div>
+            </li>
+        </template>
+        <div class="emptyIcon" id="emptyIcon" v-if="orderlist.length==0">
+            <div class="empty-icon"><img src="img/icons/no.png" alt=""></div>
+            <p class="fs-14 ta-c">暂无相关订单，<br/>快去商城逛逛吧~</p>
+        </div>
+    </ul>
+    
+    <div class="goTop" style="display: none" v-on:click="goTop()"></div>
+    <p style="display: none" class="ta-c copyright">已经到底了...</p>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $(function () {
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+        orderData.loadlist();
+        Util.common.addloadingAnimate();
+        $(window).scroll(function() {
+                	
+            if ($(window).scrollTop() > 0) {
+                $(".goTop").fadeIn(800);
+            } else {
+                $(".goTop").fadeOut(800);
+            }
+            if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                orderData.loadlist();
+            }
+        });
+    })
+    var counter = 1;
+    var orderData=new Vue({
+        el:"#orders",
+        data:{
+            orderlist:[],
+            // 加载更多状态
+            loadMore: true
+        },
+        computed:{
+
+        },
+        methods:{
+            loadlist:function () {
+                if (!orderData.loadMore) {
+                    return;
+                }
+//                初始化订单列表
+                var url ="weixin/order/getRefundOrderList";
+                var param = {};
+                param.pageNo = counter;
+                param.pageSize = 50;
+                param.status = status;
+                var param1 = {};
+                param1.modelJson = JSON.stringify(param);
+                Util.common.b2bPostCallback(url, param1, function (data) {
+                    counter += 1;
+                    Util.common.removeloadingAnimate('myCart');
+                    console.log(data)
+                    if (data.success && data.data.orderListVos) {
+                        var orderList = data.data.orderListVos;
+                        //是否加载更多
+                        if (orderList.length === 0) {
+                            orderData.loadMore = false;
+                            return;
+                        }
+                        for(y in orderList){
+                            if (orderList[y].purGoodsType) {
+                                var norm=orderList[y].purGoodsType.split(",");
+                                orderList[y].skuList=norm;
+                                if( orderList[y].flowList[0].asType == "exchange" ){
+                                    orderList[y].asTypeStr = "换货";
+                                }else if( orderList[y].flowList[0].asType == "refund" ){
+                                    orderList[y].asTypeStr = "退款";
+                                }else if( orderList[y].flowList[0].asType == "refund_return" ){
+                                    orderList[y].asTypeStr = "退货退款";
+                                }
+                                //查看详情按钮显示
+                                var flowStatusStr = orderList[y].flowList[0].flowStatusStr;
+                                if( flowStatusStr != "已拒绝退货退款" && flowStatusStr != "已拒绝换货" && flowStatusStr != "已拒绝退款" && flowStatusStr != '已撤销退款' && flowStatusStr != '已撤销换货' && flowStatusStr != '已撤销退货' ){
+                                    orderList[y].afterSaleStatus = 1;
+                                }
+                            }
+                            orderData.orderlist.push(orderList[y]);
+                        }
+                    }
+                    
+                });
+            },
+            orderDetail:function (item) {
+                item.orderType = item.orderType;
+                item.goodNum = 1;
+                sessionStorage.setItem('order-consult', JSON.stringify(item));
+                window.location.href="order_consult.html?orderId="+item.orderId+"&skuId="+item.purGoodsSkuId+"&orderStatus="+item.statusName + "&flowStatus=" + item.flowList[0].flowStatusStr;
+            },
+            goTop: function() {
+                $('html,body').animate({
+                    scrollTop: 0
+                },500);
+            }
+
+        }
+    });
+
+
+</script>
+</html>

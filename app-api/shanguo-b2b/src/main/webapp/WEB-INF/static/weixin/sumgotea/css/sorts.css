@@ -1,0 +1,67 @@
+.sort-left ul li{
+    border-bottom: 1px solid #fff;
+    padding: 1.3125rem 0;
+}
+.one {
+    color: #1c1c1c;
+}
+.left {
+    overflow: auto;
+    float: left;
+    width: 20%;
+    height: calc(90vh - 3rem);
+    background: #fff;
+}
+.selectOne {
+    background: #f2f2f2;
+    color: #CC9B4B;
+}
+.content-right{
+    background: #f3f2f5;
+}
+.sort2{
+    padding-left: 0.5rem;
+    padding-right: 0.6rem;
+    width: 16rem;
+    box-sizing: border-box;
+}
+
+.classify-header{
+    height: 2rem;
+    position: relative;
+    padding-top: 1rem;
+}
+.classify-header h6{
+    line-height: 2rem;
+    font-weight: normal;
+    text-align: left;
+}
+.classify-header .classify-link-btn{
+    position: absolute;
+    right: 0;
+    top: 1rem;
+    display: block;
+    line-height: 2rem;
+    padding: 0 0.2rem;
+    font-size: 0.67rem;
+}
+.classify-body{
+    background: #fff;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}
+.classify-body li{
+    width: 33.33%;
+    padding: 0.4rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    box-sizing: border-box;
+    margin: 0!important;
+}
+.product-name{
+    font-size: 0.67rem;
+    line-height: 2rem;
+    text-align: center;
+    height: 2rem;
+    overflow: hidden;
+}

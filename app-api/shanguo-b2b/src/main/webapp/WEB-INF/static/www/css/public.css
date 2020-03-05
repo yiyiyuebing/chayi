@@ -1,0 +1,43 @@
+/*工具类样式*/
+.center-block {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+.pull-right {
+  float: right !important;
+}
+.pull-left {
+  float: left !important;
+}
+.text-right {
+  text-align: right !important;
+}
+.text-left {
+  text-align: left !important;
+}
+.text-center {
+  text-align: center !important;
+}
+.hide {
+  display: none !important;
+}
+.show {
+  display: block !important;
+}
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+/*统一样式*/
+* {
+  font-size: 14px;
+  font-family: "微软雅黑";
+}
+img{
+  border: none;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login_success.css">
+    <title>注册成功</title>
+</head>
+<body id="login_success">
+    <div class="login-yes">
+        <img style="width: 3rem;" src="img/icons/login_yes.png" alt="">
+        <div class="color-black">材料审核中</div>
+        <div class="text">注册信息正在审核中，请耐心等候！我们将在3个工作日内短信通知审核结果，请注意查收！</div>
+        </div>
+        <div v-on:click="goIndex()" id="saveBtn" class="big-btn btn-active" >返回登陆</div>
+</body>
+
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+
+    $(function () {
+        
+
+        //                微信分享
+        //Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+
+    })
+    var start = 0;
+    var noticeData=new Vue({
+        el:'#login_success',
+        data:{
+            
+        },
+        computed:{
+
+        },
+        methods:{
+            goIndex:function(){
+                window.location.href = "login.html";
+            }
+        }
+    });
+
+</script>
+</html>

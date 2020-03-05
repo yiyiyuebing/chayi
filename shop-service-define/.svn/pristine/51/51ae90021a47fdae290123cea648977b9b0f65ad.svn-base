@@ -1,0 +1,24 @@
+package pub.makers.shop.store.service;
+
+import pub.makers.shop.store.entity.StoreLevel;
+import pub.makers.shop.store.vo.StoreLevelVo;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Created by dy on 2017/6/1.
+ */
+public interface StoreLevelMgrBizService {
+    /**
+     * 获取所有店铺等级
+     * @return
+     */
+    List<StoreLevelVo> findAllStoreLevel();
+
+    StoreLevel findStoreLevelBySubbranchId(String subbranchId);
+
+    Map<String,StoreLevel> getStoreLevelMap(Set<String> subbranchIdSet);
+
+}

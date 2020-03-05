@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <!--清除浏览器缓存-->
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <!--设备 IE  最高版本-->
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <!--定义 语言类型-->
+    <meta http-equiv="CONTENT-TYPE" content="text/html" charset="utf-8">
+    <!--设置视口宽度与设备宽度， 禁止用户缩放-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--X5内核 全屏显示-->
+    <meta name="x5-fullscreen" content="true">
+    <!--uc内核  全屏显示-->
+    <meta name="full-screen" content="yes">
+    <!--描述-->
+    <meta name="description" content="山国饮艺">
+    <!--关键字-->
+    <meta name="keywords" content="山国饮艺">
+    <title>设置</title>
+    <!--公共部分-->
+    <!--HTML标签样式重置-->
+    <link href="css/normalize.css" rel="stylesheet">
+    <!--移动端css重置-->
+    <link href="css/reset.css" rel="stylesheet">
+    <!--rem适配  设计图750*1334-->
+    <script src="js/viewport_rem.js"></script>
+    <!--公共部分   ending-->
+    <!--单独样式-->
+    <link href="css/person_center_setting.css" rel="stylesheet">
+</head>
+<body>
+    <div id="person_setting">
+        <section>
+            <a href="reset_password.html" class="group pwd clearfix">
+                <i class="pull-left"></i>修改密码
+                <span class="icon-right"></span>
+            </a>
+            <a href="advice.html" class="group advice clearfix">
+                <i class="pull-left"></i>意见反馈
+                <span class="icon-right"></span>
+            </a>
+            <a href="about_us.html" class="group about-us clearfix">
+                <i class="pull-left"></i>关于我们
+                <span class="icon-right"></span>
+            </a>
+            <a href="agreement.html" class="group server clearfix">
+                <i class="pull-left"></i>服务协议
+                <span class="icon-right"></span>
+            </a>
+        </section>
+        <footer>
+            <a href="#" class="logout" v-on:click="outLogin()">退出登录</a>
+        </footer>
+    </div>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $(function () {
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+        // 通过下面这个API隐藏右上角按钮 
+            WeixinJSBridge.call('hideOptionMenu'); 
+        });
+    });
+    var indexData=new Vue({
+            el:'#person_setting',
+            data:{
+                
+            },
+            methods:{
+                outLogin:function() {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    location.href = "login.html";
+                }
+            }
+    })
+</script>
+</body>
+</html>

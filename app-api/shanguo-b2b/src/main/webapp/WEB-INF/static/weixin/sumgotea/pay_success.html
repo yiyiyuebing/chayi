@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>订单支付</title>
+</head>
+<body  class="bg-main person-info pay-success">
+<div id="payStatus">
+    <div style="display: none" id="success" class="dis-tabel border-b1 w100 part1">
+        <div class="success-icon dis-cell"></div>
+        <div class="dis-cell">
+            <h3 class="color-green">支付成功！</h3>
+            <p>恭喜您，成功完成订单</p>
+        </div>
+    </div>
+    <div style="display: none" id="fail" class="dis-tabel border-b1 w100 part1">
+        <div class="fail-icon dis-cell"></div>
+        <div class="dis-cell">
+            <h3 class="color-red">支付失败！</h3>
+            <p>支付异常，请重新支付</p>
+        </div>
+    </div>
+
+    <div class="clearfix part2">
+        <span v-on:click="goIndex()" class="fl">返回首页</span>
+        <span v-on:click="gotoorder()" class="fr btn-active">查看订单</span>
+    </div>
+    <ul class="lists">
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">订单编号</div>
+            <p class="dis-cell ta-r">{{all.id}}</p>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">商品名称</div>
+            <p class="dis-cell ta-r">
+                <template v-for="list in all.indentList">
+                    {{list.tradeGoodName}}
+                </template>
+            </p>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">商品数量</div>
+            <p class="dis-cell ta-r">X{{all.number}}</p>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">下单时间</div>
+            <p class="dis-cell ta-r">{{all.createTime}}</p>
+        </li>
+        <li class="dis-tabel bg-white w100">
+            <div class="dis-cell info-name">实付金额</div>
+            <p class="dis-cell ta-r color-main">¥{{waitpayAmount}}</p>
+        </li>
+    </ul>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/bizhelp.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $(function () {
+        //                微信分享
+        //Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+        Util.common.addloadingAnimate();
+        setTimeout(function () {
+            orderData.loadInfo();
+        },1000);
+    });
+    var orderData=new Vue({
+        el:"#payStatus",
+        data:{
+            all:'',
+            waitpayAmount: Util.common.getParameter("waitpayAmount"),
+        },
+        computed:{
+
+        },
+        methods: {
+            loadInfo:function () {
+                var url ="trade/corder/getOrderDetail";
+                var param = {"orderId": Util.common.getParameter('orderId')};
+//                var url ="/weixin/indent/getOrderDetail.do?id=316914728286474240";
+                Util.common.b2cPostCallback(url, param, function (data) {
+                    console.log(data);
+                    if (data.success) {
+                        data.data.createTime = tofromTime(new Date(data.data.createTime))
+                        orderData.$set('all',data.data);
+                        if(data.data.status == 2 || data.data.status== 20){
+                            $("#success").css("display","table");
+                        }else {
+                            $("#fail").css("display","table");
+                        }
+                    } else {
+                        $("#fail").css("display","table");
+                        new Toast({context:$('body'),message: data.msg }).show();
+                    }
+                    Util.common.removeloadingAnimate('payStatus');
+                });
+            },
+            gotoorder:function () {
+                window.location.href='order_detail.html?orderId='+Util.common.getParameter('orderId');
+            },
+            goIndex:function() {
+                window.location.href='index.html?storeId='+sessionStorage.getItem('storeId')+'&userId='+sessionStorage.getItem('userid');
+            }
+        }
+    });
+
+
+</script>
+</html>

@@ -1,0 +1,103 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.yaoming</groupId>
+	<artifactId>yaoming-parent</artifactId>
+	<version>0.2.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		
+		<yaoming.common.version>0.1.0-SNAPSHOT</yaoming.common.version>
+		<yaoming.ueditor.version>0.1.0</yaoming.ueditor.version>
+		<yaoming.security.version>0.2.1</yaoming.security.version>
+		<yaoming.wxpay.version>0.1.0</yaoming.wxpay.version>
+		
+		<yaoming.mall.common.version>0.2.0-SNAPSHOT</yaoming.mall.common.version>
+		<yaoming.zuitese.version>1.0.10</yaoming.zuitese.version>
+		<yaoming.shanguoyinyi.version>1.1.0</yaoming.shanguoyinyi.version>
+		<yaoming.kaiwo.version>0.1.10</yaoming.kaiwo.version>
+		
+		<!-- third jars version -->
+		<aspectj.version>1.8.9</aspectj.version>
+		<aspectj.mavenplugin.version>1.7</aspectj.mavenplugin.version>
+		<spring.version>4.2.5.RELEASE</spring.version>
+		<mysql.version>5.1.29</mysql.version>
+		<mybatis.version>3.3.0</mybatis.version>
+		<mybatis.spring.version>1.2.3</mybatis.spring.version>
+		<slf4j.version>1.7.21</slf4j.version>
+        <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+
+
+    </properties>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<testSource>${java.version}</testSource>
+					<testTarget>${java.version}</testTarget>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12.4</version>
+				<configuration>
+					<skip>true </skip>
+				</configuration>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>DevSnapshots</id>
+			<url>http://112.74.79.135:6683/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+
+		<repository>
+			<id>DevReleases</id>
+			<url>http://112.74.79.135:6683/nexus/content/repositories/releases</url>
+		</repository>
+	</distributionManagement>
+	<repositories>
+		<repository>
+			<id>PublicRepositories</id>
+			<name>PublicRepositories</name>
+			<url>http://112.74.79.135:6683/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<!-- 更新发生的频率always 或者 never 或者 daily（默认的）或者 interval:X（X是分钟数） -->
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+</project>

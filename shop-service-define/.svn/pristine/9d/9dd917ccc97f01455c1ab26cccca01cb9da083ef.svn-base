@@ -1,0 +1,12 @@
+package pub.makers.shop.bill.service;
+
+import pub.makers.shop.bill.vo.BillVo;
+
+public interface BillBizService {
+
+	/**
+	 * 记录账务
+	 * @param indent
+	 */
+	void recordBill(BillVo billVo);
+}

@@ -1,0 +1,58 @@
+package pub.makers.shop.order.service;
+
+import pub.makers.shop.order.vo.AfterSaleApply;
+
+/**
+ * Created by dy on 2017/4/15.
+ */
+public interface IndentAfterSaleBizService {
+
+	
+	/**
+	 * 申请售后
+	 * @param apply
+	 */
+	void applyAfterSale(AfterSaleApply apply);
+	
+	
+	/**
+	 * 同意售后申请
+	 */
+	void agreenApply();
+	
+	
+	/**
+	 * 拒绝售后申请
+	 */
+	void rejectApply();
+	
+	
+	/**
+	 * 订单商品退款
+	 */
+	void refund();
+	
+	
+	/**
+	 * 添加用户物流信息
+	 */
+	void addUserShipping();
+	
+	
+	/**
+	 * 修改用户物流信息
+	 */
+	void editUserShipping();
+	
+	
+	/**
+	 * 接受用户快递的商品信息
+	 */
+	void acceptShipping();
+	
+	
+	/**
+	 * 对商品进行换货
+	 */
+	void changeGood();
+}

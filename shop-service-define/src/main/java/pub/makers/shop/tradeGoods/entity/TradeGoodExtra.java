@@ -1,0 +1,98 @@
+package pub.makers.shop.tradeGoods.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class TradeGoodExtra implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	/** 主键 */
+	private String goodExtraId;		
+	
+	/** 商品ID */
+	private Long goodId;		
+	
+	/** 最小团购数量 */
+	private Integer minTuanNum;		
+	
+	/** 运费模板ID */
+	private String freightTplId;
+	
+	/** 是否有效 */
+	private String isValid;		
+	
+	/** 删除状态 */
+	private String delFlag;		
+	
+	/** 创建时间 */
+	private Date dateCreated;		
+	
+	/** 更新时间 */
+	private Date lastUpdated;		
+	
+
+	public void setGoodExtraId(String goodExtraId){
+		this.goodExtraId = goodExtraId;
+	}
+	
+	public String getGoodExtraId(){
+		return goodExtraId;
+	}
+	
+	public void setGoodId(Long goodId){
+		this.goodId = goodId;
+	}
+	
+	public Long getGoodId(){
+		return goodId;
+	}
+	
+	public void setMinTuanNum(Integer minTuanNum){
+		this.minTuanNum = minTuanNum;
+	}
+	
+	public Integer getMinTuanNum(){
+		return minTuanNum;
+	}
+	
+	public void setIsValid(String isValid){
+		this.isValid = isValid;
+	}
+	
+	public String getIsValid(){
+		return isValid;
+	}
+	
+	public void setDelFlag(String delFlag){
+		this.delFlag = delFlag;
+	}
+	
+	public String getDelFlag(){
+		return delFlag;
+	}
+	
+	public void setDateCreated(Date dateCreated){
+		this.dateCreated = dateCreated;
+	}
+	
+	public Date getDateCreated(){
+		return dateCreated;
+	}
+	
+	public void setLastUpdated(Date lastUpdated){
+		this.lastUpdated = lastUpdated;
+	}
+	
+	public Date getLastUpdated(){
+		return lastUpdated;
+	}
+
+	public String getFreightTplId() {
+		return freightTplId;
+	}
+
+	public void setFreightTplId(String freightTplId) {
+		this.freightTplId = freightTplId;
+	}
+	
+}

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>管理收货地址</title>
+</head>
+<body class="bg-main address-edit">
+    <ul class="lists">
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">收货人：</div>
+            <p class="dis-cell">
+                <input type="text" name="receiptName" placeholder="请输入收货人姓名">
+            </p>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">手机号码：</div>
+            <p class="dis-cell">
+                <input type="text" name="mobile" placeholder="请输入联系人手机号码">
+            </p>
+        </li>
+        <li  class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">所在地区：</div>
+            <p class="dis-cell ">
+                <ul id="demo_treelist"></ul>
+
+                <a href="javascript:void(0)" target="_top" data-role="none" class="btn-right-a" id="pca_value"></a>
+            </p>
+            <input type="hidden" name="provinceName" value="" data-label="province" data-id="" class="cityPickerInput" value="请选择省"/>
+            <input type="hidden" name="cityName" value="" data-label="city" data-id="" class="cityPickerInput" value="请选择市"/>
+            <input type="hidden" name="areaName" value="" data-label="district" data-id="" class="cityPickerInput" value="请选择区"/>
+            <input type="hidden" name="provinceCode" value="">
+            <input type="hidden" name="cityCode" value="">
+            <input type="hidden" name="areaCode" value="">
+            <div class="right-arrow right"></div>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">详细地址：</div>
+            <p class="dis-cell">
+                <input type="text" name="detailAddr" placeholder="请输入详细地址">
+            </p>
+        </li>
+        <!-- <li class="dis-tabel bg-white w100">
+            <div class="dis-cell info-name">邮政编码：</div>
+            <p class="dis-cell">
+                <input type="text" name="postcode" placeholder="请输入邮政编码" maxlength="6">
+            </p>
+        </li>  -->
+    </ul>
+    <div id="saveBtn" class="big-btn btn-active" >保存</div>
+
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/main.js"></script>
+
+    <script src="lib/js/mobiscroll.core.js"></script>
+    <script src="lib/js/mobiscroll.frame.js"></script>
+    <script src="lib/js/mobiscroll.scroller.js"></script>
+    <script src="lib/js/mobiscroll.listbase.js"></script>
+    <script src="lib/js/mobiscroll.treelist.js"></script>
+    <script src="lib/js/mobiscroll.android-holo-light.js"></script>
+    <script src="lib/js/i18n/mobiscroll.i18n.zh.js"></script>
+    <script src="lib/js/city-picker.data.js"></script>
+    <script src="lib/js/mobile-cityPicker.js"></script>
+
+    <link href="lib/css/mobiscroll.animation.css" rel="stylesheet" type="text/css" />
+    <link href="lib/css/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
+    <link href="lib/css/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
+    <link href="lib/css/mobiscroll.frame.wp.css" rel="stylesheet" type="text/css" />
+    <link href="lib/css/mobiscroll.scroller.css" rel="stylesheet" type="text/css" />
+    <link href="lib/css/mobiscroll.scroller.android-holo.css" rel="stylesheet" type="text/css" />
+    <link href="lib/css/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+
+        .dwfl{flex:1;}
+        #demo_treelist_dummy{
+            position: absolute;
+            left: 0;
+            opacity: 0;
+        }
+        #pca_value{color: #1c1c1c;}
+    </style>
+    <script>
+
+        $(function () {
+            //                微信分享
+            //Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+            document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+                // 通过下面这个API隐藏右上角按钮
+                WeixinJSBridge.call('hideOptionMenu');
+            });
+        });
+// 编辑地址操作获取默认地址
+        var addr_id = Util.common.getParameter("id");
+        if(addr_id != undefined){
+            var url ="/weixin/addr/getAddrById.do";
+            var param = {"id": addr_id};
+            Util.common.executeAjaxCallback(url , param , function(data){
+                console.log(data);
+                $("input[name=mobile]").val(data.mobile);
+                $("input[name=receiptName]").val(data.receiptName);
+                /* $("input[name=postcode]").val(data.mailbox); */
+                $("input[name=detailAddr]").val(data.detailAddr);
+
+                $("input[name=provinceName]").val(data.provinceName);
+                $("input[name=cityName]").val(data.cityName);
+                $("input[name=areaName]").val(data.areaName);
+                $("#pca_value").html(data.provinceName+"-"+data.cityName+"-"+data.areaName);
+
+                $("input[name=provinceName]").attr("data-cs",data.provinceCode);
+                $("input[name=cityName]").attr("data-cs",data.cityCode);
+                $("input[name=areaName]").attr("data-cs",data.areaCode);
+            });
+        } else {
+            var data = {};
+        }
+
+        if ($.mobileCityPicker) {
+            $.mobileCityPicker({
+                id: 'demo_treelist',//容器id
+                inputClass: 'cityPickerInput',//
+                inputClick: true,
+                option: {
+                    defaultValue: [0, 0, 0],//默认选项
+                    label: ['province', 'city', 'district'],
+                    theme: 'android-holo-light',
+                    mode: 'scroller',
+                    inputClass: 'hidden',
+                    display: 'bottom',
+                    lang: 'zh',
+                },
+                callback: function (val, citys) {
+                    var vals = val.split(' ');
+                    $("input[name=provinceCode]").val(vals[0]);
+                    $("input[name=cityCode]").val(vals[1]);
+                    if (vals.length > 1) {
+                        $("input[name=areaCode]").val(vals[2]);
+                    }
+                    $("#pca_value").html(citys.join('-'));
+                    sessionStorage.setItem('fName',citys[0]);
+                    sessionStorage.setItem('sName',citys[1]);
+                    sessionStorage.setItem('aName',citys[2]);
+                    if($("input[name=areaCode]").val()==""){
+                        $("input[name=areaCode]").val("");
+                        $("input[name=areaName]").val("");
+                        $("input[name=areaName]").attr("data-id","");
+                        $("input[name=areaName]").attr("data-cs","");
+                    }
+                    console.log(val);
+                    console.log(citys);
+                }
+            });
+        }
+
+
+//        判断为新增收货地址或是编辑现有地址
+    $("#saveBtn").on("click",function() {
+
+        if("edit" == Util.common.getParameter("type")){
+            upDateAddr();
+        }else{
+            saveAddr();
+        }
+    });
+
+
+//        编辑现有收货地址
+    function upDateAddr() {
+        var url ="/weixin/addr/update.do";
+        var mobile = $("input[name=mobile]").val();
+        var receiptName = $("input[name=receiptName]").val();
+       // var postcode = $("input[name=postcode]").val();
+
+        var provinceName = $("input[name=provinceName]").val();
+        var cityName = $("input[name=cityName]").val();
+        var areaName = $("input[name=areaName]").val();
+        var provinceCode = $("input[name=provinceName]").attr("data-cs");
+        var cityCode = $("input[name=cityName]").attr("data-cs");
+        var areaCode = $("input[name=areaName]").attr("data-cs");
+        var detailAddr = $("input[name=detailAddr]").val();
+        var param ={
+            "id":Util.common.getParameter('id'),
+            "userId":sessionStorage.getItem('userid'),
+            "status":"0",
+            // "mailbox":postcode, 
+            "receiptName":receiptName,
+            "mobile":mobile,
+            "fiexdPhone":"",
+            "receiptEmail":"",
+            "provinceName":provinceName,
+            "provinceCode":provinceCode,
+            "cityCode":cityCode,
+            "cityName":cityName,
+            "areaName":areaName,
+            "areaCode":areaCode,
+            "detailAddr":detailAddr
+        };
+        var conditionStr = "conditionStr=" + JSON.stringify(param);
+        if(receiptName=='' || mobile=='' || provinceName=='' || detailAddr=='') {
+            new Toast({context: $('body'), message:'信息填写不完整'}).show();
+
+        }else {
+            Util.common.executeAjaxCallback(url, conditionStr, function (data) {
+                //{"msg":"操作成功","code":"000000"}
+                console.log(data.msg);
+                if (data.msg == '修改成功') {
+                    setTimeout(function () {
+                        history.back();
+                    }, 300);
+                } else {
+                    new Toast({context: $('body'), message: data.msg}).show();
+                }
+            });
+        }
+
+    }
+
+    var oneclick=false;
+//  新增地址
+    function saveAddr() {
+
+
+        var url ="/weixin/addr/save.do";
+       // var postcode = $("input[name=postcode]").val();
+        var receiptName = $("input[name=receiptName]").val();
+        var mobile = $("input[name=mobile]").val();
+        var detailAddr = $("input[name=detailAddr]").val();
+
+        var provinceName = $("input[name=provinceName]").val();
+        var cityName = $("input[name=cityName]").val();
+        var areaName = $("input[name=areaName]").val();
+        var provinceCode = $("input[name=provinceName]").attr("data-cs");
+        var cityCode = $("input[name=cityName]").attr("data-cs");
+        var areaCode = $("input[name=areaName]").attr("data-cs");
+        if(areaName == undefined || areaCode == undefined){
+            areaName="";
+            areaCode="";
+        }
+        var param ={
+            //"userId":"1",
+            "userId": sessionStorage.getItem('userid'),
+            "status":"0",
+            /* "mailbox":postcode, */
+            "receiptName":receiptName,
+            "mobile":mobile,
+            "fixedPhone":"",
+            "receiptEmail":"",
+            "provinceName":provinceName,
+            "provinceCode":provinceCode,
+            "cityCode":cityCode,
+            "cityName":cityName,
+            "areaName":areaName,
+            "areaCode":areaCode,
+            "detailAddr":detailAddr
+        };
+        var conditionStr = "conditionStr=" + JSON.stringify(param);
+        console.log(receiptName);
+        if(receiptName=='' || mobile=='' || provinceName=='' || detailAddr=='') {
+            new Toast({context: $('body'), message:'信息填写不完整'}).show();
+
+        }else {
+            if (oneclick) {
+                return false;
+            } else {
+                oneclick = true;
+                console.log(param);
+                if (Util.common.getParameter('use') == 'now') {
+                    //我要送人地址
+                    sessionStorage.setItem('one_location', JSON.stringify(param));
+                    //
+                    document.location.href = 'order_sub.html?buyType=1&shopCartInfo=' + Util.common.getParameter('shopCartInfo');
+
+                } else {
+                    Util.common.executeAjaxCallback(url, conditionStr, function (data) {
+                        if (data.msg == '保存成功') {
+                            // history.back();
+                            window.location.href = 'person_address.html?type=' + Util.common.getParameter('listType');
+                        } else {
+                            new Toast({context: $('body'), message: data.msg}).show();
+                        }
+                        oneclick = false;
+                    });
+                }
+
+            }
+        }
+    }
+
+    </script>
+</body>
+</html>

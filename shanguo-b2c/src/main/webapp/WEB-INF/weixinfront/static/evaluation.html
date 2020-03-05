@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>.sumEva span .star, .sumEva span .stara{float: left;}</style>
+    <title>评价</title>
+</head>
+<body class="bg-main">
+    <div  id="evaluation" class="op0">
+       <div id="goodsinfo">
+       </div>
+        <!--<div class="clearfix">
+            <span class="fr" style="padding: 0.8rem">
+                <input  type="checkbox" id="anony"><label class="fl" for="anony"></label>
+                <i>匿名评价</i>
+            </span>
+        </div>-->
+        <div class="br4"></div>
+        <div v-on:click="submit()" class="add-new btn-active ta-c">立即评价</div>
+    </div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/jquery.tmpl.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script type="text/javascript" src="js/qiniu/moxie.js"></script>
+<script type="text/javascript" src="js/qiniu/plupload.dev.js"></script>
+<script type="text/javascript" src="js/qiniu/zh_CN.js"></script>
+<script type="text/javascript" src="js/qiniu/ui.js"></script>
+<script type="text/javascript" src="js/qiniu/qiniu.js"></script>
+<script type="text/x-jquery-tmpl" id="goodsinfo-t">
+
+</script>
+<script>
+    Util.common.addloadingAnimate();
+
+    $(function () {
+        evaData.loadGoodsdetail();
+        //                微信分享
+        Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+    })
+
+function loadTemp() {
+    var vals=evaData.goodModel;
+    for (x in vals) {
+
+        var tmpl = '<div class="evaluate">'
+                + '<div class="dis-tabel w100 sumEva">'
+                + '<div style="width: 5rem;padding-right: 1rem" class="dis-cell"><img src="'+vals[x].goodImg+'" alt=""></div>'
+                + '<div class="dis-cell">'
+                + '<p style="height: 3rem" class="dis-row">'+vals[x].goodName+'</p>'
+                + '<span class="dis-row">'
+                + '<i onclick="changestar('+x+',1)" id="star'+x+'_1" class="stars'+x+' dis-cell star"></i>'
+                + '<i onclick="changestar('+x+',2)" id="star'+x+'_2" class="stars'+x+' dis-cell star"></i>'
+                + '<i onclick="changestar('+x+',3)" id="star'+x+'_3" class="stars'+x+' dis-cell star"></i>'
+                + '<i onclick="changestar('+x+',4)" id="star'+x+'_4" class="stars'+x+' dis-cell star"></i>'
+                + '<i onclick="changestar('+x+',5)" id="star'+x+'_5" class="stars'+x+' dis-cell star"></i>'
+                + '</span>'
+                + '</div>'
+                + '</div>'
+                + '<div class=" pad17">'
+                + '<div class=" info-name ps">评价内容：</div>'
+                + '<p class="">'
+                + '<input type="hidden" id="score'+x+'" value="5">'
+                + '<textarea id="content'+x+'" rows="4" placeholder="请在此写下你对宝贝的评价吧！" v-model="notice" style="border: none;width: 100%"></textarea>'
+                + '</p>'
+                + '<div id="container_'+vals[x].num+'" class="clearfix">'
+                + '<img id="pickfiles_'+vals[x].num+'" style="width: 3rem;" class="fl" src="img/icons/judge.png" alt="">'
+                + '<div id="showImgContainer_'+vals[x].num+'" style="display:block;overflow:hidden;"></div>'
+                + '</div>'
+                + '</div>'
+                + '</div>';
+
+        $("#goodsinfo").append(tmpl);
+    }
+}
+
+    var evaData=new Vue({
+        el:'#evaluation',
+        data:{
+            detail:{},
+            addImg:[],
+            goodModel:[]
+
+        },
+        computed:{
+
+        },
+        methods: {
+            loadGoodsdetail:function () {
+//                加载信息
+                var url ="trade/corder/getOrderDetail";
+                var param = {"orderId": Util.common.getParameter('orderId'),"userId": sessionStorage.getItem('userid')};
+                Util.common.b2cPostCallback(url, param, function (data) {
+                    if (data.success && data.data) {
+                        var dataInfo = data.data;
+                        Util.common.removeloadingAnimate('evaluation');
+                        evaData.$set('detail',dataInfo);
+                        var result=[];
+                        for( x in dataInfo.indentList){
+                            var good = {};
+                            good.goodSkuId = dataInfo.indentList[x].tradeGoodSkuId;
+                            good.goodImg = dataInfo.indentList[x].tradeGoodImgUrl;
+                            good.goodName = dataInfo.indentList[x].tradeGoodName;
+                            good.indentId = dataInfo.indentList[x].indentId;
+                            good.num=x+1;
+                            result.push(good);
+                        }
+                        console.log(result);
+                        evaData.$set('goodModel',result);
+                        evaData.loadTemplate(result);
+                        loadTemp();
+                    }
+                });
+            },
+            loadTemplate: function ( data) {
+                setTimeout(function(){
+                    for(var i=0;i<data.length;i++) {
+                        var options={
+                            browse_button: 'pickfiles_'+data[i].num,
+                            container: 'container_'+data[i].num,
+                            tigger_container:'showImgContainer_'+data[i].num}
+                        var uploader = new uploaderImg();
+                        uploader.createUploader(options);
+                    }
+                },1000);
+            },
+//            获取上传图片列表
+            GetImgList:function (container){
+                var img=$("#showImgContainer_0"+container).find(".default_uploadImg");
+                var imgList=[];
+                for(var i=0; i<img.length;i++){
+                    var rel=$('#'+img[i].id).attr("img-rel");
+                    var src=$('#'+img[i].id).attr("src");
+                    if(!rel ||rel=='-1')
+                        continue;
+                    if(src && (new RegExp("\\-img$").test(src)))
+                        src = src.substring(0, src.length-4);
+                    imgList.push(src);
+                }
+                console.log(imgList);
+                evaData.$set('addImg',imgList) ;
+            },
+            submit:function () {
+                var userid = sessionStorage.getItem('userid');
+                var url ="trade/corder/addEvaluation";
+                var model =evaData.goodModel;
+                var isCheck=$('#anony').is(':checked');
+                var pingList=[];
+                for (var i = 0; i <model.length; i++) {
+                    var param = {};
+                    param.indentId = evaData.detail.id;
+                    param.goodSkuid = model[i].goodSkuId;
+                    param.user = userid;
+                    param.content = $("#content"+i).val() || '此用户没有填写评价';
+                    param.score = $("#score"+i).val();
+                    var imgList = [];
+                    for(var ii=0;ii<$("#showImgContainer_"+model[i].num).find("img").length;ii++){
+                        var src = $("#showImgContainer_"+model[i].num).find("img").eq(ii).attr("src");
+                        imgList.push(src);
+                    }
+                    param.imageUrlList = imgList;
+                    pingList.push(param);
+                }
+                var param1 = {};
+                param1.modelJson = JSON.stringify(pingList);
+                console.log(param1)
+                Util.common.b2cPostCallback(url, param1, function(data) {
+                    if (data.success && data.data) {
+                        new Toast({context:$('body'),message:'评价成功'}).show();
+                        setTimeout(function () {
+                            window.history.back();
+                        }, 2000);
+                    }
+                })
+            }
+        }
+    });
+
+//    对商品进行评分
+    function changestar(num,score) {
+        $(".stars"+num).removeClass('stara');
+            for(i=1;i<=score;i++){
+                $("#star"+num+'_'+i).addClass('stara');
+            }
+            $("#score"+num).val(score);
+    }
+
+
+    var uploaderImg=function(){
+        var default_options={
+            runtimes: 'html5,flash,html4',
+            browse_button:'',
+            container: '',
+            tigger_container:'',
+            //chunk_size: '4mb',
+            uptoken:sessionStorage.getItem('qiniu_token'),
+            uptoken_url: Util.common.baseUrl+"/weixin/qiniu/getToken.do",
+            domain: 'http://o7o0uv2j1.bkt.clouddn.com/',
+            flash_swf_url : 'qiniu/Moxie.swf',
+            silverlight_xap_url : 'qiniu/Moxie.xap',
+            multi_selection: !(mOxie.Env.OS.toLowerCase()==="ios"),
+            filters : {
+                max_file_size : '100mb',
+                prevent_duplicates: false,
+                mime_types: [
+                    {title : "Image files", extensions : "jpg,jpeg,gif,png,bmp"}
+                ]
+            },
+            get_new_uptoken: false,
+            auto_start: true,
+            log_level: 5,
+            resize : {
+                width : 200,
+                height : 200,
+                quality : 72,
+                crop: true // crop to exact dimensions
+            },
+            init: {
+                'FilesAdded': function(up, files) {
+                    var op=up.getOption();
+                    var targetContainer=op.tigger_container;
+                    plupload.each(files, function(file) {
+                        var progress = new FileProgress(file, targetContainer);
+                        progress.bindUploadCancel(up);
+                        up.refresh();
+
+                    });
+                },
+                'BeforeUpload': function(up, file) {
+                    var op=up.getOption();
+                    var targetContainer=op.tigger_container;
+                    var progress = new FileProgress(file, targetContainer);
+                    var chunk_size = plupload.parseSize(this.getOption('chunk_size'));
+                    if (up.runtime === 'html5' && chunk_size) {
+                        progress.setChunkProgess(chunk_size);
+                    }
+                },
+                'UploadComplete': function() {
+                    console.log("ssss");
+                },
+                'FileUploaded': function(up, file, info) {
+                    var op=up.getOption();
+                    var targetContainer=op.tigger_container;
+                    var progress = new FileProgress(file, targetContainer);
+                    progress.setComplete(up, info, "");
+                },
+                'Error': function(up, err, errTip) {
+                    var op=up.getOption();
+                    var targetContainer=op.tigger_container;
+                    var progress = new FileProgress(err.file, targetContainer);
+                    progress.setError();
+                    progress.setStatus(errTip);
+                },
+                'Key': function(up, file) {
+                    var key = "";
+                    var timestamp=new Date().getTime();
+                    var imgType=file.name.substr(file.name.lastIndexOf(".")).toLowerCase();
+                    var randomStr = function(len){
+                        var targetStr="";
+                        var hexDigits = "0123456789abcdef";
+                        for(var i=0;i<len;i++){
+                            targetStr+=hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+                        }
+                        return targetStr;
+                    }
+                    key=timestamp+randomStr(7)+imgType;
+                    return key;
+                }
+            }
+        };
+        var _init=function(options){
+            return $.extend(true, default_options, options);
+        }
+        var _create=function(options){
+            var op=_init(options);
+            var uploader = Qiniu.uploader(op);
+            return uploader;
+        }
+        return {
+            createUploader:function(options){
+                _create(options);
+            }
+        }
+    };
+
+</script>
+</html>

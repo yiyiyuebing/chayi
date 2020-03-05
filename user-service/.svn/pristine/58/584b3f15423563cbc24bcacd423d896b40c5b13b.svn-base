@@ -1,0 +1,80 @@
+package pub.makers.shop.store.service;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.dev.base.utils.UUIDUtils;
+
+import pub.makers.jedis.JedisCallback;
+import pub.makers.jedis.JedisTemplate;
+import redis.clients.jedis.Jedis;
+
+@Service(version="1.0.0")
+public class SubbranchLoginBizServiceImpl implements SubbranchLoginBizService{
+
+	@Autowired
+	private JedisTemplate jedisTemplate;
+	
+	public String getLoginToken(final String subbranchId) {
+		
+		return jedisTemplate.execute(new JedisCallback<String>() {
+
+			public String doInJedis(Jedis jedis) {
+				
+				cleanLoginToken(subbranchId);
+				
+				String token = UUIDUtils.uuid3();
+				String userKey = "subbranch_" + subbranchId;
+				jedis.set(token, subbranchId);
+				jedis.set(userKey, token);
+				
+				return token;
+			}
+			
+		});
+	}
+
+	public void cleanLoginToken(final String subbranchId) {
+		
+		jedisTemplate.execute(new JedisCallback<Object>() {
+
+			public Object doInJedis(Jedis jedis) {
+				
+				String userKey = "subbranch_" + subbranchId;
+				String token = jedis.get(userKey);
+				
+				if (StringUtils.isNotBlank(token)){
+					jedis.del(userKey, token);
+				}
+				
+				return null;
+			}
+			
+		});
+	}
+
+	public boolean isTokenValid(final String token) {
+		
+		return jedisTemplate.execute(new JedisCallback<Boolean>() {
+
+			public Boolean doInJedis(Jedis jedis) {
+				
+				return jedis.exists(token);
+			}
+		});
+		
+	}
+
+	@Override
+	public String getShopIdByToken(final String token) {
+		
+		return jedisTemplate.execute(new JedisCallback<String>() {
+
+			public String doInJedis(Jedis jedis) {
+				
+				return jedis.get(token);
+			}
+		});
+	}
+}

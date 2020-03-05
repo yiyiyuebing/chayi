@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>查看物流</title>
+</head>
+<body class=" logistics">
+<div id="orderDetail">
+    <div class="logis-goods dis-tabel">
+        <div class="dis-cell logis-goods-img"><img src="img/4.png" alt=""></div>
+        <div class="dis-cell logis-goods-des">
+            <h4>物流状态：
+                <i class="color-main" v-if="!detail.state">在途中</i>
+                <i class="color-main" v-if="detail.state==0">在途中</i>
+                <i class="color-main" v-if="detail.state==1">正在揽件</i>
+                <i class="color-main" v-if="detail.state==2">疑难</i>
+                <i class="color-main" v-if="detail.state==3">已签收</i>
+                <i class="color-main" v-if="detail.state==4">退签</i>
+                <i class="color-main" v-if="detail.state==5">正在派件</i>
+                <i class="color-main" v-if="detail.state==6">退回</i>
+            </h4>
+            <p>承运来源：{{com}}</p>
+            <p>运单编号：{{nu}}</p>
+        </div>
+    </div>
+    <div class="br09 bg-main"></div>
+    <!--<a href="#" class="dis-tabel logis-person">-->
+        <!--<div class="dis-cell logis-person-img"><img src="img/icons/defaultimg.png" alt=""></div>-->
+        <!--<div class="dis-cell logis-person-des">-->
+            <!--<h4>派件员：潇潇</h4>-->
+            <!--<p>手机：<i class="color-blue">15876540587</i></p>-->
+        <!--</div>-->
+        <!--<div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>-->
+    <!--</a>-->
+    <div class="br09 bg-main"></div>
+    <div class="logis-msg">
+        <div class="w100 dis-tabel logis-msg-tit">
+            <div class="dis-cell">物流跟踪</div>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </div>
+        <ul>
+            <template v-for="list in detail.data">
+                <li v-if="$index ==0">
+                    <div class="dot dot-active"></div>
+                    <div class="logis-msg-con">
+                        <h4 class="color-main">{{list.context}}</h4>
+                        <p class="color-main">{{list.ftime}}</p>
+                    </div>
+                </li>
+                <li v-else>
+                    <div class="dot dot-grey"></div>
+                    <div class="logis-msg-con">
+                        <h4>{{list.context}}</h4>
+                        <p>{{list.ftime}}</p>
+                    </div>
+                </li>
+            </template>
+        </ul>
+        <div v-if="!detail.state" id="no-msg" class="ta-c fs-14" style="padding-top: 25%;">
+            更多物流状态展示，敬请期待！
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    Util.common.addloadingAnimate();
+
+    $(function () {
+        orderData.initOrderDetail();
+        //                微信分享
+        Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+    })
+
+    var orderData=new Vue({
+        el: "#orderDetail",
+        data: {
+            detail: {},
+            com: Util.common.getParameter('expressCompany'),
+            nu: Util.common.getParameter('oddNum')
+        },
+        computed: {},
+        methods: {
+            initOrderDetail: function () {
+                var url = "weixin/indent/express.do?num="+Util.common.getParameter('oddNum');
+                var param = {};
+                Util.common.executeAjaxCallback(url, param, function (res) {
+                    Util.common.removeloadingAnimate('orderDetail');
+
+                    console.log(res);
+                    if(res.code==1){
+                        if(res.data==null || res.data=="null" || res.
+                                        data==undefined || res.data=='undefined'){
+                            $("#no-msg").show();
+                        }else{
+                            orderData.$set('detail', res.data);
+                        }
+                    }
+                });
+            }
+        }
+    });
+</script>
+</html>

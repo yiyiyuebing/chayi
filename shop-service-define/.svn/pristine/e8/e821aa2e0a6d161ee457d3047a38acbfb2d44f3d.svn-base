@@ -1,0 +1,38 @@
+package pub.makers.shop.promotion.service;
+
+import pub.makers.shop.promotion.entity.ManzengActivity;
+import pub.makers.shop.promotion.entity.ManzengGood;
+import pub.makers.shop.promotion.entity.ManzengRule;
+import pub.makers.shop.promotion.vo.ManzengParam;
+
+import java.util.List;
+
+/**
+ * Created by dy on 2017/8/22.
+ */
+public interface ManzengBizService {
+
+    /**
+     * 保存活动
+     * @param manzengActivity
+     */
+    ManzengActivity save(ManzengActivity manzengActivity);
+
+    /**
+     * 保存活动规则
+     * @param manzengRule
+     */
+    void saveManzengRule(ManzengRule manzengRule);
+
+
+    ManzengRule getManzengRuleById(String id);
+
+    ManzengActivity getManzengActivityById(String id);
+
+    /**
+     * 查询满赠活动商品信息
+     * @param manzengParam
+     * @return
+     */
+    List<ManzengGood> getManzengGoodListByRuleIds(ManzengParam manzengParam);
+}

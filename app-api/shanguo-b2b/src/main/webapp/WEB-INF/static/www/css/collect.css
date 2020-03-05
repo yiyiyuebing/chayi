@@ -1,0 +1,41 @@
+.right-cont-wrap {position: relative;}
+.right-cont-wrap .top-right-box {position: absolute; top: 0; right: 0; min-width: 270px; padding: 14px 10px;}
+.top-right-box .option-wrap .batch-btn {float: left; padding: 5px 10px; color: #333; font-size: 12px; background-color: #f0f0f0; line-height: 16px;}
+.top-right-box .option-wrap .check-box {line-height: 25px;}
+.top-right-box .option-wrap .check-box .option-btn {float: left; margin-left: 20px; padding-left: 20px; font-size: 12px; background-repeat: no-repeat; background-position: left;}
+.top-right-box .option-wrap .check-box .option-btn.cart {background-image: url("../images/cart_icon.png");}
+.top-right-box .option-wrap .check-box .option-btn.cart:hover {color: #f05353; background-image: url("../images/cart_icon_active.png");}
+.top-right-box .option-wrap .check-box .option-btn.collect {margin-right: 40px; background-image: url("../images/collect_icon.png");}
+.top-right-box .option-wrap .check-box .option-btn.collect:hover {color: #f05353; background-image: url("../images/collect_icon_hover.png");}
+.top-right-box .option-wrap .check-box, .top-right-box .option-wrap.check .nomal-box {display: none;}
+.top-right-box .option-wrap.check .check-box {display: block;}
+.top-right-box .page-box {margin-left: 30px; line-height: 25px;}
+.top-right-box .page-box .page-btn {float: left; width: 23px; height: 23px; background-repeat: no-repeat; background-position: center; border: 1px solid #f0f0f0;}
+.top-right-box .page-box .page-btn.pre {margin-left: 20px; background-image: url("../images/icon_left_gray.png");}
+.top-right-box .page-box .page-btn.pre.disable {background-image: url("../images/icon_left_gray_disable.png");}
+.top-right-box .page-box .page-btn.next {margin-left: 10px; background-image: url("../images/icon_right_gray.png");}
+.top-right-box .page-box .page-btn.next.disable {background-image: url("../images/icon_right_gray_disable.png");}
+.collect-list-wrap {margin-top: -1px; margin-left: -20px; border-top: 1px solid #f0f0f0;}
+.collect-list-wrap .list-item {position: relative; float: left; width: 221px; margin-top: 20px; margin-left: 20px; border: 1px solid #f0f0f0;}
+.collect-list-wrap .list-item:hover {box-shadow: 0px 3px 10px rgba(0,0,0,.1);}
+.collect-list-wrap .list-item .img-cover {width: 221px; height: 200px;}
+.collect-list-wrap .list-item .img-cover img {width: 100%; height: 100%;}
+.collect-list-wrap .list-item .p-name {display: block; padding: 5px 10px; color: #333; font-size: 12px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+.collect-list-wrap .list-item .p-price {margin-bottom: 15px; text-align: center; line-height: 20px;}
+.collect-list-wrap .list-item .p-stats {padding: 5px 0; border-top: 1px solid #f0f0f0;}
+.list-item .p-stats .p-comment {float: left; width: 49%; color: #666; text-align: center; border-left: 1px solid #f0f0f0; overflow: hidden;}
+.list-item .p-stats .p-comment:first-child, .list-item .p-operate .op-btn:first-child {border-left: none;}
+.list-item .p-stats .love {padding-left: 20px; background: url("../images/like_icon.png") no-repeat left;}
+.list-item .p-stats .like {padding-left: 20px; background: url("../images/good_icon.png") no-repeat left;}
+.collect-list-wrap .list-item .p-operate {background: #fafafa; border-top: 1px solid #f0f0f0;}
+.list-item .p-operate .op-btn {float: left; width: 49%; padding: 8px 0; color: #666; text-align: center; border-left: 1px solid #f0f0f0;}
+.list-item .p-operate .op-btn .btn-compare {padding-left: 20px; background: url("../images/add_cart_icon.png") no-repeat left;}
+.list-item .p-operate .op-btn .btn-compare:hover {color: #f05353; background: url("../images/add_cart_hover.png") no-repeat left;}
+.list-item .p-operate .op-btn .btn-cut {padding-left: 20px; background: url("../images/cancel_coolect_icon.png") no-repeat left;}
+.list-item .p-operate .op-btn .btn-cut:hover {color: #f05353; background: url("../images/cancel_collect_icon_hover.png") no-repeat left;}
+.collect-list-wrap .item-check {display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.3); cursor: pointer;}
+.collect-list-wrap .item-check .i-check {position: absolute; top: 0; right: 0; width: 36px; height: 36px; background: url("../images/collect_check.png") no-repeat center;}
+.collect-list-wrap .list-item.active .item-check .i-check {background: url("../images/coolect_check_active.png") no-repeat center;}
+.collect-list-wrap.check .item-check {display: block;}
+.collect-list-wrap .list-item.active, .collect-list-wrap.check .list-item:hover {border-color: #f05353;}
+.collect-list-wrap.check .list-item:hover {box-shadow: none;}

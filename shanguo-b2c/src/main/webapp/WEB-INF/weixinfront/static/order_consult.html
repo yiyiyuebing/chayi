@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--清除浏览器缓存-->
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <!--设备 IE  最高版本-->
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <!--定义 语言类型-->
+    <meta http-equiv="CONTENT-TYPE" content="text/html" charset="utf-8">
+    <!--设置视口宽度与设备宽度， 禁止用户缩放-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--X5内核 全屏显示-->
+    <meta name="x5-fullscreen" content="true">
+    <!--uc内核  全屏显示-->
+    <meta name="full-screen" content="yes">
+    <!--描述-->
+    <meta name="description" content="山国饮艺">
+    <!--关键字-->
+    <meta name="keywords" content="山国饮艺">
+    <title>售后协商</title>
+    <!--公共部分-->
+    <!--HTML标签样式重置-->
+    <link href="css/normalize.css" rel="stylesheet">
+    <!--移动端css重置-->
+    <link href="css/reset.css" rel="stylesheet">
+    <!--rem适配  设计图750*1334-->
+    <!--公共部分   ending-->
+    <!--单独样式-->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/person_center_back_money_consult_refuse.css" rel="stylesheet">
+</head>
+<body>
+
+    <div id="orderConsult">
+        <!--确认收货弹窗-->
+        <section class="popup" id="popup">
+            <div class="popup-wrap">
+                <h4>提示</h4>
+                <p>确定已收到商品？</p>
+                <p>订单完成后不能申请售后</p>
+                <div class="button-group clearfix">
+                    <a href="javascript:;" class="cancel pull-left">取消</a>
+                    <a href="#" class="confirm pull-right">确定</a>
+                </div>
+            </div>
+        </section>
+        <template v-for="item in detail.replyList">
+            <!--用户-->
+            <template v-if=" item.operManType == 'buyer'">
+                <section class="customer">
+                    <div class="group-time">
+                        <span class="time">{{item.date}}</span>
+                    </div>
+                    <div class="group-txt">
+                        <i class="icon-triangle"></i>
+                        <h5>{{item.operDesc}}</h5>
+                        <p v-html="item.remark"></p>
+                    </div>
+                </section>
+            </template>
+            <template v-if="item.operManType != 'buyer' && item.operManType != 'pending'">
+                <!--平台-->
+                <section class="customer-server">
+                    <div class="group-time">
+                        <span class="time">{{item.date}}</span>
+                    </div>
+                    <div class="server-txt">
+                        <i class="icon-triangle"></i>
+                        <h5>优茶联{{item.operDesc}}</h5>
+                        <div class="txt">
+                            <div class="markTxt" v-html="item.remark"></div>                      
+                        </div>
+                    </div>
+                </section>
+            </template>
+            <template v-if="item.operManType == 'pending'">
+                <section class="customer-server" id="orange">
+                    <div class="group-time">
+                        <span class="plate"><i></i>优茶联平台</span>
+                        <span class="time">{{item.date}}</span>
+                    </div>
+                    <div class="server-txt">
+                        <i class="icon-triangle"></i>
+                        <h5>{{item.operDesc}}</h5>
+                        <div class="txt">
+                            <div class="markTxt" v-html="item.remark"></div>
+                        </div>
+                    </div>
+                </section>
+            </template>
+        </template>
+        <template v-if="isReply" class="clearfix">         
+            <div class="part4 clearfix border-t">
+                <span class="fr" v-on:click="cancelAfterSale()">撤销申请</span><span class="fr" v-on:click="editAfterSale()">修改申请</span>
+            </div>
+        </template>
+        <template v-if="saleAfterAgain">
+            <div class="part4 clearfix border-t">
+                <span class="fr" v-on:click="saleAfterAgainFun()">再次申请</span>
+            </div>
+        </template>
+        <div class="br4"></div>
+        
+    </div>
+</body>
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/bizhelp.js"></script>
+    <script>
+        /*开启加载动画*/
+        Util.common.addloadingAnimate();
+        /*隐藏微信自带的分享功能*/
+        $(function () {
+            /*发送请求*/
+            orderConsult.initOrderConsult();
+            //                微信分享
+            //Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+            document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+                // 通过下面这个API隐藏右上角按钮
+                WeixinJSBridge.call('hideOptionMenu');
+            });
+        });
+        /*渲染数据*/
+        var orderConsult = new Vue({
+            el:"#orderConsult",
+            data:{
+                detail:{},
+                goodInfo: JSON.parse(sessionStorage.getItem('order-consult')),
+                saleAfterAgain: false,
+                //是否有客服回复
+                isReply: false
+            },
+            computed:{},
+            methods:{
+                initOrderConsult:function(){
+                    var url="weixin/afterSale/getOrderReplyList";
+                    var param = {"orderId":Util.common.getParameter("orderId"),"skuId":Util.common.getParameter("skuId")};
+                    Util.common.b2cPostCallback(url,param,function(data){
+                        if(data.success && data.data){
+                            var dataInfo = data.data;
+                            /*关闭加载动画*/
+                            Util.common.removeloadingAnimate("orderConsult");
+                            console.log(dataInfo);
+                            dataInfo.orderStatus = Util.common.getParameter('orderStatus');
+                            dataInfo.flowStatus = Util.common.getParameter('flowStatus');
+                            /*设定申请售后的类型变量*/
+                            if(dataInfo.replyList && dataInfo.replyList.length > 0){
+                                for(var i=0;i<dataInfo.replyList.length;i++){
+                                    if( dataInfo.replyList[i].orderFlowType == "exchange" ){
+                                        dataInfo.replyList[i].replyType = "换货";
+                                    }else if( dataInfo.replyList[i].orderFlowType == "refund" ){
+                                        dataInfo.replyList[i].replyType = "退款";
+                                    }else if( dataInfo.replyList[i].orderFlowType == "refund_return" ){
+                                        dataInfo.replyList[i].replyType = "退货退款";
+                                    }
+                                    dataInfo.replyList[i].date = tofromTime(new Date(dataInfo.replyList[i].dateCreated));
+                                    //是否有后台回复
+                                    if (dataInfo.replyList[i].operManType == 'pending') {
+                                        orderConsult.$set('isReply', true);
+                                    }
+                                }
+                                
+                                //看是否可以再次申请售后
+                                /*申请的二级状态*/
+                                var flowStatusStr = orderConsult.goodInfo.flowList[0].flowStatusStr;
+                                /*申请次数*/
+                                var returnTime = orderConsult.goodInfo.returnTime;
+                                var shipReturnTime = orderConsult.goodInfo.shipReturnTime;
+                                if (dataInfo.orderStatus == '待发货') {
+                                    if (flowStatusStr == "已拒绝退款" && shipReturnTime < 2 && dataInfo.replyList[dataInfo.replyList.length-1].operManType == 'pending') {
+                                        orderConsult.$set('saleAfterAgain', true);
+                                        orderConsult.$set('isReply', false);
+                                    }
+                                } else {
+                                    if ((flowStatusStr == "已拒绝退货退款" || flowStatusStr == "已拒绝退款" || flowStatusStr == "已拒绝换货") && returnTime < 2 && dataInfo.replyList[dataInfo.replyList.length-1].operManType == 'pending') {
+                                        orderConsult.$set('saleAfterAgain', true);
+                                        orderConsult.$set('isReply', false);
+                                    }
+                                }
+                                //如果没有后台回复倒计时
+                                // if (!orderConsult.isReply) {
+                                //     orderConsult.countDown(dataInfo.replyList[dataInfo.replyList.length-1].timeout);
+                                // }
+                            }
+                            
+                            orderConsult.$set('detail',dataInfo);
+                        }else{
+                            new Toast({context:$('body'),message: data.msg }).show();
+                        }
+                    })
+                },
+                //修改申请
+                editAfterSale:function() {
+                    var item = JSON.parse(sessionStorage.getItem('order-consult'));
+                    var goodInfo = {};
+                    goodInfo.goods = [];
+                    goodInfo.goods.push(item);
+                    goodInfo.orderId = Util.common.getParameter("orderId");
+                    goodInfo.orderType = item.orderType;
+                    goodInfo.goodNum = item.goodNum;
+                    //修改信息
+                    var regoodInfo = JSON.stringify(orderConsult.detail.replyList[0]);
+                    if (Util.common.getParameter('orderStatus') == '待发货'){
+                        window.location.href='reafter_sale.html?goodInfo='+JSON.stringify(goodInfo)+'&refund=T&regoodInfo='+regoodInfo;
+                    } else {
+                        window.location.href='after_sale2.html?goodInfo='+JSON.stringify(goodInfo)+'&regoodInfo='+regoodInfo;
+                    }
+                },
+                //撤销申请
+                cancelAfterSale:function() {
+                    my_confirm({
+                        title:'提示',
+                        tips:"撤销申请后，不能再发起申请，<br>是否确认撤销？",
+                        btnOk:'确定',
+                        btnNo:'取消',
+                        funcOk:function () {
+                            var url ="weixin/afterSale/cancelApply";
+                            var param = {};
+                            param.flowId = orderConsult.goodInfo.flowList[0].id;
+                            param.operManId = sessionStorage.getItem('userid');
+                            param1 = {}
+                            param1.modelJson = JSON.stringify(param);
+                            Util.common.b2cPostCallback(url, param1, function (data) {
+                                if(data.success){
+                                    new Toast({context:$('body'),message: "撤销成功！" }).show();
+                                    setTimeout(function() {
+                                        historyBack();
+                                    }, 2000);
+                                } else {
+                                    new Toast({context:$('body'),message: data.msg }).show();
+                                }
+                            });
+                        },
+                        funcNo:function () {
+                        }
+                    });
+                },
+                //再次申请
+                saleAfterAgainFun:function(){
+                    my_confirm({
+                        title:'提示',
+                        tips:"您仅剩最后一次申请机会，<br>请谨慎使用！",
+                        btnOk:'确定',
+                        btnNo:'取消',
+                        funcOk:function () {
+                            var item = JSON.parse(sessionStorage.getItem('order-consult'));
+                            var goodInfo = {};
+                            goodInfo.goods = [];
+                            goodInfo.goods.push(item);
+                            goodInfo.orderId = Util.common.getParameter("orderId");
+                            goodInfo.orderType = item.orderType;
+                            goodInfo.goodNum = item.goodNum;
+                            if (Util.common.getParameter('orderStatus') == '待发货'){
+                                window.location.href='after_sale.html?goodInfo='+JSON.stringify(goodInfo)+'&refund=T';
+                            } else {
+                                window.location.href='after_sale.html?goodInfo='+JSON.stringify(goodInfo);
+                            }   
+                        },
+                        funcNo:function () {
+                        }
+                    });
+                },
+                //倒计时
+                countDown:function(endTimer) {
+                    var curTimer = new Date().getTime();
+                    console.log(endTimer)
+                    console.log(curTimer)
+                    if (endTimer > curTimer) {
+                        setInterval(function() {
+                            t=endTimer-curTimer;
+                            var d=Math.floor(t/1000/60/60/24);
+                            var h=Math.floor(t/1000/60/60%24);
+                            var m=Math.floor(t/1000/60%60);
+                            if(d<10&&d>=0){
+                                $('.day').html('0'+d);
+                            }else {
+                                $('.day').html(d);
+                            }
+                            if(h<10&&h >=0){
+                                $('.hour').html('0'+h);
+                            }else{
+                                $('.hour').html(h);
+                            }
+                            if(m<10&&m >=0){
+                                $('.min').html('0'+m);
+                            }else{
+                                $('.min').html(m);
+                            }
+                        }, 1000);
+                    }
+                    
+                }
+
+            }
+        });
+    </script>
+</html>

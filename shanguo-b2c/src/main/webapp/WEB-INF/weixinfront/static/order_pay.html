@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>订单支付</title>
+</head>
+<body id="orderPay" class="bg-main order-pay">
+<div id="paying
+">
+   <div class="bg-white">
+       <h2 class="clearfix border-b1"><i>实付金额：</i><em class="fr color-main">¥{{waitpayAmount}}</em></h2>
+       <div class="dis-tabel w100">
+           <div class="dis-cell pay-icon"></div>
+           <div class="dis-cell">
+               <p>微信支付</p>
+               <h5>推荐已安装微信客户端使用</h5>
+           </div>
+           <div class="dis-cell w20 ta-c">
+               <input checked="checked" id="wechat" type="checkbox">
+               <label for="wechat"></label>
+           </div>
+       </div>
+   </div>
+   <div onclick="verificationUrl()" class="big-btn btn-active" onclick="jumpTo('pay_success')">确认支付</div>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $(function () {
+        orderData.loadInfo();
+        //                微信分享
+        //Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+        pushHistory();
+        var bool=false;
+        setTimeout(function(){
+            bool=true;
+        },100);
+        window.addEventListener("popstate", function(e) {
+            if(bool){
+                my_confirm({
+                    title:'提示',
+                    tips:"订单还未支付，返回后可以到我的<br/>订单继续支付，确认返回？",
+                    btnOk:'确定',
+                    btnNo:'取消',
+                    funcOk:function () {
+                        bool==false;
+                        history.back();
+                    },
+                    funcNo:function () {
+                        bool=true;
+//                        pushHistory();
+                    }
+                });
+
+            }
+        }, false);
+        //    监听微信返回事件
+        function pushHistory() {
+            var state = {
+                title: "title",
+                url: "#"
+            };
+            window.history.pushState(state, "title", "#");
+        }
+    });
+
+
+    var orderData=new Vue({
+        el:"#orderPay",
+        data:{
+            waitpayAmount:'',
+        },
+        computed:{
+
+        },
+        methods: {
+            loadInfo:function () {
+                var waitpayAmount=Util.common.getParameter("waitpayAmount");
+                console.log(waitpayAmount)
+                var orderId=Util.common.getParameter("orderId");
+                orderData.$set('waitpayAmount',waitpayAmount);
+            }
+        }
+    });
+
+    function verificationUrl(){
+//      var url = Util.common.baseUrl + "/weixin/weixinPay/wxPay.do";
+        var url = "/weixin/weixinConfig/verification.do";
+        var currentUrl = "/order_pay.html?"+Util.common.getParameter("orderId");
+        var param = {"url":currentUrl};
+        Util.common.executeAjaxCallback(url ,param,function(data){
+            console.info(data);
+            console.info(data.msg.appId);
+            if(data.success){
+                wxPrePay();
+            }
+        })
+    }
+    function wxPrePay(){
+        var url ="trade/corder/toPay";
+        var param = {"orderId":Util.common.getParameter("orderId"),"userId":sessionStorage.getItem('userid')};
+        Util.common.b2cPostCallback(url ,param,function(data){
+            if (data.success && data.data) {
+                onBridgeReady(data);
+            } else {
+                new Toast({context:$('body'),message: data.msg }).show();
+            }
+        })
+    }
+    function getOrderCode(){
+        var url ="/weixin/indent/getOrderDetail.do";
+        var param = {"id": Util.common.getParameter('orderId')};
+        Util.common.executeAjaxCallback(url, param, function (data) {
+            console.log(data);
+        });
+    }
+    function onBridgeReady(data){
+        WeixinJSBridge.invoke(
+                'getBrandWCPayRequest', {
+                    "appId" :data.data.appId,     //公众号名称，由商户传入
+                    "timeStamp":data.data.timeStamp,         //时间戳，自1970年以来的秒数
+                    "nonceStr" :data.data.nonceStr, //随机串
+                    "package" :data.data.package,
+                    "signType" :data.data.signType,         //微信签名方式：
+                    "paySign" :data.data.paySign //微信签名
+                },
+                function(res){
+                    // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+                    if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+
+                        window.location.href='pay_success.html?orderId='+Util.common.getParameter('orderId')+'&waitpayAmount='+Util.common.getParameter("waitpayAmount");
+
+                    }
+                    else if(res.err_msg =="get_brand_wcpay_request:cancel"){
+                        new Toast({context:$('body'),message:'取消支付'}).show();
+                    }
+                    else if(res.err_msg =="get_brand_wcpay_request:fail"){
+                        new Toast({context:$('body'),message:'支付失败'}).show();
+                    }
+                }
+        );
+    }
+    if (typeof WeixinJSBridge == "undefined"){
+        if( document.addEventListener ){
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        }else if (document.attachEvent){
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+    }else{
+        onBridgeReady();
+    }
+
+
+</script>
+</html>

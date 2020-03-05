@@ -1,0 +1,14 @@
+package pub.makers.shop.item.service;
+
+import java.util.List;
+
+import pub.makers.shop.item.vo.TradeGoodSkuVo;
+
+public interface TradeGoodSkuBizService {
+
+	/**
+	 * 查询所有赠品SKU列表
+	 * @return
+	 */
+	List<TradeGoodSkuVo> listGiftSkus();
+}

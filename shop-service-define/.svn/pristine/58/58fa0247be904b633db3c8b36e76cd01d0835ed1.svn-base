@@ -1,0 +1,151 @@
+package pub.makers.shop.promotion.vo;
+
+import pub.makers.shop.baseOrder.enums.OrderBizType;
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * Created by dy on 2017/8/19.
+ */
+public class ManzengParam implements Serializable {
+
+    private String activityName;
+    private String skuCode;
+    private String goodSkuId;
+    private String goodName;
+    private String cargoNo;
+    private OrderBizType orderBizType;
+    private String activityIds;
+    private String status;
+    private String ruleIds;
+    private String isValid;
+    private String zengFlag;
+    private String classifyId;
+    private String applyType;
+
+    private List<String> goodSkuIdList;
+
+
+    private List<ManzengGoodVo> manzengGoodVos;
+
+    public String getApplyType() {
+        return applyType;
+    }
+
+    public void setApplyType(String applyType) {
+        this.applyType = applyType;
+    }
+
+    public List<String> getGoodSkuIdList() {
+        return goodSkuIdList;
+    }
+
+    public void setGoodSkuIdList(List<String> goodSkuIdList) {
+        this.goodSkuIdList = goodSkuIdList;
+    }
+
+    public String getGoodSkuId() {
+        return goodSkuId;
+    }
+
+    public void setGoodSkuId(String goodSkuId) {
+        this.goodSkuId = goodSkuId;
+    }
+
+    public List<ManzengGoodVo> getManzengGoodVos() {
+        return manzengGoodVos;
+    }
+
+    public void setManzengGoodVos(List<ManzengGoodVo> manzengGoodVos) {
+        this.manzengGoodVos = manzengGoodVos;
+    }
+
+    public String getCargoNo() {
+        return cargoNo;
+    }
+
+    public void setCargoNo(String cargoNo) {
+        this.cargoNo = cargoNo;
+    }
+
+    public String getClassifyId() {
+        return classifyId;
+    }
+
+    public void setClassifyId(String classifyId) {
+        this.classifyId = classifyId;
+    }
+
+    public String getZengFlag() {
+        return zengFlag;
+    }
+
+    public void setZengFlag(String zengFlag) {
+        this.zengFlag = zengFlag;
+    }
+
+    public String getIsValid() {
+        return isValid;
+    }
+
+    public void setIsValid(String isValid) {
+        this.isValid = isValid;
+    }
+
+    public String getRuleIds() {
+        return ruleIds;
+    }
+
+    public void setRuleIds(String ruleIds) {
+        this.ruleIds = ruleIds;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getActivityIds() {
+        return activityIds;
+    }
+
+    public void setActivityIds(String activityIds) {
+        this.activityIds = activityIds;
+    }
+
+    public OrderBizType getOrderBizType() {
+        return orderBizType;
+    }
+
+    public void setOrderBizType(OrderBizType orderBizType) {
+        this.orderBizType = orderBizType;
+    }
+
+    public String getActivityName() {
+        return activityName;
+    }
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
+    }
+
+    public String getSkuCode() {
+        return skuCode;
+    }
+
+    public void setSkuCode(String skuCode) {
+        this.skuCode = skuCode;
+    }
+
+    public String getGoodName() {
+        return goodName;
+    }
+
+    public void setGoodName(String goodName) {
+        this.goodName = goodName;
+    }
+}

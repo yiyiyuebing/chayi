@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>我的收藏</title>
+</head>
+<body class="bg-main today">
+<div id="myCollect">
+    <div class="part3">
+        <ul class="clearfix">
+            <template v-for="li in list">
+                <li class="fl">
+                    <a style="display: block" v-if="li.goodId>100000000000" href="goods_detail.html?id={{li.goodId}}&userId={{userId}}&storeId={{storeId}}"><img :src="li.goodImgUrl" alt=""></a>
+                    <a style="display: block" v-if="li.goodId<100000000000" href="goods_pack_detail.html?id={{li.goodId}}&userId={{userId}}&storeId={{storeId}}"><img :src="li.goodImgUrl" alt=""></a>
+                    <h4>{{li.goodTitle}}</h4>
+                    <h5>¥{{li.salePrice}}<i>¥{{li.marketPrice}}</i></h5>
+                    <p>销售量：{{li.saleNum}}<i class="iconfont fr" v-on:click="delStore(li.goodId)">&#xe659;</i></p>
+                </li>
+            </template>
+
+        </ul>
+    </div>
+    <p class="ta-c copyright">努力加载中...</p>
+</div>
+    <div id="emptyIcon" style="display: none;">
+        <div class="empty-icon"><img src="img/icons/no.png" alt=""></div>
+        <p class="fs-14 ta-c">您还没有收藏任何商品哦，<br/>赶快去添加吧~</p>
+    </div>
+</body>
+    <script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        Util.common.addloadingAnimate();
+
+        $(function () {
+            collectList.loadlist();
+            document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+            // 通过下面这个API隐藏右上角按钮 
+                WeixinJSBridge.call('hideOptionMenu'); 
+            });
+        })
+
+        var collectList=new Vue({
+            el:'#myCollect',
+            data:{
+                userId:sessionStorage.getItem("userid"),
+                storeId:sessionStorage.getItem("shopId"),
+                list:[]
+            },
+            computed:{
+
+            },
+            methods: {
+                loadlist:function () {
+                    var url ="/weixin/store/queryStore.do";
+                    var param = {"userId":sessionStorage.getItem("userid"),"shopId":sessionStorage.getItem("shopId")};
+                    Util.common.executeAjaxCallback(url ,param,function(data){
+                        console.info(data);
+                        Util.common.removeloadingAnimate('myCollect');
+                        if(data.length==0){
+                            $(".copyright").css('display','none');
+                            $("#emptyIcon").css('display','block');
+                        }else {
+                            collectList.$set("list",data);
+                            $(".copyright").css('display','block');
+                        }
+                    });
+                },
+                delStore:function(goodId){
+                    console.info(goodId)
+                    var url ="/weixin/store/delStore.do";
+                    var param = {"userId":sessionStorage.getItem("userid"),"goodsIds":goodId,shopId:sessionStorage.getItem("shopId")};
+                    Util.common.executeAjaxCallback(url ,param,function(data){
+                        //{"msg":"操作成功","code":"000000"}
+                        if(data.code!='000000'){
+                            new Toast({context:$('body'),message:data.msg}).show();
+                        }
+                        else{
+                            window.location.reload();
+                        }
+                    });
+                },
+            }
+        });
+
+
+    </script>
+</html>

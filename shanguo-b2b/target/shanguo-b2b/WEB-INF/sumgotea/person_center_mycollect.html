@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--清除浏览器缓存-->
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <!--设备 IE  最高版本-->
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <!--定义 语言类型-->
+    <meta http-equiv="CONTENT-TYPE" content="text/html" charset="utf-8">
+    <!--设置视口宽度与设备宽度， 禁止用户缩放-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--X5内核 全屏显示-->
+    <meta name="x5-fullscreen" content="true">
+    <!--uc内核  全屏显示-->
+    <meta name="full-screen" content="yes">
+    <!--描述-->
+    <meta name="description" content="山国饮艺">
+    <!--关键字-->
+    <meta name="keywords" content="山国饮艺">
+    <title>我的收藏</title>
+    <!--公共部分-->
+    <!--HTML标签样式重置-->
+    <link href="css/normalize.css" rel="stylesheet">
+    <!--移动端css重置-->
+    <link href="css/reset.css" rel="stylesheet">
+    <!--rem适配  设计图750*1334-->
+    <script src="js/viewport_rem.js"></script>
+    <!--公共部分   ending-->
+    <!--单独样式-->
+    <link href="css/gg_common.css" rel="stylesheet">
+    <link href="css/person_center_mycollect.css" rel="stylesheet">
+    <script src="js/isLogin.js"></script>
+</head>
+<body id="myCollect">
+<template v-if="isHasFlag">
+    <header>
+        我的收藏
+        <a href="javascript:;" id="editorBtn">编辑</a>
+        <a href="javascript:;" id="completeBtn" style="display: none;">完成</a>
+    </header>
+    <section class="wrap">
+        <ul id="productList">
+            <template v-for="item in collectList">
+                <li class="clearfix" data-slide="true" data-id="{{item.id}}" data-goodId="{{item.good.skuId}}" :data-isPresale="item.good.promotionalInfo && item.good.promotionalInfo.bestActivity.activityType=='presell'?1:0">
+                    <template v-if="item.good.stock > 0 && item.good.status == 1">
+                        <label class="pull-left label-check">
+                        </label>
+                    </template>
+                    <template v-if="item.good.stock <= 0 || item.good.status == 0 ">
+                        <span class="pull-left off-sale">
+                            <i>售罄</i>
+                        </span>
+                    </template>
+                    <div class="product-information pull-left">
+                        <div style="position: relative;" class="information clearfix">
+                            <a href="goods_detail.html?id={{item.goodsId}}" class="hot-link"></a>
+                            <template v-if="item.good.stock > 0 && item.good.status == 1">
+                                <template v-if="item.good.promotionalInfo">
+                                    <template v-if="item.good.promotionalInfo.bestActivity">
+                                        <template v-if="item.good.promotionalInfo.bestActivity.activityType != 'presell' ">
+                                            <i v-on:click="singleToCart(item.goodsId)" class="addToCartIcon"></i>
+                                        </template>
+                                    </template>
+                                </template>
+                                <template v-if="!item.good.promotionalInfo">
+                                    <i v-on:click="singleToCart(item.goodsId)" class="addToCartIcon"></i>
+                                </template>
+                            </template>
+                            <div class="product-img pull-left" style="position: relative;">
+                                <template v-if="item.good.stock <= 0 || item.good.status == 0">
+                                    <i class="off-sale-img"></i>
+                                </template>
+                                <template v-if="item.good && item.good.image">
+                                    <img :src="item.good.image.url">
+                                </template>
+                            </div>
+                            <div class="product-txt pull-left">
+
+                                <template v-if="item.good">
+                                    <h6>
+                                        <!--<i>代销</i>-->
+                                        {{item.good.name}}
+                                    </h6>
+                                </template>
+
+                                <div class="tips clearfix">
+                                    <template v-if="item.good.promotionalInfo && item.good.promotionalInfo.bestActivity.activityName != '赠品' ">
+                                        <span class="pull-left">{{item.good.promotionalInfo.bestActivity.tag2}}</span>
+                                    </template>
+                                </div>
+                                <div class="price">
+                                    供货价：
+                                    <sub>¥</sub>
+                                    <span class="single-price" v-if="item.good">{{item.good.price}}</span>
+                                    <sup v-if="item.good">/{{item.good.skuName | unitFilter }}</sup>
+                                </div>
+                                <div class="quantity" v-if="item.good">销量：{{item.good.saleNum}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="delete-box pull-right" v-on:touchstart="delSingle(item.id)">
+                        <a href="javascript:;" class="delete-btn" data-product-id="1">取消收藏</a>
+                    </div>
+                </li>
+            </template>
+
+        </ul>
+    </section>
+
+    <footer class="clearfix" id="operationBtn">
+        <a class="cart pull-left" href="javascript:;" v-on:click="addToCart()">加入购物车</a>
+        <a class="delete pull-right" href="javascript:;" v-on:click="delFromCart()">取消收藏</a>
+    </footer>
+</template>
+
+    <template v-if="!isHasFlag">
+        <header>
+            我的收藏
+        </header>
+        <div id="emptyTip">
+            <div class="empty-icon">
+                <img src="img/icons/no.png" alt="">
+            </div>
+            <p class="empty-txt">暂时没有您的收藏，<br>赶紧去逛逛吧~</p>
+            <a href="index.html" class="empty-link-btn">去逛逛</a>
+        </div>
+    </template>
+</body>
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/person_center_mycollect.js"></script>
+    <script src="js/isLogin.js"></script>
+    <script>
+        Util.common.addloadingAnimate();
+        /*--调用方法*/
+        $(function(){
+            isLogin.init();
+            Collect.isLogin();
+            Collect.getCollectList();
+            document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() { 
+            // 通过下面这个API隐藏右上角按钮 
+                WeixinJSBridge.call('hideOptionMenu'); 
+            });
+        });
+        /*--ending  调用方法*/
+        var Collect = new Vue({
+            el:'#myCollect',
+            data:{
+                pageNo:1,
+                collectList:[],
+                isHasFlag:true,    //初始化显示标识
+                pageNum:1,
+                pageSize:900,
+                pageLoadFlag:true  //分页加载标识
+            },
+            computed:{},
+            filters:{
+                /*时间管道*/
+                timefilter:function(val){
+                    var timeOutput = $.formatDate("MM月dd日",new Date( val ));
+                    return timeOutput;
+                },
+                /*单位管道*/
+                unitFilter:function(value){
+                    if(value){
+                        var skuArr = value.split(",");
+                        var result;
+                        $.each(skuArr,function(i,item){
+                            if(item.indexOf("单位") != -1){
+                                result = item.split(":")[1];
+                            }
+                        });
+                        return result;
+                    }
+                }
+            },
+            methods:{
+                /*判断是够登录*/
+                isLogin:function(){
+                    if(!$.isLogin()){
+                        window.location.href = 'login.html';
+                    }
+                },
+                getCollectList:function(){
+                    var url = '/weixin/favorite/getFavoriteList';
+                    var param = {};
+                    param.modelJsonStr = JSON.stringify({
+                        "pageNum":Collect.pageNum,
+                        "pageSize":Collect.pageSize
+                    });
+                    Util.common.b2bPostCallback(url, param, function (result) {
+                        if (result.success) {
+                            Util.common.removeloadingAnimate();
+                            Collect.$set("collectList", result.data);
+                            Vue.nextTick(function () {
+                                Collect.listPosition();
+                                myCollect.init();
+                            });
+                        } else {
+                            new Toast({context: $('body'), message: result.msg}).showQ();
+                        }
+                    });
+
+                },
+                /*列表位置显示*/
+                listPosition:function(){
+                    if($("#editorBtn").css("display") == "none"){
+                        for(var i=0;i<$("#productList").find("li").length;i++){
+                            $("#productList").find(".label-check").eq(i).removeClass("checkbox-active");
+                            $("#productList").find("li").eq(i).attr("data-slide","false");
+                            $("#productList").find("li").eq(i).css("margin-left",0);
+                        }
+                        $("#productList").find("li").addClass("li-left-active");
+                        $("#productList").find("li").bind("touchstart",function(ev){});
+                    }else{
+                        for(var i=0;i<$("#productList").find(".label-check").length;i++){
+                            $("#productList").find(".label-check").eq(i).removeClass("checkbox-active");
+                            $("#productList").find("li").eq(i).attr("data-slide","true");
+                        }
+                        $("#productList").find("li").removeClass("li-left-active");
+                    }
+                },
+                /*单个商品取消收藏*/
+                delSingle:function(id){
+                    my_confirm({
+                        title:'提示',
+                        tips:"确定取消收藏该商品吗？",
+                        btnOk:'确定',
+                        btnNo:'取消',
+                        funcOk:function(){
+                            var url = '/weixin/favorite/cancelFavorite';
+                            var idList = [];
+                            idList.push(id);
+                            var param = {};
+                            param.modelJsonStr = JSON.stringify(idList);
+                            Util.common.b2bPostCallback(url,param,function(result){
+                                if(result.success){
+                                    new Toast({context:$('body'),message: '删除成功'}).showQ("1000");
+                                    setTimeout(function(){
+                                        Collect.getCollectList();
+                                    },2000);
+                                }else{
+                                    new Toast({context:$('body'),message: result.msg}).showQ();
+                                }
+                            });
+                        },
+                        funcNo:function(){}
+                    })
+                },
+                /*多件选中的商品取消收藏*/
+                delFromCart:function(){
+                    var url = '/weixin/favorite/cancelFavorite';
+                    var idList = [];
+
+                    /*可以添加到购物车中的商品数量*/
+                    for(var i = 0 ; i < $("#productList>li").length;i++){
+                        if($('#productList>li').eq(i).find("label.label-check").hasClass('checkbox-active')){
+                            idList.push($('#productList>li').eq(i).attr('data-id'));
+                        }
+                    }
+
+                    console.log(idList);
+                    if(idList.length > 0){
+                        my_confirm({
+                            title:'提示',
+                            tips:"确定删除所选商品吗？",
+                            btnOk:'确定',
+                            btnNo:'取消',
+                            funcOk:function(){
+                                var params = {};
+                                params.modelJsonStr = JSON.stringify( idList );
+                                Util.common.b2bPostCallback(url,params,function(result){
+                                    if(result.success){
+
+                                        new Toast({context:$('body'),message: "删除成功"}).showQ("1000");
+
+                                        setTimeout(function(){
+                                            Collect.getCollectList();
+                                        },2000);
+
+                                    }else{
+                                        new Toast({context:$('body'),message: result.msg}).showQ();
+                                    }
+                                });
+                            },
+                            funcNo:function(){}
+                        });
+                    }else{
+                        new Toast({context:$('body'),message: '请先选择需要删除的商品'}).showQ();
+                    }
+                },
+                /*单个商品加入购物车*/
+                singleToCart:function(id){
+                    var url = "/weixin/cart/batchAddToCart";
+                    var idParam = [{"goodsId":id,"goodsCount":"1"}];
+                    var params = {};
+                    params.queryJson = JSON.stringify(idParam);
+                    Util.common.b2bPostCallback(url, params, function (result) {
+                        if (result.success) {
+                            new Toast({context: $('body'), message: "添加成功"}).showQ();
+                            Collect.getCollectList();
+                        } else {
+                            new Toast({context: $('body'), message: result.msg}).showQ();
+                        }
+                    });
+                },
+                /*多件选中商品  加入购物车*/
+                addToCart:function(){
+                    var url = '/weixin/cart/batchAddToCart';
+                    var idList = [];
+                    /*选中的预售商品的数量*/
+                    var presaleCount = 0;
+
+                    /*计算可以添加购物车的商品，并添加到参数中*/
+                    for(var i = 0 ; i < $("#productList>li").length;i++){
+                        if($('#productList>li').eq(i).find("label.label-check").hasClass('checkbox-active') && $('#productList>li').eq(i).attr("data-ispresale") == '0'){
+                            idList.push({
+                                "goodsId":$('#productList>li').eq(i).attr('data-goodId'),
+                                "goodsCount":"1"
+
+                            });
+
+                        }
+                    }
+                    /*计算选中的预售商品的数量*/
+                    for(var i = 0 ; i < $("#productList>li").length;i++){
+                        if($('#productList>li').eq(i).find("label.label-check").hasClass('checkbox-active') && $('#productList>li').eq(i).attr("data-ispresale") == '1'){
+                            presaleCount++;
+                        }
+                    }
+
+                    console.log(idList);
+                    console.log(presaleCount);
+
+                    if (idList.length > 0) {
+
+                        var params = {};
+                        params.queryJson = JSON.stringify(idList);
+                        Util.common.b2bPostCallback(url, params, function (result) {
+                            if (result.success) {
+                                if(presaleCount > 0){
+                                    new Toast({context: $('body'), message: "加入购物车成功！当前有"+presaleCount+"款预售商品不支持加入购物车。"}).showQ('3000');
+                                }else{
+                                    new Toast({context: $('body'), message: "添加成功"}).showQ();
+                                }
+
+                                setTimeout(function () {
+                                    Collect.getCollectList();
+                                }, 2000);
+
+                            } else {
+                                new Toast({context: $('body'), message: result.msg}).showQ();
+                            }
+                        });
+
+                    }else{
+                        if(presaleCount > 0){
+                            new Toast({context:$('body'),message: '预售商品不能添加到购物车，请直接点击购买'}).showQ('3000');
+                        }else{
+                            new Toast({context:$('body'),message: '请先选择需要添加到购物车的商品'}).showQ();
+                        }
+                    }
+                },
+            }
+        });
+    </script>
+</html>

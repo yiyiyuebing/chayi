@@ -1,0 +1,18 @@
+package pub.makers.shop.purchaseOrder.service;
+
+import pub.makers.shop.purchaseOrder.entity.PurchaseOrder;
+
+/**
+ * Created by dy on 2017/4/10.
+ */
+public interface PurchaseOrderBizService {
+
+    /**
+     * 通过采购订单id查找微信回调的订单信息
+     * @param id
+     * @return
+     */
+    PurchaseOrder findPurchaseOrderById(Long id);
+
+    String getPackNum(String purPackingBagValue, String purPackingPrice, String number);
+}

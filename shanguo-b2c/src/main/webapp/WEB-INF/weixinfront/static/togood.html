@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+</body>
+
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    var shopId = localStorage.getItem('b2c-shopId');
+    if (shopId=="" || shopId==undefined || shopId=="undefined" ||shopId==null || shopId =='null' || !shopId) {
+        shopId = '280378603036803072';
+    }
+    window.location.href="goods_detail.html?id="+Util.common.getParameter("goodId")+"&flag=T&storeId="+shopId;
+</script>
+</html>

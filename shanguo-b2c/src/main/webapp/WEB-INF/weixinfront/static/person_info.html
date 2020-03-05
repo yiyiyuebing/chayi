@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/mobiscroll.custom-3.0.0-beta6.min.css">
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .params-list{
+            background: transparent;
+        }
+        .returnReason .params-list ul li{
+            background: #FFFFFF;
+            padding: 1rem 0;
+        }
+    </style>
+    <title>我的资料</title>
+</head>
+<body class="bg-main person-info" >
+<div id="personInfo" class="op0">
+    <ul class="lists">
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">头像</div>
+            <div class="dis-cell ta-r">
+                <div class="info-head">
+                    <img :src="userInfo.headimgurl" alt="">
+                </div>
+            </div>
+            <div class="right-arrow"><i class="iconfont ">&nbsp;</i></div>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">昵称</div>
+            <p class="dis-cell ta-r">{{userInfo.nickname}}</p>
+            <div class="right-arrow"><i class="iconfont ">&nbsp;</i></div>
+        </li>
+        <!--<li class="dis-tabel border-b1 bg-white w100">-->
+            <!--<div class="dis-cell info-name">微信号</div>-->
+            <!--<p class="dis-cell ta-r">Susan008</p>-->
+            <!--<div class="right-arrow"><i class="iconfont ">&nbsp;</i></div>-->
+        <!--</li>-->
+        <li  v-on:click="editInfo('tel')" class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">手机号</div>
+            <p class="dis-cell ta-r">{{changeInfo.tel}}</p>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+        <li v-on:click="setSex(0)" class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">性别</div>
+            <p class="dis-cell ta-r">
+                <template v-if="changeInfo.sex==0">未知</template>
+                <template v-if="changeInfo.sex==1">男</template>
+                <template v-if="changeInfo.sex==2">女</template>
+            </p>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+        <li   class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">出生日期</div>
+            <p class=" dis-cell ta-r" ><input readonly="readonly" type="text" value="{{userInfo.birthday}}" id="time"></p>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+        <li class="dis-tabel border-b1 bg-white w100">
+            <div class="dis-cell info-name">所在地区</div>
+            <div class="dis-cell ta-r "><i id="defaultAddr"></i><a href="javascript:void(0)" target="_top" data-role="none" class="btn-right-a" id="pca_value"></a></div>
+            <ul id="demo_treelist"></ul>
+            <input type="hidden" name="provinceName" value="" data-label="province" data-id="" class="cityPickerInput" value="请选择省"/>
+            <input type="hidden" name="cityName" value="" data-label="city" data-id="" class="cityPickerInput" value="请选择市"/>
+            <input type="hidden" name="areaName" value="" data-label="district" data-id="" class="cityPickerInput" value="请选择区"/>
+            <input type="hidden" name="provinceCode" value="">
+            <input type="hidden" name="cityCode" value="">
+            <input type="hidden" name="areaCode" value="">
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i> </div>
+        </li>
+        <li v-on:click="editInfo('motto')" class="dis-tabel bg-white w100">
+            <div class="dis-cell info-name">个性签名</div>
+            <p class="dis-cell ta-r">{{showMotto}}</p>
+            <div class="right-arrow"><i class="iconfont ">&#xe65e;</i></div>
+        </li>
+    </ul>
+
+    <div v-on:click="subInfo()" class="big-btn btn-active">保存</div>
+
+    <div style="display: none;" id="reason" class="full-bg returnReason">
+        <div class="params-list  clearfix">
+            <ul>
+                <li v-on:click="setSex(1)" id="man" class="reason ta-c ">男</li>
+                <li v-on:click="setSex(2)" id="woman" class="reason ta-c ">女</li>
+                <li style="opacity: 0;padding: 0.5rem 0;" class="reason ta-c "></li>
+                <li v-on:click="setSex(0)" id="cancle"  class="reason ta-c ">取消</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+    <script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/main.js"></script>
+
+<script src="lib/js/mobiscroll.core.js"></script>
+<script src="lib/js/mobiscroll.frame.js"></script>
+<script src="lib/js/mobiscroll.scroller.js"></script>
+<script src="lib/js/mobiscroll.listbase.js"></script>
+<script src="lib/js/mobiscroll.treelist.js"></script>
+<script src="lib/js/mobiscroll.android-holo-light.js"></script>
+<script src="lib/js/i18n/mobiscroll.i18n.zh.js"></script>
+<script src="lib/js/city-picker.data.js"></script>
+<script src="lib/js/mobile-cityPicker.js"></script>
+
+
+<link href="lib/css/mobiscroll.animation.css" rel="stylesheet" type="text/css" />
+<link href="lib/css/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
+<link href="lib/css/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
+<link href="lib/css/mobiscroll.frame.wp.css" rel="stylesheet" type="text/css" />
+<link href="lib/css/mobiscroll.scroller.css" rel="stylesheet" type="text/css" />
+<link href="lib/css/mobiscroll.scroller.android-holo.css" rel="stylesheet" type="text/css" />
+<link href="lib/css/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    #time{
+        border: none;
+        text-align: right;
+    }
+    .dwfl{flex:1;}
+    #demo_treelist_dummy{
+        opacity: 0;
+        position: absolute;
+        left: 1rem;
+        width: 90%;
+    }
+    #pca_value{color: #1c1c1c;}
+</style>
+<link rel="stylesheet" href="css/datePicker.css">
+<script src="js/iscroll.js"></script>
+<script src="js/datePicker.js"></script>
+    <script>
+        Util.common.addloadingAnimate();
+
+        $(function () {
+            //                微信分享
+            Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+
+            personInfo.loadList();
+
+            $('#time').datePicker({
+                beginyear: 1900,
+                endyear:new Date().getFullYear(),
+                theme: 'date',
+                curdate:true
+            });
+
+
+            if ($.mobileCityPicker) {
+                $.mobileCityPicker({
+                    id: 'demo_treelist',//容器id
+                    inputClass: 'cityPickerInput',//
+                    inputClick: true,
+                    option: {
+                        defaultValue: [0, 0, 0],//默认选项
+                        label: ['province', 'city', 'district'],
+                        theme: 'android-holo-light',
+                        mode: 'scroller',
+                        inputClass: 'hidden',
+                        display: 'bottom',
+                        lang: 'zh',
+                    },
+                    callback: function (val, citys) {
+                        var vals = val.split(' ');
+                        $("input[name=provinceCode]").val(vals[0]);
+                        $("input[name=cityCode]").val(vals[1]);
+                        if (vals.length > 1) {
+                            $("input[name=areaCode]").val(vals[2]);
+                        }
+                        $("#pca_value").html(citys.join('-'));
+                        sessionStorage.setItem('fName',citys[0]);
+                        personInfo.$set("changeInfo.province",citys[0]);
+                        personInfo.$set("changeInfo.city",citys[1]);
+                        sessionStorage.setItem('sName',citys[1]);
+                        sessionStorage.setItem('aName',citys[2]);
+                        if($("input[name=areaCode]").val()==""){
+                            $("input[name=areaCode]").val("");
+                            $("input[name=areaName]").val("");
+                            $("input[name=areaName]").attr("data-id","");
+                            $("input[name=areaName]").attr("data-cs","");
+                        }
+                        console.log(val);
+                        console.log(citys);
+                    }
+                });
+            }
+
+
+
+        })
+        
+        var personInfo=new Vue({
+            el:'#personInfo',
+            data:{
+                userInfo:{},
+                changeInfo:{
+                    id:sessionStorage.getItem("userid"),
+                    tel:'',
+                    sex:'',
+                    birthday:'',
+                    personSign:sessionStorage.getItem("motto"),
+                    country:'中国',
+                    province:'',
+                    city:''
+                }
+            },
+            computed:{
+                showBirthday:function () {
+                    if(this.changeInfo.birthday!=''){
+                        var date=this.changeInfo.birthday.substr(0,10);
+                    }else {
+                        var date='';
+                    }
+                    return date;
+                },
+                showMotto:function () {
+                    if(sessionStorage.getItem("motto")!==null && sessionStorage.getItem("motto")!==undefined && sessionStorage.getItem("motto")!==''){
+                        var str=strLimit(sessionStorage.getItem("motto"),10);
+                    }else {
+                        var str=this.userInfo.personSign;
+                    }
+                    return str;
+                }
+            },
+            methods:{
+                loadList:function () {
+                    var url ="/weixin/weixinClient/loadMyInfo.do?id=" + sessionStorage.getItem("userid");
+                    var param = {"userId": sessionStorage.getItem("userid")};
+
+                    Util.common.executeAjaxCallback(url, param, function (data) {
+                        console.log(data.msg);
+
+                        if (data.success==true) {
+                            Util.common.removeloadingAnimate('personInfo');
+                            personInfo.$set("userInfo", data.msg);
+
+                            if( data.msg.birthday!=undefined && data.msg.birthday!=null){
+                                data.msg.birthday=data.msg.birthday.substr(0,10);
+                            }
+                            sessionStorage.setItem("userInfo", data.msg);
+
+                            personInfo.$set("changeInfo.sex",data.msg.sex);
+
+                            if(sessionStorage.getItem('telNum')!=null && sessionStorage.getItem('telNum')!=undefined && sessionStorage.getItem('telNum')!=''){
+                                personInfo.$set("changeInfo.tel",sessionStorage.getItem('telNum') );
+                            }else {
+                                personInfo.$set("changeInfo.tel",personInfo.userInfo.tel);
+                            }
+
+                            var day=personInfo.userInfo.birthday;
+                            personInfo.$set("changeInfo.birthday",day);
+
+                            if(data.msg.province!=undefined && data.msg.city!=undefined){
+                                $("#pca_value").html(data.msg.province+'-'+data.msg.city);
+                            }
+                        }
+                    });
+
+
+                },
+                editInfo:function (str) {
+                    window.location.href='person_info_motto.html?editType='+str;
+                },
+                subInfo:function () {
+                    console.log(personInfo.changeInfo);
+                    if($("#time").val()!=''){
+                        personInfo.$set('changeInfo.birthday',$("#time").val()+' 00:00:00');
+                    }else {
+                        var day=personInfo.userInfo.birthday;
+                        personInfo.$set("changeInfo.birthday",day);
+
+                    }
+                    var url ="/weixin/weixinClient/updateMyInfo.do";
+                    var param ={'modelJson':JSON.stringify(personInfo.changeInfo)};
+                    console.log(param);
+                    Util.common.executeAjaxCallback(url, param, function (data) {
+                        console.log(data);
+                        if(data.success==true){
+                            sessionStorage.setItem('telNum','');
+                            sessionStorage.setItem("motto",'');
+                            window.location.href='person.html';
+                        }
+                    });
+                },
+                setSex:function (state) {
+                    if(state==1){
+                        personInfo.$set("changeInfo.sex",1);
+                        $("#reason").toggle();
+                    }else if(state==2){
+                        personInfo.$set("changeInfo.sex",2);
+                        $("#reason").toggle();
+                    }else {
+                        $("#reason").toggle();
+                    }
+                }
+            }
+        });
+
+
+
+
+    </script>
+
+</html>

@@ -1,0 +1,160 @@
+#kkpager .infoTextAndGoPageBtnWrap {
+    display: none!important;
+}
+/*产品详情*/
+.product-bread-nav{
+    width: 1200px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 30px;
+    color: #999;
+
+}
+.product-bread-nav span{
+    color: #666;
+    margin-right: 6px;
+    font-weight: bold;
+    margin-left: 6px;
+}
+.product-bread-nav a{
+    color: #666;
+    font-weight: bold;
+}
+.product-bread-nav a:hover{
+    color: #cc9b4b;
+}
+.article{
+    width: 1200px;
+    margin: 0 auto;
+}
+.article .article-aside{
+    width: 200px;
+    margin-right: 44px;
+}
+.article .article-aside ul{
+    border: 1px solid #dbdbdb;
+    border-bottom: none;
+}
+.article .article-aside ul li a{
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 42px;
+    color: #333;
+    background: #f5f5f5;
+    border-bottom: 1px solid #dbdbdb;
+}
+.article .article-aside ul .active a{
+    background: #cc9b4b;
+    color: #fff;
+}
+.article .article-content{
+    width: 956px;
+    background: #f5f5f5;
+    min-height: 580px;
+}
+.article .article-content .article-list-content{
+    width: 450px;
+    background: #fff;
+    margin-top: 23px;
+    margin-left: 15px;
+}
+
+.article .article-content .article-list-content li a{
+    font-size: 12px;
+    color: #333;
+    text-align: left;
+    line-height: 36px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    width: 90%;
+}
+.article .article-content .article-list-content li a:hover{
+    color: #cc9b4b;
+}
+.article .article-content .article-list-content li a i{
+    width: 7px;
+    height: 8px;
+    background: url(../images/icon_right_7x8.png) no-repeat center;
+    background-size: contain;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.article .article-content .product-list-paging{
+    margin-top: 20px;
+    margin-right: 20px;
+}
+.article .article-content .product-list-paging a{
+    font-size: 14px;
+    line-height: 30px;
+    color: #333;
+    padding-left: 11px;
+    padding-right: 11px;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    margin-right: 8px;
+    background: #fff;
+}
+.article .article-content .product-list-paging .page-number.disable{
+    border:none;
+    color: #cc9b4b;
+    cursor: not-allowed;
+    background: #f5f5f5;
+}
+.article .article-content .product-list-paging .page-number{
+    background: #fff;
+}
+.article .article-content .product-list-paging .prev i{
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background-image: url(../images/icon_left_gray.png);
+    background-repeat: no-repeat;
+    background-size: 8px 14px;
+    background-position: center;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+.article .article-content .product-list-paging .prev.disable{
+    color: #dbdbdb;
+    cursor: not-allowed;
+}
+.article .article-content .product-list-paging .prev.disable i{
+    background-image:url(../images/icon_left_gray_disable.png) ;
+}
+.article .article-content .product-list-paging .next i{
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background-image: url(../images/icon_right_gray.png);
+    background-repeat: no-repeat;
+    background-size: 8px 14px;
+    background-position: center;
+    vertical-align: sub;
+    margin-left:6px;
+}
+.article .article-content .product-list-paging .next.disable{
+    color: #dbdbdb;
+    cursor: not-allowed;
+}
+.article .article-content .product-list-paging .next.disable i{
+    background-image:url(../images/icon_right_gray_disable.png) ;
+}
+.article .article-content .product-list-paging .dot{
+    line-height: 28px;
+    margin-right: 14px;
+    margin-left: 8px;
+}
+.article .article-content .product-list-paging .page-count{
+    font-size: 14px;
+    color: #333;
+    line-height: 36px;
+    margin-left: 60px;
+    margin-right: 10px;
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>店铺信息</title>
+</head>
+<body class="bg-main shop-info">
+    <div id="shop_info">
+
+        <div class="info-part1">
+            <div class="img-con">
+                <div style=" background: url('{{detail.headImgUrl}}') center center no-repeat;background-size:cover;">
+                </div>
+                <!--<div>
+                    <img :src="detail.headImgUrl" alt="">
+                </div>-->
+            </div>
+            <h2>{{detail.name}}</h2>
+            <div>
+                <p><i class="color-grey">茶掌柜：</i> {{detail.userName}}</p>
+                <a class="color-main phone dis-b" href="tel://{{detail.phone}}"><i class="color-grey">门店电话：</i>{{detail.phone}}</a>
+                <p><i class="color-grey">门店地址：</i>
+                    <template v-if="detail.provinceName != '---请选择---' && detail.cityName != '---请选择---' &&detail.address != '---请选择---'">
+                    {{detail.provinceName}}{{detail.cityName}}{{detail.address}}
+                    </template>
+                </p>
+                <p><i class="color-grey">加入平台时间：</i>{{detail.createTime}}</p>
+            </div>
+        </div>
+        <div class="info-part2">
+            <div class="clearfix border-b1">
+                <i class="fl color-grey">主营产品：</i>
+                <p class="fl">
+                    <template v-if="detail.businessContent != null ">
+                        {{detail.businessContent}}
+                    </template>
+                </p>
+            </div>
+            <div class="clearfix">
+                <i class="fl color-grey">店铺介绍：</i>
+                <p class="fl">{{detail.description}}</p>
+            </div>
+        </div>
+        <div class="info-part2">
+            <div class="clearfix border-b1">
+                <i class="fl color-grey">店内照片：</i>
+                <em class="fr">共{{detail.imgNum}}张</em>
+            </div>
+            <ul class="clearfix shop-img">
+                <template v-for="list in detail.picList">
+                    <li class="fl w33">
+                        <div class="img-con" style="background: url('{{list.url}}') center center no-repeat;background-size:contain;">
+                            <!--<img :src="list.url" alt="">-->
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    Util.common.addloadingAnimate();
+
+    $(function () {
+        shopInfo.loadData();
+        //                微信分享
+        Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+    })
+    var shopInfo=new Vue({
+        el: "#shop_info",
+        data: {
+            detail:{}
+        },
+        computed: {
+
+        },
+        methods: {
+            loadData:function () {
+                var url ="/mobile/store/subbranch/loadInfo.do?shopId="+sessionStorage.getItem('shopId');
+                var param = {};
+                Util.common.executeAjaxCallback(url, param, function (data) {
+                    Util.common.removeloadingAnimate('trading_record');
+                    if(data.picList!=undefined){
+                        data.imgNum=data.picList.length;
+                    }else {
+                        data.imgNum=0;
+                    }
+                        shopInfo.$set('detail',data);
+                });
+            }
+        }
+    });
+</script>
+</html>

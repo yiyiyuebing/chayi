@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="css/fonts/iconfont.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/ui-box.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/register.css">
+    <title>注册</title>
+</head>
+<body id="login" class="bg-main">
+    <div class="logo">
+        <a href="#">
+            <img src="./img/logo.png">
+        </a>
+    </div>
+    <div class="input-group" id="tel">
+        <i class="tel-icon"></i>
+        <input class="mobile-icon" v-on:input="checkPhone()" v-on:blur="checkPhoneLenght()" v-model="mobileNumber" required maxlength="11" type="tel"  placeholder="请输入手机号码">
+    </div>
+    <div class="input-group" id="TextCode">
+        <i class="imgCode-icon"></i>
+        <input class="login-verifi" type="text" v-model="imgCode" placeholder="图片验证码" required>
+        <span class="imgCode color-main" v-on:click="switchImgCode()"><img id="imgs"></span>
+    </div>
+    <div class="input-group" id="code">
+        <i class="code-icon"></i>
+        <input class="login-verifi" type="text" v-model="mobileCode" placeholder="请输入验证码" required>
+        <template v-if="isGetCode" >
+            <span v-on:click="send()" class="verifiCode color-main">{{countText}}</span>
+        </template>
+        <template v-else>
+            <span class="verifiCode color-main">{{count}}s</span>
+        </template>
+    </div>
+    <div class="input-group" >
+        <i class="password-icon"></i>
+        <input id="pwd" class="login-ps" type="password" v-model="password" placeholder="请输入密码" required>
+        <template v-if="isShowPwd">
+            <i class="password-eye-show" v-on:click="isShowPwdFun()"></i>
+        </template>
+        <template v-else>
+            <i class="password-eye-hide" v-on:click="isShowPwdFun()"></i>
+        </template>
+        <!-- <p>密码由字母及数字两种以上字符组成,6-20位,区分大小写！</p> -->
+    </div>
+    <div class="input-group" id="invite">
+        <i class="person-icon"></i>
+        <input class="login-person" v-on:input="checkInvite()" v-on:blur="checkInviteLenght()"  type="text" v-model="inviteNumber"   placeholder="请输入邀请人手机号（选填）">
+    </div>
+    <div class="btnView">
+        <i class="login-agree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>我已经阅读并同意<span class="color-main">《服务条款及隐私政策》</span>
+    </div>
+    <div id="saveBtn" class="big-btn btn-active" v-on:click="doRegister()" >下一步</div>
+</body>
+
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script src="js/common.js"></script>
+<script src="js/md5.js"></script>
+
+<script>
+
+    $(function () {
+        
+        login.switchImgCode();
+        //                微信分享
+        //Util.weixinMenu.share(sessionStorage.getItem('shopImg'),sessionStorage.getItem('shopName'),'index');
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+
+    })
+    var login=new Vue({
+        el:'#login',
+        data:{
+            mobileNumber:'',
+            mobileCode:'',
+            password:'',
+            inviteNumber:'',
+            imgCode:'',
+            requestRandom:Math.random(),
+            count: 60,
+            countText: '获取验证码',
+            isGetCode: true,
+            isShowPwd: false,
+        },
+        computed:{
+
+        },
+        methods:{
+            /*切换图片验证码*/
+            switchImgCode:function(){
+                login.requestRandom = Math.random();
+                $("#imgs").attr("src", Util.common.b2bUrlApi + "/weixin/user/getVerifyImg?requestId=" + login.requestRandom);
+                console.log(login.requestRandom);
+            },
+            /*验证手机合法性*/
+            checkPhone:function(){
+                if(!$.validatePhone(login.mobileNumber) && login.mobileNumber.length == 11){
+                    new Toast({context:$('body'),message:"手机号码不合法！"}).show();
+                }
+            },
+            /*验证手机长度*/
+            checkPhoneLenght:function(){
+                if( login.mobileNumber.length < 11 && login.mobileNumber.length > 0){
+                    new Toast({context:$('body'),message:"手机号码长度为11位！"}).show();
+                }
+            },
+            /*验证邀请人手机合法性*/
+            checkInvite:function(){
+                if(!$.validatePhone(login.inviteNumber) && login.inviteNumber.length == 11){
+                    new Toast({context:$('body'),message:"手机号码不合法！"}).show();
+                }
+            },
+            /*验证邀请人手机长度*/
+            checkInviteLenght:function(){
+                if( login.inviteNumber.length < 11 && login.inviteNumber.length >0){
+                    new Toast({context:$('body'),message:"邀请人手机号码长度为11位！"}).show();
+                }
+            },
+            /*密码的合法性*/
+            checkPassword:function(){
+                if( (login.password.length < 6 || login.password.length > 20) && (login.password.length ) > 0){
+                    new Toast({context:$('body'),message:"密码长度为6到20位"}).show();
+                }
+            },
+            /*发送验证码*/
+            send : function () {
+                login.count = 60;
+                if(login.mobileNumber == '' || login.mobileNumber == null){
+                    new Toast({context:$('body'),message:"手机号码不能为空"}).show();
+                    return;
+                }
+                if(!$.validatePhone(login.mobileNumber)){
+                    new Toast({context:$('body'),message:"手机号码不合法！无法发送手机验证码"}).show();
+                    return;
+                }
+                if(login.imgCode == '' || login.imgCode == null){
+                    new Toast({context:$('body'),message:"图片验证码不能为空"}).show();
+                    return;
+                }
+                var url = "/weixin/user/verifyPhone.do";
+                console.log(login.requestRandom);
+                var param = { requestId:login.requestRandom,phoneCode:login.mobileNumber,iptVerifyCode:login.imgCode };
+                Util.common.b2bPostCallback(url,param,function(result){
+                    if(result.success){
+                        new Toast({context:$('body'),message:"发送成功"}).show();
+                        InterValObj = window.setInterval(SetRemainTime, 1000);
+                        login.isGetCode = false;
+                        /*设置验证码有效时间  有效时长10分钟*/
+                        setTimeout(function(){
+                            login.switchImgCode();
+                        },600000);
+                    }else{
+                        new Toast({context:$('body'),message:result.msg}).show();
+                        login.switchImgCode();
+                    }
+                })
+
+            },
+            /*注册*/
+            doRegister:function(){
+                if(!$.validatePhone(login.mobileNumber)){
+                    new Toast({context:$('body'),message:"手机号码不合法！"}).show();
+                    return;
+                }
+
+                if(login.mobileCode == '' || login.mobileCode == null){
+                    new Toast({context:$('body'),message:"验证码不能为空！"}).show();
+                    return;
+                }
+
+                if(login.password == '' || login.password == null){
+                    new Toast({context:$('body'),message:"密码不能为空！"}).show();
+                    return;
+                }
+
+                if(!$.validatePassword(login.password)){
+                    new Toast({context:$('body'),message:"密码为6-20位数字及字母的组合"}).show("2000");
+                    return;
+                }
+
+
+                var url = "/weixin/user/checkVerifyCode";
+                var params = {};
+                params.smsType = "user_login";
+                params.phoneCode = login.mobileNumber;
+                params.verifyCode = login.mobileCode;
+
+                Util.common.b2bPostCallback(url,params,function(result){
+                    if(result.success){
+                        window.location.href = 'shopInfo_edit.html?mobile=' + login.mobileNumber +'&password=' + login.password + '&yzm=' + login.mobileCode;
+                    }else{
+                        new Toast({context:$('body'),message:result.msg}).show();
+                    }
+                });
+
+
+                /*Util.common.b2bPostCallback(url,param,function(result){
+                    if(result.success){
+                        new Toast({context:$('body'),message:"注册成功"}).show();
+                        setTimeout(function(){
+                            window.location.href = 'shopInfo_edit.html';
+                        },2000)
+                    }else{
+                        new Toast({context:$('body'),message:result.msg}).show();
+                    }
+                });*/
+
+            },
+            isShowPwdFun:function() {
+                if (login.isShowPwd) {
+                    login.$set('isShowPwd', false);
+                    document.getElementById("pwd").type="password";
+                } else {
+                    login.$set('isShowPwd', true);
+                    document.getElementById("pwd").type="text";
+                }
+            }
+        }
+    });
+    function SetRemainTime() {
+        if (login.count == 0) {
+            window.clearInterval(InterValObj);
+            login.isGetCode = true;
+            login.countText = "重新获取";
+        } else {
+            login.count--;
+        }
+    }
+</script>
+</html>

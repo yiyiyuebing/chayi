@@ -1,0 +1,343 @@
+package pub.makers.shop.purchaseOrder.entity;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by dy on 2017/5/19.
+ */
+public class PurchaseOrderExport implements Serializable {
+
+    private String orderNo; //订单号
+    private String receiver; //收货人
+    private String receiverPhone; //收货人手机号
+    private String address; //收货地址
+    private String invoiceContent; //发票
+    private String invoiceName; //抬头
+    private String invoiceDutyParagraph;
+    private String buyerCarriage; //运费
+    private String paymentAmount; //实际支付金额（含运费）
+    private String buyerRemark; //买家留言
+
+    private String buyType; //购买类型
+    private String storeDeptNum; //部门编码
+    private String storeNum; //店铺编码
+    private String concatName;  //客户名称
+    private String storeName;   //店铺名称
+    private Integer status;  //订单状态
+
+    private Date createTime;  //创建时间
+    private Date payTime; //支付时间
+    private Date shipTime;    //发货时间
+    private String expressMethod;  //配送方式
+    private Integer type;    //订单类型
+    private String stageOrder;  //分阶段订单
+    private String preAmount;   //预付款
+    private String lastAmount;  //预付款尾款
+    private String earnestAmount; //定金
+    private String lastEarnestAmount; //定金尾款
+
+    private String refundAmount; //退款金额
+    private String expressCompany;  //快递公司
+    private String expressNumber;   //快递单号
+    private Integer payType; //支付类型
+    private String payAccount;  //支付账号
+    private String remarkInfo;  //客服备注
+
+    private BigDecimal presellFirst;
+    private BigDecimal presellEnd;
+    private BigDecimal presellAmount;
+
+
+    private List<PurchaseOrderListExport> orderListExportList;
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
+    public String getReceiverPhone() {
+        return receiverPhone;
+    }
+
+    public void setReceiverPhone(String receiverPhone) {
+        this.receiverPhone = receiverPhone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getInvoiceContent() {
+        return invoiceContent;
+    }
+
+    public void setInvoiceContent(String invoiceContent) {
+        this.invoiceContent = invoiceContent;
+    }
+
+    public String getInvoiceName() {
+        return invoiceName;
+    }
+
+    public void setInvoiceName(String invoiceName) {
+        this.invoiceName = invoiceName;
+    }
+
+    public String getBuyerCarriage() {
+        return buyerCarriage;
+    }
+
+    public void setBuyerCarriage(String buyerCarriage) {
+        this.buyerCarriage = buyerCarriage;
+    }
+
+    public String getPaymentAmount() {
+        return paymentAmount;
+    }
+
+    public String getInvoiceDutyParagraph() {
+        return invoiceDutyParagraph;
+    }
+
+    public void setInvoiceDutyParagraph(String invoiceDutyParagraph) {
+        this.invoiceDutyParagraph = invoiceDutyParagraph;
+    }
+
+    public void setPaymentAmount(String paymentAmount) {
+        this.paymentAmount = paymentAmount;
+    }
+
+    public String getBuyerRemark() {
+        return buyerRemark;
+    }
+
+    public void setBuyerRemark(String buyerRemark) {
+        this.buyerRemark = buyerRemark;
+    }
+
+    public String getBuyType() {
+        return buyType;
+    }
+
+    public void setBuyType(String buyType) {
+        this.buyType = buyType;
+    }
+
+    public String getStoreDeptNum() {
+        return storeDeptNum;
+    }
+
+    public void setStoreDeptNum(String storeDeptNum) {
+        this.storeDeptNum = storeDeptNum;
+    }
+
+    public String getStoreNum() {
+        return storeNum;
+    }
+
+    public void setStoreNum(String storeNum) {
+        this.storeNum = storeNum;
+    }
+
+    public String getConcatName() {
+        return concatName;
+    }
+
+    public void setConcatName(String concatName) {
+        this.concatName = concatName;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(Date payTime) {
+        this.payTime = payTime;
+    }
+
+    public Date getShipTime() {
+        return shipTime;
+    }
+
+    public void setShipTime(Date shipTime) {
+        this.shipTime = shipTime;
+    }
+
+    public String getExpressMethod() {
+        return expressMethod;
+    }
+
+    public void setExpressMethod(String expressMethod) {
+        this.expressMethod = expressMethod;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getStageOrder() {
+        return stageOrder;
+    }
+
+    public void setStageOrder(String stageOrder) {
+        this.stageOrder = stageOrder;
+    }
+
+    public String getPreAmount() {
+        return preAmount;
+    }
+
+    public void setPreAmount(String preAmount) {
+        this.preAmount = preAmount;
+    }
+
+    public String getLastAmount() {
+        return lastAmount;
+    }
+
+    public void setLastAmount(String lastAmount) {
+        this.lastAmount = lastAmount;
+    }
+
+    public String getEarnestAmount() {
+        return earnestAmount;
+    }
+
+    public void setEarnestAmount(String earnestAmount) {
+        this.earnestAmount = earnestAmount;
+    }
+
+    public String getLastEarnestAmount() {
+        return lastEarnestAmount;
+    }
+
+    public void setLastEarnestAmount(String lastEarnestAmount) {
+        this.lastEarnestAmount = lastEarnestAmount;
+    }
+
+    public String getRefundAmount() {
+        return refundAmount;
+    }
+
+    public void setRefundAmount(String refundAmount) {
+        this.refundAmount = refundAmount;
+    }
+
+    public String getExpressCompany() {
+        return expressCompany;
+    }
+
+    public void setExpressCompany(String expressCompany) {
+        this.expressCompany = expressCompany;
+    }
+
+    public String getExpressNumber() {
+        return expressNumber;
+    }
+
+    public void setExpressNumber(String expressNumber) {
+        this.expressNumber = expressNumber;
+    }
+
+    public Integer getPayType() {
+        return payType;
+    }
+
+    public void setPayType(Integer payType) {
+        this.payType = payType;
+    }
+
+    public String getPayAccount() {
+        return payAccount;
+    }
+
+    public void setPayAccount(String payAccount) {
+        this.payAccount = payAccount;
+    }
+
+    public String getRemarkInfo() {
+        return remarkInfo;
+    }
+
+    public void setRemarkInfo(String remarkInfo) {
+        this.remarkInfo = remarkInfo;
+    }
+
+    public List<PurchaseOrderListExport> getOrderListExportList() {
+        return orderListExportList;
+    }
+
+    public void setOrderListExportList(List<PurchaseOrderListExport> orderListExportList) {
+        this.orderListExportList = orderListExportList;
+    }
+
+    public BigDecimal getPresellFirst() {
+        return presellFirst;
+    }
+
+    public void setPresellFirst(BigDecimal presellFirst) {
+        this.presellFirst = presellFirst;
+    }
+
+    public BigDecimal getPresellEnd() {
+        return presellEnd;
+    }
+
+    public void setPresellEnd(BigDecimal presellEnd) {
+        this.presellEnd = presellEnd;
+    }
+
+    public BigDecimal getPresellAmount() {
+        return presellAmount;
+    }
+
+    public void setPresellAmount(BigDecimal presellAmount) {
+        this.presellAmount = presellAmount;
+    }
+}
