@@ -9,7 +9,7 @@
 	<artifactId>yaoming-security</artifactId>
 	<version>${yaoming.security.version}</version>
 	<properties>
-		<spring-security.version>4.0.2.RELEASE</spring-security.version>
+		<spring-security.version>5.5.7</spring-security.version>
 		<cxf.version>3.1.3</cxf.version>
 		<hamcrest.version>1.3</hamcrest.version>
 		<jetty.version>8.1.8.v20121106</jetty.version>
